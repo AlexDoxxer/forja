@@ -1,0 +1,219 @@
+# CI de Forja (MASTER_PROMPT §13, ADR 0010):
+# lint → tipos → unit → integración → build → E2E → Lighthouse → informe de cobertura.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_VERSION: "0.12.18"
+  PYTHON_VERSION: "3.12"
+  NODE_VERSION: "20.19"
+  FORCE_COLOR: "1"
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Instalar dependencias
+        run: make install
+      - name: Lint (ruff, ESLint, contrato OpenAPI, marcadores prohibidos)
+        run: make lint
+
+  typecheck:
+    needs: lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Instalar dependencias
+        run: make install
+      - name: Tipos (mypy --strict, tsc --strict)
+        run: make typecheck
+
+  unit:
+    needs: typecheck
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Instalar dependencias
+        run: make install
+      - name: Motor de rutinas (100 % líneas, >= 95 % ramas)
+        run: make test-engine
+      - name: Motor de nutrición (100 % líneas, >= 95 % ramas)
+        run: make test-nutrition
+      - name: Backend sin Docker (unit + contrato)
+        run: make test-backend-unit
+      - name: Frontend (Vitest, >= 85 %)
+        run: make test-frontend
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-unit
+          path: |
+            engine/coverage.json
+            nutrition/coverage.json
+            frontend/coverage/coverage-summary.json
+          if-no-files-found: error
+
+  integration:
+    needs: unit
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
+      - name: Instalar dependencias del backend
+        run: |
+          uv sync --locked --project engine
+          uv sync --locked --project backend
+      - name: Backend completo con testcontainers-postgres (>= 90 % líneas y ramas)
+        run: make test-backend
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-backend
+          path: backend/coverage.json
+          if-no-files-found: error
+
+  build:
+    needs: integration
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Instalar dependencias del frontend
+        run: npm ci
+        working-directory: frontend
+      - name: Wheels de Python y bundle del frontend
+        run: make build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist
+          if-no-files-found: error
+
+  e2e:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Instalar dependencias y navegadores
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium webkit
+      - name: Playwright (Chromium escritorio + WebKit móvil)
+        run: make e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: frontend/playwright-report
+
+  lighthouse:
+    needs: e2e
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Lighthouse CI (umbrales de §10.5)
+        working-directory: frontend
+        run: npx --yes @lhci/cli@0.14.0 autorun
+
+  coverage:
+    needs: [unit, integration, lighthouse]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: "**/uv.lock"
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage-unit
+          path: .
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage-backend
+          path: backend
+      - name: Umbrales de cobertura (§2.2) y resumen
+        run: |
+          uv sync --locked --project engine
+          {
+            echo "## Cobertura"
+            echo '```'
+            uv run --locked --project engine python scripts/coverage_gate.py engine/coverage.json --lines 100 --branches 95
+            uv run --locked --project engine python scripts/coverage_gate.py nutrition/coverage.json --lines 100 --branches 95
+            uv run --locked --project engine python scripts/coverage_gate.py backend/coverage.json --lines 90 --branches 90
+            echo "frontend: $(jq -c '.total | {lines: .lines.pct, branches: .branches.pct, functions: .functions.pct, statements: .statements.pct}' frontend/coverage/coverage-summary.json)"
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"

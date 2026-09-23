@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.json
+coverage.xml
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/playwright-report/
+frontend/test-results/
+frontend/.lighthouseci/
+frontend/src/lib/api/schema.d.ts.tmp
+
+# Entorno y datos locales (los medios de Gym visual nunca se versionan: ADR 0004)
+.env
+media/
+*.dump

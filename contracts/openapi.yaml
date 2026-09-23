@@ -1,0 +1,3786 @@
+openapi: 3.1.0
+info:
+  title: Forja API
+  version: 1.0.0
+  summary: API de Forja, app de entrenamiento autoalojada.
+  description: |
+    Contrato de la API de Forja (fuente de verdad, MASTER_PROMPT §9). Lo consumen el cliente
+    generado (`openapi-typescript` + `openapi-fetch`) y los mocks MSW del frontend; el backend
+    exporta su propio esquema y un test de contrato en CI lo compara con este fichero.
+
+    ## Convenciones (ADR 0009)
+    - JSON en `snake_case`; fechas ISO 8601 (`date`) y marcas de tiempo en UTC (`date-time`).
+    - Identificadores UUID v7, salvo los ejercicios, que conservan el id del dataset (`"0001"`).
+    - Errores RFC 9457 (`application/problem+json`, esquema `Problem`) con `code` estable.
+    - Listados paginados por cursor opaco: `?cursor=&limit=` (máx. 100) y respuesta
+      `{items, next_cursor}`; `next_cursor = null` indica la última página.
+    - Autenticación por cookie de sesión `__Host-forja_session` (HttpOnly, Secure, SameSite=Lax).
+    - CSRF por doble envío: cookie `__Host-forja_csrf` (legible por JS) + cabecera
+      `X-CSRF-Token` con el mismo valor en todo método no seguro (POST, PUT, PATCH, DELETE).
+      `GET /auth/csrf` emite la cookie antes del inicio de sesión.
+    - Catálogo con `ETag` (débil, depende de la versión del catálogo y de los favoritos del
+      usuario) y `If-None-Match` ⇒ `304`.
+    - `Idempotency-Key` obligatorio en `POST /sessions` y `POST /sessions/{session_id}/sets`:
+      misma clave y mismo cuerpo ⇒ se repite la respuesta original con
+      `Idempotent-Replayed: true`; misma clave con otro cuerpo ⇒ `422`
+      (`code = idempotency_key_reused`); petición concurrente con la misma clave ⇒ `409`.
+    - Autorización por propietario: un recurso de otro usuario responde `404`, nunca `403`.
+    - Los medios de ejercicio son © Gym visual: toda vista que muestre `media` DEBE mostrar
+      `media.attribution` (MASTER_PROMPT §2.1).
+    - Los ejemplos son ilustrativos (los `media_id` de las rutas de medios no son reales);
+      los mocks MSW los usan tal cual.
+  contact:
+    name: Proyecto Forja
+servers:
+  - url: /api/v1
+    description: Mismo origen que la SPA, detrás de nginx.
+security:
+  - sessionCookie: []
+tags:
+  - name: health
+    description: Vida y disponibilidad del servicio.
+  - name: auth
+    description: Registro, inicio de sesión, sesiones activas y CSRF.
+  - name: profile
+    description: Perfil, PAR-Q y métricas corporales.
+  - name: catalog
+    description: Biblioteca de ejercicios, facetas y favoritos.
+  - name: generator
+    description: Generación de programas con el motor de rutinas (sin persistir).
+  - name: programs
+    description: Programas guardados, edición, activación y exportación.
+  - name: sessions
+    description: Sesiones de entrenamiento, series y sincronización offline.
+  - name: stats
+    description: Progreso, volumen y récords personales.
+  - name: nutrition
+    description: Módulo opcional de dieta.
+  - name: data
+    description: Exportación, importación y borrado de la cuenta.
+  - name: admin
+    description: Administración (solo rol admin).
+  - name: meta
+    description: Información de versión, dataset y licencias.
+
+paths:
+  # ------------------------------------------------------------------ health
+  /health:
+    get:
+      tags: [health]
+      operationId: getHealth
+      summary: Comprobación de vida
+      security: []
+      responses:
+        "200":
+          description: El proceso está vivo.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/HealthStatus" }
+              example: { status: ok }
+  /ready:
+    get:
+      tags: [health]
+      operationId: getReadiness
+      summary: Disponibilidad (base de datos y medios)
+      security: []
+      responses:
+        "200":
+          description: Listo para servir tráfico.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReadinessStatus" }
+              example: { status: ready, checks: { database: true, media: true } }
+        "503":
+          description: Alguna dependencia no está disponible.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReadinessStatus" }
+              example: { status: not_ready, checks: { database: true, media: false } }
+
+  /about:
+    get:
+      tags: [meta]
+      operationId: getAbout
+      summary: Versiones, dataset ingerido y licencias (pantalla «Créditos»)
+      security: []
+      responses:
+        "200":
+          description: Información de créditos y licencias.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AboutInfo" }
+
+  # -------------------------------------------------------------------- auth
+  /auth/csrf:
+    get:
+      tags: [auth]
+      operationId: issueCsrfToken
+      summary: Emite la cookie CSRF (necesaria antes de registro o inicio de sesión)
+      security: []
+      responses:
+        "204":
+          description: Cookie `__Host-forja_csrf` emitida o renovada.
+          headers:
+            Set-Cookie: { $ref: "#/components/headers/SetCsrfCookie" }
+  /auth/register:
+    post:
+      tags: [auth]
+      operationId: register
+      summary: Registro de usuario (si está habilitado; el primer usuario es admin)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RegisterRequest" }
+            example:
+              email: lucia@example.org
+              password: "brasa-y-yunque-2026"
+              display_name: Lucía
+              locale: es
+      responses:
+        "201":
+          description: Usuario creado y sesión iniciada.
+          headers:
+            Set-Cookie: { $ref: "#/components/headers/SetSessionCookie" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CurrentUser" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /auth/login:
+    post:
+      tags: [auth]
+      operationId: login
+      summary: Inicio de sesión (rota la sesión y el token CSRF)
+      security:
+        - csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LoginRequest" }
+            example: { email: lucia@example.org, password: "brasa-y-yunque-2026" }
+      responses:
+        "200":
+          description: Sesión iniciada.
+          headers:
+            Set-Cookie: { $ref: "#/components/headers/SetSessionCookie" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CurrentUser" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /auth/logout:
+    post:
+      tags: [auth]
+      operationId: logout
+      summary: Cierra la sesión actual
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      responses:
+        "204":
+          description: Sesión revocada y cookies eliminadas.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+  /auth/me:
+    get:
+      tags: [auth]
+      operationId: getCurrentUser
+      summary: Usuario autenticado
+      responses:
+        "200":
+          description: Usuario actual.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CurrentUser" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+  /auth/password:
+    post:
+      tags: [auth]
+      operationId: changePassword
+      summary: Cambia la contraseña y revoca las demás sesiones
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PasswordChangeRequest" }
+      responses:
+        "204":
+          description: Contraseña cambiada.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /auth/check:
+    get:
+      tags: [auth]
+      operationId: checkSession
+      summary: Comprobación para `auth_request` de nginx (sin cuerpo, muy rápida)
+      responses:
+        "204":
+          description: Sesión válida.
+        "401":
+          description: Sin sesión válida (sin cuerpo).
+  /auth/sessions:
+    get:
+      tags: [auth]
+      operationId: listAuthSessions
+      summary: Sesiones activas del usuario
+      responses:
+        "200":
+          description: Sesiones activas (no revocadas ni caducadas).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthSessionList" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+  /auth/sessions/{auth_session_id}:
+    parameters:
+      - $ref: "#/components/parameters/AuthSessionId"
+    delete:
+      tags: [auth]
+      operationId: revokeAuthSession
+      summary: Revoca una sesión activa
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      responses:
+        "204":
+          description: Sesión revocada.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  # ----------------------------------------------------------------- profile
+  /profile:
+    get:
+      tags: [profile]
+      operationId: getProfile
+      summary: Perfil del usuario
+      responses:
+        "200":
+          description: Perfil.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Profile" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    put:
+      tags: [profile]
+      operationId: updateProfile
+      summary: Sustituye el perfil (edición completa)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProfileUpdate" }
+      responses:
+        "200":
+          description: Perfil actualizado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Profile" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /profile/parq:
+    put:
+      tags: [profile]
+      operationId: submitParq
+      summary: Registra el cuestionario de aptitud (PAR-Q)
+      description: |
+        Si alguna respuesta es «sí» se marca `parq_flagged`, se registra el aviso y el nivel
+        pasa a `beginner` (el usuario puede cambiarlo después de forma explícita con
+        `PUT /profile`). Nunca bloquea el uso de la app (MASTER_PROMPT §2.3).
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ParqSubmission" }
+      responses:
+        "200":
+          description: PAR-Q registrado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ParqResult" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /body-metrics:
+    get:
+      tags: [profile]
+      operationId: listBodyMetrics
+      summary: Métricas corporales (peso, % grasa, cintura), más recientes primero
+      parameters:
+        - $ref: "#/components/parameters/FromDate"
+        - $ref: "#/components/parameters/ToDate"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Página de métricas.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BodyMetricPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+    post:
+      tags: [profile]
+      operationId: upsertBodyMetric
+      summary: Registra la métrica de un día (sustituye la existente de esa fecha)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/BodyMetricCreate" }
+            example: { date: "2026-09-21", weight_kg: 64.3, body_fat_pct: null, waist_cm: 71.5 }
+      responses:
+        "200":
+          description: Métrica existente de esa fecha sustituida.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BodyMetric" }
+        "201":
+          description: Métrica creada.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BodyMetric" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /body-metrics/{metric_id}:
+    parameters:
+      - $ref: "#/components/parameters/MetricId"
+    delete:
+      tags: [profile]
+      operationId: deleteBodyMetric
+      summary: Elimina una métrica corporal
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      responses:
+        "204":
+          description: Eliminada.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  # ----------------------------------------------------------------- catalog
+  /exercises:
+    get:
+      tags: [catalog]
+      operationId: listExercises
+      summary: Busca y filtra ejercicios
+      description: |
+        Búsqueda tolerante a acentos en español e inglés (`q`). Los filtros de lista admiten
+        varios valores repitiendo el parámetro (`?equipment=dumbbell&equipment=band`): OR
+        dentro de un filtro, AND entre filtros. `muscle` casa con el músculo objetivo o con
+        los secundarios. Orden: relevancia si hay `q`; si no, `name_es`.
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string, minLength: 1, maxLength: 100 }
+          example: sentadilla
+        - name: body_part
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/BodyPart" }, uniqueItems: true }
+        - name: target
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/MuscleCode" }, uniqueItems: true }
+        - name: muscle
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/MuscleCode" }, uniqueItems: true }
+        - name: equipment
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/EquipmentCode" }, uniqueItems: true }
+        - name: pattern
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/MovementPattern" }, uniqueItems: true }
+        - name: mechanic
+          in: query
+          schema: { $ref: "#/components/schemas/Mechanic" }
+        - name: difficulty
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/Difficulty" }, uniqueItems: true }
+        - name: role
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/ExerciseRole" }, uniqueItems: true }
+        - name: favorites
+          in: query
+          description: Solo favoritos del usuario.
+          schema: { type: boolean, default: false }
+        - name: include_deprecated
+          in: query
+          description: Incluye ejercicios retirados del dataset (marcados `deprecated`).
+          schema: { type: boolean, default: false }
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Página de ejercicios.
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+            Cache-Control: { $ref: "#/components/headers/CacheControlPrivate" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ExercisePage" }
+              example:
+                items:
+                  - id: "0043"
+                    slug: sentadilla-con-barra
+                    name_es: sentadilla con barra
+                    name_en: barbell full squat
+                    variant_label_es: null
+                    body_part: upper_legs
+                    equipment_code: barbell
+                    target_muscle: glutes
+                    movement_pattern: squat
+                    mechanic: compound
+                    role: main
+                    difficulty: 2
+                    is_staple: true
+                    laterality: bilateral
+                    load_type: external
+                    demo_sex: null
+                    variant_group: barbell-full-squat
+                    media:
+                      thumb_url: /media/thumbs/0043-qXTaZnJ.jpg
+                      gif_url: /media/gifs/0043-qXTaZnJ.gif
+                      width: 180
+                      height: 180
+                      attribution: { text: "© Gym visual", url: "https://gymvisual.com/" }
+                    is_favorite: true
+                    deprecated: false
+                next_cursor: "eyJuIjoic2VudGFkaWxsYSBjb24gYmFycmEiLCJpZCI6IjAwNDMifQ"
+        "304": { $ref: "#/components/responses/NotModified" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /exercises/{exercise_id}:
+    parameters:
+      - $ref: "#/components/parameters/ExerciseId"
+    get:
+      tags: [catalog]
+      operationId: getExercise
+      summary: Detalle de un ejercicio con instrucciones en el idioma pedido
+      parameters:
+        - name: lang
+          in: query
+          description: Idioma de las instrucciones; por defecto, el `locale` del usuario.
+          schema: { $ref: "#/components/schemas/InstructionLang" }
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Detalle del ejercicio.
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+            Cache-Control: { $ref: "#/components/headers/CacheControlPrivate" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ExerciseDetail" }
+        "304": { $ref: "#/components/responses/NotModified" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+  /exercises/{exercise_id}/alternatives:
+    parameters:
+      - $ref: "#/components/parameters/ExerciseId"
+    get:
+      tags: [catalog]
+      operationId: listExerciseAlternatives
+      summary: Alternativas precalculadas (top 8, MASTER_PROMPT §6.5)
+      parameters:
+        - name: equipment
+          in: query
+          description: Restringe a este equipamiento (p. ej. el del perfil del usuario).
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/EquipmentCode" }, uniqueItems: true }
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Alternativas ordenadas por puntuación descendente.
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+            Cache-Control: { $ref: "#/components/headers/CacheControlPrivate" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ExerciseAlternativeList" }
+        "304": { $ref: "#/components/responses/NotModified" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+  /exercises/{exercise_id}/favorite:
+    parameters:
+      - $ref: "#/components/parameters/ExerciseId"
+    put:
+      tags: [catalog]
+      operationId: addFavoriteExercise
+      summary: Marca el ejercicio como favorito (idempotente)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      responses:
+        "204":
+          description: Es favorito.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    delete:
+      tags: [catalog]
+      operationId: removeFavoriteExercise
+      summary: Quita el ejercicio de favoritos (idempotente)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      responses:
+        "204":
+          description: Ya no es favorito.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+  /catalog/facets:
+    get:
+      tags: [catalog]
+      operationId: getCatalogFacets
+      summary: Recuentos por valor de cada filtro (acepta los mismos filtros que /exercises)
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string, minLength: 1, maxLength: 100 }
+        - name: body_part
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/BodyPart" }, uniqueItems: true }
+        - name: muscle
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/MuscleCode" }, uniqueItems: true }
+        - name: equipment
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/EquipmentCode" }, uniqueItems: true }
+        - name: pattern
+          in: query
+          style: form
+          explode: true
+          schema: { type: array, items: { $ref: "#/components/schemas/MovementPattern" }, uniqueItems: true }
+        - name: favorites
+          in: query
+          schema: { type: boolean, default: false }
+        - $ref: "#/components/parameters/IfNoneMatch"
+      responses:
+        "200":
+          description: Facetas con recuentos.
+          headers:
+            ETag: { $ref: "#/components/headers/ETag" }
+            Cache-Control: { $ref: "#/components/headers/CacheControlPrivate" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CatalogFacets" }
+        "304": { $ref: "#/components/responses/NotModified" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  # --------------------------------------------------------------- generator
+  /generator/preview:
+    post:
+      tags: [generator]
+      operationId: previewProgram
+      summary: Genera un programa sin persistirlo
+      description: |
+        Ejecuta `forja_engine.generate`. Misma entrada + misma semilla + misma versión de
+        tablas ⇒ mismo `ProgramPlan`. Si `seed` falta, se deriva del hash de la entrada
+        normalizada y se devuelve en `plan.seed`.
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/GeneratorInput" }
+            example:
+              goal: hypertrophy
+              days_per_week: 4
+              sex: female
+              experience: intermediate
+              session_minutes: 60
+              equipment: { preset: full_gym, items: [] }
+              emphasis: lower_glutes
+              avoid_muscles: []
+              avoid_patterns: []
+              preferred_days: [mon, tue, thu, fri]
+              weeks: 5
+              include_warmup: null
+              include_cooldown: null
+              include_cardio_finisher: null
+              favorite_exercise_ids: ["0043"]
+              excluded_exercise_ids: []
+              seed: null
+      responses:
+        "200":
+          description: Programa generado y ejercicios referenciados.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GeneratorPreview" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /generator/preview/regenerate-day:
+    post:
+      tags: [generator]
+      operationId: previewRegenerateDay
+      summary: Regenera un día de un plan aún no guardado
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PreviewRegenerateDayRequest" }
+      responses:
+        "200":
+          description: Plan con el día regenerado en todas las semanas.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GeneratorPreview" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /generator/preview/swap:
+    post:
+      tags: [generator]
+      operationId: previewSwapExercise
+      summary: Cambia un ejercicio de un plan aún no guardado
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PreviewSwapRequest" }
+      responses:
+        "200":
+          description: Plan con el ejercicio sustituido.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GeneratorPreview" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  # ---------------------------------------------------------------- programs
+  /programs:
+    get:
+      tags: [programs]
+      operationId: listPrograms
+      summary: Programas del usuario (activo primero, luego por fecha de creación desc.)
+      parameters:
+        - name: archived
+          in: query
+          description: "`true` lista solo archivados; `false` (defecto) solo no archivados."
+          schema: { type: boolean, default: false }
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Página de programas.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    post:
+      tags: [programs]
+      operationId: createProgram
+      summary: Guarda un programa desde un plan generado o creado a mano
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProgramCreate" }
+      responses:
+        "201":
+          description: Programa creado.
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /programs/{program_id}:
+    parameters:
+      - $ref: "#/components/parameters/ProgramId"
+    get:
+      tags: [programs]
+      operationId: getProgram
+      summary: Programa completo (semanas, días, bloques y ejercicios)
+      responses:
+        "200":
+          description: Programa.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      tags: [programs]
+      operationId: updateProgram
+      summary: Renombra o archiva/desarchiva un programa
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProgramUpdate" }
+      responses:
+        "200":
+          description: Programa actualizado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramSummary" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+    delete:
+      tags: [programs]
+      operationId: deleteProgram
+      summary: Elimina un programa (las sesiones registradas se conservan desvinculadas)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      responses:
+        "204":
+          description: Eliminado.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+  /programs/{program_id}/activate:
+    parameters:
+      - $ref: "#/components/parameters/ProgramId"
+    post:
+      tags: [programs]
+      operationId: activateProgram
+      summary: Activa el programa (desactiva el anterior; máx. 1 activo)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      responses:
+        "200":
+          description: Programa activo.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramSummary" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+  /programs/{program_id}/duplicate:
+    parameters:
+      - $ref: "#/components/parameters/ProgramId"
+    post:
+      tags: [programs]
+      operationId: duplicateProgram
+      summary: Duplica un programa (la copia queda inactiva)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ProgramDuplicateRequest" }
+      responses:
+        "201":
+          description: Copia creada.
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /programs/{program_id}/regenerate-day:
+    parameters:
+      - $ref: "#/components/parameters/ProgramId"
+    post:
+      tags: [programs]
+      operationId: regenerateProgramDay
+      summary: Regenera un día de un programa generado (motor `regenerate_day`)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RegenerateDayRequest" }
+      responses:
+        "200":
+          description: Programa con el día regenerado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /programs/{program_id}/swap:
+    parameters:
+      - $ref: "#/components/parameters/ProgramId"
+    post:
+      tags: [programs]
+      operationId: swapProgramExercise
+      summary: Sustituye un ejercicio del programa (motor `swap_exercise`)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SwapRequest" }
+      responses:
+        "200":
+          description: Programa con el ejercicio sustituido.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /programs/{program_id}/days/{day_id}:
+    parameters:
+      - $ref: "#/components/parameters/ProgramId"
+      - $ref: "#/components/parameters/DayId"
+    put:
+      tags: [programs]
+      operationId: replaceProgramDay
+      summary: Edición completa de un día, validada por el motor
+      description: |
+        Sustituye bloques y ejercicios del día y ejecuta `rebalance_after_edit` +
+        `validate_plan`. Los incumplimientos de reglas duras (§7.7) devuelven `422` con
+        `code = plan_invalid` y la lista `violations`; los avisos blandos se devuelven en
+        `warnings` del programa con `200`.
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/DayEdit" }
+      responses:
+        "200":
+          description: Programa con el día sustituido y avisos recalculados.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ProgramDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /programs/{program_id}/export.pdf:
+    parameters:
+      - $ref: "#/components/parameters/ProgramId"
+    get:
+      tags: [programs]
+      operationId: exportProgramPdf
+      summary: Exporta el programa a PDF (con atribución de Gym visual en cada página)
+      parameters:
+        - name: lang
+          in: query
+          schema: { $ref: "#/components/schemas/Locale" }
+      responses:
+        "200":
+          description: Documento PDF.
+          headers:
+            Content-Disposition: { $ref: "#/components/headers/ContentDispositionAttachment" }
+          content:
+            application/pdf:
+              schema: { type: string, contentMediaType: application/pdf }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+  /programs/{program_id}/calendar.ics:
+    parameters:
+      - $ref: "#/components/parameters/ProgramId"
+    get:
+      tags: [programs]
+      operationId: exportProgramCalendar
+      summary: Calendario ICS (RFC 5545) según los días preferidos
+      parameters:
+        - name: start_date
+          in: query
+          description: Primer día del mesociclo; por defecto, el próximo lunes (zona del usuario).
+          schema: { type: string, format: date }
+      responses:
+        "200":
+          description: Calendario iCalendar.
+          headers:
+            Content-Disposition: { $ref: "#/components/headers/ContentDispositionAttachment" }
+          content:
+            text/calendar:
+              schema: { type: string }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  # ---------------------------------------------------------------- sessions
+  /sessions:
+    get:
+      tags: [sessions]
+      operationId: listWorkoutSessions
+      summary: Sesiones de entrenamiento (más recientes primero)
+      parameters:
+        - name: from
+          in: query
+          description: Fecha inicial inclusiva (por `started_at`, zona del usuario).
+          schema: { type: string, format: date }
+        - name: to
+          in: query
+          description: Fecha final inclusiva.
+          schema: { type: string, format: date }
+        - name: status
+          in: query
+          schema: { $ref: "#/components/schemas/SessionStatus" }
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Página de sesiones.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/WorkoutSessionPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+    post:
+      tags: [sessions]
+      operationId: startWorkoutSession
+      summary: Empieza una sesión (desde un día de programa o libre)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/WorkoutSessionCreate" }
+            example:
+              client_uuid: 0192f0a4-7c1e-7b3a-9d51-2f6c1e8a4b10
+              program_day_id: 0192f09e-11aa-7c2d-8e4f-5a6b7c8d9e01
+              name: null
+              started_at: "2026-09-22T17:05:00Z"
+              notes: null
+      responses:
+        "201":
+          description: Sesión creada (o respuesta original repetida por idempotencia).
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+            Idempotent-Replayed: { $ref: "#/components/headers/IdempotentReplayed" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/WorkoutSession" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /sessions/next:
+    get:
+      tags: [sessions]
+      operationId: getNextSession
+      summary: Próximo día del programa activo con cargas sugeridas por progresión
+      responses:
+        "200":
+          description: Próxima sesión (o descanso / sin programa activo).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/NextSession" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+  /sessions/{session_id}:
+    parameters:
+      - $ref: "#/components/parameters/SessionId"
+    get:
+      tags: [sessions]
+      operationId: getWorkoutSession
+      summary: Sesión con sus series
+      responses:
+        "200":
+          description: Sesión.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/WorkoutSession" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    patch:
+      tags: [sessions]
+      operationId: updateWorkoutSession
+      summary: Actualiza notas, esfuerzo percibido o abandona la sesión
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/WorkoutSessionUpdate" }
+      responses:
+        "200":
+          description: Sesión actualizada.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/WorkoutSession" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /sessions/{session_id}/sets:
+    parameters:
+      - $ref: "#/components/parameters/SessionId"
+    post:
+      tags: [sessions]
+      operationId: logSet
+      summary: Registra una serie
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SetLogCreate" }
+            example:
+              client_uuid: 0192f0a6-0b2c-7d4e-8f60-718293a4b5c6
+              exercise_id: "0043"
+              program_exercise_id: 0192f09e-2b3c-7d4e-9f60-a1b2c3d4e5f6
+              set_index: 1
+              weight_kg: 62.5
+              reps: 8
+              rir: 2
+              duration_s: null
+              is_warmup: false
+              completed_at: "2026-09-22T17:14:30Z"
+      responses:
+        "201":
+          description: Serie registrada (o respuesta original repetida por idempotencia).
+          headers:
+            Idempotent-Replayed: { $ref: "#/components/headers/IdempotentReplayed" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SetLog" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /sessions/{session_id}/sets/{set_id}:
+    parameters:
+      - $ref: "#/components/parameters/SessionId"
+      - $ref: "#/components/parameters/SetId"
+    patch:
+      tags: [sessions]
+      operationId: updateSet
+      summary: Corrige una serie registrada
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SetLogUpdate" }
+      responses:
+        "200":
+          description: Serie actualizada.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SetLog" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+    delete:
+      tags: [sessions]
+      operationId: deleteSet
+      summary: Elimina una serie registrada
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      responses:
+        "204":
+          description: Eliminada.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+  /sessions/{session_id}/finish:
+    parameters:
+      - $ref: "#/components/parameters/SessionId"
+    post:
+      tags: [sessions]
+      operationId: finishWorkoutSession
+      summary: Termina la sesión y devuelve el resumen (idempotente si ya estaba terminada)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SessionFinishRequest" }
+            example: { finished_at: "2026-09-22T18:02:10Z", perceived_effort: 8, notes: "Buenas sensaciones en sentadilla." }
+      responses:
+        "200":
+          description: Resumen de la sesión.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SessionSummary" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /sync:
+    post:
+      tags: [sessions]
+      operationId: syncOfflineBatch
+      summary: Lote de escrituras offline, idempotente por `client_uuid`
+      description: |
+        Aplica en orden las operaciones de la cola offline. Cada operación se resuelve de
+        forma independiente (un fallo no aborta el lote). Reintentos seguros: una operación
+        ya aplicada devuelve `duplicate`. Conflictos: gana la escritura con `updated_at`
+        más reciente; si el servidor tiene una versión más nueva, `superseded` (ADR 0006).
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SyncRequest" }
+      responses:
+        "200":
+          description: Resultado por operación.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SyncResponse" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  # ------------------------------------------------------------------- stats
+  /stats/overview:
+    get:
+      tags: [stats]
+      operationId: getStatsOverview
+      summary: Resumen para la pantalla «Hoy» y el calendario de actividad
+      responses:
+        "200":
+          description: Resumen.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StatsOverview" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+  /stats/volume:
+    get:
+      tags: [stats]
+      operationId: getVolumeStats
+      summary: Series efectivas y volumen semanal por grupo muscular
+      parameters:
+        - name: weeks
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 52, default: 8 }
+      responses:
+        "200":
+          description: Volumen por semana (más antigua primero).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/VolumeStats" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /stats/exercise/{exercise_id}:
+    parameters:
+      - $ref: "#/components/parameters/ExerciseId"
+    get:
+      tags: [stats]
+      operationId: getExerciseStats
+      summary: Serie temporal de e1RM y mejor serie de un ejercicio
+      parameters:
+        - $ref: "#/components/parameters/FromDate"
+        - $ref: "#/components/parameters/ToDate"
+      responses:
+        "200":
+          description: Historial del ejercicio.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ExerciseStats" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /records:
+    get:
+      tags: [stats]
+      operationId: listPersonalRecords
+      summary: Récords personales vigentes (más recientes primero)
+      parameters:
+        - name: exercise_id
+          in: query
+          schema: { $ref: "#/components/schemas/ExerciseIdValue" }
+        - name: kind
+          in: query
+          schema: { $ref: "#/components/schemas/RecordKind" }
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Página de récords.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PersonalRecordPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  # --------------------------------------------------------------- nutrition
+  /nutrition/settings:
+    get:
+      tags: [nutrition]
+      operationId: getNutritionSettings
+      summary: Ajustes de dieta del usuario y objetivo vigente
+      responses:
+        "200":
+          description: Ajustes.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/NutritionSettings" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    put:
+      tags: [nutrition]
+      operationId: updateNutritionSettings
+      summary: Sustituye los ajustes de dieta
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NutritionSettingsUpdate" }
+      responses:
+        "200":
+          description: Ajustes actualizados.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/NutritionSettings" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /nutrition/targets/calculate:
+    post:
+      tags: [nutrition]
+      operationId: calculateNutritionTarget
+      summary: Calcula (y guarda) el objetivo diario de kcal y macros
+      description: |
+        Los bloqueos de seguridad (§8.5) no son errores: se devuelven como
+        `target.blocked = true` con `target.block.reason_code` y un mensaje de derivación.
+        Requiere dieta activada (usuario y global); si no, `403` con `code = diet_disabled`.
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NutritionTargetRequest" }
+      responses:
+        "200":
+          description: Objetivo calculado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/NutritionTargetRecord" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /nutrition/plans:
+    get:
+      tags: [nutrition]
+      operationId: listMealPlans
+      summary: Planes de comidas del usuario (semana más reciente primero)
+      parameters:
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Página de planes.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MealPlanPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+    post:
+      tags: [nutrition]
+      operationId: generateMealPlan
+      summary: Genera el plan semanal de comidas
+      description: |
+        Si un bloqueo de seguridad impide generar el plan, responde `422` con
+        `code = nutrition_blocked` y la extensión `block` (motivo y mensaje de derivación).
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/MealPlanCreate" }
+            example: { week_start: "2026-09-28", seed: null }
+      responses:
+        "201":
+          description: Plan generado.
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MealPlanResource" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /nutrition/plans/{plan_id}:
+    parameters:
+      - $ref: "#/components/parameters/PlanId"
+    get:
+      tags: [nutrition]
+      operationId: getMealPlan
+      summary: Plan de comidas
+      responses:
+        "200":
+          description: Plan.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MealPlanResource" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+  /nutrition/plans/{plan_id}/swap:
+    parameters:
+      - $ref: "#/components/parameters/PlanId"
+    post:
+      tags: [nutrition]
+      operationId: swapMealPlanFood
+      summary: Intercambia un alimento dentro de su categoría conservando los macros de la comida
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/MealSwapRequest" }
+      responses:
+        "200":
+          description: Plan actualizado.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MealPlanResource" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /nutrition/plans/{plan_id}/shopping-list:
+    parameters:
+      - $ref: "#/components/parameters/PlanId"
+    get:
+      tags: [nutrition]
+      operationId: getShoppingList
+      summary: Lista de la compra semanal agregada por categoría
+      responses:
+        "200":
+          description: Lista de la compra.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ShoppingList" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+  /foods:
+    get:
+      tags: [nutrition]
+      operationId: listFoods
+      summary: Base de alimentos (búsqueda sin acentos por nombre en español)
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string, minLength: 1, maxLength: 100 }
+          example: garbanzos
+        - name: category
+          in: query
+          schema: { $ref: "#/components/schemas/FoodCategory" }
+        - name: diet_type
+          in: query
+          description: Solo alimentos compatibles con este tipo de dieta.
+          schema: { $ref: "#/components/schemas/DietType" }
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Página de alimentos.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/FoodPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+
+  # -------------------------------------------------------------------- data
+  /me/export:
+    get:
+      tags: [data]
+      operationId: exportAccountData
+      summary: Copia completa de los datos del usuario en JSON
+      responses:
+        "200":
+          description: Exportación completa.
+          headers:
+            Content-Disposition: { $ref: "#/components/headers/ContentDispositionAttachment" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/UserExport" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+  /me/import:
+    post:
+      tags: [data]
+      operationId: importAccountData
+      summary: Importa una exportación de Forja (fusión idempotente, máx. 5 MB)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/UserExport" }
+      responses:
+        "200":
+          description: Resultado de la importación.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ImportResult" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "413": { $ref: "#/components/responses/PayloadTooLarge" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /me:
+    delete:
+      tags: [data]
+      operationId: deleteAccount
+      summary: Borra la cuenta y todos sus datos (requiere la contraseña)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AccountDeleteRequest" }
+      responses:
+        "204":
+          description: Cuenta eliminada y cookies borradas.
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  # ------------------------------------------------------------------- admin
+  /admin/settings:
+    get:
+      tags: [admin]
+      operationId: getAdminSettings
+      summary: Ajustes globales
+      responses:
+        "200":
+          description: Ajustes globales.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AdminSettings" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+    put:
+      tags: [admin]
+      operationId: updateAdminSettings
+      summary: Sustituye los ajustes globales editables
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AdminSettingsUpdate" }
+      responses:
+        "200":
+          description: Ajustes actualizados (queda registro en `audit_log`).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AdminSettings" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /admin/users:
+    get:
+      tags: [admin]
+      operationId: listUsers
+      summary: Usuarios
+      parameters:
+        - name: q
+          in: query
+          description: Filtro por email o nombre visible.
+          schema: { type: string, minLength: 1, maxLength: 100 }
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Página de usuarios.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AdminUserPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+  /admin/users/{user_id}:
+    parameters:
+      - $ref: "#/components/parameters/UserId"
+    patch:
+      tags: [admin]
+      operationId: updateUser
+      summary: Cambia rol o activa/desactiva un usuario
+      description: No se puede degradar ni desactivar al último administrador activo (`409`).
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AdminUserUpdate" }
+      responses:
+        "200":
+          description: Usuario actualizado (queda registro en `audit_log`).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AdminUser" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /admin/ingest:
+    post:
+      tags: [admin]
+      operationId: startIngest
+      summary: Lanza la ingesta del dataset en segundo plano (commit fijado en DATASET_COMMIT)
+      security:
+        - sessionCookie: []
+          csrfToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/IngestRequest" }
+            example: { dry_run: true }
+      responses:
+        "202":
+          description: Ingesta encolada.
+          headers:
+            Location: { $ref: "#/components/headers/Location" }
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/IngestRun" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "409": { $ref: "#/components/responses/Conflict" }
+        "422": { $ref: "#/components/responses/ValidationFailed" }
+  /admin/ingest/runs:
+    get:
+      tags: [admin]
+      operationId: listIngestRuns
+      summary: Ejecuciones de ingesta (más recientes primero)
+      parameters:
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Página de ejecuciones.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/IngestRunPage" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: __Host-forja_session
+      description: |
+        Token opaco aleatorio de 32 bytes (guardado hasheado). Cookie `HttpOnly; Secure;
+        SameSite=Lax; Path=/`, expiración deslizante de 30 días (ADR 0003).
+    csrfToken:
+      type: apiKey
+      in: header
+      name: X-CSRF-Token
+      description: |
+        Doble envío: debe coincidir con la cookie `__Host-forja_csrf`. Obligatorio en todo
+        método no seguro; su ausencia o discrepancia responde `403` con `code = csrf_failed`.
+
+  parameters:
+    Cursor:
+      name: cursor
+      in: query
+      description: Cursor opaco devuelto como `next_cursor` en la página anterior.
+      schema: { type: string, minLength: 1, maxLength: 512 }
+    Limit:
+      name: limit
+      in: query
+      description: Tamaño de página.
+      schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+    FromDate:
+      name: from
+      in: query
+      description: Fecha inicial inclusiva.
+      schema: { type: string, format: date }
+    ToDate:
+      name: to
+      in: query
+      description: Fecha final inclusiva.
+      schema: { type: string, format: date }
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: ETag de una respuesta anterior; si coincide, `304`.
+      schema: { type: string }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Clave única por intento lógico (se recomienda el `client_uuid`). Se retiene 24 h.
+      schema: { type: string, minLength: 8, maxLength: 128 }
+    ExerciseId:
+      name: exercise_id
+      in: path
+      required: true
+      schema: { $ref: "#/components/schemas/ExerciseIdValue" }
+    ProgramId:
+      name: program_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    DayId:
+      name: day_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    SessionId:
+      name: session_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    SetId:
+      name: set_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    PlanId:
+      name: plan_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    UserId:
+      name: user_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    MetricId:
+      name: metric_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    AuthSessionId:
+      name: auth_session_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+  headers:
+    ETag:
+      description: Validador débil de la representación (versión de catálogo + favoritos).
+      schema: { type: string }
+      example: 'W/"cat-7455efae-1-fav-12"'
+    CacheControlPrivate:
+      description: Las respuestas dependen del usuario; solo caché privada con revalidación.
+      schema: { type: string, const: "private, no-cache" }
+    Location:
+      description: URL del recurso creado.
+      schema: { type: string, format: uri-reference }
+    IdempotentReplayed:
+      description: "`true` si la respuesta es la repetición de una petición idempotente previa."
+      schema: { type: string, enum: ["true"] }
+    RetryAfter:
+      description: Segundos que hay que esperar antes de reintentar.
+      schema: { type: integer, minimum: 1 }
+    ContentDispositionAttachment:
+      description: Descarga como fichero (`attachment; filename="..."`).
+      schema: { type: string }
+      example: 'attachment; filename="forja-programa-hipertrofia.pdf"'
+    SetSessionCookie:
+      description: |
+        `__Host-forja_session=<token>; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=2592000`
+        y, además, una cookie `__Host-forja_csrf` nueva (rotación al iniciar sesión).
+      schema: { type: string }
+    SetCsrfCookie:
+      description: "`__Host-forja_csrf=<token>; Path=/; Secure; SameSite=Lax` (sin HttpOnly)."
+      schema: { type: string }
+
+  responses:
+    NotModified:
+      description: La representación no ha cambiado desde el `ETag` indicado.
+      headers:
+        ETag: { $ref: "#/components/headers/ETag" }
+    Unauthorized:
+      description: Sin sesión válida o credenciales incorrectas.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+          example:
+            type: /problems/unauthenticated
+            title: Necesitas iniciar sesión
+            status: 401
+            code: unauthenticated
+            detail: La sesión ha caducado. Vuelve a iniciar sesión.
+            request_id: 01J8Z3M4Q5R6S7T8V9W0X1Y2Z3
+    Forbidden:
+      description: Autenticado pero sin permiso (rol, CSRF, registro cerrado o dieta desactivada).
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+          example:
+            type: /problems/csrf-failed
+            title: Token CSRF no válido
+            status: 403
+            code: csrf_failed
+            detail: Recarga la página e inténtalo de nuevo.
+            request_id: 01J8Z3M4Q5R6S7T8V9W0X1Y2Z4
+    NotFound:
+      description: El recurso no existe o pertenece a otro usuario.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+          example:
+            type: /problems/not-found
+            title: No encontrado
+            status: 404
+            code: not_found
+            detail: El programa solicitado no existe.
+            request_id: 01J8Z3M4Q5R6S7T8V9W0X1Y2Z5
+    Conflict:
+      description: Conflicto con el estado actual del recurso.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+          example:
+            type: /problems/conflict
+            title: Conflicto
+            status: 409
+            code: session_already_finished
+            detail: La sesión ya estaba terminada.
+            request_id: 01J8Z3M4Q5R6S7T8V9W0X1Y2Z6
+    PayloadTooLarge:
+      description: El cuerpo supera el tamaño máximo permitido.
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+          example:
+            type: /problems/payload-too-large
+            title: Fichero demasiado grande
+            status: 413
+            code: payload_too_large
+            detail: El tamaño máximo es 5 MB.
+    ValidationFailed:
+      description: Entrada no válida (esquema, reglas de negocio o del motor).
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+          example:
+            type: /problems/validation-error
+            title: Datos no válidos
+            status: 422
+            code: validation_error
+            detail: Revisa los campos marcados.
+            errors:
+              - loc: [body, session_minutes]
+                msg: Debe ser un múltiplo de 5 entre 20 y 120.
+                type: multiple_of
+            request_id: 01J8Z3M4Q5R6S7T8V9W0X1Y2Z7
+    TooManyRequests:
+      description: Límite de peticiones superado.
+      headers:
+        Retry-After: { $ref: "#/components/headers/RetryAfter" }
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+          example:
+            type: /problems/rate-limited
+            title: Demasiadas peticiones
+            status: 429
+            code: rate_limited
+            detail: Espera un minuto antes de volver a intentarlo.
+
+  schemas:
+    # ============================================================ comunes
+    Problem:
+      type: object
+      description: Detalle de error RFC 9457 con extensiones de Forja.
+      required: [type, title, status, code]
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: URI relativa que identifica el tipo de problema (`/problems/<code-con-guiones>`).
+        title: { type: string, description: "Resumen legible en el idioma del usuario." }
+        status: { type: integer, minimum: 400, maximum: 599 }
+        detail: { type: string }
+        instance: { type: string, format: uri-reference }
+        code:
+          type: string
+          pattern: "^[a-z][a-z0-9_]*$"
+          description: |
+            Código estable para el cliente. Valores definidos: validation_error, unauthenticated,
+            invalid_credentials, forbidden, csrf_failed, registration_closed, admin_required,
+            diet_disabled, not_found, conflict, email_taken, session_already_finished,
+            program_not_generated, last_admin, ingest_running, idempotency_key_reused,
+            idempotency_in_progress, plan_invalid, nutrition_blocked, payload_too_large,
+            import_invalid, rate_limited, service_unavailable.
+        request_id: { type: string, description: "Identificador de la petición (cabecera `X-Request-ID`)." }
+        errors:
+          type: array
+          description: Errores de validación por campo (solo con `validation_error`).
+          items: { $ref: "#/components/schemas/ValidationIssue" }
+        violations:
+          type: array
+          description: Reglas del motor incumplidas (solo con `plan_invalid`).
+          items: { $ref: "#/components/schemas/PlanWarning" }
+        block:
+          description: Bloqueo de seguridad nutricional (solo con `nutrition_blocked`).
+          $ref: "#/components/schemas/NutritionBlock"
+      additionalProperties: true
+    ValidationIssue:
+      type: object
+      required: [loc, msg, type]
+      properties:
+        loc:
+          type: array
+          items: { anyOf: [{ type: string }, { type: integer }] }
+          description: Ruta del campo (`["body", "equipment", "items", 0]`).
+        msg: { type: string, description: "Mensaje en el idioma del usuario." }
+        type: { type: string, description: "Tipo de error estable (`missing`, `too_short`…)." }
+    ExerciseIdValue:
+      type: string
+      pattern: "^[0-9]{4}$"
+      description: Id del dataset de origen, cuatro dígitos con ceros a la izquierda.
+      examples: ["0043"]
+    Weekday:
+      type: string
+      enum: [mon, tue, wed, thu, fri, sat, sun]
+    HealthStatus:
+      type: object
+      required: [status]
+      properties:
+        status: { type: string, const: ok }
+    ReadinessStatus:
+      type: object
+      required: [status, checks]
+      properties:
+        status: { type: string, enum: [ready, not_ready] }
+        checks:
+          type: object
+          required: [database, media]
+          properties:
+            database: { type: boolean }
+            media: { type: boolean, description: "`$MEDIA_ROOT/manifest.json` legible." }
+    MediaAttribution:
+      type: object
+      description: Atribución obligatoria de los medios © Gym visual (§2.1). Se muestra siempre debajo del medio.
+      required: [text, url]
+      properties:
+        text: { type: string, const: "© Gym visual" }
+        url: { type: string, const: "https://gymvisual.com/" }
+    AboutInfo:
+      type: object
+      required: [app_version, api_version, engine_version, nutrition_version, dataset, licenses, media_attribution, health_disclaimer_es]
+      properties:
+        app_version: { type: string, examples: ["1.0.0"] }
+        api_version: { type: string, examples: ["1.0.0"] }
+        engine_version: { type: string, examples: ["1.0.0"] }
+        nutrition_version: { type: string, examples: ["1.0.0"] }
+        dataset:
+          type: object
+          required: [repo, commit, ingested_at, exercise_count]
+          properties:
+            repo: { type: string, format: uri, examples: ["https://github.com/hasaneyldrm/exercises-dataset"] }
+            commit: { type: string, pattern: "^[0-9a-f]{40}$", examples: ["7455efae41b330c265e7cd4b78dfa848e7ce5ebd"] }
+            ingested_at: { type: [string, "null"], format: date-time }
+            exercise_count: { type: integer, minimum: 0, examples: [1324] }
+        licenses:
+          type: object
+          required: [dataset_mit, media_notice]
+          properties:
+            dataset_mit: { type: string, description: "Texto completo de la licencia MIT del dataset." }
+            media_notice: { type: string, description: "Aviso de medios de Gym visual (NOTICE.md del dataset)." }
+        media_attribution: { $ref: "#/components/schemas/MediaAttribution" }
+        health_disclaimer_es:
+          type: string
+          examples: ["Forja no sustituye el consejo de profesionales sanitarios ni de entrenamiento."]
+
+    # ============================================================ enumeraciones
+    Sex:
+      type: string
+      enum: [male, female, unspecified]
+    Experience:
+      type: string
+      enum: [beginner, intermediate, advanced]
+    Goal:
+      type: string
+      enum: [strength, hypertrophy, fat_loss, endurance, general_fitness, toning]
+    Emphasis:
+      type: string
+      enum: [balanced, lower_glutes, upper_body, arms, back_posture, core]
+    EquipmentPreset:
+      type: string
+      enum: [full_gym, home_dumbbells, home_bands, bodyweight, custom]
+    EquipmentCode:
+      type: string
+      description: Código canónico de `specs/equipment-normalization.yaml`.
+      enum: [bodyweight, dumbbell, cable, barbell, ez_bar, trap_bar, machine, smith, sled, assisted,
+        band, kettlebell, weighted, stability_ball, medicine_ball, bosu, rope, roller, ab_wheel,
+        hammer, tire, arm_ergometer, skierg, bike, elliptical, stepmill]
+    EquipmentGroup:
+      type: string
+      enum: [gym, home_basic, bodyweight, cardio_machine, other]
+    MuscleCode:
+      type: string
+      description: Código canónico de `specs/muscle-normalization.yaml`.
+      enum: [chest, lats, upper_back, traps, lower_back, shoulders, rear_delts, rotator_cuff,
+        serratus, biceps, triceps, forearms, abs, obliques, hip_flexors, glutes, quads,
+        hamstrings, adductors, abductors, calves, lower_leg, neck, cardio]
+    MuscleRegion:
+      type: string
+      enum: [upper, lower, core, cardio, other]
+    VolumeGroup:
+      type: string
+      description: Grupos que computan volumen semanal (`specs/volume-targets.yaml`).
+      enum: [chest, back, shoulders, arms, quads, hamstrings, glutes, calves, core]
+    MuscleGroup:
+      type: string
+      description: Grupo de un slot del split; `legs_other`, `other` y `cardio` no computan volumen.
+      enum: [chest, back, shoulders, arms, quads, hamstrings, glutes, calves, core, legs_other, other, cardio]
+    BodyPart:
+      type: string
+      description: "`body_part` del dataset normalizado a snake_case."
+      enum: [upper_arms, upper_legs, back, waist, chest, shoulders, lower_legs, lower_arms, cardio, neck]
+    MovementPattern:
+      type: string
+      enum: [squat, lunge, hinge, horizontal_push, vertical_push, horizontal_pull, vertical_pull,
+        elbow_flexion, elbow_extension, shoulder_raise, chest_fly, rear_delt, knee_extension,
+        knee_flexion, hip_abduction, hip_adduction, glute_isolation, calf, core_flexion,
+        core_anti_extension, core_rotation, core_lateral, shrug, forearm, neck, carry,
+        plyometric, cardio, mobility, other]
+    Mechanic:
+      type: string
+      enum: [compound, isolation]
+    ExerciseRole:
+      type: string
+      enum: [main, accessory, core, cardio, mobility, warmup]
+    Difficulty:
+      type: integer
+      minimum: 1
+      maximum: 3
+      description: 1 = guiado/asistido, 2 = estándar, 3 = exigente (unilateral, gimnástico, olímpico).
+    Laterality:
+      type: string
+      enum: [bilateral, unilateral]
+    DemoSex:
+      type: string
+      enum: [male, female]
+    LoadType:
+      type: string
+      enum: [external, bodyweight, assisted, time]
+    VariantKind:
+      type: string
+      description: "version = `v. N`; demonstrator = `(male)`/`(female)`; camera_angle = `(back pov)`/`(side pov)`; duplicate = mismo nombre con distinto id."
+      enum: [version, demonstrator, camera_angle, duplicate]
+    UserRole:
+      type: string
+      enum: [user, admin]
+    Units:
+      type: string
+      enum: [metric, imperial]
+    Locale:
+      type: string
+      enum: [es, en]
+    InstructionLang:
+      type: string
+      enum: [en, es, it, tr, ru, zh, hi, pl, ko, fr]
+    ActivityLevel:
+      type: string
+      enum: [sedentary, light, moderate, high]
+    ThemePreference:
+      type: string
+      enum: [dark, light, system]
+    ProgramSource:
+      type: string
+      enum: [generated, manual, imported]
+    WeekPhase:
+      type: string
+      enum: [accumulation, intensification, deload]
+    BlockKind:
+      type: string
+      enum: [warmup, main, superset, circuit, finisher, cooldown]
+    SessionStatus:
+      type: string
+      enum: [in_progress, completed, abandoned]
+    RecordKind:
+      type: string
+      description: "e1rm = mejor 1RM estimado (Epley); heaviest_set = mejor peso×reps; volume = mayor volumen en una sesión."
+      enum: [e1rm, heaviest_set, volume]
+    SuggestionKind:
+      type: string
+      enum: [first_time, increase_load, increase_reps, harder_variant, hold, decrease_load]
+    PlanWarningCode:
+      type: string
+      description: Códigos estables de aviso del motor (ampliables vía CONTRACT_CHANGES).
+      enum: [beginner_high_frequency, recovery_day_enforced, slot_relaxed, slot_dropped,
+        time_budget_exceeded, main_exercise_trimmed, volume_out_of_range, session_group_cap,
+        rest_below_minimum, empty_day, mobility_in_main_block, equipment_insufficient,
+        avoided_muscle_substituted, deprecated_exercise]
+    NutritionGoal:
+      type: string
+      enum: [lose, maintain, gain, recomp]
+    NutritionPace:
+      type: string
+      enum: [gentle, standard]
+    DietType:
+      type: string
+      enum: [omnivore, pescatarian, vegetarian, vegan]
+    Allergen:
+      type: string
+      description: "gluten, lactosa, frutos secos (tree_nuts), huevo, pescado, marisco y soja."
+      enum: [gluten, lactose, tree_nuts, egg, fish, shellfish, soy]
+    MealSlot:
+      type: string
+      enum: [breakfast, mid_morning, lunch, snack, dinner]
+    FoodCategory:
+      type: string
+      description: Categoría de supermercado (orden de la lista de la compra).
+      enum: [fruits, vegetables, legumes, grains, bakery, dairy, eggs, meat, fish_seafood,
+        plant_protein, nuts_seeds, fats_oils, condiments, beverages]
+    FoodMacroRole:
+      type: string
+      description: Papel del alimento en las plantillas de comida mediterráneas (§8.3).
+      enum: [protein, carb, produce, fat]
+    BmrMethod:
+      type: string
+      enum: [mifflin_male, mifflin_female, mifflin_average]
+    NutritionBlockReason:
+      type: string
+      enum: [under_18, pregnant, breastfeeding, missing_profile_data]
+    NutritionNoticeCode:
+      type: string
+      enum: [health_disclaimer, kcal_floor_applied, deficit_capped, lose_blocked_low_bmi,
+        protein_clamped, fat_floor_applied, tolerance_not_met, swap_macros_adjusted]
+    IngestStatus:
+      type: string
+      enum: [queued, running, succeeded, failed]
+    SyncResultStatus:
+      type: string
+      description: "applied = aplicada; duplicate = ya aplicada antes (reintento); superseded = el servidor tiene una versión más reciente; rejected = inválida (ver `problem`)."
+      enum: [applied, duplicate, superseded, rejected]
+
+    # ============================================================ auth
+    RegisterRequest:
+      type: object
+      required: [email, password, display_name]
+      additionalProperties: false
+      properties:
+        email: { type: string, format: email, maxLength: 254 }
+        password:
+          type: string
+          minLength: 10
+          maxLength: 256
+          description: Mínimo 10 caracteres; se rechazan contraseñas comunes (lista local).
+        display_name: { type: string, minLength: 1, maxLength: 60 }
+        locale: { $ref: "#/components/schemas/Locale" }
+    LoginRequest:
+      type: object
+      required: [email, password]
+      additionalProperties: false
+      properties:
+        email: { type: string, format: email, maxLength: 254 }
+        password: { type: string, minLength: 1, maxLength: 256 }
+    PasswordChangeRequest:
+      type: object
+      required: [current_password, new_password]
+      additionalProperties: false
+      properties:
+        current_password: { type: string, minLength: 1, maxLength: 256 }
+        new_password: { type: string, minLength: 10, maxLength: 256 }
+    CurrentUser:
+      type: object
+      required: [id, email, display_name, role, locale, units, created_at, last_login_at, onboarding_completed, diet_available]
+      properties:
+        id: { type: string, format: uuid }
+        email: { type: string, format: email }
+        display_name: { type: string }
+        role: { $ref: "#/components/schemas/UserRole" }
+        locale: { $ref: "#/components/schemas/Locale" }
+        units: { $ref: "#/components/schemas/Units" }
+        created_at: { type: string, format: date-time }
+        last_login_at: { type: [string, "null"], format: date-time }
+        onboarding_completed: { type: boolean, description: "Perfil básico y PAR-Q completados." }
+        diet_available: { type: boolean, description: "`DIET_FEATURE_ENABLED` global y `diet_enabled` del usuario." }
+      example:
+        id: 0192f08a-3b4c-7d5e-8f60-112233445566
+        email: lucia@example.org
+        display_name: Lucía
+        role: admin
+        locale: es
+        units: metric
+        created_at: "2026-09-01T09:12:00Z"
+        last_login_at: "2026-09-22T16:58:41Z"
+        onboarding_completed: true
+        diet_available: false
+    AuthSession:
+      type: object
+      required: [id, created_at, last_seen_at, expires_at, user_agent, current]
+      properties:
+        id: { type: string, format: uuid }
+        created_at: { type: string, format: date-time }
+        last_seen_at: { type: string, format: date-time }
+        expires_at: { type: string, format: date-time }
+        user_agent: { type: [string, "null"], maxLength: 256 }
+        current: { type: boolean, description: "Es la sesión de esta petición." }
+    AuthSessionList:
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/AuthSession" } }
+
+    # ============================================================ perfil
+    EquipmentSelection:
+      type: object
+      required: [preset, items]
+      additionalProperties: false
+      description: |
+        Con `custom`, `items` es la lista marcada por el usuario (mín. 1). Con otro preset,
+        `items` va vacío en la entrada y el motor lo resuelve con los presets de
+        `specs/equipment-normalization.yaml`; en `ProgramPlan.input` aparece ya resuelto.
+      properties:
+        preset: { $ref: "#/components/schemas/EquipmentPreset" }
+        items:
+          type: array
+          uniqueItems: true
+          items: { $ref: "#/components/schemas/EquipmentCode" }
+    Limitations:
+      type: object
+      required: [avoid_muscles, avoid_patterns, notes]
+      additionalProperties: false
+      properties:
+        avoid_muscles: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/MuscleCode" } }
+        avoid_patterns: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/MovementPattern" } }
+        notes: { type: [string, "null"], maxLength: 500, description: "Texto libre; dato sensible, nunca en logs." }
+    Preferences:
+      type: object
+      required: [theme, sounds, vibration, default_rest_s]
+      additionalProperties: false
+      properties:
+        theme: { $ref: "#/components/schemas/ThemePreference" }
+        sounds: { type: boolean }
+        vibration: { type: boolean }
+        default_rest_s:
+          type: [integer, "null"]
+          minimum: 15
+          maximum: 600
+          description: Descanso por defecto en sesiones libres; `null` usa el del programa.
+    ProfileFields:
+      description: Campos editables del perfil (base de ProfileUpdate y Profile).
+      type: object
+      required: [display_name, locale, units, sex, birth_date, height_cm, experience, activity_level, equipment, limitations, diet_enabled, preferences]
+      properties:
+        display_name: { type: string, minLength: 1, maxLength: 60 }
+        locale: { $ref: "#/components/schemas/Locale" }
+        units: { $ref: "#/components/schemas/Units" }
+        sex: { $ref: "#/components/schemas/Sex" }
+        birth_date: { type: [string, "null"], format: date }
+        height_cm: { type: [number, "null"], minimum: 100, maximum: 250 }
+        experience: { $ref: "#/components/schemas/Experience" }
+        activity_level: { $ref: "#/components/schemas/ActivityLevel" }
+        equipment: { $ref: "#/components/schemas/EquipmentSelection" }
+        limitations: { $ref: "#/components/schemas/Limitations" }
+        diet_enabled: { type: boolean }
+        preferences: { $ref: "#/components/schemas/Preferences" }
+    ProfileUpdate:
+      allOf:
+        - $ref: "#/components/schemas/ProfileFields"
+      unevaluatedProperties: false
+    Profile:
+      allOf:
+        - $ref: "#/components/schemas/ProfileFields"
+        - type: object
+          required: [parq_flagged, parq_completed_at, onboarding_completed, updated_at]
+          properties:
+            parq_flagged: { type: boolean, readOnly: true }
+            parq_completed_at: { type: [string, "null"], format: date-time, readOnly: true }
+            onboarding_completed: { type: boolean, readOnly: true }
+            updated_at: { type: string, format: date-time, readOnly: true }
+      example:
+        display_name: Lucía
+        locale: es
+        units: metric
+        sex: female
+        birth_date: "1991-04-17"
+        height_cm: 166
+        experience: intermediate
+        activity_level: moderate
+        equipment: { preset: full_gym, items: [] }
+        limitations: { avoid_muscles: [], avoid_patterns: [], notes: null }
+        diet_enabled: false
+        preferences: { theme: dark, sounds: true, vibration: true, default_rest_s: null }
+        parq_flagged: false
+        parq_completed_at: "2026-09-01T09:20:00Z"
+        onboarding_completed: true
+        updated_at: "2026-09-01T09:21:00Z"
+    ParqAnswers:
+      type: object
+      description: Cuestionario PAR-Q (7 preguntas; `true` = «sí»).
+      required: [heart_condition, chest_pain_activity, chest_pain_rest, dizziness_or_fainting, bone_or_joint_problem, blood_pressure_or_heart_medication, other_reason]
+      additionalProperties: false
+      properties:
+        heart_condition: { type: boolean }
+        chest_pain_activity: { type: boolean }
+        chest_pain_rest: { type: boolean }
+        dizziness_or_fainting: { type: boolean }
+        bone_or_joint_problem: { type: boolean }
+        blood_pressure_or_heart_medication: { type: boolean }
+        other_reason: { type: boolean }
+    ParqSubmission:
+      type: object
+      required: [answers]
+      additionalProperties: false
+      properties:
+        answers: { $ref: "#/components/schemas/ParqAnswers" }
+    ParqResult:
+      type: object
+      required: [parq_flagged, experience_forced, recommendation_es, profile]
+      properties:
+        parq_flagged: { type: boolean }
+        experience_forced: { type: boolean, description: "Se ha fijado `experience = beginner`." }
+        recommendation_es:
+          type: [string, "null"]
+          examples: ["Te recomendamos consultar con un profesional sanitario antes de empezar. Hemos ajustado tu nivel a principiante; puedes cambiarlo en tu perfil."]
+        profile: { $ref: "#/components/schemas/Profile" }
+    BodyMetricCreate:
+      type: object
+      required: [date, weight_kg]
+      additionalProperties: false
+      properties:
+        date: { type: string, format: date }
+        weight_kg: { type: number, minimum: 20, maximum: 400 }
+        body_fat_pct: { type: [number, "null"], minimum: 2, maximum: 70 }
+        waist_cm: { type: [number, "null"], minimum: 30, maximum: 250 }
+    BodyMetric:
+      type: object
+      required: [id, date, weight_kg, body_fat_pct, waist_cm, created_at, updated_at]
+      properties:
+        id: { type: string, format: uuid }
+        date: { type: string, format: date }
+        weight_kg: { type: number }
+        body_fat_pct: { type: [number, "null"] }
+        waist_cm: { type: [number, "null"] }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+    BodyMetricPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/BodyMetric" } }
+        next_cursor: { type: [string, "null"] }
+
+    # ============================================================ catálogo
+    ExerciseMedia:
+      type: object
+      description: |
+        Medios © Gym visual, servidos byte a byte (180×180, sin reescalar ni recodificar) y,
+        por defecto, solo a usuarios autenticados. Mostrar a 180 px CSS máximo y SIEMPRE con
+        `attribution` debajo.
+      required: [thumb_url, gif_url, width, height, attribution]
+      properties:
+        thumb_url: { type: string, format: uri-reference, examples: ["/media/thumbs/0043-qXTaZnJ.jpg"] }
+        gif_url: { type: string, format: uri-reference, examples: ["/media/gifs/0043-qXTaZnJ.gif"] }
+        width: { type: integer, const: 180 }
+        height: { type: integer, const: 180 }
+        attribution: { $ref: "#/components/schemas/MediaAttribution" }
+    ExerciseSummary:
+      type: object
+      required: [id, slug, name_es, name_en, variant_label_es, body_part, equipment_code, target_muscle, movement_pattern, mechanic, role, difficulty, is_staple, laterality, load_type, demo_sex, variant_group, media, is_favorite, deprecated]
+      properties:
+        id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        slug: { type: string, pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$" }
+        name_es: { type: string, description: "Nombre en español (minúscula inicial; el cliente capitaliza)." }
+        name_en: { type: string, description: "`display_name_en` (erratas corregidas, sin sufijos de variante)." }
+        variant_label_es:
+          type: [string, "null"]
+          description: Etiqueta de variante («variante 2», «vista lateral», «(variante B)»).
+        body_part: { $ref: "#/components/schemas/BodyPart" }
+        equipment_code: { $ref: "#/components/schemas/EquipmentCode" }
+        target_muscle: { $ref: "#/components/schemas/MuscleCode" }
+        movement_pattern: { $ref: "#/components/schemas/MovementPattern" }
+        mechanic: { $ref: "#/components/schemas/Mechanic" }
+        role: { $ref: "#/components/schemas/ExerciseRole" }
+        difficulty: { $ref: "#/components/schemas/Difficulty" }
+        is_staple: { type: boolean }
+        laterality: { $ref: "#/components/schemas/Laterality" }
+        load_type: { $ref: "#/components/schemas/LoadType" }
+        demo_sex: { anyOf: [{ $ref: "#/components/schemas/DemoSex" }, { type: "null" }] }
+        variant_group: { type: string }
+        media: { $ref: "#/components/schemas/ExerciseMedia" }
+        is_favorite: { type: boolean }
+        deprecated: { type: boolean, description: "Retirado del dataset; se conserva por historial." }
+    ExerciseInstructions:
+      type: object
+      required: [lang, text, steps]
+      properties:
+        lang: { $ref: "#/components/schemas/InstructionLang" }
+        text: { type: string }
+        steps: { type: array, minItems: 1, items: { type: string } }
+    ExerciseVariantRef:
+      type: object
+      required: [id, name_es, label_es, kind, demo_sex]
+      properties:
+        id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        name_es: { type: string }
+        label_es: { type: string, examples: ["vista trasera"] }
+        kind: { $ref: "#/components/schemas/VariantKind" }
+        demo_sex: { anyOf: [{ $ref: "#/components/schemas/DemoSex" }, { type: "null" }] }
+    ExerciseDetail:
+      allOf:
+        - $ref: "#/components/schemas/ExerciseSummary"
+        - type: object
+          required: [secondary_muscles, primary_group_muscle, equipment_group, instructions, available_langs, variants, source_commit, enrichment_version, deprecated_at]
+          properties:
+            secondary_muscles: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/MuscleCode" } }
+            primary_group_muscle: { $ref: "#/components/schemas/MuscleCode" }
+            equipment_group: { $ref: "#/components/schemas/EquipmentGroup" }
+            instructions: { $ref: "#/components/schemas/ExerciseInstructions" }
+            available_langs: { type: array, items: { $ref: "#/components/schemas/InstructionLang" } }
+            variants:
+              type: array
+              description: Otros ejercicios del mismo `variant_group` (conmutador de ángulo/demostrador).
+              items: { $ref: "#/components/schemas/ExerciseVariantRef" }
+            source_commit: { type: string, pattern: "^[0-9a-f]{40}$" }
+            enrichment_version: { type: integer, minimum: 1 }
+            deprecated_at: { type: [string, "null"], format: date-time }
+      example:
+        id: "0043"
+        slug: sentadilla-con-barra
+        name_es: sentadilla con barra
+        name_en: barbell full squat
+        variant_label_es: null
+        body_part: upper_legs
+        equipment_code: barbell
+        target_muscle: glutes
+        movement_pattern: squat
+        mechanic: compound
+        role: main
+        difficulty: 2
+        is_staple: true
+        laterality: bilateral
+        load_type: external
+        demo_sex: null
+        variant_group: barbell-full-squat
+        media:
+          thumb_url: /media/thumbs/0043-qXTaZnJ.jpg
+          gif_url: /media/gifs/0043-qXTaZnJ.gif
+          width: 180
+          height: 180
+          attribution: { text: "© Gym visual", url: "https://gymvisual.com/" }
+        is_favorite: true
+        deprecated: false
+        secondary_muscles: [quads, hamstrings, calves, lower_back]
+        primary_group_muscle: quads
+        equipment_group: gym
+        instructions:
+          lang: es
+          text: "Colócate de pie con los pies a la anchura de los hombros y la barra apoyada en la parte alta de la espalda…"
+          steps:
+            - Colócate de pie con los pies a la anchura de los hombros y la barra apoyada en la parte alta de la espalda.
+            - Flexiona rodillas y cadera bajando como si te sentaras, con el pecho erguido.
+            - Baja hasta que los muslos queden paralelos al suelo o algo por debajo.
+            - Empuja con los talones para volver a la posición inicial.
+        available_langs: [en, es, it, tr, ru, zh, hi, pl, ko, fr]
+        variants: []
+        source_commit: 7455efae41b330c265e7cd4b78dfa848e7ce5ebd
+        enrichment_version: 1
+        deprecated_at: null
+    ExercisePage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/ExerciseSummary" } }
+        next_cursor: { type: [string, "null"] }
+    ExerciseAlternative:
+      type: object
+      required: [exercise, score]
+      properties:
+        exercise: { $ref: "#/components/schemas/ExerciseSummary" }
+        score: { type: number, minimum: 0, maximum: 1, description: "Puntuación §6.5 (patrón 0,5 + músculo 0,3 + Jaccard 0,1 + dificultad 0,1)." }
+    ExerciseAlternativeList:
+      type: object
+      required: [items]
+      properties:
+        items: { type: array, maxItems: 8, items: { $ref: "#/components/schemas/ExerciseAlternative" } }
+    FacetValue:
+      type: object
+      required: [value, label_es, label_en, count]
+      properties:
+        value: { type: string, description: "Valor del filtro (código canónico o dificultad como texto)." }
+        label_es: { type: string }
+        label_en: { type: string }
+        count: { type: integer, minimum: 0 }
+    CatalogFacets:
+      type: object
+      required: [total, body_part, target, muscle, equipment, pattern, mechanic, difficulty, role]
+      properties:
+        total: { type: integer, minimum: 0 }
+        body_part: { type: array, items: { $ref: "#/components/schemas/FacetValue" } }
+        target: { type: array, items: { $ref: "#/components/schemas/FacetValue" } }
+        muscle: { type: array, items: { $ref: "#/components/schemas/FacetValue" } }
+        equipment: { type: array, items: { $ref: "#/components/schemas/FacetValue" } }
+        pattern: { type: array, items: { $ref: "#/components/schemas/FacetValue" } }
+        mechanic: { type: array, items: { $ref: "#/components/schemas/FacetValue" } }
+        difficulty: { type: array, items: { $ref: "#/components/schemas/FacetValue" } }
+        role: { type: array, items: { $ref: "#/components/schemas/FacetValue" } }
+      example:
+        total: 1324
+        body_part:
+          - { value: upper_arms, label_es: Brazos, label_en: Upper arms, count: 292 }
+          - { value: upper_legs, label_es: Piernas, label_en: Upper legs, count: 227 }
+        target:
+          - { value: abs, label_es: Abdomen, label_en: Abs, count: 169 }
+        muscle:
+          - { value: glutes, label_es: Glúteos, label_en: Glutes, count: 280 }
+        equipment:
+          - { value: bodyweight, label_es: Peso corporal, label_en: Body weight, count: 325 }
+          - { value: dumbbell, label_es: Mancuernas, label_en: Dumbbell, count: 294 }
+        pattern:
+          - { value: squat, label_es: Sentadilla, label_en: Squat, count: 78 }
+        mechanic:
+          - { value: compound, label_es: Multiarticular, label_en: Compound, count: 610 }
+          - { value: isolation, label_es: Aislamiento, label_en: Isolation, count: 714 }
+        difficulty:
+          - { value: "1", label_es: Básico, label_en: Basic, count: 402 }
+        role:
+          - { value: mobility, label_es: Movilidad, label_en: Mobility, count: 57 }
+    ExerciseCard:
+      type: object
+      description: |
+        DTO interno e inmutable del catálogo enriquecido que recibe `forja_engine` (no lo
+        devuelve ningún endpoint; lo exporta `forja-ingest export-cards`). Se publica aquí
+        para mantener un único esquema JSON (ver `contracts/domain.md`).
+      required: [id, name_es, display_name_en, variant_group, body_part, equipment_code, equipment_group, target_muscle, primary_group_muscle, secondary_muscles, movement_pattern, mechanic, role, difficulty, is_staple, laterality, load_type, demo_sex, deprecated]
+      additionalProperties: false
+      properties:
+        id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        name_es: { type: string }
+        display_name_en: { type: string }
+        variant_group: { type: string }
+        body_part: { $ref: "#/components/schemas/BodyPart" }
+        equipment_code: { $ref: "#/components/schemas/EquipmentCode" }
+        equipment_group: { $ref: "#/components/schemas/EquipmentGroup" }
+        target_muscle: { $ref: "#/components/schemas/MuscleCode" }
+        primary_group_muscle: { $ref: "#/components/schemas/MuscleCode" }
+        secondary_muscles: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/MuscleCode" } }
+        movement_pattern: { $ref: "#/components/schemas/MovementPattern" }
+        mechanic: { $ref: "#/components/schemas/Mechanic" }
+        role: { $ref: "#/components/schemas/ExerciseRole" }
+        difficulty: { $ref: "#/components/schemas/Difficulty" }
+        is_staple: { type: boolean }
+        laterality: { $ref: "#/components/schemas/Laterality" }
+        load_type: { $ref: "#/components/schemas/LoadType" }
+        demo_sex: { anyOf: [{ $ref: "#/components/schemas/DemoSex" }, { type: "null" }] }
+        deprecated: { type: boolean }
+
+    # ============================================================ motor de rutinas
+    GeneratorInput:
+      type: object
+      description: Entrada del motor de rutinas (MASTER_PROMPT §7.1). Ver `contracts/domain.md`.
+      required: [goal, days_per_week, sex, experience, session_minutes, equipment]
+      additionalProperties: false
+      properties:
+        goal: { $ref: "#/components/schemas/Goal" }
+        days_per_week: { type: integer, minimum: 1, maximum: 7 }
+        sex: { $ref: "#/components/schemas/Sex" }
+        experience: { $ref: "#/components/schemas/Experience" }
+        session_minutes: { type: integer, minimum: 20, maximum: 120, multipleOf: 5 }
+        equipment: { $ref: "#/components/schemas/EquipmentSelection" }
+        emphasis:
+          $ref: "#/components/schemas/Emphasis"
+          default: balanced
+        avoid_muscles:
+          type: array
+          uniqueItems: true
+          default: []
+          items: { $ref: "#/components/schemas/MuscleCode" }
+        avoid_patterns:
+          type: array
+          uniqueItems: true
+          default: []
+          items: { $ref: "#/components/schemas/MovementPattern" }
+        preferred_days:
+          type: array
+          uniqueItems: true
+          maxItems: 7
+          default: []
+          description: Vacía o con exactamente `days_per_week` elementos.
+          items: { $ref: "#/components/schemas/Weekday" }
+        weeks: { type: integer, minimum: 4, maximum: 8, default: 5, description: "Incluye la semana final de descarga." }
+        include_warmup: { type: [boolean, "null"], default: null, description: "`null` ⇒ valor por defecto según objetivo." }
+        include_cooldown: { type: [boolean, "null"], default: null }
+        include_cardio_finisher: { type: [boolean, "null"], default: null }
+        favorite_exercise_ids:
+          type: array
+          uniqueItems: true
+          maxItems: 200
+          default: []
+          items: { $ref: "#/components/schemas/ExerciseIdValue" }
+        excluded_exercise_ids:
+          type: array
+          uniqueItems: true
+          maxItems: 500
+          default: []
+          items: { $ref: "#/components/schemas/ExerciseIdValue" }
+        seed:
+          type: [integer, "null"]
+          minimum: 0
+          maximum: 9007199254740991
+          default: null
+          description: "Entero seguro en JavaScript (≤ 2^53−1). `null` ⇒ se deriva del hash de la entrada normalizada."
+    SlotRef:
+      type: object
+      description: Slot del día del split que originó el ejercicio.
+      required: [slot_index, pattern, role, group, priority]
+      additionalProperties: false
+      properties:
+        slot_index: { type: integer, minimum: 0 }
+        pattern: { $ref: "#/components/schemas/MovementPattern" }
+        role: { $ref: "#/components/schemas/ExerciseRole" }
+        group: { $ref: "#/components/schemas/MuscleGroup" }
+        priority: { type: integer, minimum: 1, maximum: 3 }
+    SlotAddress:
+      type: object
+      description: Posición de un ejercicio dentro de un `ProgramPlan` (índices desde 0).
+      required: [week_index, day_index, block_order, exercise_order]
+      additionalProperties: false
+      properties:
+        week_index: { type: integer, minimum: 0 }
+        day_index: { type: integer, minimum: 0, maximum: 6 }
+        block_order: { type: integer, minimum: 0 }
+        exercise_order: { type: integer, minimum: 0 }
+    PlanWarning:
+      type: object
+      required: [code, message_es, week_index, day_index, exercise_id]
+      additionalProperties: false
+      properties:
+        code: { $ref: "#/components/schemas/PlanWarningCode" }
+        message_es: { type: string }
+        week_index: { type: [integer, "null"], minimum: 0 }
+        day_index: { type: [integer, "null"], minimum: 0, maximum: 6 }
+        exercise_id: { anyOf: [{ $ref: "#/components/schemas/ExerciseIdValue" }, { type: "null" }] }
+    GroupVolume:
+      type: object
+      description: Series efectivas semanales objetivo y planificadas de un grupo (semana tipo).
+      required: [group, target_min, target_max, planned_sets]
+      additionalProperties: false
+      properties:
+        group: { $ref: "#/components/schemas/VolumeGroup" }
+        target_min: { type: number, minimum: 0 }
+        target_max: { type: number, minimum: 0 }
+        planned_sets: { type: number, minimum: 0, description: "Compuestos: 1,0 al objetivo y 0,5 a secundarios relevantes." }
+    GroupSets:
+      type: object
+      required: [group, sets]
+      additionalProperties: false
+      properties:
+        group: { $ref: "#/components/schemas/VolumeGroup" }
+        sets: { type: number, minimum: 0, maximum: 10, description: "Máx. 10 series efectivas por grupo y sesión." }
+    ExercisePrescription:
+      type: object
+      description: |
+        Prescripción de un ejercicio. Se usa `rep_min`/`rep_max` o `duration_s` (isométricos,
+        cardio y estiramientos), nunca ambos a `null`. `per_side` indica que reps o
+        duración son por lado. `tempo` = excéntrica-pausa-concéntrica-pausa (`X` = explosiva).
+      required: [exercise_id, sets, rep_min, rep_max, duration_s, per_side, target_rir, tempo, rest_s, load_hint, notes_es, alternatives]
+      properties:
+        exercise_id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        sets: { type: integer, minimum: 1, maximum: 10 }
+        rep_min: { type: [integer, "null"], minimum: 1, maximum: 100 }
+        rep_max: { type: [integer, "null"], minimum: 1, maximum: 100 }
+        duration_s: { type: [integer, "null"], minimum: 5, maximum: 3600 }
+        per_side: { type: boolean }
+        target_rir: { type: [integer, "null"], minimum: 0, maximum: 5 }
+        tempo: { type: [string, "null"], pattern: "^[0-9X]-[0-9X]-[0-9X]-[0-9X]$", examples: ["3-0-1-0"] }
+        rest_s: { type: integer, minimum: 0, maximum: 600 }
+        load_hint: { type: [string, "null"], maxLength: 200, examples: ["Carga que te deje 2 repeticiones en reserva"] }
+        notes_es: { type: [string, "null"], maxLength: 500 }
+        alternatives:
+          type: array
+          maxItems: 3
+          uniqueItems: true
+          items: { $ref: "#/components/schemas/ExerciseIdValue" }
+    PlanExercise:
+      allOf:
+        - $ref: "#/components/schemas/ExercisePrescription"
+        - type: object
+          required: [order, slot]
+          properties:
+            order: { type: integer, minimum: 0 }
+            slot:
+              description: "`null` en ejercicios de calentamiento, vuelta a la calma o finisher."
+              anyOf: [{ $ref: "#/components/schemas/SlotRef" }, { type: "null" }]
+    PlanBlock:
+      type: object
+      required: [order, kind, rounds, rest_between_rounds_s, exercises]
+      properties:
+        order: { type: integer, minimum: 0 }
+        kind: { $ref: "#/components/schemas/BlockKind" }
+        rounds: { type: integer, minimum: 1, maximum: 10 }
+        rest_between_rounds_s: { type: [integer, "null"], minimum: 0, maximum: 600 }
+        exercises: { type: array, minItems: 1, items: { $ref: "#/components/schemas/PlanExercise" } }
+    PlanDay:
+      type: object
+      required: [index, template, name_es, focus_es, weekday, is_recovery, estimated_minutes, blocks, volume]
+      properties:
+        index: { type: integer, minimum: 0, maximum: 6 }
+        template: { type: string, description: "Clave de `day_templates` en `specs/split-templates.yaml`.", examples: [upper_a] }
+        name_es: { type: string, examples: ["Torso A"] }
+        focus_es: { type: string, examples: ["Tren superior: empuje y tirón horizontal"] }
+        weekday: { anyOf: [{ $ref: "#/components/schemas/Weekday" }, { type: "null" }] }
+        is_recovery: { type: boolean, description: "Día de recuperación activa (7 días/semana)." }
+        estimated_minutes: { type: integer, minimum: 1, maximum: 240 }
+        blocks: { type: array, minItems: 1, items: { $ref: "#/components/schemas/PlanBlock" } }
+        volume: { type: array, items: { $ref: "#/components/schemas/GroupSets" } }
+    PlanWeek:
+      type: object
+      required: [index, phase, target_rir, volume_ratio, days]
+      properties:
+        index: { type: integer, minimum: 0, maximum: 7 }
+        phase: { $ref: "#/components/schemas/WeekPhase" }
+        target_rir: { type: integer, minimum: 0, maximum: 5, description: "RIR objetivo de referencia de la semana." }
+        volume_ratio: { type: number, exclusiveMinimum: 0, maximum: 2, description: "1,0 normal; ≈0,55 en descarga." }
+        days: { type: array, minItems: 1, maxItems: 7, items: { $ref: "#/components/schemas/PlanDay" } }
+    ProgramPlan:
+      type: object
+      description: Salida del motor de rutinas (MASTER_PROMPT §7.2 paso 9). Determinista.
+      required: [engine_version, tables_hash, seed, input, split, weeks, weekly_volume, warnings, rationale_es]
+      properties:
+        engine_version: { type: string, examples: ["1.0.0"] }
+        tables_hash: { type: string, pattern: "^[0-9a-f]{64}$", description: "SHA-256 de las tablas YAML cargadas." }
+        seed: { type: integer, minimum: 0, maximum: 9007199254740991 }
+        input: { $ref: "#/components/schemas/GeneratorInput" }
+        split:
+          type: array
+          minItems: 1
+          maxItems: 7
+          description: Plantillas de día elegidas, en orden.
+          items: { type: string }
+        weeks: { type: array, minItems: 4, maxItems: 8, items: { $ref: "#/components/schemas/PlanWeek" } }
+        weekly_volume: { type: array, items: { $ref: "#/components/schemas/GroupVolume" } }
+        warnings: { type: array, items: { $ref: "#/components/schemas/PlanWarning" } }
+        rationale_es:
+          type: array
+          items: { type: string }
+          examples: [["Hemos elegido torso/pierna porque entrenas 4 días y tienes experiencia intermedia.", "Hemos dado más volumen a glúteos e isquios por el énfasis elegido."]]
+    GeneratorPreview:
+      type: object
+      required: [plan, exercises]
+      properties:
+        plan: { $ref: "#/components/schemas/ProgramPlan" }
+        exercises:
+          type: array
+          description: Ejercicios referenciados por el plan (incluidas alternativas), sin repetir.
+          items: { $ref: "#/components/schemas/ExerciseSummary" }
+    PreviewRegenerateDayRequest:
+      type: object
+      required: [plan, day_index, seed]
+      additionalProperties: false
+      properties:
+        plan: { $ref: "#/components/schemas/ProgramPlan" }
+        day_index: { type: integer, minimum: 0, maximum: 6 }
+        seed: { type: [integer, "null"], minimum: 0, maximum: 9007199254740991, description: "`null` ⇒ semilla nueva derivada." }
+    PreviewSwapRequest:
+      type: object
+      required: [plan, address, exclude_ids, replacement_id, apply_to_all_weeks]
+      additionalProperties: false
+      properties:
+        plan: { $ref: "#/components/schemas/ProgramPlan" }
+        address: { $ref: "#/components/schemas/SlotAddress" }
+        exclude_ids:
+          type: array
+          uniqueItems: true
+          maxItems: 100
+          items: { $ref: "#/components/schemas/ExerciseIdValue" }
+        replacement_id:
+          description: Ejercicio elegido por el usuario; `null` ⇒ el motor elige el mejor candidato.
+          anyOf: [{ $ref: "#/components/schemas/ExerciseIdValue" }, { type: "null" }]
+        apply_to_all_weeks: { type: boolean, default: true }
+
+    # ============================================================ programas
+    ProgramExercise:
+      allOf:
+        - $ref: "#/components/schemas/ExercisePrescription"
+        - type: object
+          required: [id, order]
+          properties:
+            id: { type: string, format: uuid }
+            order: { type: integer, minimum: 0 }
+    ProgramBlock:
+      type: object
+      required: [id, order, kind, rounds, rest_between_rounds_s, exercises]
+      properties:
+        id: { type: string, format: uuid }
+        order: { type: integer, minimum: 0 }
+        kind: { $ref: "#/components/schemas/BlockKind" }
+        rounds: { type: integer, minimum: 1, maximum: 10 }
+        rest_between_rounds_s: { type: [integer, "null"], minimum: 0, maximum: 600 }
+        exercises: { type: array, minItems: 1, items: { $ref: "#/components/schemas/ProgramExercise" } }
+    ProgramDay:
+      type: object
+      required: [id, index, name, focus, weekday, is_recovery, estimated_minutes, blocks]
+      properties:
+        id: { type: string, format: uuid }
+        index: { type: integer, minimum: 0, maximum: 6 }
+        name: { type: string, maxLength: 80 }
+        focus: { type: [string, "null"], maxLength: 120 }
+        weekday: { anyOf: [{ $ref: "#/components/schemas/Weekday" }, { type: "null" }] }
+        is_recovery: { type: boolean }
+        estimated_minutes: { type: integer, minimum: 1, maximum: 240 }
+        blocks: { type: array, items: { $ref: "#/components/schemas/ProgramBlock" } }
+    ProgramWeek:
+      type: object
+      required: [id, index, phase, days]
+      properties:
+        id: { type: string, format: uuid }
+        index: { type: integer, minimum: 0, maximum: 7 }
+        phase: { $ref: "#/components/schemas/WeekPhase" }
+        days: { type: array, items: { $ref: "#/components/schemas/ProgramDay" } }
+    ProgramSummary:
+      type: object
+      required: [id, name, source, goal, days_per_week, weeks_count, is_active, archived_at, generator_version, created_at, updated_at]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string, maxLength: 80 }
+        source: { $ref: "#/components/schemas/ProgramSource" }
+        goal: { anyOf: [{ $ref: "#/components/schemas/Goal" }, { type: "null" }] }
+        days_per_week: { type: integer, minimum: 1, maximum: 7 }
+        weeks_count: { type: integer, minimum: 1, maximum: 8 }
+        is_active: { type: boolean }
+        archived_at: { type: [string, "null"], format: date-time }
+        generator_version: { type: [string, "null"], description: "`ENGINE_VERSION` con el que se generó." }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+      example:
+        id: 0192f09e-0000-7c2d-8e4f-5a6b7c8d9e00
+        name: Hipertrofia 4 días · glúteo
+        source: generated
+        goal: hypertrophy
+        days_per_week: 4
+        weeks_count: 5
+        is_active: true
+        archived_at: null
+        generator_version: 1.0.0
+        created_at: "2026-09-20T10:00:00Z"
+        updated_at: "2026-09-20T10:00:00Z"
+    ProgramDetail:
+      allOf:
+        - $ref: "#/components/schemas/ProgramSummary"
+        - type: object
+          required: [seed, tables_hash, generator_input, weeks, weekly_volume, warnings, rationale_es, exercises]
+          properties:
+            seed: { type: [integer, "null"], minimum: 0, maximum: 9007199254740991 }
+            tables_hash: { type: [string, "null"], pattern: "^[0-9a-f]{64}$" }
+            generator_input: { anyOf: [{ $ref: "#/components/schemas/GeneratorInput" }, { type: "null" }] }
+            weeks: { type: array, items: { $ref: "#/components/schemas/ProgramWeek" } }
+            weekly_volume: { type: array, items: { $ref: "#/components/schemas/GroupVolume" } }
+            warnings: { type: array, items: { $ref: "#/components/schemas/PlanWarning" } }
+            rationale_es: { type: array, items: { type: string } }
+            exercises:
+              type: array
+              description: Ejercicios referenciados (incluidas alternativas), sin repetir.
+              items: { $ref: "#/components/schemas/ExerciseSummary" }
+    ExerciseEdit:
+      allOf:
+        - $ref: "#/components/schemas/ExercisePrescription"
+    BlockEdit:
+      type: object
+      required: [kind, rounds, rest_between_rounds_s, exercises]
+      additionalProperties: false
+      properties:
+        kind: { $ref: "#/components/schemas/BlockKind" }
+        rounds: { type: integer, minimum: 1, maximum: 10 }
+        rest_between_rounds_s: { type: [integer, "null"], minimum: 0, maximum: 600 }
+        exercises: { type: array, minItems: 1, maxItems: 20, items: { $ref: "#/components/schemas/ExerciseEdit" } }
+    DayEdit:
+      type: object
+      description: Día completo editado (el orden de `blocks` y `exercises` es el orden final).
+      required: [name, focus, weekday, blocks, apply_to_all_weeks]
+      additionalProperties: false
+      properties:
+        name: { type: string, minLength: 1, maxLength: 80 }
+        focus: { type: [string, "null"], maxLength: 120 }
+        weekday: { anyOf: [{ $ref: "#/components/schemas/Weekday" }, { type: "null" }] }
+        blocks: { type: array, minItems: 1, maxItems: 12, items: { $ref: "#/components/schemas/BlockEdit" } }
+        apply_to_all_weeks:
+          type: boolean
+          default: true
+          description: Propaga la estructura al mismo día del resto de semanas (re-periodizado por el motor).
+    ProgramCreateFromPlan:
+      type: object
+      required: [source, name, plan, activate]
+      additionalProperties: false
+      properties:
+        source: { type: string, const: generated }
+        name: { type: string, minLength: 1, maxLength: 80 }
+        plan: { $ref: "#/components/schemas/ProgramPlan" }
+        activate: { type: boolean, default: false }
+    ProgramCreateManual:
+      type: object
+      required: [source, name, goal, weeks, days, activate]
+      additionalProperties: false
+      properties:
+        source: { type: string, const: manual }
+        name: { type: string, minLength: 1, maxLength: 80 }
+        goal: { anyOf: [{ $ref: "#/components/schemas/Goal" }, { type: "null" }] }
+        weeks: { type: integer, minimum: 1, maximum: 8, description: "Número de semanas; la estructura de `days` se repite en todas." }
+        days: { type: array, minItems: 1, maxItems: 7, items: { $ref: "#/components/schemas/DayEdit" } }
+        activate: { type: boolean, default: false }
+    ProgramCreate:
+      oneOf:
+        - $ref: "#/components/schemas/ProgramCreateFromPlan"
+        - $ref: "#/components/schemas/ProgramCreateManual"
+      discriminator:
+        propertyName: source
+        mapping:
+          generated: "#/components/schemas/ProgramCreateFromPlan"
+          manual: "#/components/schemas/ProgramCreateManual"
+    ProgramUpdate:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        name: { type: string, minLength: 1, maxLength: 80 }
+        archived: { type: boolean, description: "`true` archiva (y desactiva); `false` desarchiva." }
+    ProgramDuplicateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name: { type: string, minLength: 1, maxLength: 80, description: "Por defecto «<nombre> (copia)»." }
+    ProgramPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/ProgramSummary" } }
+        next_cursor: { type: [string, "null"] }
+    RegenerateDayRequest:
+      type: object
+      required: [day_index, seed]
+      additionalProperties: false
+      description: Solo para programas `generated` (si no, `409` con `code = program_not_generated`).
+      properties:
+        day_index: { type: integer, minimum: 0, maximum: 6, description: "Índice del día en la semana; se regenera en todas las semanas." }
+        seed: { type: [integer, "null"], minimum: 0, maximum: 9007199254740991 }
+    SwapRequest:
+      type: object
+      required: [program_exercise_id, exclude_ids, replacement_id, apply_to_all_weeks]
+      additionalProperties: false
+      properties:
+        program_exercise_id: { type: string, format: uuid }
+        exclude_ids:
+          type: array
+          uniqueItems: true
+          maxItems: 100
+          items: { $ref: "#/components/schemas/ExerciseIdValue" }
+        replacement_id: { anyOf: [{ $ref: "#/components/schemas/ExerciseIdValue" }, { type: "null" }] }
+        apply_to_all_weeks: { type: boolean, default: true }
+
+    # ============================================================ sesiones
+    WorkoutSessionCreate:
+      type: object
+      required: [client_uuid, program_day_id, started_at]
+      additionalProperties: false
+      properties:
+        client_uuid: { type: string, format: uuid, description: "Generado en el cliente (idempotencia offline)." }
+        program_day_id: { type: [string, "null"], format: uuid, description: "`null` ⇒ sesión libre." }
+        name: { type: [string, "null"], maxLength: 80, description: "Por defecto, el nombre del día o «Sesión libre»." }
+        started_at: { type: string, format: date-time }
+        notes: { type: [string, "null"], maxLength: 2000 }
+    WorkoutSessionUpdate:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        name: { type: string, minLength: 1, maxLength: 80 }
+        notes: { type: [string, "null"], maxLength: 2000 }
+        perceived_effort: { type: [integer, "null"], minimum: 1, maximum: 10 }
+        status: { type: string, const: abandoned, description: "Solo se puede pasar a `abandoned`; para terminar, `/finish`." }
+    SetLogCreate:
+      type: object
+      description: Serie registrada; al menos `reps` o `duration_s`.
+      required: [client_uuid, exercise_id, program_exercise_id, set_index, weight_kg, reps, rir, duration_s, is_warmup, completed_at]
+      additionalProperties: false
+      properties:
+        client_uuid: { type: string, format: uuid }
+        exercise_id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        program_exercise_id: { type: [string, "null"], format: uuid }
+        set_index: { type: integer, minimum: 1, maximum: 50 }
+        weight_kg: { type: [number, "null"], minimum: 0, maximum: 1000, description: "Siempre en kg (el cliente convierte si `units = imperial`)." }
+        reps: { type: [integer, "null"], minimum: 0, maximum: 200 }
+        rir: { type: [integer, "null"], minimum: 0, maximum: 10 }
+        duration_s: { type: [integer, "null"], minimum: 1, maximum: 7200 }
+        is_warmup: { type: boolean }
+        completed_at: { type: string, format: date-time }
+    SetLogUpdate:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        weight_kg: { type: [number, "null"], minimum: 0, maximum: 1000 }
+        reps: { type: [integer, "null"], minimum: 0, maximum: 200 }
+        rir: { type: [integer, "null"], minimum: 0, maximum: 10 }
+        duration_s: { type: [integer, "null"], minimum: 1, maximum: 7200 }
+        is_warmup: { type: boolean }
+    SetLog:
+      type: object
+      required: [id, client_uuid, session_id, exercise_id, program_exercise_id, set_index, weight_kg, reps, rir, duration_s, is_warmup, completed_at, updated_at, records]
+      properties:
+        id: { type: string, format: uuid }
+        client_uuid: { type: string, format: uuid }
+        session_id: { type: string, format: uuid }
+        exercise_id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        program_exercise_id: { type: [string, "null"], format: uuid }
+        set_index: { type: integer, minimum: 1 }
+        weight_kg: { type: [number, "null"] }
+        reps: { type: [integer, "null"] }
+        rir: { type: [integer, "null"] }
+        duration_s: { type: [integer, "null"] }
+        is_warmup: { type: boolean }
+        completed_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+        records:
+          type: array
+          description: Récords personales que ha batido esta serie (para el confeti discreto).
+          items: { $ref: "#/components/schemas/RecordKind" }
+      example:
+        id: 0192f0a6-9999-7d4e-8f60-718293a4b5c7
+        client_uuid: 0192f0a6-0b2c-7d4e-8f60-718293a4b5c6
+        session_id: 0192f0a4-8888-7b3a-9d51-2f6c1e8a4b11
+        exercise_id: "0043"
+        program_exercise_id: 0192f09e-2b3c-7d4e-9f60-a1b2c3d4e5f6
+        set_index: 1
+        weight_kg: 62.5
+        reps: 8
+        rir: 2
+        duration_s: null
+        is_warmup: false
+        completed_at: "2026-09-22T17:14:30Z"
+        updated_at: "2026-09-22T17:14:31Z"
+        records: [e1rm]
+    WorkoutSessionSummary:
+      type: object
+      required: [id, client_uuid, program_id, program_day_id, name, started_at, finished_at, status, perceived_effort, notes, set_count, volume_kg, created_at, updated_at]
+      properties:
+        id: { type: string, format: uuid }
+        client_uuid: { type: string, format: uuid }
+        program_id: { type: [string, "null"], format: uuid }
+        program_day_id: { type: [string, "null"], format: uuid }
+        name: { type: string }
+        started_at: { type: string, format: date-time }
+        finished_at: { type: [string, "null"], format: date-time }
+        status: { $ref: "#/components/schemas/SessionStatus" }
+        perceived_effort: { type: [integer, "null"], minimum: 1, maximum: 10 }
+        notes: { type: [string, "null"] }
+        set_count: { type: integer, minimum: 0, description: "Series de trabajo (sin calentamiento)." }
+        volume_kg: { type: number, minimum: 0, description: "Σ peso × reps de las series de trabajo." }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+    WorkoutSession:
+      allOf:
+        - $ref: "#/components/schemas/WorkoutSessionSummary"
+        - type: object
+          required: [sets]
+          properties:
+            sets: { type: array, items: { $ref: "#/components/schemas/SetLog" } }
+    WorkoutSessionPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/WorkoutSessionSummary" } }
+        next_cursor: { type: [string, "null"] }
+    SessionFinishRequest:
+      type: object
+      required: [finished_at]
+      additionalProperties: false
+      properties:
+        finished_at: { type: string, format: date-time }
+        perceived_effort: { type: [integer, "null"], minimum: 1, maximum: 10 }
+        notes: { type: [string, "null"], maxLength: 2000 }
+    SessionSummary:
+      type: object
+      required: [session, duration_s, total_sets, total_reps, volume_kg, exercises_completed, new_records]
+      properties:
+        session: { $ref: "#/components/schemas/WorkoutSessionSummary" }
+        duration_s: { type: integer, minimum: 0 }
+        total_sets: { type: integer, minimum: 0 }
+        total_reps: { type: integer, minimum: 0 }
+        volume_kg: { type: number, minimum: 0 }
+        exercises_completed: { type: integer, minimum: 0 }
+        new_records: { type: array, items: { $ref: "#/components/schemas/PersonalRecord" } }
+    SyncSessionUpsert:
+      type: object
+      required: [op, client_uuid, program_day_id, name, started_at, finished_at, status, perceived_effort, notes, updated_at]
+      additionalProperties: false
+      properties:
+        op: { type: string, const: session_upsert }
+        client_uuid: { type: string, format: uuid }
+        program_day_id: { type: [string, "null"], format: uuid }
+        name: { type: [string, "null"], maxLength: 80 }
+        started_at: { type: string, format: date-time }
+        finished_at: { type: [string, "null"], format: date-time }
+        status: { $ref: "#/components/schemas/SessionStatus" }
+        perceived_effort: { type: [integer, "null"], minimum: 1, maximum: 10 }
+        notes: { type: [string, "null"], maxLength: 2000 }
+        updated_at: { type: string, format: date-time, description: "Marca del cliente para «última escritura gana»." }
+    SyncSetUpsert:
+      type: object
+      required: [op, session_client_uuid, set, updated_at]
+      additionalProperties: false
+      properties:
+        op: { type: string, const: set_upsert }
+        session_client_uuid: { type: string, format: uuid }
+        set: { $ref: "#/components/schemas/SetLogCreate" }
+        updated_at: { type: string, format: date-time }
+    SyncSetDelete:
+      type: object
+      required: [op, client_uuid, deleted_at]
+      additionalProperties: false
+      properties:
+        op: { type: string, const: set_delete }
+        client_uuid: { type: string, format: uuid, description: "`client_uuid` de la serie." }
+        deleted_at: { type: string, format: date-time }
+    SyncOperation:
+      oneOf:
+        - $ref: "#/components/schemas/SyncSessionUpsert"
+        - $ref: "#/components/schemas/SyncSetUpsert"
+        - $ref: "#/components/schemas/SyncSetDelete"
+      discriminator:
+        propertyName: op
+        mapping:
+          session_upsert: "#/components/schemas/SyncSessionUpsert"
+          set_upsert: "#/components/schemas/SyncSetUpsert"
+          set_delete: "#/components/schemas/SyncSetDelete"
+    SyncRequest:
+      type: object
+      required: [operations]
+      additionalProperties: false
+      properties:
+        operations: { type: array, minItems: 1, maxItems: 500, items: { $ref: "#/components/schemas/SyncOperation" } }
+    SyncResult:
+      type: object
+      required: [index, op, client_uuid, status, server_id, problem]
+      properties:
+        index: { type: integer, minimum: 0, description: "Posición de la operación en el lote." }
+        op: { type: string, enum: [session_upsert, set_upsert, set_delete] }
+        client_uuid: { type: string, format: uuid }
+        status: { $ref: "#/components/schemas/SyncResultStatus" }
+        server_id: { type: [string, "null"], format: uuid }
+        problem: { anyOf: [{ $ref: "#/components/schemas/Problem" }, { type: "null" }] }
+    SyncResponse:
+      type: object
+      required: [server_time, results]
+      properties:
+        server_time: { type: string, format: date-time }
+        results: { type: array, items: { $ref: "#/components/schemas/SyncResult" } }
+    SetPerformance:
+      type: object
+      required: [weight_kg, reps, rir, duration_s]
+      properties:
+        weight_kg: { type: [number, "null"] }
+        reps: { type: [integer, "null"] }
+        rir: { type: [integer, "null"] }
+        duration_s: { type: [integer, "null"] }
+    LastPerformance:
+      type: object
+      required: [session_id, date, sets]
+      properties:
+        session_id: { type: string, format: uuid }
+        date: { type: string, format: date }
+        sets: { type: array, items: { $ref: "#/components/schemas/SetPerformance" } }
+    WarmupSet:
+      type: object
+      description: "Serie de aproximación (40 %×8, 60 %×5, 80 %×2) redondeada a la carga disponible."
+      required: [percent, reps, weight_kg, plates_per_side_kg]
+      properties:
+        percent: { type: number, exclusiveMinimum: 0, maximum: 1 }
+        reps: { type: integer, minimum: 1 }
+        weight_kg: { type: number, minimum: 0 }
+        plates_per_side_kg: { type: array, items: { type: number }, description: "Discos por lado sobre barra de 20 kg (vacío si no aplica)." }
+    LoadSuggestion:
+      type: object
+      description: Sugerencia de progresión (§7.6); puramente informativa, el usuario confirma.
+      required: [program_exercise_id, exercise_id, kind, suggested_weight_kg, suggested_rep_min, suggested_rep_max, suggested_exercise_id, plates_per_side_kg, reason_es, last_performance, warmup_sets]
+      properties:
+        program_exercise_id: { type: string, format: uuid }
+        exercise_id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        kind: { $ref: "#/components/schemas/SuggestionKind" }
+        suggested_weight_kg: { type: [number, "null"], minimum: 0 }
+        suggested_rep_min: { type: [integer, "null"], minimum: 1 }
+        suggested_rep_max: { type: [integer, "null"], minimum: 1 }
+        suggested_exercise_id:
+          description: Variante más difícil del mismo patrón (solo con `harder_variant`).
+          anyOf: [{ $ref: "#/components/schemas/ExerciseIdValue" }, { type: "null" }]
+        plates_per_side_kg: { type: array, items: { type: number } }
+        reason_es: { type: string, examples: ["Completaste todas las series en el tope del rango: sube 2,5 kg."] }
+        last_performance: { anyOf: [{ $ref: "#/components/schemas/LastPerformance" }, { type: "null" }] }
+        warmup_sets: { type: array, items: { $ref: "#/components/schemas/WarmupSet" } }
+    NextSession:
+      type: object
+      required: [status, program_id, program_name, week_index, day, scheduled_date, suggestions, exercises]
+      properties:
+        status:
+          type: string
+          enum: [scheduled, rest_day, no_active_program, program_completed]
+        program_id: { type: [string, "null"], format: uuid }
+        program_name: { type: [string, "null"] }
+        week_index: { type: [integer, "null"], minimum: 0 }
+        day: { anyOf: [{ $ref: "#/components/schemas/ProgramDay" }, { type: "null" }] }
+        scheduled_date: { type: [string, "null"], format: date }
+        suggestions: { type: array, items: { $ref: "#/components/schemas/LoadSuggestion" } }
+        exercises: { type: array, items: { $ref: "#/components/schemas/ExerciseSummary" } }
+
+    # ============================================================ progreso
+    PersonalRecord:
+      type: object
+      required: [id, exercise_id, exercise_name_es, kind, value, weight_kg, reps, achieved_at, session_id, set_id]
+      properties:
+        id: { type: string, format: uuid }
+        exercise_id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        exercise_name_es: { type: string }
+        kind: { $ref: "#/components/schemas/RecordKind" }
+        value: { type: number, description: "kg para `e1rm`/`heaviest_set`; kg·reps para `volume`." }
+        weight_kg: { type: [number, "null"] }
+        reps: { type: [integer, "null"] }
+        achieved_at: { type: string, format: date-time }
+        session_id: { type: string, format: uuid }
+        set_id: { type: [string, "null"], format: uuid }
+      example:
+        id: 0192f0b0-1111-7a2b-8c3d-4e5f60718293
+        exercise_id: "0043"
+        exercise_name_es: sentadilla con barra
+        kind: e1rm
+        value: 79.2
+        weight_kg: 62.5
+        reps: 8
+        achieved_at: "2026-09-22T17:14:30Z"
+        session_id: 0192f0a4-8888-7b3a-9d51-2f6c1e8a4b11
+        set_id: 0192f0a6-9999-7d4e-8f60-718293a4b5c7
+    PersonalRecordPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/PersonalRecord" } }
+        next_cursor: { type: [string, "null"] }
+    ActivityDay:
+      type: object
+      required: [date, session_count, volume_kg]
+      properties:
+        date: { type: string, format: date }
+        session_count: { type: integer, minimum: 1 }
+        volume_kg: { type: number, minimum: 0 }
+    StatsOverview:
+      type: object
+      required: [week_start, sessions_completed, sessions_planned, sets_completed, volume_kg, streak_weeks, last_record, body_weight, activity]
+      properties:
+        week_start: { type: string, format: date, description: "Lunes de la semana actual (zona del usuario)." }
+        sessions_completed: { type: integer, minimum: 0 }
+        sessions_planned: { type: integer, minimum: 0 }
+        sets_completed: { type: integer, minimum: 0 }
+        volume_kg: { type: number, minimum: 0 }
+        streak_weeks: { type: integer, minimum: 0, description: "Semanas consecutivas cumpliendo lo planificado." }
+        last_record: { anyOf: [{ $ref: "#/components/schemas/PersonalRecord" }, { type: "null" }] }
+        body_weight:
+          type: object
+          required: [latest, moving_average_7d_kg]
+          properties:
+            latest: { anyOf: [{ $ref: "#/components/schemas/BodyMetric" }, { type: "null" }] }
+            moving_average_7d_kg: { type: [number, "null"] }
+        activity:
+          type: array
+          description: Días con sesiones completadas en los últimos 365 días (mapa de calor).
+          items: { $ref: "#/components/schemas/ActivityDay" }
+    GroupWeekVolume:
+      type: object
+      required: [group, effective_sets, volume_kg]
+      properties:
+        group: { $ref: "#/components/schemas/VolumeGroup" }
+        effective_sets: { type: number, minimum: 0, description: "Series a RIR ≤ 4 (compuestos 0,5 a secundarios)." }
+        volume_kg: { type: number, minimum: 0 }
+    VolumeWeek:
+      type: object
+      required: [week_start, groups]
+      properties:
+        week_start: { type: string, format: date }
+        groups: { type: array, items: { $ref: "#/components/schemas/GroupWeekVolume" } }
+    VolumeStats:
+      type: object
+      required: [weeks]
+      properties:
+        weeks: { type: array, items: { $ref: "#/components/schemas/VolumeWeek" } }
+    ExerciseStatPoint:
+      type: object
+      required: [date, session_id, e1rm_kg, best_weight_kg, best_reps, volume_kg]
+      properties:
+        date: { type: string, format: date }
+        session_id: { type: string, format: uuid }
+        e1rm_kg: { type: [number, "null"], description: "Epley con reps efectivas (reps + RIR) ≤ 10; `null` si no aplica." }
+        best_weight_kg: { type: [number, "null"] }
+        best_reps: { type: [integer, "null"] }
+        volume_kg: { type: number, minimum: 0 }
+    ExerciseStats:
+      type: object
+      required: [exercise_id, best_e1rm_kg, best_set, points]
+      properties:
+        exercise_id: { $ref: "#/components/schemas/ExerciseIdValue" }
+        best_e1rm_kg: { type: [number, "null"] }
+        best_set:
+          anyOf:
+            - type: object
+              required: [weight_kg, reps, rir, date]
+              properties:
+                weight_kg: { type: number }
+                reps: { type: integer }
+                rir: { type: [integer, "null"] }
+                date: { type: string, format: date }
+            - type: "null"
+        points: { type: array, items: { $ref: "#/components/schemas/ExerciseStatPoint" } }
+
+    # ============================================================ nutrición
+    MacroTotals:
+      type: object
+      required: [kcal, protein_g, fat_g, carbs_g, fiber_g]
+      additionalProperties: false
+      properties:
+        kcal: { type: number, minimum: 0 }
+        protein_g: { type: number, minimum: 0 }
+        fat_g: { type: number, minimum: 0 }
+        carbs_g: { type: number, minimum: 0 }
+        fiber_g: { type: number, minimum: 0 }
+    NutritionBlock:
+      type: object
+      required: [reason_code, message_es]
+      additionalProperties: false
+      properties:
+        reason_code: { $ref: "#/components/schemas/NutritionBlockReason" }
+        message_es:
+          type: string
+          examples: ["No generamos planes de alimentación durante el embarazo o la lactancia. Consulta con un dietista-nutricionista o con tu profesional sanitario."]
+    NutritionNotice:
+      type: object
+      required: [code, message_es]
+      additionalProperties: false
+      properties:
+        code: { $ref: "#/components/schemas/NutritionNoticeCode" }
+        message_es: { type: string }
+    NutritionInput:
+      type: object
+      description: |
+        Entrada del motor de nutrición (MASTER_PROMPT §8.1). DTO interno: lo construye el
+        backend a partir del perfil, la última métrica corporal, el programa activo y los
+        ajustes de dieta; no lo recibe ningún endpoint. Ver `contracts/domain.md`.
+      required: [sex, age_years, height_cm, weight_kg, activity_level, training_days_per_week, goal, pace, diet_type, meals_per_day, allergens, excluded_food_ids, disliked_food_ids, pregnant, breastfeeding, seed]
+      additionalProperties: false
+      properties:
+        sex: { $ref: "#/components/schemas/Sex" }
+        age_years: { type: integer, minimum: 0, maximum: 120 }
+        height_cm: { type: number, minimum: 100, maximum: 250 }
+        weight_kg: { type: number, minimum: 20, maximum: 400 }
+        activity_level: { $ref: "#/components/schemas/ActivityLevel" }
+        training_days_per_week: { type: integer, minimum: 0, maximum: 7 }
+        goal: { $ref: "#/components/schemas/NutritionGoal" }
+        pace: { $ref: "#/components/schemas/NutritionPace" }
+        diet_type: { $ref: "#/components/schemas/DietType" }
+        meals_per_day: { type: integer, minimum: 3, maximum: 5 }
+        allergens: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/Allergen" } }
+        excluded_food_ids: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/FoodId" } }
+        disliked_food_ids: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/FoodId" } }
+        pregnant: { type: boolean }
+        breastfeeding: { type: boolean }
+        seed: { type: [integer, "null"], minimum: 0, maximum: 9007199254740991 }
+    NutritionTarget:
+      type: object
+      description: Objetivo diario calculado por el motor (§8.2) con suelos de seguridad aplicados (§8.5).
+      required: [method, age_years, bmr_kcal, activity_factor, tdee_kcal, requested_goal, effective_goal, pace, target_kcal, protein_g, fat_g, carbs_g, fiber_g, blocked, block, notices]
+      properties:
+        method: { $ref: "#/components/schemas/BmrMethod" }
+        age_years: { type: integer, minimum: 0 }
+        bmr_kcal: { type: number, minimum: 0 }
+        activity_factor: { type: number, minimum: 1, maximum: 1.9 }
+        tdee_kcal: { type: number, minimum: 0 }
+        requested_goal: { $ref: "#/components/schemas/NutritionGoal" }
+        effective_goal:
+          description: Puede diferir del pedido (p. ej. `lose` bloqueado por IMC < 18,5 ⇒ `maintain`).
+          $ref: "#/components/schemas/NutritionGoal"
+        pace: { $ref: "#/components/schemas/NutritionPace" }
+        target_kcal: { type: [number, "null"], minimum: 0, description: "`null` si `blocked`." }
+        protein_g: { type: [number, "null"], minimum: 0 }
+        fat_g: { type: [number, "null"], minimum: 0 }
+        carbs_g: { type: [number, "null"], minimum: 0 }
+        fiber_g: { type: [number, "null"], minimum: 0 }
+        blocked: { type: boolean }
+        block: { anyOf: [{ $ref: "#/components/schemas/NutritionBlock" }, { type: "null" }] }
+        notices: { type: array, items: { $ref: "#/components/schemas/NutritionNotice" } }
+    NutritionTargetRecord:
+      type: object
+      required: [id, calculated_at, target]
+      properties:
+        id: { type: string, format: uuid }
+        calculated_at: { type: string, format: date-time }
+        target: { $ref: "#/components/schemas/NutritionTarget" }
+      example:
+        id: 0192f0c1-2222-7b3c-8d4e-5f6071829304
+        calculated_at: "2026-09-22T19:00:00Z"
+        target:
+          method: mifflin_female
+          age_years: 35
+          bmr_kcal: 1377.5
+          activity_factor: 1.65
+          tdee_kcal: 2272.9
+          requested_goal: lose
+          effective_goal: lose
+          pace: standard
+          target_kcal: 1932
+          protein_g: 135
+          fat_g: 58
+          carbs_g: 218
+          fiber_g: 27
+          blocked: false
+          block: null
+          notices:
+            - { code: health_disclaimer, message_es: "Estas cifras son orientativas y no sustituyen el consejo de un profesional sanitario." }
+    NutritionTargetRequest:
+      type: object
+      additionalProperties: false
+      description: Campos opcionales que sustituyen a los del perfil/ajustes solo para este cálculo.
+      properties:
+        weight_kg: { type: number, minimum: 20, maximum: 400 }
+        goal: { $ref: "#/components/schemas/NutritionGoal" }
+        pace: { $ref: "#/components/schemas/NutritionPace" }
+    NutritionSettingsFields:
+      description: Campos editables de los ajustes de dieta.
+      type: object
+      required: [diet_enabled, goal, pace, diet_type, meals_per_day, allergens, excluded_food_ids, disliked_food_ids, pregnant, breastfeeding]
+      properties:
+        diet_enabled: { type: boolean }
+        goal: { $ref: "#/components/schemas/NutritionGoal" }
+        pace: { $ref: "#/components/schemas/NutritionPace" }
+        diet_type: { $ref: "#/components/schemas/DietType" }
+        meals_per_day: { type: integer, minimum: 3, maximum: 5 }
+        allergens: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/Allergen" } }
+        excluded_food_ids: { type: array, uniqueItems: true, maxItems: 200, items: { $ref: "#/components/schemas/FoodId" } }
+        disliked_food_ids: { type: array, uniqueItems: true, maxItems: 200, items: { $ref: "#/components/schemas/FoodId" } }
+        pregnant: { type: boolean, description: "Dato sensible; bloquea la generación de planes." }
+        breastfeeding: { type: boolean, description: "Dato sensible; bloquea la generación de planes." }
+    NutritionSettingsUpdate:
+      allOf:
+        - $ref: "#/components/schemas/NutritionSettingsFields"
+      unevaluatedProperties: false
+    NutritionSettings:
+      allOf:
+        - $ref: "#/components/schemas/NutritionSettingsFields"
+        - type: object
+          required: [feature_available, current_target]
+          properties:
+            feature_available: { type: boolean, readOnly: true, description: "`DIET_FEATURE_ENABLED` global." }
+            current_target: { anyOf: [{ $ref: "#/components/schemas/NutritionTargetRecord" }, { type: "null" }] }
+    FoodId:
+      type: string
+      pattern: "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+      maxLength: 64
+      examples: [garbanzos_cocidos]
+    Food:
+      type: object
+      required: [id, name_es, category, fdc_id, per_100g, diet_types, allergens, macro_role, typical_portion_g, unit_grams, unit_name_es, energy_note]
+      properties:
+        id: { $ref: "#/components/schemas/FoodId" }
+        name_es: { type: string }
+        category: { $ref: "#/components/schemas/FoodCategory" }
+        fdc_id: { type: integer, minimum: 1, description: "Identificador de USDA FoodData Central (dominio público)." }
+        per_100g: { $ref: "#/components/schemas/MacroTotals" }
+        diet_types: { type: array, uniqueItems: true, minItems: 1, items: { $ref: "#/components/schemas/DietType" } }
+        allergens: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/Allergen" } }
+        macro_role: { $ref: "#/components/schemas/FoodMacroRole" }
+        typical_portion_g: { type: number, exclusiveMinimum: 0 }
+        unit_grams: { type: [number, "null"], exclusiveMinimum: 0, description: "Gramos por unidad (huevos, frutas…); `null` si se pesa." }
+        unit_name_es: { type: [string, "null"], examples: [huevo] }
+        energy_note:
+          type: [string, "null"]
+          description: "Justificación cuando |kcal − (4P + 4C + 9G)| supera el 12 % (alcohol, fibra, polioles)."
+      example:
+        id: garbanzos_cocidos
+        name_es: garbanzos cocidos
+        category: legumes
+        fdc_id: 173757
+        per_100g: { kcal: 164, protein_g: 8.9, fat_g: 2.6, carbs_g: 27.4, fiber_g: 7.6 }
+        diet_types: [omnivore, pescatarian, vegetarian, vegan]
+        allergens: []
+        macro_role: carb
+        typical_portion_g: 150
+        unit_grams: null
+        unit_name_es: null
+        energy_note: null
+    FoodPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/Food" } }
+        next_cursor: { type: [string, "null"] }
+    MealItem:
+      type: object
+      required: [food_id, name_es, grams, units, nutrients]
+      properties:
+        food_id: { $ref: "#/components/schemas/FoodId" }
+        name_es: { type: string }
+        grams: { type: number, exclusiveMinimum: 0, description: "Múltiplo de 5 g salvo alimentos por unidades." }
+        units: { type: [integer, "null"], minimum: 1, description: "Unidades para alimentos contables." }
+        nutrients: { $ref: "#/components/schemas/MacroTotals" }
+    Meal:
+      type: object
+      required: [slot, items, totals]
+      properties:
+        slot: { $ref: "#/components/schemas/MealSlot" }
+        items: { type: array, minItems: 1, items: { $ref: "#/components/schemas/MealItem" } }
+        totals: { $ref: "#/components/schemas/MacroTotals" }
+    MacroDeviation:
+      type: object
+      description: Desviación relativa respecto al objetivo (0,03 = +3 %).
+      required: [kcal, protein, fat, carbs]
+      properties:
+        kcal: { type: number }
+        protein: { type: number }
+        fat: { type: number }
+        carbs: { type: number }
+    MealPlanDay:
+      type: object
+      required: [day_index, date, meals, totals, deviation]
+      properties:
+        day_index: { type: integer, minimum: 0, maximum: 6 }
+        date: { type: string, format: date }
+        meals: { type: array, minItems: 3, maxItems: 5, items: { $ref: "#/components/schemas/Meal" } }
+        totals: { $ref: "#/components/schemas/MacroTotals" }
+        deviation: { $ref: "#/components/schemas/MacroDeviation" }
+    MealPlan:
+      type: object
+      description: Salida del motor de nutrición (§8.3). Determinista con la misma semilla y base de alimentos.
+      required: [nutrition_version, foods_hash, seed, week_start, diet_type, meals_per_day, target, days, notices]
+      properties:
+        nutrition_version: { type: string, examples: ["1.0.0"] }
+        foods_hash: { type: string, pattern: "^[0-9a-f]{64}$" }
+        seed: { type: integer, minimum: 0, maximum: 9007199254740991 }
+        week_start: { type: string, format: date }
+        diet_type: { $ref: "#/components/schemas/DietType" }
+        meals_per_day: { type: integer, minimum: 3, maximum: 5 }
+        target: { $ref: "#/components/schemas/NutritionTarget" }
+        days: { type: array, minItems: 7, maxItems: 7, items: { $ref: "#/components/schemas/MealPlanDay" } }
+        notices: { type: array, items: { $ref: "#/components/schemas/NutritionNotice" } }
+    MealPlanCreate:
+      type: object
+      required: [week_start]
+      additionalProperties: false
+      properties:
+        week_start: { type: string, format: date, description: "Lunes de la semana del plan." }
+        seed: { type: [integer, "null"], minimum: 0, maximum: 9007199254740991 }
+    MealPlanResource:
+      type: object
+      required: [id, created_at, updated_at, plan]
+      properties:
+        id: { type: string, format: uuid }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+        plan: { $ref: "#/components/schemas/MealPlan" }
+    MealPlanSummary:
+      type: object
+      required: [id, week_start, diet_type, meals_per_day, target_kcal, created_at]
+      properties:
+        id: { type: string, format: uuid }
+        week_start: { type: string, format: date }
+        diet_type: { $ref: "#/components/schemas/DietType" }
+        meals_per_day: { type: integer, minimum: 3, maximum: 5 }
+        target_kcal: { type: number }
+        created_at: { type: string, format: date-time }
+    MealPlanPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/MealPlanSummary" } }
+        next_cursor: { type: [string, "null"] }
+    MealSwapRequest:
+      type: object
+      required: [day_index, meal, food_id, replacement_food_id]
+      additionalProperties: false
+      properties:
+        day_index: { type: integer, minimum: 0, maximum: 6 }
+        meal: { $ref: "#/components/schemas/MealSlot" }
+        food_id: { $ref: "#/components/schemas/FoodId" }
+        replacement_food_id:
+          description: Alimento elegido (misma categoría); `null` ⇒ el motor elige.
+          anyOf: [{ $ref: "#/components/schemas/FoodId" }, { type: "null" }]
+    ShoppingItem:
+      type: object
+      required: [food_id, name_es, total_grams, units]
+      properties:
+        food_id: { $ref: "#/components/schemas/FoodId" }
+        name_es: { type: string }
+        total_grams: { type: number, minimum: 0 }
+        units: { type: [integer, "null"], minimum: 1 }
+    ShoppingCategory:
+      type: object
+      required: [category, label_es, items]
+      properties:
+        category: { $ref: "#/components/schemas/FoodCategory" }
+        label_es: { type: string, examples: [Legumbres] }
+        items: { type: array, items: { $ref: "#/components/schemas/ShoppingItem" } }
+    ShoppingList:
+      type: object
+      required: [plan_id, week_start, categories]
+      properties:
+        plan_id: { type: string, format: uuid }
+        week_start: { type: string, format: date }
+        categories: { type: array, items: { $ref: "#/components/schemas/ShoppingCategory" } }
+
+    # ============================================================ datos de usuario
+    UserExport:
+      type: object
+      description: Copia completa y reimportable de los datos del usuario (sin contraseña ni sesiones).
+      required: [format, schema_version, exported_at, app_version, user, profile, body_metrics, favorites, programs, sessions, personal_records, nutrition]
+      additionalProperties: false
+      properties:
+        format: { type: string, const: forja-export }
+        schema_version: { type: integer, const: 1 }
+        exported_at: { type: string, format: date-time }
+        app_version: { type: string }
+        user:
+          type: object
+          required: [email, display_name, locale, units, created_at]
+          properties:
+            email: { type: string, format: email }
+            display_name: { type: string }
+            locale: { $ref: "#/components/schemas/Locale" }
+            units: { $ref: "#/components/schemas/Units" }
+            created_at: { type: string, format: date-time }
+        profile: { $ref: "#/components/schemas/Profile" }
+        parq_answers: { anyOf: [{ $ref: "#/components/schemas/ParqAnswers" }, { type: "null" }] }
+        body_metrics: { type: array, items: { $ref: "#/components/schemas/BodyMetric" } }
+        favorites: { type: array, items: { $ref: "#/components/schemas/ExerciseIdValue" } }
+        programs: { type: array, items: { $ref: "#/components/schemas/ProgramDetail" } }
+        sessions: { type: array, items: { $ref: "#/components/schemas/WorkoutSession" } }
+        personal_records: { type: array, items: { $ref: "#/components/schemas/PersonalRecord" } }
+        nutrition:
+          type: object
+          required: [settings, targets, plans]
+          properties:
+            settings: { anyOf: [{ $ref: "#/components/schemas/NutritionSettingsUpdate" }, { type: "null" }] }
+            targets: { type: array, items: { $ref: "#/components/schemas/NutritionTargetRecord" } }
+            plans: { type: array, items: { $ref: "#/components/schemas/MealPlanResource" } }
+    ImportCounts:
+      type: object
+      required: [programs, sessions, sets, body_metrics, favorites, meal_plans]
+      properties:
+        programs: { type: integer, minimum: 0 }
+        sessions: { type: integer, minimum: 0 }
+        sets: { type: integer, minimum: 0 }
+        body_metrics: { type: integer, minimum: 0 }
+        favorites: { type: integer, minimum: 0 }
+        meal_plans: { type: integer, minimum: 0 }
+    ImportResult:
+      type: object
+      description: "Los programas importados quedan con `source = imported` e inactivos; sesiones y series se deduplican por `client_uuid`."
+      required: [created, skipped, warnings]
+      properties:
+        created: { $ref: "#/components/schemas/ImportCounts" }
+        skipped: { $ref: "#/components/schemas/ImportCounts" }
+        warnings: { type: array, items: { type: string } }
+    AccountDeleteRequest:
+      type: object
+      required: [password]
+      additionalProperties: false
+      properties:
+        password: { type: string, minLength: 1, maxLength: 256 }
+
+    # ============================================================ administración
+    AdminSettingsFields:
+      description: Ajustes globales editables.
+      type: object
+      required: [registration_open, diet_feature_enabled]
+      properties:
+        registration_open: { type: boolean }
+        diet_feature_enabled: { type: boolean }
+    AdminSettingsUpdate:
+      allOf:
+        - $ref: "#/components/schemas/AdminSettingsFields"
+      unevaluatedProperties: false
+    AdminSettings:
+      allOf:
+        - $ref: "#/components/schemas/AdminSettingsFields"
+        - type: object
+          required: [media_require_auth, dataset_commit]
+          properties:
+            media_require_auth: { type: boolean, readOnly: true, description: "Efectivo, de `MEDIA_REQUIRE_AUTH` (solo lectura)." }
+            dataset_commit: { type: string, pattern: "^[0-9a-f]{40}$", readOnly: true }
+    AdminUser:
+      type: object
+      required: [id, email, display_name, role, is_active, created_at, last_login_at]
+      properties:
+        id: { type: string, format: uuid }
+        email: { type: string, format: email }
+        display_name: { type: string }
+        role: { $ref: "#/components/schemas/UserRole" }
+        is_active: { type: boolean }
+        created_at: { type: string, format: date-time }
+        last_login_at: { type: [string, "null"], format: date-time }
+    AdminUserPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/AdminUser" } }
+        next_cursor: { type: [string, "null"] }
+    AdminUserUpdate:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        role: { $ref: "#/components/schemas/UserRole" }
+        is_active: { type: boolean, description: "`false` revoca todas sus sesiones." }
+    IngestRequest:
+      type: object
+      required: [dry_run]
+      additionalProperties: false
+      properties:
+        dry_run: { type: boolean, description: "Solo calcula el diff (altas/bajas/cambios) sin escribir." }
+    IngestCounts:
+      type: object
+      required: [exercises_total, added, updated, deprecated, unchanged, media_verified]
+      properties:
+        exercises_total: { type: integer, minimum: 0 }
+        added: { type: integer, minimum: 0 }
+        updated: { type: integer, minimum: 0 }
+        deprecated: { type: integer, minimum: 0 }
+        unchanged: { type: integer, minimum: 0 }
+        media_verified: { type: integer, minimum: 0, description: "Ficheros de medios con SHA-256 verificado (2.648 esperados)." }
+    IngestDiff:
+      type: object
+      required: [added, updated, deprecated]
+      properties:
+        added: { type: array, items: { $ref: "#/components/schemas/ExerciseIdValue" } }
+        updated: { type: array, items: { $ref: "#/components/schemas/ExerciseIdValue" } }
+        deprecated: { type: array, items: { $ref: "#/components/schemas/ExerciseIdValue" } }
+    IngestRun:
+      type: object
+      required: [id, status, dry_run, commit, started_at, finished_at, triggered_by, counts, diff, errors, warnings]
+      properties:
+        id: { type: string, format: uuid }
+        status: { $ref: "#/components/schemas/IngestStatus" }
+        dry_run: { type: boolean }
+        commit: { type: string, pattern: "^[0-9a-f]{40}$" }
+        started_at: { type: [string, "null"], format: date-time }
+        finished_at: { type: [string, "null"], format: date-time }
+        triggered_by: { type: [string, "null"], format: uuid, description: "Admin que la lanzó; `null` si fue por CLI." }
+        counts: { anyOf: [{ $ref: "#/components/schemas/IngestCounts" }, { type: "null" }] }
+        diff: { anyOf: [{ $ref: "#/components/schemas/IngestDiff" }, { type: "null" }] }
+        errors: { type: array, items: { type: string } }
+        warnings: { type: array, items: { type: string } }
+      example:
+        id: 0192f0d0-3333-7c4d-8e5f-60718293a4b5
+        status: succeeded
+        dry_run: false
+        commit: 7455efae41b330c265e7cd4b78dfa848e7ce5ebd
+        started_at: "2026-09-20T08:00:00Z"
+        finished_at: "2026-09-20T08:03:12Z"
+        triggered_by: 0192f08a-3b4c-7d5e-8f60-112233445566
+        counts: { exercises_total: 1324, added: 1324, updated: 0, deprecated: 0, unchanged: 0, media_verified: 2648 }
+        diff: { added: ["0001", "0002"], updated: [], deprecated: [] }
+        errors: []
+        warnings: []
+    IngestRunPage:
+      type: object
+      required: [items, next_cursor]
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/IngestRun" } }
+        next_cursor: { type: [string, "null"] }

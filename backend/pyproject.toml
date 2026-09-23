@@ -1,0 +1,105 @@
+[project]
+name = "forja-backend"
+version = "0.1.0"
+description = "API de Forja (FastAPI) y pipeline de ingesta del dataset de ejercicios."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "MIT"
+dependencies = [
+  "alembic>=1.14,<2",
+  "argon2-cffi>=23.1",
+  "asyncpg>=0.30",
+  "fastapi>=0.115,<1",
+  "forja-engine",
+  "forja-nutrition",
+  "gunicorn>=23.0",
+  "jinja2>=3.1.4,<4",
+  "jsonschema>=4.23,<5",
+  "pillow>=11.0",
+  "pydantic>=2.9,<3",
+  "pydantic-settings>=2.6,<3",
+  "pyyaml>=6.0.2,<7",
+  "sqlalchemy[asyncio]>=2.0.36,<3",
+  "typer>=0.13",
+  "uvicorn[standard]>=0.32",
+  "weasyprint>=63.0",
+]
+
+[dependency-groups]
+dev = [
+  "httpx>=0.28",
+  "hypothesis>=6.112",
+  "mypy>=1.13",
+  "openapi-spec-validator>=0.7.1",
+  "pytest>=8.3",
+  "pytest-asyncio>=0.24",
+  "pytest-benchmark>=4.0",
+  "pytest-cov>=6.0",
+  "ruff>=0.8",
+  "testcontainers[postgres]>=4.8",
+  "types-jsonschema>=4.23",
+  "types-pyyaml>=6.0.12",
+]
+
+[tool.uv.sources]
+forja-engine = { path = "../engine", editable = true }
+forja-nutrition = { path = "../nutrition", editable = true }
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app", "ingest"]
+
+[tool.ruff]
+extend = "../ruff.toml"
+extend-exclude = ["migrations/versions"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unreachable = true
+plugins = ["pydantic.mypy"]
+files = ["app", "ingest", "tests"]
+
+[[tool.mypy.overrides]]
+module = ["testcontainers.*"]
+ignore_missing_imports = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests", "ingest/tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+addopts = [
+  "--strict-markers",
+  "--strict-config",
+  "-ra",
+  "--cov=app",
+  "--cov=ingest",
+  "--cov-branch",
+  "--cov-report=term-missing",
+  "--cov-report=json:coverage.json",
+]
+markers = [
+  "integration: requiere Docker (testcontainers-postgres)",
+  "slow: pruebas lentas (dataset completo, rendimiento)",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["app", "ingest"]
+omit = ["ingest/tests/*"]
+
+[tool.coverage.report]
+# Umbral combinado. El umbral exacto de §2.2 (>= 90 % líneas y >= 90 % ramas) lo aplica
+# scripts/coverage_gate.py en `make test` y en CI.
+fail_under = 90
+show_missing = true
+exclude_also = ["if TYPE_CHECKING:", "@overload"]
