@@ -3477,7 +3477,7 @@ components:
       examples: [garbanzos_cocidos]
     Food:
       type: object
-      required: [id, name_es, category, fdc_id, per_100g, diet_types, allergens, macro_role, typical_portion_g, unit_grams, unit_name_es]
+      required: [id, name_es, category, fdc_id, per_100g, diet_types, allergens, macro_role, typical_portion_g, unit_grams, unit_name_es, energy_note]
       properties:
         id: { $ref: "#/components/schemas/FoodId" }
         name_es: { type: string }
@@ -3490,6 +3490,9 @@ components:
         typical_portion_g: { type: number, exclusiveMinimum: 0 }
         unit_grams: { type: [number, "null"], exclusiveMinimum: 0, description: "Gramos por unidad (huevos, frutas…); `null` si se pesa." }
         unit_name_es: { type: [string, "null"], examples: [huevo] }
+        energy_note:
+          type: [string, "null"]
+          description: "Justificación cuando |kcal − (4P + 4C + 9G)| supera el 12 % (alcohol, fibra, polioles)."
       example:
         id: garbanzos_cocidos
         name_es: garbanzos cocidos
@@ -3502,6 +3505,7 @@ components:
         typical_portion_g: 150
         unit_grams: null
         unit_name_es: null
+        energy_note: null
     FoodPage:
       type: object
       required: [items, next_cursor]
