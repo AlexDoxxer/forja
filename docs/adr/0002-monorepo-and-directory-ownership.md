@@ -32,6 +32,9 @@ silenciosos. MASTER_PROMPT §4.2 fija la estructura del monorepo.
 3. Zonas compartidas con regla explícita:
    - `backend/app/models/catalog.py`: lo crea `ingesta-datos` si `backend-api` aún no lo ha
      hecho (según `contracts/domain.md`) y a partir de ese momento pasa a `backend-api`.
+   - `backend/pyproject.toml` y `backend/uv.lock`: los mantiene `backend-api`; `ingesta-datos`
+     puede añadir la entrada `[project.scripts] forja-ingest` y las dependencias que use
+     `backend/ingest/`, avisándolo en su handoff.
    - `docs/TASKS.md`: cada agente marca el estado de **sus** tareas; solo el arquitecto y el
      orquestador crean o reasignan tareas.
    - `.github/workflows/ci.yml`: el arquitecto mantiene los trabajos de calidad (lint, tipos,
