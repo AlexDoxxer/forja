@@ -1,0 +1,82 @@
+# Normalización del vocabulario muscular del dataset -> códigos canónicos de Forja.
+# Cubre el 100 % de valores de target, muscle_group y secondary_muscles @ 7455efae.
+# Un valor nuevo sin mapear DEBE hacer fallar la ingesta.
+version: 1
+canonical:
+  chest:        { es: Pecho,               en: Chest,            region: upper, group: chest }
+  lats:         { es: Dorsales,            en: Lats,             region: upper, group: back }
+  upper_back:   { es: Espalda alta,        en: Upper back,       region: upper, group: back }
+  traps:        { es: Trapecio,            en: Traps,            region: upper, group: back }
+  lower_back:   { es: Zona lumbar,         en: Lower back,       region: core,  group: core }
+  shoulders:    { es: Hombros,             en: Shoulders,        region: upper, group: shoulders }
+  rear_delts:   { es: Deltoides posterior, en: Rear delts,       region: upper, group: shoulders }
+  rotator_cuff: { es: Manguito rotador,    en: Rotator cuff,     region: upper, group: shoulders }
+  serratus:     { es: Serrato anterior,    en: Serratus anterior,region: upper, group: chest }
+  biceps:       { es: Bíceps,              en: Biceps,           region: upper, group: arms }
+  triceps:      { es: Tríceps,             en: Triceps,          region: upper, group: arms }
+  forearms:     { es: Antebrazos,          en: Forearms,         region: upper, group: arms }
+  abs:          { es: Abdomen,             en: Abs,              region: core,  group: core }
+  obliques:     { es: Oblicuos,            en: Obliques,         region: core,  group: core }
+  hip_flexors:  { es: Flexores de cadera,  en: Hip flexors,      region: lower, group: core }
+  glutes:       { es: Glúteos,             en: Glutes,           region: lower, group: glutes }
+  quads:        { es: Cuádriceps,          en: Quads,            region: lower, group: quads }
+  hamstrings:   { es: Isquiotibiales,      en: Hamstrings,       region: lower, group: hamstrings }
+  adductors:    { es: Aductores,           en: Adductors,        region: lower, group: legs_other }
+  abductors:    { es: Abductores,          en: Abductors,        region: lower, group: glutes }
+  calves:       { es: Gemelos y sóleo,     en: Calves,           region: lower, group: calves }
+  lower_leg:    { es: Tobillo y tibial,    en: Ankles and shins, region: lower, group: calves }
+  neck:         { es: Cuello,              en: Neck,             region: upper, group: other }
+  cardio:       { es: Sistema cardiovascular, en: Cardiovascular system, region: cardio, group: cardio }
+# Grupos de volumen usados por el motor (volume-targets.yaml): chest, back, shoulders, arms,
+# quads, hamstrings, glutes, calves, core. legs_other/other/cardio no computan volumen.
+map:
+  pectorals: chest
+  chest: chest
+  upper chest: chest
+  lats: lats
+  latissimus dorsi: lats
+  back: lats
+  upper back: upper_back
+  rhomboids: upper_back
+  traps: traps
+  trapezius: traps
+  levator scapulae: traps
+  lower back: lower_back
+  spine: lower_back
+  delts: shoulders
+  deltoids: shoulders
+  shoulders: shoulders
+  rear deltoids: rear_delts
+  rotator cuff: rotator_cuff
+  serratus anterior: serratus
+  biceps: biceps
+  brachialis: biceps
+  triceps: triceps
+  forearms: forearms
+  wrist flexors: forearms
+  wrist extensors: forearms
+  wrists: forearms
+  hands: forearms
+  grip muscles: forearms
+  abs: abs
+  abdominals: abs
+  lower abs: abs
+  core: abs
+  obliques: obliques
+  hip flexors: hip_flexors
+  glutes: glutes
+  quads: quads
+  quadriceps: quads
+  hamstrings: hamstrings
+  adductors: adductors
+  inner thighs: adductors
+  groin: adductors
+  abductors: abductors
+  calves: calves
+  soleus: calves
+  ankles: lower_leg
+  ankle stabilizers: lower_leg
+  shins: lower_leg
+  feet: lower_leg
+  sternocleidomastoid: neck
+  cardiovascular system: cardio

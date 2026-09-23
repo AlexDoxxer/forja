@@ -1,0 +1,24 @@
+# Uso del sexo: solo preselección y ajustes finos documentados. Nunca excluye ejercicios ni limita cargas.
+version: 1
+female:
+  default_emphasis: lower_glutes
+  accessory_rest_multiplier: 0.85
+  isolation_rep_max_delta: 1
+  demo_variant_bonus: 5
+  bmr_formula: mifflin_female
+male:
+  default_emphasis: balanced
+  accessory_rest_multiplier: 1.0
+  isolation_rep_max_delta: 0
+  demo_variant_bonus: 5
+  bmr_formula: mifflin_male
+unspecified:
+  default_emphasis: balanced
+  accessory_rest_multiplier: 1.0
+  isolation_rep_max_delta: 0
+  demo_variant_bonus: 0
+  bmr_formula: mifflin_average
+explanation_es:
+  female: "Hemos preseleccionado énfasis en tren inferior y glúteo y descansos algo más cortos en accesorios. Puedes cambiarlo."
+  male: "Hemos preseleccionado un reparto equilibrado. Puedes cambiarlo."
+  unspecified: "Usamos valores neutros. Puedes ajustar el énfasis a tu gusto."

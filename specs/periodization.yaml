@@ -1,0 +1,27 @@
+version: 1
+default_weeks: 5
+allowed_weeks: [4, 5, 6, 7, 8]
+phases:
+  accumulation:
+    rir_by_week: [3, 2, 2, 1, 1, 1, 1]   # se recorta a las semanas no-deload
+    extra_sets_per_group_per_week: 1
+    cap_ratio_of_max: 1.0
+  deload:
+    last_week: true
+    volume_ratio: 0.55
+    rir: 4
+    load_ratio: 0.9
+strength_undulation:
+  enabled_for: [intermediate, advanced]
+  heavy_day: { reps_shift: -2, rir: 1 }
+  medium_day: { reps_shift: 0, rir: 2 }
+beginner_linear: true
+progression:
+  upper_compound_kg: 2.5
+  lower_compound_kg: 5.0
+  isolation_kg: 1.25
+  miss_threshold_sessions: 2
+  reduce_ratio: [0.05, 0.10]
+  warmup_ramp: [[0.4, 8], [0.6, 5], [0.8, 2]]
+  plates_kg: [25, 20, 15, 10, 5, 2.5, 1.25]
+  bar_kg: 20

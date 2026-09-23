@@ -1,0 +1,38 @@
+# Equipamiento del dataset -> código, nombre ES y grupo. Cubre los 28 valores @ 7455efae.
+version: 1
+map:
+  body weight:          { code: bodyweight,       es: Peso corporal,            group: bodyweight }
+  dumbbell:             { code: dumbbell,         es: Mancuernas,               group: home_basic }
+  cable:                { code: cable,            es: Polea,                    group: gym }
+  barbell:              { code: barbell,          es: Barra,                    group: gym }
+  olympic barbell:      { code: barbell,          es: Barra olímpica,           group: gym }
+  ez barbell:           { code: ez_bar,           es: Barra Z,                  group: gym }
+  trap bar:             { code: trap_bar,         es: Barra hexagonal,          group: gym }
+  leverage machine:     { code: machine,          es: Máquina guiada,           group: gym }
+  smith machine:        { code: smith,            es: Multipower,               group: gym }
+  sled machine:         { code: sled,             es: Prensa / trineo,          group: gym }
+  assisted:             { code: assisted,         es: Máquina asistida,         group: gym }
+  band:                 { code: band,             es: Banda elástica,           group: home_basic }
+  resistance band:      { code: band,             es: Banda de resistencia,     group: home_basic }
+  kettlebell:           { code: kettlebell,       es: Kettlebell,               group: home_basic }
+  weighted:             { code: weighted,         es: Lastre / disco,           group: gym }
+  stability ball:       { code: stability_ball,   es: Fitball,                  group: home_basic }
+  medicine ball:        { code: medicine_ball,    es: Balón medicinal,          group: home_basic }
+  bosu ball:            { code: bosu,             es: Bosu,                     group: gym }
+  rope:                 { code: rope,             es: Cuerda,                   group: gym }
+  roller:               { code: roller,           es: Rodillo de espuma,        group: home_basic }
+  wheel roller:         { code: ab_wheel,         es: Rueda abdominal,          group: home_basic }
+  hammer:               { code: hammer,           es: Mazo,                     group: other }
+  tire:                 { code: tire,             es: Neumático,                group: other }
+  upper body ergometer: { code: arm_ergometer,    es: Ergómetro de brazos,      group: cardio_machine }
+  skierg machine:       { code: skierg,           es: SkiErg,                   group: cardio_machine }
+  stationary bike:      { code: bike,             es: Bicicleta estática,       group: cardio_machine }
+  elliptical machine:   { code: elliptical,       es: Elíptica,                 group: cardio_machine }
+  stepmill machine:     { code: stepmill,         es: Escaladora,               group: cardio_machine }
+# Presets del wizard (qué códigos incluye cada uno)
+presets:
+  full_gym: "*"
+  home_dumbbells: [bodyweight, dumbbell, band, stability_ball, roller, ab_wheel, kettlebell]
+  home_bands: [bodyweight, band, roller, ab_wheel]
+  bodyweight: [bodyweight]
+  custom: []   # el usuario marca la lista

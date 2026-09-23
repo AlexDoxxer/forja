@@ -1,0 +1,9 @@
+# Overrides manuales por id (prevalecen sobre reglas). Revisados por experto-entrenamiento.
+# Campos admitidos: movement_pattern, mechanic, role, difficulty, laterality, load_type, is_staple.
+version: 1
+by_id:
+  "0814": { movement_pattern: elbow_extension }   # triceps dip
+  "0251": { movement_pattern: horizontal_push }   # chest dip
+  "0549": { movement_pattern: hinge, mechanic: compound }  # kettlebell swing
+  "2133": { movement_pattern: carry, load_type: time }     # farmers walk
+  "0276": { movement_pattern: core_anti_extension }        # dead bug

@@ -1,0 +1,40 @@
+# Series efectivas semanales objetivo por grupo de volumen (rango min-max).
+# El motor apunta al punto medio y lo ajusta por énfasis, sexo y tiempo disponible.
+version: 1
+groups: [chest, back, shoulders, arms, quads, hamstrings, glutes, calves, core]
+targets:
+  hypertrophy:
+    beginner:     { default: [8, 12],  arms: [6, 10],  calves: [4, 8],  core: [4, 8] }
+    intermediate: { default: [10, 16], arms: [8, 14],  calves: [6, 10], core: [6, 10] }
+    advanced:     { default: [14, 20], arms: [10, 16], calves: [8, 14], core: [6, 12] }
+  strength:
+    beginner:     { default: [6, 10],  arms: [3, 6],   calves: [3, 6],  core: [4, 8] }
+    intermediate: { default: [8, 12],  arms: [4, 8],   calves: [3, 6],  core: [4, 8] }
+    advanced:     { default: [10, 14], arms: [6, 10],  calves: [4, 8],  core: [6, 10] }
+  fat_loss:
+    beginner:     { default: [6, 10],  arms: [4, 8],   calves: [3, 6],  core: [4, 8] }
+    intermediate: { default: [8, 12],  arms: [6, 10],  calves: [4, 8],  core: [6, 10] }
+    advanced:     { default: [10, 14], arms: [8, 12],  calves: [6, 10], core: [6, 10] }
+  toning:
+    beginner:     { default: [6, 10],  arms: [4, 8],   calves: [3, 6],  core: [4, 8] }
+    intermediate: { default: [8, 14],  arms: [6, 10],  calves: [4, 8],  core: [6, 10] }
+    advanced:     { default: [10, 16], arms: [8, 12],  calves: [6, 10], core: [6, 12] }
+  endurance:
+    beginner:     { default: [6, 10],  arms: [4, 6],   calves: [4, 6],  core: [6, 10] }
+    intermediate: { default: [8, 12],  arms: [4, 8],   calves: [4, 8],  core: [8, 12] }
+    advanced:     { default: [10, 14], arms: [6, 10],  calves: [6, 10], core: [8, 14] }
+  general_fitness:
+    beginner:     { default: [6, 10],  arms: [3, 6],   calves: [3, 6],  core: [4, 8] }
+    intermediate: { default: [8, 12],  arms: [4, 8],   calves: [4, 8],  core: [6, 10] }
+    advanced:     { default: [10, 14], arms: [6, 10],  calves: [4, 8],  core: [6, 10] }
+# Contribución de una serie a cada grupo
+set_credit: { target: 1.0, relevant_secondary: 0.5 }
+max_effective_sets_per_group_per_session: 10
+maintenance_floor_ratio: 0.6   # nunca bajar de 60 % del mínimo por redistribución
+emphasis_multipliers:
+  balanced:     {}
+  lower_glutes: { glutes: 1.5, hamstrings: 1.3, quads: 1.2, "*": 0.8 }
+  upper_body:   { chest: 1.3, back: 1.3, shoulders: 1.3, arms: 1.2, "*": 0.85 }
+  arms:         { arms: 1.5, shoulders: 1.1, "*": 0.9 }
+  back_posture: { back: 1.4, shoulders: 1.2, core: 1.2, "*": 0.9 }
+  core:         { core: 1.5, "*": 0.95 }

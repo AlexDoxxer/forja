@@ -1,0 +1,29 @@
+# Lista SEMILLA de ejercicios fundamentales (ids reales verificados @ 7455efae).
+# El agente de ingesta la amplía hasta 120-160 garantizando >= 2 staples por patrón principal
+# y grupo de equipamiento (gym / home_basic / bodyweight); experto-entrenamiento la aprueba.
+version: 1
+staples:
+  squat:           ["0043", "0042", "0770", "0739", "0046", "1760", "0534", "0413", "1004"]
+  lunge:           ["0336", "0054", "1460", "0431", "0381", "0410"]
+  hinge:           ["0032", "0085", "1459", "0117", "0811", "0044", "0549", "0489", "0991", "1757"]
+  glute_isolation: ["1409", "3013", "0860"]
+  horizontal_push: ["0025", "0289", "0314", "0047", "0577", "2144", "0662", "0493", "0251"]
+  vertical_push:   ["0405", "0426", "0091", "0587", "0553"]
+  horizontal_pull: ["0027", "0293", "0861", "0180", "0499", "3168"]
+  vertical_pull:   ["0652", "1326", "2330", "0017", "0970", "1429"]
+  chest_fly:       ["0308"]
+  shoulder_raise:  ["0334", "0178"]
+  rear_delt:       ["0383", "0993", "0203"]
+  elbow_flexion:   ["0294", "0031", "0447", "0313", "0165"]
+  elbow_extension: ["0201", "0200", "0060", "0194", "0814", "0283"]
+  knee_extension:  ["0585", "3007"]
+  knee_flexion:    ["0586", "0599", "0496"]
+  hip_abduction:   ["0597", "0710", "3006"]
+  calf:            ["1372", "1373", "0417", "0605", "0088", "0409"]
+  shrug:           ["0406", "0095"]
+  core_anti_extension: ["0276", "2135"]
+  core_flexion:    ["0472", "0872", "0274", "0175"]
+  core_rotation:   ["0687", "0846"]
+  core_lateral:    ["0979", "3544"]
+  carry:           ["2133"]
+  cardio:          ["2612", "2138", "2141", "3666", "0003"]

@@ -1,0 +1,60 @@
+# Reglas de enriquecimiento (semilla). Se evalúan en orden; la primera que casa gana.
+# 'name_any' busca subcadenas en name_en (minúsculas). Si una regla tiene varias condiciones
+# (name_any, target, body_part) TODAS deben cumplirse (AND); dentro de una lista basta una (OR). Overrides en overrides/enrichment-overrides.yaml.
+# El agente de ingesta DEBE ampliar estas reglas hasta que el informe muestre 0 'other' no justificados.
+version: 1
+pattern_rules:
+  - { pattern: mobility,        name_any: [stretch, " mobility", "foam roll", "roller "] }
+  - { pattern: cardio,          body_part: cardio }
+  - { pattern: calf,            name_any: ["calf ", "calf-", "calves", "calf raise", "calf press"] }
+  - { pattern: knee_extension,  name_any: ["leg extension", "sissy squat"] }
+  - { pattern: knee_flexion,    name_any: ["leg curl", "nordic", "hamstring curl"] }
+  - { pattern: hip_abduction,   name_any: ["abduction", "clamshell", "side hip", "fire hydrant"] }
+  - { pattern: hip_adduction,   name_any: ["adduction", "adductor"] }
+  - { pattern: glute_isolation, name_any: ["hip thrust", "glute bridge", "bridge", "kickback" ], target: [glutes] }
+  - { pattern: hinge,           name_any: [deadlift, "good morning", "swing", hyperextension, "pull through", "rack pull"] }
+  - { pattern: lunge,           name_any: [lunge, "split squat", "step-up", "step up", "bulgarian", "curtsey"] }
+  - { pattern: squat,           name_any: [squat, "leg press", "hack", "pistol", "wall sit"] }
+  - { pattern: chest_fly,       name_any: [" fly", "flye", "crossover", "pec deck"], target: [pectorals] }
+  - { pattern: rear_delt,       name_any: ["rear delt", "reverse fly", "face pull", "rear lateral"] }
+  - { pattern: shoulder_raise,  name_any: ["lateral raise", "front raise", "y raise", "side raise", "raise"], target: [delts] }
+  - { pattern: shrug,           name_any: [shrug] }
+  - { pattern: vertical_pull,   name_any: ["pull-up", "pull up", "chin-up", "chin up", pulldown, "muscle up", "rope climb"] }
+  - { pattern: horizontal_pull, name_any: [" row", "row ", "inverted row", "t-bar"] }
+  - { pattern: vertical_push,   name_any: ["military press", "shoulder press", "overhead press", "push press", "handstand push", "pike push", "arnold press", "jerk"] }
+  - { pattern: horizontal_push, name_any: ["bench press", "chest press", "push-up", "push up", "floor press", "chest dip", "dip"], target: [pectorals] }
+  - { pattern: elbow_extension, name_any: ["triceps", "tricep", "pushdown", "skull", "french press", "kickback", "close grip bench", "dip"], target: [triceps] }
+  - { pattern: elbow_flexion,   name_any: [curl], target: [biceps] }
+  - { pattern: forearm,         target: [forearms] }
+  - { pattern: neck,            body_part: neck }
+  - { pattern: carry,           name_any: ["farmer", "carry", "suitcase walk"] }
+  - { pattern: plyometric,      name_any: [jump, burpee, "box jump", skater, "plyo", "clap"] }
+  - { pattern: core_anti_extension, name_any: [plank, "dead bug", rollout, "roll out", "hollow", "ab wheel", "body saw"] }
+  - { pattern: core_lateral,    name_any: ["side bend", "side plank", "side bridge", "pallof", "oblique"] }
+  - { pattern: core_rotation,   name_any: [twist, "russian", "woodchop", "wood chop", "rotation", "windshield"] }
+  - { pattern: core_flexion,    name_any: [crunch, "sit-up", "sit up", "leg raise", "knee raise", "v-up", "jackknife", "jack knife", "toe touch", "toes to bar"], target: [abs] }
+  - { pattern: core_flexion,    target: [abs] }
+  - { pattern: hinge,           target: [spine] }
+  - { pattern: elbow_flexion,   target: [biceps] }
+  - { pattern: elbow_extension, target: [triceps] }
+  - { pattern: shoulder_raise,  target: [delts] }
+  - { pattern: horizontal_push, target: [pectorals] }
+  - { pattern: horizontal_pull, target: [upper back] }
+  - { pattern: vertical_pull,   target: [lats] }
+  - { pattern: squat,           target: [quads] }
+  - { pattern: glute_isolation, target: [glutes] }
+  - { pattern: knee_flexion,    target: [hamstrings] }
+  - { pattern: shrug,           target: [traps, levator scapulae] }
+  - { pattern: hip_adduction,   target: [adductors] }
+  - { pattern: hip_abduction,   target: [abductors] }
+  - { pattern: core_anti_extension, target: [serratus anterior] }
+compound_patterns: [squat, lunge, hinge, horizontal_push, vertical_push, horizontal_pull, vertical_pull, carry, plyometric]
+isolation_name_hints: [" fly", "raise", "kickback", "curl", "extension", "shrug", "pushdown"]
+difficulty:
+  level_1_any: [assisted, "on knees", "(kneeling)", "wall", "lever ", "machine", "cable ", "band ", "incline push"]
+  level_3_any: [pistol, "muscle up", handstand, planche, maltese, "front lever", "back lever", "l-pull-up", "archer", "one arm push", "single arm push-up", "dragon flag", "clean", "snatch", "jerk", "nordic", "impossible"]
+  default: 2
+laterality_unilateral_any: ["one arm", "single arm", "one leg", "single leg", alternate, lunge, "split squat", "step-up", unilateral, "archer"]
+load_type:
+  time_any: [plank, hold, "wall sit", "hollow", "hang", walk, stretch]
+  assisted_any: [assisted]

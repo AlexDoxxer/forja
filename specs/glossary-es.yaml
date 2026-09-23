@@ -1,0 +1,104 @@
+# Glosario obligatorio EN -> ES para traducir los 1.324 nombres. Consistencia > literalidad.
+version: 1
+style:
+  - "Minúscula inicial salvo nombres propios; el frontend capitaliza la primera letra."
+  - "Orden: movimiento + implemento + variante (p. ej. 'curl de bíceps con mancuerna, sentado')."
+  - "Mantener anglicismos asentados en gimnasios españoles: curl, press, hip thrust, crunch, burpee, kettlebell."
+  - "No traducir (male)/(female)/(back pov)/(side pov)/v. 2: se retiran y se gestionan como variante."
+terms:
+  dumbbell: mancuerna
+  barbell: barra
+  ez barbell: barra Z
+  trap bar: barra hexagonal
+  cable: polea
+  lever: máquina
+  leverage machine: máquina
+  smith: multipower
+  sled: prensa
+  band: banda elástica
+  resistance band: banda de resistencia
+  stability ball: fitball
+  exercise ball: fitball
+  medicine ball: balón medicinal
+  kettlebell: kettlebell
+  weighted: lastrado
+  assisted: asistido
+  body weight: peso corporal
+  bench press: press de banca
+  incline: inclinado
+  decline: declinado
+  military press: press militar
+  shoulder press: press de hombro
+  squat: sentadilla
+  front squat: sentadilla frontal
+  goblet squat: sentadilla goblet
+  hack squat: sentadilla hack
+  lunge: zancada
+  split squat: sentadilla búlgara / sentadilla dividida (usar 'sentadilla dividida' salvo pie trasero elevado)
+  step-up: subida al banco
+  deadlift: peso muerto
+  romanian deadlift: peso muerto rumano
+  stiff leg: piernas rígidas
+  sumo: sumo
+  good morning: buenos días
+  hip thrust: hip thrust
+  glute bridge: puente de glúteo
+  row: remo
+  bent over: inclinado
+  upright row: remo al mentón
+  pulldown: jalón
+  lat pulldown: jalón al pecho
+  pull-up: dominada
+  chin-up: dominada supina
+  pullover: pullover
+  push-up: flexión
+  dip: fondos
+  fly: aperturas
+  reverse fly: pájaros
+  rear delt: deltoides posterior
+  lateral raise: elevación lateral
+  front raise: elevación frontal
+  shrug: encogimiento de hombros
+  curl: curl
+  hammer curl: curl martillo
+  concentration curl: curl de concentración
+  preacher curl: curl predicador
+  triceps extension: extensión de tríceps
+  skull crusher: press francés
+  french press: press francés
+  pushdown: extensión de tríceps en polea
+  kickback: patada de tríceps
+  leg extension: extensión de cuádriceps
+  leg curl: curl femoral
+  leg press: prensa de piernas
+  calf raise: elevación de talones
+  hip abduction: abducción de cadera
+  hip adduction: aducción de cadera
+  crunch: crunch
+  sit-up: abdominal completo
+  plank: plancha
+  side plank: plancha lateral
+  leg raise: elevación de piernas
+  twist: giro
+  rollout: rueda abdominal
+  hyperextension: hiperextensión
+  stretch: estiramiento
+  seated: sentado
+  standing: de pie
+  lying: tumbado
+  kneeling: de rodillas
+  one arm: a una mano
+  single arm: a una mano
+  one leg: a una pierna
+  single leg: a una pierna
+  alternate: alterno
+  reverse grip: agarre supino
+  close grip: agarre cerrado
+  wide grip: agarre ancho
+  neutral grip: agarre neutro
+  parallel grip: agarre neutro
+  on knees: de rodillas
+  wall: en pared
+  jump: salto
+  walk: caminata
+  farmers walk: paseo del granjero

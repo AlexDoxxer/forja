@@ -1,0 +1,125 @@
+# Splits por días x experiencia. Cada día: nombre, foco y slots (pattern, role, target group, prioridad 1=alta).
+version: 1
+day_templates:
+  full_body_a:
+    name_es: Cuerpo completo A
+    slots:
+      - { pattern: squat,            role: main,      group: quads,      priority: 1 }
+      - { pattern: horizontal_push,  role: main,      group: chest,      priority: 1 }
+      - { pattern: horizontal_pull,  role: main,      group: back,       priority: 1 }
+      - { pattern: hinge,            role: accessory, group: hamstrings, priority: 2 }
+      - { pattern: shoulder_raise,   role: accessory, group: shoulders,  priority: 3 }
+      - { pattern: core_anti_extension, role: core,   group: core,       priority: 3 }
+  full_body_b:
+    name_es: Cuerpo completo B
+    slots:
+      - { pattern: hinge,            role: main,      group: hamstrings, priority: 1 }
+      - { pattern: vertical_push,    role: main,      group: shoulders,  priority: 1 }
+      - { pattern: vertical_pull,    role: main,      group: back,       priority: 1 }
+      - { pattern: lunge,            role: accessory, group: quads,      priority: 2 }
+      - { pattern: elbow_flexion,    role: accessory, group: arms,       priority: 3 }
+      - { pattern: core_rotation,    role: core,      group: core,       priority: 3 }
+  full_body_c:
+    name_es: Cuerpo completo C
+    slots:
+      - { pattern: squat,            role: main,      group: quads,      priority: 1 }
+      - { pattern: vertical_pull,    role: main,      group: back,       priority: 1 }
+      - { pattern: horizontal_push,  role: accessory, group: chest,      priority: 2 }
+      - { pattern: glute_isolation,  role: accessory, group: glutes,     priority: 2 }
+      - { pattern: elbow_extension,  role: accessory, group: arms,       priority: 3 }
+      - { pattern: calf,             role: accessory, group: calves,     priority: 3 }
+      - { pattern: core_flexion,     role: core,      group: core,       priority: 3 }
+  upper_a:
+    name_es: Torso A
+    slots:
+      - { pattern: horizontal_push,  role: main,      group: chest,      priority: 1 }
+      - { pattern: horizontal_pull,  role: main,      group: back,       priority: 1 }
+      - { pattern: vertical_push,    role: accessory, group: shoulders,  priority: 2 }
+      - { pattern: vertical_pull,    role: accessory, group: back,       priority: 2 }
+      - { pattern: elbow_flexion,    role: accessory, group: arms,       priority: 3 }
+      - { pattern: elbow_extension,  role: accessory, group: arms,       priority: 3 }
+  upper_b:
+    name_es: Torso B
+    slots:
+      - { pattern: vertical_pull,    role: main,      group: back,       priority: 1 }
+      - { pattern: vertical_push,    role: main,      group: shoulders,  priority: 1 }
+      - { pattern: horizontal_push,  role: accessory, group: chest,      priority: 2 }
+      - { pattern: horizontal_pull,  role: accessory, group: back,       priority: 2 }
+      - { pattern: shoulder_raise,   role: accessory, group: shoulders,  priority: 3 }
+      - { pattern: rear_delt,        role: accessory, group: shoulders,  priority: 3 }
+  lower_a:
+    name_es: Pierna A (cuádriceps)
+    slots:
+      - { pattern: squat,            role: main,      group: quads,      priority: 1 }
+      - { pattern: hinge,            role: accessory, group: hamstrings, priority: 1 }
+      - { pattern: lunge,            role: accessory, group: quads,      priority: 2 }
+      - { pattern: knee_extension,   role: accessory, group: quads,      priority: 3 }
+      - { pattern: calf,             role: accessory, group: calves,     priority: 3 }
+      - { pattern: core_anti_extension, role: core,   group: core,       priority: 3 }
+  lower_b:
+    name_es: Pierna B (cadena posterior)
+    slots:
+      - { pattern: hinge,            role: main,      group: hamstrings, priority: 1 }
+      - { pattern: glute_isolation,  role: accessory, group: glutes,     priority: 1 }
+      - { pattern: squat,            role: accessory, group: quads,      priority: 2 }
+      - { pattern: knee_flexion,     role: accessory, group: hamstrings, priority: 2 }
+      - { pattern: calf,             role: accessory, group: calves,     priority: 3 }
+      - { pattern: core_rotation,    role: core,      group: core,       priority: 3 }
+  push:
+    name_es: Empuje
+    slots:
+      - { pattern: horizontal_push,  role: main,      group: chest,      priority: 1 }
+      - { pattern: vertical_push,    role: main,      group: shoulders,  priority: 1 }
+      - { pattern: horizontal_push,  role: accessory, group: chest,      priority: 2 }
+      - { pattern: chest_fly,        role: accessory, group: chest,      priority: 2 }
+      - { pattern: shoulder_raise,   role: accessory, group: shoulders,  priority: 3 }
+      - { pattern: elbow_extension,  role: accessory, group: arms,       priority: 3 }
+  pull:
+    name_es: Tirón
+    slots:
+      - { pattern: vertical_pull,    role: main,      group: back,       priority: 1 }
+      - { pattern: horizontal_pull,  role: main,      group: back,       priority: 1 }
+      - { pattern: horizontal_pull,  role: accessory, group: back,       priority: 2 }
+      - { pattern: rear_delt,        role: accessory, group: shoulders,  priority: 2 }
+      - { pattern: elbow_flexion,    role: accessory, group: arms,       priority: 3 }
+      - { pattern: shrug,            role: accessory, group: back,       priority: 3 }
+  legs:
+    name_es: Pierna
+    slots:
+      - { pattern: squat,            role: main,      group: quads,      priority: 1 }
+      - { pattern: hinge,            role: main,      group: hamstrings, priority: 1 }
+      - { pattern: lunge,            role: accessory, group: glutes,     priority: 2 }
+      - { pattern: knee_flexion,     role: accessory, group: hamstrings, priority: 2 }
+      - { pattern: calf,             role: accessory, group: calves,     priority: 3 }
+      - { pattern: core_flexion,     role: core,      group: core,       priority: 3 }
+  glutes_hams:
+    name_es: Glúteo e isquios
+    slots:
+      - { pattern: glute_isolation,  role: main,      group: glutes,     priority: 1 }
+      - { pattern: hinge,            role: main,      group: hamstrings, priority: 1 }
+      - { pattern: lunge,            role: accessory, group: glutes,     priority: 2 }
+      - { pattern: hip_abduction,    role: accessory, group: glutes,     priority: 2 }
+      - { pattern: knee_flexion,     role: accessory, group: hamstrings, priority: 3 }
+      - { pattern: core_anti_extension, role: core,   group: core,       priority: 3 }
+  active_recovery:
+    name_es: Recuperación activa y movilidad
+    slots:
+      - { pattern: cardio,           role: cardio,    group: cardio,     priority: 1 }
+      - { pattern: mobility,         role: mobility,  group: other,      priority: 1 }
+      - { pattern: mobility,         role: mobility,  group: other,      priority: 2 }
+splits:
+  "1": { beginner: [full_body_a], intermediate: [full_body_a], advanced: [full_body_a] }
+  "2": { beginner: [full_body_a, full_body_b], intermediate: [full_body_a, full_body_b], advanced: [upper_a, lower_a] }
+  "3": { beginner: [full_body_a, full_body_b, full_body_c], intermediate: [full_body_a, full_body_b, full_body_c], advanced: [push, pull, legs] }
+  "4": { beginner: [upper_a, lower_a, upper_b, lower_b], intermediate: [upper_a, lower_a, upper_b, lower_b], advanced: [upper_a, lower_a, upper_b, lower_b] }
+  "5": { beginner: [upper_a, lower_a, full_body_c, upper_b, lower_b], intermediate: [upper_a, lower_a, push, pull, legs], advanced: [push, pull, legs, upper_b, lower_b] }
+  "6": { beginner: [push, pull, legs, push, pull, legs], intermediate: [push, pull, legs, push, pull, legs], advanced: [push, pull, legs, push, pull, legs] }
+  "7": { beginner: [push, pull, legs, active_recovery, push, pull, legs], intermediate: [push, pull, legs, active_recovery, push, pull, legs], advanced: [push, pull, legs, active_recovery, push, pull, legs] }
+# Sustituciones por énfasis (se aplican tras elegir split, solo si days >= min_days)
+emphasis_overrides:
+  lower_glutes: { min_days: 4, replace_last_of: [upper_b, push], with: glutes_hams }
+  upper_body:   { min_days: 4, append_block: { patterns: [elbow_flexion, elbow_extension], to: [upper_a, upper_b, push, pull] } }
+  arms:         { min_days: 3, append_block: { patterns: [elbow_flexion, elbow_extension], to: "*" } }
+  back_posture: { min_days: 2, append_block: { patterns: [rear_delt, horizontal_pull], to: "*" } }
+  core:         { min_days: 2, append_block: { patterns: [core_anti_extension, core_lateral], to: "*" } }
+  balanced:     {}
