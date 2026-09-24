@@ -1,8 +1,17 @@
-# Correcciones de display_name_en (name_en original intacto). Ampliar durante la ingesta.
+# Correcciones de display_name_en (name_en original intacto). Propiedad de ingesta-datos.
+# replace_substrings se aplica sobre el nombre rodeado de un espacio a cada lado, así que un
+# espacio en la clave actúa como límite de palabra. by_id sustituye el nombre completo.
 version: 1
 replace_substrings:
   "в°": "°"
   " revers ": " reverse "
   "sitted": "seated"
   "side bent": "side bend"
+  " squad stretch": " quad stretch"
+  " keens ": " knees "
+  " peacher ": " preacher "
+  " rollerer ": " roller "
+  " depresor ": " depressor "
+  " row_shoulder ": " row "
+  " left hook. boxing ": " left hook (boxing) "
 by_id: {}

@@ -1,29 +1,50 @@
-# Lista SEMILLA de ejercicios fundamentales (ids reales verificados @ 7455efae).
-# El agente de ingesta la amplía hasta 120-160 garantizando >= 2 staples por patrón principal
-# y grupo de equipamiento (gym / home_basic / bodyweight); experto-entrenamiento la aprueba.
-version: 1
+# Ejercicios fundamentales («staples», MASTER_PROMPT §6.3). Ids reales @ 7455efae.
+# Ampliada por ingesta-datos desde la semilla de 103 ids: >= 2 staples por patrón principal y
+# grupo de equipamiento (gym / home_basic / bodyweight), comprobado por tests y por
+# docs/enrichment-report.md. Cada id debe tener exactamente el patrón bajo el que figura.
+# Cambios respecto a la semilla: 0860 (cable kickback) es de tríceps en el dataset y sale de
+# glute_isolation; 0003 (air bike) es un crunch bicicleta (core_rotation) y sale de cardio.
+# Pendiente de aprobación por experto-entrenamiento (F1b-EXP-02).
+version: 2
 staples:
-  squat:           ["0043", "0042", "0770", "0739", "0046", "1760", "0534", "0413", "1004"]
-  lunge:           ["0336", "0054", "1460", "0431", "0381", "0410"]
-  hinge:           ["0032", "0085", "1459", "0117", "0811", "0044", "0549", "0489", "0991", "1757"]
-  glute_isolation: ["1409", "3013", "0860"]
-  horizontal_push: ["0025", "0289", "0314", "0047", "0577", "2144", "0662", "0493", "0251"]
-  vertical_push:   ["0405", "0426", "0091", "0587", "0553"]
-  horizontal_pull: ["0027", "0293", "0861", "0180", "0499", "3168"]
-  vertical_pull:   ["0652", "1326", "2330", "0017", "0970", "1429"]
-  chest_fly:       ["0308"]
-  shoulder_raise:  ["0334", "0178"]
-  rear_delt:       ["0383", "0993", "0203"]
-  elbow_flexion:   ["0294", "0031", "0447", "0313", "0165"]
-  elbow_extension: ["0201", "0200", "0060", "0194", "0814", "0283"]
-  knee_extension:  ["0585", "3007"]
-  knee_flexion:    ["0586", "0599", "0496"]
-  hip_abduction:   ["0597", "0710", "3006"]
-  calf:            ["1372", "1373", "0417", "0605", "0088", "0409"]
-  shrug:           ["0406", "0095"]
-  core_anti_extension: ["0276", "2135"]
+  # --- patrones principales (gym · home_basic · bodyweight) ---
+  squat:           ["0043", "0042", "0046", "0770", "0739",   # gym
+                    "0413", "0534", "1760", "1004",           # home_basic
+                    "3533", "3119", "1759"]                   # bodyweight
+  lunge:           ["0054", "0078", "0114",
+                    "0336", "0381", "0410", "0431",
+                    "1460", "2368", "3470"]
+  hinge:           ["0032", "0085", "0117", "0811", "0044",
+                    "0549", "0991", "1459", "1757",
+                    "0489", "0488"]
+  horizontal_push: ["0025", "0047", "0577", "2144", "0748",
+                    "0289", "0314", "1254",
+                    "0251", "0493", "0662", "3211"]
+  vertical_push:   ["0091", "0587", "0774",
+                    "0405", "0426", "0553", "0997",
+                    "0471", "3302"]
+  horizontal_pull: ["0027", "0180", "0861", "3017",
+                    "0293", "0292", "3144",
+                    "0499", "3168", "2300"]
+  vertical_pull:   ["0017", "2330", "0198",
+                    "0970", "0974", "1013",
+                    "0652", "1326", "1429"]
+  # --- accesorios, core y cardio ---
+  glute_isolation: ["1409", "3562", "2286", "3236", "3013"]
+  chest_fly:       ["0308", "0227", "0596"]
+  shoulder_raise:  ["0334", "0178", "0584"]
+  rear_delt:       ["0383", "0993", "0203", "0602"]
+  elbow_flexion:   ["0294", "0031", "0447", "0313", "0165", "0968"]
+  elbow_extension: ["0201", "0200", "0060", "0194", "0814", "0283", "0430"]
+  knee_extension:  ["0585", "3007", "1489"]
+  knee_flexion:    ["0586", "0599", "0496", "3193"]
+  hip_abduction:   ["0597", "3006", "0710"]
+  hip_adduction:   ["0598", "3667"]
+  calf:            ["1372", "1373", "0417", "0605", "0088", "0409", "0999"]
+  shrug:           ["0406", "0095", "1018"]
+  core_anti_extension: ["0276", "2135", "0857"]
   core_flexion:    ["0472", "0872", "0274", "0175"]
-  core_rotation:   ["0687", "0846"]
-  core_lateral:    ["0979", "3544"]
-  carry:           ["2133"]
-  cardio:          ["2612", "2138", "2141", "3666", "0003"]
+  core_rotation:   ["0687", "0846", "0230"]
+  core_lateral:    ["0979", "3544", "0407"]
+  carry:           ["2133", "3548"]
+  cardio:          ["2612", "2138", "2141", "3666", "0685", "1160"]
