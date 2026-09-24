@@ -1,0 +1,94 @@
+/**
+ * Tokens de diseño «Forja» (MASTER_PROMPT §10.1). Tema oscuro por defecto; el tema claro se
+ * activa con `[data-theme="light"]` en `<html>` (ver `src/lib/theme.ts`).
+ *
+ * Los pares texto/fondo listados aquí se verifican con la fórmula de contraste WCAG en
+ * `tests/design-tokens.test.ts` (mínimo AA: 4.5:1 en texto normal, 3:1 en texto grande/UI).
+ */
+:root {
+  color-scheme: dark;
+
+  /* Superficies (oscuro, por defecto) */
+  --color-bg: #16181b;
+  --color-surface-1: #1f2226;
+  --color-surface-2: #2a2e33;
+  --color-text: #f4f1ec;
+  --color-text-muted: #b7bcc4;
+  --color-border: #383d44;
+
+  /* Acento «brasa» (acciones primarias y récords) */
+  --color-accent: #ff6a2b;
+  --color-accent-2: #ffb23f;
+  --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+  --color-on-accent: #16181b;
+
+  /* Semánticos: color base (chips/iconos) y variante de texto verificada en AA */
+  --color-success: #3fb57a;
+  --color-success-text: #3fb57a;
+  --color-warning: #e8b03a;
+  --color-warning-text: #e8b03a;
+  --color-error: #e5484d;
+  --color-error-text: #e5484d;
+
+  /* Tipografía (ADR 0007) */
+  --font-display: "Archivo Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --nums-tabular: "tnum" 1, "cv11" 1;
+
+  /* Espaciado (escala de 4 px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Radios y sombras */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-2: 0 8px 24px rgb(0 0 0 / 0.45);
+
+  /* Objetivo táctil mínimo (§10.1) y medio de ejercicio (§2.1) */
+  --tap-target-min: 48px;
+  --media-max: 180px;
+
+  /* Navegación */
+  --nav-height: 64px;
+  --nav-width: 240px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-bg: #f4f1ec;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #e9e4da;
+  --color-text: #1b1d20;
+  --color-text-muted: #52555c;
+  --color-border: #d8d2c4;
+
+  --color-on-accent: #16181b;
+
+  /* En claro, los semánticos usados como texto se oscurecen para mantener AA (ver test) */
+  --color-success-text: #1e7a4c;
+  --color-warning-text: #8a5a00;
+  --color-error-text: #b3231f;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.08);
+  --shadow-2: 0 8px 24px rgb(0 0 0 / 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration: 0ms;
+  }
+}
+@media not (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration: 180ms;
+  }
+}

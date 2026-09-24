@@ -109,14 +109,14 @@
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F1-FE-01 | Dependencias de §4.1 y `npm run gen:api` (`openapi-typescript` → `src/lib/api/schema.d.ts`) + cliente `openapi-fetch` con middleware CSRF (ADR 0003) | Tipos generados sin `any`; test del middleware (cabecera en métodos no seguros) | F0-ORQ-01 | pendiente |
-| F1-FE-02 | Mocks MSW generados de los ejemplos de `contracts/openapi.yaml` | Handlers para todas las operaciones; tests de componentes los usan | F1-FE-01 | pendiente |
-| F1-FE-03 | Tokens de diseño «Forja» (§10.1) y tipografía autoalojada (ADR 0007) | Contraste AA verificado en test; fuentes servidas desde `/assets` | F0-ORQ-01 | pendiente |
-| F1-FE-04 | Componentes base sobre Radix (Button, Sheet, Dialog, Tabs, Select, Slider, Toast, NumberPad) | Tests con Testing Library + axe sin violaciones | F1-FE-03 | pendiente |
-| F1-FE-05 | `ExerciseMedia` único + regla ESLint que prohíbe `<img>` de medios fuera de él | Test que falla sin atribución «© Gym visual — https://gymvisual.com/»; máx. 180 px; `prefers-reduced-motion` | F1-FE-03 | pendiente |
-| F1-FE-06 | Shell: TanStack Router, navegación inferior (móvil) y lateral (escritorio) | Navegación entre las 5 secciones con MSW | F1-FE-04 | pendiente |
-| F1-FE-07 | i18n `es` (defecto) y `en` con `Intl` | Sin cadenas sin traducir (test) | F1-FE-06 | pendiente |
-| F1-FE-08 | Handoff con capturas móvil/escritorio, claro/oscuro | `docs/handoffs/F1-frontend.md`; `make test-frontend` ≥ 85 % | F1-FE-01…07 | pendiente |
+| F1-FE-01 | Dependencias de §4.1 y `npm run gen:api` (`openapi-typescript` → `src/lib/api/schema.d.ts`) + cliente `openapi-fetch` con middleware CSRF (ADR 0003) | Tipos generados sin `any`; test del middleware (cabecera en métodos no seguros) | F0-ORQ-01 | hecha |
+| F1-FE-02 | Mocks MSW generados de los ejemplos de `contracts/openapi.yaml` | Handlers para todas las operaciones; tests de componentes los usan | F1-FE-01 | hecha |
+| F1-FE-03 | Tokens de diseño «Forja» (§10.1) y tipografía autoalojada (ADR 0007) | Contraste AA verificado en test; fuentes servidas desde `/assets` | F0-ORQ-01 | hecha |
+| F1-FE-04 | Componentes base sobre Radix (Button, Sheet, Dialog, Tabs, Select, Slider, Toast, NumberPad) | Tests con Testing Library + axe sin violaciones | F1-FE-03 | pendiente (fuera del encargo de esta entrega; ver handoff F1) |
+| F1-FE-05 | `ExerciseMedia` único + regla ESLint que prohíbe `<img>` de medios fuera de él | Test que falla sin atribución «© Gym visual — https://gymvisual.com/»; máx. 180 px; `prefers-reduced-motion` | F1-FE-03 | hecha |
+| F1-FE-06 | Shell: TanStack Router, navegación inferior (móvil) y lateral (escritorio) | Navegación entre las 5 secciones con MSW | F1-FE-04 | hecha |
+| F1-FE-07 | i18n `es` (defecto) y `en` con `Intl` | Sin cadenas sin traducir (test) | F1-FE-06 | hecha |
+| F1-FE-08 | Handoff con capturas móvil/escritorio, claro/oscuro | `docs/handoffs/F1-frontend.md`; `make test-frontend` ≥ 85 % | F1-FE-01…07 | hecha (handoff en `docs/handoffs/f1-frontend-ui.md`; capturas se entregan con F2 junto al resto de pantallas, ver handoff) |
 
 ---
 
