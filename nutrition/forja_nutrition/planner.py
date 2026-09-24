@@ -157,7 +157,7 @@ def build_meal_candidates(
     return chosen
 
 
-def _round_grams(grams: float, food: Food, rounding: RoundingTable) -> tuple[float, int | None]:
+def round_grams(grams: float, food: Food, rounding: RoundingTable) -> tuple[float, int | None]:
     if food.unit_grams is not None:
         units = round(grams / food.unit_grams)
         if units < 1 and grams > 0:
@@ -168,7 +168,7 @@ def _round_grams(grams: float, food: Food, rounding: RoundingTable) -> tuple[flo
     return rounded, None
 
 
-def _nutrients_for(food: Food, grams: float) -> MacroTotals:
+def nutrients_for(food: Food, grams: float) -> MacroTotals:
     factor = grams / 100.0
     per_100g = food.per_100g
     return MacroTotals(
@@ -237,7 +237,7 @@ def build_meal(
 
     items: list[MealItem] = []
     for food, raw_grams in zip(candidates, grams_solution, strict=True):
-        grams, units = _round_grams(raw_grams, food, rounding)
+        grams, units = round_grams(raw_grams, food, rounding)
         usage_counts[food.id] = usage_counts.get(food.id, 0) + 1
         if grams <= 0:
             continue
@@ -247,7 +247,7 @@ def build_meal(
                 name_es=food.name_es,
                 grams=grams,
                 units=units,
-                nutrients=_nutrients_for(food, grams),
+                nutrients=nutrients_for(food, grams),
             )
         )
 
@@ -263,15 +263,15 @@ def build_meal(
                 name_es=main_food.name_es,
                 grams=grams,
                 units=units,
-                nutrients=_nutrients_for(main_food, grams),
+                nutrients=nutrients_for(main_food, grams),
             )
         )
 
-    totals = _sum_macro_totals(item.nutrients for item in items)
+    totals = sum_macro_totals(item.nutrients for item in items)
     return Meal(slot=slot, items=tuple(items), totals=totals)
 
 
-def _sum_macro_totals(totals_iter: Iterable[MacroTotals]) -> MacroTotals:
+def sum_macro_totals(totals_iter: Iterable[MacroTotals]) -> MacroTotals:
     kcal = protein = fat = carbs = fiber = 0.0
     for totals in totals_iter:
         kcal += totals.kcal
@@ -282,20 +282,20 @@ def _sum_macro_totals(totals_iter: Iterable[MacroTotals]) -> MacroTotals:
     return MacroTotals(kcal=kcal, protein_g=protein, fat_g=fat, carbs_g=carbs, fiber_g=fiber)
 
 
-def _relative_deviation(actual: float, target: float | None) -> float:
+def relative_deviation(actual: float, target: float | None) -> float:
     if not target:
         return 0.0
     return (actual - target) / target
 
 
-def _deviation_for(
+def deviation_for(
     totals: MacroTotals, target_kcal: float, protein: float, fat: float, carbs: float
 ) -> MacroDeviation:
     return MacroDeviation(
-        kcal=_relative_deviation(totals.kcal, target_kcal),
-        protein=_relative_deviation(totals.protein_g, protein),
-        fat=_relative_deviation(totals.fat_g, fat),
-        carbs=_relative_deviation(totals.carbs_g, carbs),
+        kcal=relative_deviation(totals.kcal, target_kcal),
+        protein=relative_deviation(totals.protein_g, protein),
+        fat=relative_deviation(totals.fat_g, fat),
+        carbs=relative_deviation(totals.carbs_g, carbs),
     )
 
 
@@ -345,8 +345,8 @@ def plan_week(nutrition_input: NutritionInput, week_start: date) -> MealPlanOutc
                 rounding=tables.rounding,
             )
             meals.append(meal)
-        totals = _sum_macro_totals(m.totals for m in meals)
-        deviation = _deviation_for(
+        totals = sum_macro_totals(m.totals for m in meals)
+        deviation = deviation_for(
             totals, target.target_kcal, target.protein_g, target.fat_g, target.carbs_g
         )
         if (
