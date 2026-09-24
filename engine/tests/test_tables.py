@@ -51,7 +51,7 @@ def test_hash_changes_when_a_table_changes(tmp_path: Path) -> None:
 def test_missing_file_fails_fast(tmp_path: Path) -> None:
     specs = copy_specs(tmp_path)
     (specs / "engine-rules.yaml").unlink()
-    with pytest.raises(TablesError, match="engine-rules.yaml: no existe"):
+    with pytest.raises(TablesError, match=r"engine-rules\.yaml: no existe"):
         load_tables(specs)
 
 
@@ -85,7 +85,11 @@ def _delete(path: list[str | int]) -> Mutation:
 BROKEN: list[tuple[str, Mutation, str]] = [
     ("split-templates.yaml", _delete(["splits", "3"]), "splits\\[3\\]"),
     ("split-templates.yaml", _set(["splits", "3", "advanced"], ["push", "pull"]), "3 días"),
-    ("split-templates.yaml", _set(["splits", "1", "advanced"], ["nope"]), "plantillas inexistentes"),
+    (
+        "split-templates.yaml",
+        _set(["splits", "1", "advanced"], ["nope"]),
+        "plantillas inexistentes",
+    ),
     ("split-templates.yaml", _delete(["emphasis_overrides", "core"]), "todos los énfasis"),
     (
         "split-templates.yaml",

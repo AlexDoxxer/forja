@@ -1,4 +1,4 @@
-"""§7.8: las 1.890 combinaciones objetivo × días × nivel × sexo × preset generan planes válidos."""
+"""§7.8: las 1.890 combinaciones objetivo x días x nivel x sexo x preset generan planes válidos."""
 
 import itertools
 
@@ -9,9 +9,7 @@ from forja_engine.models import EquipmentPreset, Experience, GeneratorInput, Goa
 from tests.helpers import assert_plan_invariants, catalog, equipment_for
 
 SESSION_MINUTES = (30, 45, 60, 75, 90)
-COMBINATIONS = list(
-    itertools.product(Goal, range(1, 8), Experience, Sex, EquipmentPreset)
-)
+COMBINATIONS = list(itertools.product(Goal, range(1, 8), Experience, Sex, EquipmentPreset))
 
 
 def test_matrix_has_1890_cases() -> None:

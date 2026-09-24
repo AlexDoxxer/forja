@@ -123,7 +123,6 @@ def blocks_volume(
     return totals
 
 
-
 def ordered_volume(totals: Mapping[VolumeGroup, float]) -> list[tuple[VolumeGroup, float]]:
     """Grupos con series > 0 en el orden de ``VolumeGroup``."""
     return [(group, totals[group]) for group in VolumeGroup if totals.get(group, 0.0) > 0]

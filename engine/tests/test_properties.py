@@ -32,7 +32,9 @@ def generator_inputs(draw: st.DrawFn) -> GeneratorInput:
     items: tuple[EquipmentCode, ...] = ()
     if preset is EquipmentPreset.CUSTOM:
         items = tuple(
-            draw(st.lists(st.sampled_from(list(EquipmentCode)), min_size=1, max_size=6, unique=True))
+            draw(
+                st.lists(st.sampled_from(list(EquipmentCode)), min_size=1, max_size=6, unique=True)
+            )
         )
     preferred = draw(
         st.one_of(
@@ -62,9 +64,7 @@ def generator_inputs(draw: st.DrawFn) -> GeneratorInput:
         include_cooldown=draw(st.one_of(st.none(), st.booleans())),
         include_cardio_finisher=draw(st.one_of(st.none(), st.booleans())),
         favorite_exercise_ids=tuple(draw(st.lists(st.sampled_from(IDS), max_size=10, unique=True))),
-        excluded_exercise_ids=tuple(
-            draw(st.lists(st.sampled_from(IDS), max_size=40, unique=True))
-        ),
+        excluded_exercise_ids=tuple(draw(st.lists(st.sampled_from(IDS), max_size=40, unique=True))),
         seed=draw(st.one_of(st.none(), st.integers(0, 2**53 - 1))),
     )
 

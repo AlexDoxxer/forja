@@ -32,7 +32,9 @@ def test_candidate_pool_is_identical_for_every_sex(preset: EquipmentPreset) -> N
             [c.id for c in selector.candidates(slot, order[:level], UsageState())]
             for template in tables.split_templates.day_templates.values()
             for slot in (
-                SlotRef(slot_index=i, pattern=s.pattern, role=s.role, group=s.group, priority=s.priority)
+                SlotRef(
+                    slot_index=i, pattern=s.pattern, role=s.role, group=s.group, priority=s.priority
+                )
                 for i, s in enumerate(template.slots)
             )
             for level in range(len(order) + 1)
@@ -71,9 +73,11 @@ def test_female_modifiers_only_touch_rest_and_isolation_reps() -> None:
             low = tables.prescription.table[Goal.HYPERTROPHY]["accessory"].rest_s[0]
             assert f_ex.rest_s >= low
             if cards[f_ex.exercise_id].mechanic is Mechanic.ISOLATION and f_ex.rep_max is not None:
-                assert f_ex.rep_max == tables.prescription.table[Goal.HYPERTROPHY][
-                    "accessory"
-                ].reps[1] + tables.sex_modifiers.female.isolation_rep_max_delta
+                assert (
+                    f_ex.rep_max
+                    == tables.prescription.table[Goal.HYPERTROPHY]["accessory"].reps[1]
+                    + tables.sex_modifiers.female.isolation_rep_max_delta
+                )
 
 
 def test_demonstrator_bonus_prefers_but_never_excludes() -> None:
