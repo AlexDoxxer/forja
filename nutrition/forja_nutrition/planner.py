@@ -16,6 +16,7 @@ from forja_nutrition import __version__
 from forja_nutrition.energy import calculate_target, notice
 from forja_nutrition.foods import foods_hash, load_foods
 from forja_nutrition.models import (
+    FoodCategory,
     FoodMacroRole,
     MacroDeviation,
     MacroTotals,
@@ -42,6 +43,25 @@ _ROLE_ORDER: tuple[FoodMacroRole, ...] = (
     FoodMacroRole.produce,
     FoodMacroRole.fat,
 )
+# Categorías que la plantilla mediterránea puede seleccionar automáticamente; condiments y
+# beverages quedan fuera de la selección de comidas (siguen en el catálogo para intercambios
+# y en la lista de la compra si aparecen por otra vía), evitando p. ej. cerveza como "carb".
+_MEAL_ELIGIBLE_CATEGORIES: frozenset[FoodCategory] = frozenset(
+    {
+        FoodCategory.fruits,
+        FoodCategory.vegetables,
+        FoodCategory.legumes,
+        FoodCategory.grains,
+        FoodCategory.bakery,
+        FoodCategory.dairy,
+        FoodCategory.eggs,
+        FoodCategory.meat,
+        FoodCategory.fish_seafood,
+        FoodCategory.plant_protein,
+        FoodCategory.nuts_seeds,
+        FoodCategory.fats_oils,
+    }
+)
 _DAYS_PER_WEEK = 7
 _BASE_SELECTION_WEIGHT = 10.0
 _REPEAT_PENALTY_PER_USE = 3.0
@@ -55,9 +75,16 @@ def _role_order() -> tuple[FoodMacroRole, ...]:
     return _ROLE_ORDER
 
 
+def meal_eligible_categories() -> frozenset[FoodCategory]:
+    """Categorías que la plantilla mediterránea puede elegir (reusado por `swap.py`)."""
+    return _MEAL_ELIGIBLE_CATEGORIES
+
+
 def _eligible(
     food: Food, nutrition_input: NutritionInput, allergens: set[object], excluded: set[str]
 ) -> bool:
+    if food.category not in _MEAL_ELIGIBLE_CATEGORIES:
+        return False
     if food.id in excluded:
         return False
     if nutrition_input.diet_type not in food.diet_types:
