@@ -43,4 +43,21 @@ export default tseslint.config(
     files: ["vite.config.ts", "playwright.config.ts", "e2e/**/*.ts"],
     languageOptions: { globals: { ...globals.node } },
   },
+  {
+    // Medios de ejercicio © Gym visual: solo `ExerciseMedia` puede usar `<img>` (MASTER_PROMPT
+    // §2.1, ADR 0004). El resto del código debe pasar por ese componente, que exige la
+    // atribución, el tamaño máximo de 180 px y el comportamiento de `prefers-reduced-motion`.
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: ["src/components/ExerciseMedia.tsx"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "JSXOpeningElement[name.name='img']",
+          message:
+            "Usa el componente ExerciseMedia para mostrar medios de ejercicio (MASTER_PROMPT §2.1, ADR 0004); no uses <img> directamente.",
+        },
+      ],
+    },
+  },
 );
