@@ -7,7 +7,7 @@ semilla DEBE incrementar ``ENGINE_VERSION``.
 
 from typing import Final
 
-ENGINE_VERSION: Final[str] = "0.1.0"
+ENGINE_VERSION: Final[str] = "0.2.0"
 __version__: Final[str] = ENGINE_VERSION
 
 __all__ = ["ENGINE_VERSION", "__version__"]
