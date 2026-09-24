@@ -6,7 +6,18 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", "coverage", "playwright-report", "test-results", ".lighthouseci"] },
+  {
+    ignores: [
+      "dist",
+      "coverage",
+      "playwright-report",
+      "test-results",
+      ".lighthouseci",
+      // Generado por `openapi-typescript` a partir de contracts/openapi.yaml (`npm run gen:api`);
+      // no se edita a mano y se sobrescribe en cada generación.
+      "src/lib/api/schema.d.ts",
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
@@ -38,6 +49,14 @@ export default tseslint.config(
     files: ["**/*.js"],
     extends: [tseslint.configs.disableTypeChecked],
     languageOptions: { globals: { ...globals.node } },
+  },
+  {
+    // Script de generación de mocks (Node, ejecutado tal cual sin compilar): las anotaciones
+    // de tipo de retorno no son sintaxis JS válida aquí.
+    files: ["scripts/**/*.js"],
+    rules: {
+      "@typescript-eslint/explicit-function-return-type": "off",
+    },
   },
   {
     files: ["vite.config.ts", "playwright.config.ts", "e2e/**/*.ts"],

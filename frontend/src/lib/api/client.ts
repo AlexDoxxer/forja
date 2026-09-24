@@ -45,7 +45,7 @@ function extractTitle(problem: unknown): string | null {
   if (typeof problem !== "object" || problem === null || !("title" in problem)) {
     return null;
   }
-  const { title } = problem as { title: unknown };
+  const { title } = problem;
   return typeof title === "string" ? title : null;
 }
 
@@ -63,7 +63,7 @@ export class ApiError extends Error {
  * Extrae `data` de una respuesta de `openapi-fetch` o lanza un `ApiError`/`Error` tipado.
  * Evita repetir la comprobación de `{ data, error }` en cada hook de datos.
  */
-export async function unwrapApi<TData>(result: { data?: TData; error?: unknown }): Promise<TData> {
+export function unwrapApi<TData>(result: { data?: TData; error?: unknown }): TData {
   if (result.error !== undefined) {
     throw new ApiError(result.error);
   }

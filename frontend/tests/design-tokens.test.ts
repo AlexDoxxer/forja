@@ -41,6 +41,15 @@ function relativeLuminance(hex: string): number {
   return 0.2126 * channelLuminance(r) + 0.7152 * channelLuminance(g) + 0.0722 * channelLuminance(b);
 }
 
+/** Devuelve el valor de un token o falla la prueba si no existe (evita asertar `!`/`as`). */
+function requireToken(tokens: Record<string, string>, name: string): string {
+  const value = tokens[name];
+  if (value === undefined) {
+    throw new Error(`El token --${name} no está definido en tokens.css`);
+  }
+  return value;
+}
+
 /** Ratio de contraste WCAG 2.x entre dos colores hexadecimales. */
 function contrastRatio(a: string, b: string): number {
   const luminanceA = relativeLuminance(a);
@@ -64,11 +73,8 @@ describe("tokens de diseño — contraste WCAG AA (MASTER_PROMPT §10.1)", () =>
     ["aviso sobre fondo", "color-warning-text", "color-bg"],
     ["error sobre fondo", "color-error-text", "color-bg"],
   ])("tema oscuro: %s cumple AA (>= 4.5:1)", (_label, fg, bg) => {
-    const fgHex = dark[fg];
-    const bgHex = dark[bg];
-    expect(fgHex).toBeDefined();
-    expect(bgHex).toBeDefined();
-    expect(contrastRatio(fgHex as string, bgHex as string)).toBeGreaterThanOrEqual(AA_NORMAL_TEXT);
+    const ratio = contrastRatio(requireToken(dark, fg), requireToken(dark, bg));
+    expect(ratio).toBeGreaterThanOrEqual(AA_NORMAL_TEXT);
   });
 
   it.each([
@@ -79,21 +85,15 @@ describe("tokens de diseño — contraste WCAG AA (MASTER_PROMPT §10.1)", () =>
     ["aviso sobre fondo", "color-warning-text", "color-bg"],
     ["error sobre fondo", "color-error-text", "color-bg"],
   ])("tema claro: %s cumple AA (>= 4.5:1)", (_label, fg, bg) => {
-    const fgHex = light[fg];
-    const bgHex = light[bg];
-    expect(fgHex).toBeDefined();
-    expect(bgHex).toBeDefined();
-    expect(contrastRatio(fgHex as string, bgHex as string)).toBeGreaterThanOrEqual(AA_NORMAL_TEXT);
+    const ratio = contrastRatio(requireToken(light, fg), requireToken(light, bg));
+    expect(ratio).toBeGreaterThanOrEqual(AA_NORMAL_TEXT);
   });
 
   it.each([
     ["tinta sobre acento", "color-on-accent", "color-accent"],
     ["tinta sobre acento 2", "color-on-accent", "color-accent-2"],
   ])("botones primarios: %s cumple AA de texto grande/UI (>= 3:1)", (_label, fg, bg) => {
-    const fgHex = dark[fg];
-    const bgHex = dark[bg];
-    expect(fgHex).toBeDefined();
-    expect(bgHex).toBeDefined();
-    expect(contrastRatio(fgHex as string, bgHex as string)).toBeGreaterThanOrEqual(AA_LARGE_TEXT_OR_UI);
+    const ratio = contrastRatio(requireToken(dark, fg), requireToken(dark, bg));
+    expect(ratio).toBeGreaterThanOrEqual(AA_LARGE_TEXT_OR_UI);
   });
 });

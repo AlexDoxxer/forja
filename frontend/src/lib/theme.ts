@@ -18,7 +18,7 @@ export function readStoredTheme(): Theme {
 }
 
 export function applyTheme(theme: Theme): void {
-  document.documentElement.dataset.theme = theme;
+  document.documentElement.dataset["theme"] = theme;
   try {
     window.localStorage.setItem(STORAGE_KEY, theme);
   } catch {

@@ -19,7 +19,7 @@ function mockMatchMedia(reducedMotion: boolean): void {
     media: query,
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
-  })) as unknown as typeof window.matchMedia;
+  }));
 }
 
 describe("ExerciseMedia", () => {
@@ -40,7 +40,7 @@ describe("ExerciseMedia", () => {
     const mediaWithoutAttribution = {
       ...validMedia,
       attribution: { text: "", url: "" },
-    } as ExerciseMediaValue;
+    } as unknown as ExerciseMediaValue;
 
     expect(() => render(<ExerciseMedia media={mediaWithoutAttribution} alt="Sentadilla" />)).toThrow(
       /atribución/,

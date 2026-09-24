@@ -1,12 +1,15 @@
-/**
- * Raíz de la aplicación. En la Fase 1 `frontend-ui` la sustituye por el shell con
- * TanStack Router, navegación inferior/lateral e i18n (MASTER_PROMPT §10).
- */
+import { QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "@tanstack/react-router";
+
+import "./i18n";
+import { queryClient } from "./lib/queryClient";
+import { router } from "./routes/router";
+
+/** Raíz de la aplicación: proveedores de datos (TanStack Query) y de rutas (TanStack Router). */
 export function App(): React.JSX.Element {
   return (
-    <main className="app-root">
-      <h1>Forja</h1>
-      <p>Tu entrenamiento, en tu propio servidor.</p>
-    </main>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }
