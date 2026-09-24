@@ -123,7 +123,7 @@ def test_invalid_schema_is_rejected(tmp_path: Path) -> None:
     records = fixture_data()[:2]
     records[0]["body_part"] = "tail"
     repo, commit = make_dataset_repo(tmp_path / "repo", records)
-    with pytest.raises(SourceError, match="exercises.schema.json"):
+    with pytest.raises(SourceError, match=r"exercises\.schema\.json"):
         fetch(repo.as_uri(), commit, tmp_path / "media")
 
 
@@ -133,7 +133,7 @@ def test_missing_license_is_rejected(tmp_path: Path) -> None:
     git("add", "-A", cwd=repo)
     git("commit", "--quiet", "-m", "sin aviso", cwd=repo)
     commit = git("rev-parse", "HEAD", cwd=repo)
-    with pytest.raises(FetchError, match="NOTICE.md"):
+    with pytest.raises(FetchError, match=r"NOTICE\.md"):
         fetch(repo.as_uri(), commit, tmp_path / "media")
 
 
