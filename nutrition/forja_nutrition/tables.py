@@ -116,8 +116,8 @@ class NutritionTables(_Frozen):
 
     @model_validator(mode="after")
     def _check_templates_match_split(self) -> NutritionTables:
-        if set(self.meal_templates) != set(self.meal_kcal_split):
-            raise ValueError("meal_templates y meal_kcal_split deben cubrir los mismos tamaños")
+        # Ambos campos ya están forzados a cubrir exactamente {3, 4, 5} por sus propios
+        # field_validator; aquí solo queda comprobar que coinciden las comidas de cada tamaño.
         for key, slots in self.meal_templates.items():
             if set(slots) != set(self.meal_kcal_split[key]):
                 raise ValueError(
