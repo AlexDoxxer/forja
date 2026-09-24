@@ -6,7 +6,6 @@ from dataclasses import dataclass, field
 from pydantic import ValidationError
 from pydantic_core import InitErrorDetails, PydanticCustomError
 
-from forja_engine import ENGINE_VERSION
 from forja_engine.allocate import SlotKey, allocate_sets, enforce_session_cap
 from forja_engine.compose import (
     day_focus,
@@ -52,6 +51,7 @@ from forja_engine.select import (
 from forja_engine.split import DaySpec, build_days, split_rationale
 from forja_engine.tables import Tables, default_tables
 from forja_engine.timefit import fit_day, pair_supersets
+from forja_engine.version import ENGINE_VERSION
 from forja_engine.volume import Credits, card_credits, emphasis_rationale, weekly_targets
 
 
