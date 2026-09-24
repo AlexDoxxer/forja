@@ -1,3 +1,21 @@
+# Excepciones justificadas a las comprobaciones de specs/overrides/names_es.json.
+# Propiedad de ingesta-datos (ADR 0002); revisadas por experto-entrenamiento (F1b-EXP-03).
 version: 1
-glossary: {}
-intentional_duplicates: []
+
+# {id: {término del glosario: motivo}} cuando el término no se aplica literalmente.
+glossary:
+  "0172": { pushdown: "El objetivo es el dorsal (extensión de hombros en polea), no el tríceps." }
+  "0099": { single leg: "«Single leg split squat» es la sentadilla búlgara: el apoyo a una pierna va implícito." }
+  "0410": { single leg: "«Single leg split squat» es la sentadilla búlgara: el apoyo a una pierna va implícito." }
+  "0768": { single leg: "«Single leg split squat» es la sentadilla búlgara: el apoyo a una pierna va implícito." }
+  "0987": { single leg: "«Single leg split squat» es la sentadilla búlgara: el apoyo a una pierna va implícito." }
+  "1001": { single leg: "«Single leg split squat» es la sentadilla búlgara: el apoyo a una pierna va implícito." }
+  "1352": { curl: "«Lower back curl» es una extensión lumbar en el suelo, no un curl de brazos." }
+  "3295": { lever: "«Front lever» es un elemento gimnástico (palanca), no una máquina." }
+  "3296": { lever: "«Front lever» es un elemento gimnástico (palanca), no una máquina." }
+  "3297": { lever: "«Back lever» es un elemento gimnástico (palanca), no una máquina." }
+
+# Grupos de variantes distintos que comparten nombre ES a propósito.
+intentional_duplicates:
+  - ids: ["0653", "1307"]
+    reason: "El dataset publica la flexión sobre bosu con dos nombres ingleses («push-up (bosu ball)» y «push up on bosu ball») y medios distintos."
