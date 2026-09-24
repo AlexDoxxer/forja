@@ -138,8 +138,12 @@ def test_rule_conditions_are_anded(normalized: dict[str, NormalizedExercise]) ->
     assert not rule_matches(
         PatternRule(pattern="squat", name_any=(" bench",), name_none=("press",)), exercise
     )
-    assert rule_matches(PatternRule(pattern="squat", equipment="barbell"), exercise)
-    assert not rule_matches(PatternRule(pattern="squat", body_part="waist"), exercise)
+    assert rule_matches(
+        PatternRule.model_validate({"pattern": "squat", "equipment": "barbell"}), exercise
+    )
+    assert not rule_matches(
+        PatternRule.model_validate({"pattern": "squat", "body_part": "waist"}), exercise
+    )
 
 
 def test_unmatched_exercise_defaults_to_other(

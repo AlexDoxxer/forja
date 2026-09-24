@@ -95,11 +95,11 @@ def test_fixture_dataset_validates_and_is_sorted(fixture_records: tuple[Any, ...
     assert ids == sorted(ids)
 
 
-def test_schema_violation_fails(tmp_path: Path) -> None:
+def test_schema_violation_fails() -> None:
     data = fixture_data()
     data[0]["body_part"] = "tail"
     schema = json.loads((FIXTURES / "exercises.schema.json").read_text("utf-8"))
-    with pytest.raises(SourceError, match="no cumple exercises.schema.json"):
+    with pytest.raises(SourceError, match=r"no cumple exercises\.schema\.json"):
         validate_against_schema(data, schema)
 
 

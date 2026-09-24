@@ -29,7 +29,8 @@ def test_spanish_names_cover_all_exercises_and_follow_glossary(
 
 def test_names_are_lowercase_and_without_variant_suffixes(specs: IngestSpecs) -> None:
     for exercise_id, name in specs.names_es.items():
-        assert name == name.strip() and name, exercise_id
+        assert name, exercise_id
+        assert name == name.strip(), exercise_id
         assert not name[0].isupper(), exercise_id
         for suffix in ("(male)", "(female)", "pov)", " v. "):
             assert suffix not in name, exercise_id
