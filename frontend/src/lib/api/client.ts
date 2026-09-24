@@ -21,12 +21,27 @@ export function readCookie(name: string): string | null {
 }
 
 /**
+ * La API vive en el mismo origen que la SPA detrás de nginx (MASTER_PROMPT §4.3). Se resuelve
+ * a una URL absoluta a partir de `window.location.origin` porque el `Request` del Fetch API
+ * solo resuelve rutas relativas frente al documento en un navegador real; en Node (tests) no
+ * hay documento y una base relativa lanzaría "Invalid URL".
+ */
+function resolveApiBaseUrl(): string {
+  return typeof window === "undefined" ? "/api/v1" : `${window.location.origin}/api/v1`;
+}
+
+/**
  * Cliente API tipado generado desde `contracts/openapi.yaml` (`openapi-typescript` +
  * `openapi-fetch`, MASTER_PROMPT §4.1). Nunca se escriben tipos de la API a mano.
  */
 export const api = createClient<paths>({
-  baseUrl: "/api/v1",
+  baseUrl: resolveApiBaseUrl(),
   credentials: "include",
+  // `openapi-fetch` resuelve `globalThis.fetch` una sola vez, al crear el cliente. Herramientas
+  // que parchean el `fetch` global después de esa creación (p. ej. MSW en los tests, o
+  // cualquier interceptor en producción) no tendrían efecto. Se envuelve para leer
+  // `globalThis.fetch` en cada petición.
+  fetch: (request) => globalThis.fetch(request),
 });
 
 api.use({

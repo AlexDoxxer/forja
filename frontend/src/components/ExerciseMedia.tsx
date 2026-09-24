@@ -62,9 +62,10 @@ export function ExerciseMedia({
     );
   }
 
-  const wantsAnimated = variant === "animated" || userRequestedPlay;
-  const showGif = wantsAnimated && !prefersReducedMotion;
-  const showPlayButton = prefersReducedMotion && !userRequestedPlay;
+  // `prefers-reduced-motion` impide la reproducción automática, pero una pulsación explícita
+  // del botón (acción iniciada por la persona) siempre debe surtir efecto.
+  const showGif = userRequestedPlay || (variant === "animated" && !prefersReducedMotion);
+  const showPlayButton = prefersReducedMotion && !showGif;
 
   return (
     <figure className={cx(styles["figure"], className)}>

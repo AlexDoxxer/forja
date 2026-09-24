@@ -7,15 +7,15 @@ describe("App", () => {
   it("monta la navegación principal y la pantalla «Hoy» por defecto", async () => {
     render(<App />);
 
-    expect(screen.getByRole("navigation", { name: "Forja" })).toBeInTheDocument();
+    expect(await screen.findByRole("navigation", { name: "Forja" })).toBeInTheDocument();
     expect(screen.getByRole("main")).toBeInTheDocument();
     expect(await screen.findByRole("heading", { level: 1, name: "Hoy" })).toBeInTheDocument();
   });
 
-  it("incluye un enlace para saltar al contenido principal", () => {
+  it("incluye un enlace para saltar al contenido principal", async () => {
     render(<App />);
 
-    const skipLink = screen.getByRole("link", { name: "Saltar al contenido" });
+    const skipLink = await screen.findByRole("link", { name: "Saltar al contenido" });
     expect(skipLink).toHaveAttribute("href", "#main-content");
   });
 });

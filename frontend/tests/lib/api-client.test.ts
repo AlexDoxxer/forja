@@ -1,19 +1,28 @@
 import { http, HttpResponse } from "msw";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { api, readCookie } from "../../src/lib/api/client";
+import { ApiError, api, readCookie, unwrapApi } from "../../src/lib/api/client";
 import { server } from "../../src/mocks/server";
 
+/**
+ * `__Host-` exige `Secure` + `Path=/` (y, para jsdom, un origen https — ver
+ * `test.environmentOptions.jsdom.url` en `vite.config.ts`).
+ */
+const CSRF_COOKIE = "__Host-forja_csrf";
+function setCsrfCookie(value: string): void {
+  document.cookie = `${CSRF_COOKIE}=${value}; Path=/; Secure`;
+}
+
 afterEach(() => {
-  document.cookie = "__Host-forja_csrf=; max-age=0";
+  document.cookie = `${CSRF_COOKIE}=; Path=/; Secure; max-age=0`;
   document.cookie = "otra=; max-age=0";
 });
 
 describe("readCookie", () => {
   it("lee el valor de una cookie por nombre", () => {
     document.cookie = "otra=valor-a";
-    document.cookie = "__Host-forja_csrf=token-de-prueba";
-    expect(readCookie("__Host-forja_csrf")).toBe("token-de-prueba");
+    setCsrfCookie("token-de-prueba");
+    expect(readCookie(CSRF_COOKIE)).toBe("token-de-prueba");
   });
 
   it("devuelve null si la cookie no existe", () => {
@@ -23,7 +32,7 @@ describe("readCookie", () => {
 
 describe("cliente API — middleware CSRF (ADR 0003)", () => {
   it("añade X-CSRF-Token en peticiones de escritura cuando hay cookie", async () => {
-    document.cookie = "__Host-forja_csrf=token-de-prueba";
+    setCsrfCookie("token-de-prueba");
     let capturedHeader: string | null = null;
     server.use(
       http.post("/api/v1/auth/logout", ({ request }) => {
@@ -38,7 +47,7 @@ describe("cliente API — middleware CSRF (ADR 0003)", () => {
   });
 
   it("no añade la cabecera en peticiones de solo lectura (GET)", async () => {
-    document.cookie = "__Host-forja_csrf=token-de-prueba";
+    setCsrfCookie("token-de-prueba");
     let capturedHeader: string | null = "sin-tocar";
     server.use(
       http.get("/api/v1/auth/me", ({ request }) => {
@@ -78,5 +87,32 @@ describe("cliente API — middleware CSRF (ADR 0003)", () => {
     await api.POST("/auth/logout");
 
     expect(capturedHeader).toBeNull();
+  });
+});
+
+describe("unwrapApi / ApiError", () => {
+  it("devuelve data cuando la respuesta no tiene error", () => {
+    expect(unwrapApi({ data: { ok: true } })).toEqual({ ok: true });
+  });
+
+  it("lanza ApiError con el título del problema cuando hay error", () => {
+    expect(() => unwrapApi({ error: { title: "No autorizado" } })).toThrow(ApiError);
+    try {
+      unwrapApi({ error: { title: "No autorizado" } });
+    } catch (thrown) {
+      expect(thrown).toBeInstanceOf(ApiError);
+      expect((thrown as ApiError).message).toBe("No autorizado");
+      expect((thrown as ApiError).problem).toEqual({ title: "No autorizado" });
+    }
+  });
+
+  it("usa un mensaje por defecto si el problema no trae título", () => {
+    expect(() => unwrapApi({ error: { code: "conflict" } })).toThrow("Error de la API");
+    expect(() => unwrapApi({ error: "texto plano" })).toThrow("Error de la API");
+    expect(() => unwrapApi({ error: null })).toThrow("Error de la API");
+  });
+
+  it("lanza un error si no hay ni data ni error (respuesta vacía inesperada)", () => {
+    expect(() => unwrapApi({})).toThrow("Respuesta vacía inesperada del servidor.");
   });
 });
