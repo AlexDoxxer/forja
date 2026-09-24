@@ -131,24 +131,26 @@ def build_meal_candidates(
     usage_counts: dict[str, int],
     rng: random.Random,
 ) -> list[Food]:
-    chosen: list[Food] = []
-    for role in _role_order():
-        food = select_food(
-            role=role,
-            foods=foods,
-            nutrition_input=nutrition_input,
-            allergens=allergens,
-            excluded=excluded,
-            disliked=disliked,
-            usage_counts=usage_counts,
-            rng=rng,
+    # Cada alimento tiene un único `macro_role` de entre los cuatro de `_ROLE_ORDER`, así que
+    # recorrer los cuatro roles cubre exactamente el conjunto de alimentos elegibles: no hace
+    # falta una segunda pasada "de repesca" ignorando el rol.
+    chosen: list[Food] = [
+        food
+        for role in _role_order()
+        if (
+            food := select_food(
+                role=role,
+                foods=foods,
+                nutrition_input=nutrition_input,
+                allergens=allergens,
+                excluded=excluded,
+                disliked=disliked,
+                usage_counts=usage_counts,
+                rng=rng,
+            )
         )
-        if food is not None:
-            chosen.append(food)
-    if not chosen:
-        fallback = [f for f in foods if _eligible(f, nutrition_input, allergens, excluded)]
-        if fallback:
-            chosen = [rng.choice(fallback)]
+        is not None
+    ]
     if not chosen:
         raise ValueError(
             "No hay ningún alimento compatible con la dieta, alérgenos y exclusiones "
