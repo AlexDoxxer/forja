@@ -44,6 +44,7 @@ allocation:
     accessory: [1, 4]
     core: [1, 4]
   tolerance_sets: 0.5
+  accumulation_extra_cap: 1   # la acumulación puede superar el máximo por ejercicio en 1 serie
   volume_warning_ratio: 0.15
 
 # Grupo de volumen de un slot añadido por énfasis (split-templates.yaml#emphasis_overrides).

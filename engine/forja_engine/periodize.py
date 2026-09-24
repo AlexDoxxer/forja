@@ -75,6 +75,7 @@ class _Periodizer:
         self.limit = limit_seconds(inp.session_minutes, self.model)
         self.cap = tables.volume_targets.max_effective_sets_per_group_per_session
         self.target_credit = tables.volume_targets.set_credit.target
+        self.extra_cap = tables.engine_rules.allocation.accumulation_extra_cap
         training = [d.index for d in base if not d.is_recovery]
         self.heavy_days = {index for n, index in enumerate(training) if n % 2 == 0}
 
@@ -95,7 +96,8 @@ class _Periodizer:
                             block.kind is BlockKind.MAIN
                             and exercise.rx_role in SLOTTED_ROLES
                             and (group, self.target_credit) in self.credits_of(exercise.exercise_id)
-                            and exercise.sets < role_bounds(exercise.rx_role, self.tables)[1]
+                            and exercise.sets
+                            < role_bounds(exercise.rx_role, self.tables)[1] + self.extra_cap
                             and weekly + self.target_credit <= ceiling
                             and self._fits(day, exercise)
                         ):

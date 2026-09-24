@@ -441,6 +441,7 @@ Relaxation = Literal["difficulty", "staple", "target_group", "pattern_affinity"]
 class AllocationRules(Table):
     bounds_by_role: dict[Literal["main", "accessory", "core"], Range]
     tolerance_sets: float = Field(ge=0)
+    accumulation_extra_cap: int = Field(ge=0, le=3)
     volume_warning_ratio: float = Field(gt=0, lt=1)
 
     @model_validator(mode="after")
