@@ -43,6 +43,40 @@ SPLIT_FAMILY_ES: dict[str, str] = {
 }
 
 
+PATTERN_ES: dict[str, str] = {
+    "squat": "sentadilla",
+    "lunge": "zancada",
+    "hinge": "bisagra de cadera",
+    "horizontal_push": "empuje horizontal",
+    "vertical_push": "empuje vertical",
+    "horizontal_pull": "tirón horizontal",
+    "vertical_pull": "tirón vertical",
+    "elbow_flexion": "flexión de codo (bíceps)",
+    "elbow_extension": "extensión de codo (tríceps)",
+    "shoulder_raise": "elevaciones de hombro",
+    "chest_fly": "aperturas de pecho",
+    "rear_delt": "deltoides posterior",
+    "knee_extension": "extensión de rodilla",
+    "knee_flexion": "flexión de rodilla",
+    "hip_abduction": "abducción de cadera",
+    "hip_adduction": "aducción de cadera",
+    "glute_isolation": "glúteo aislado",
+    "calf": "gemelos",
+    "core_flexion": "flexión de tronco",
+    "core_anti_extension": "antiextensión de core",
+    "core_rotation": "rotación de core",
+    "core_lateral": "core lateral",
+    "shrug": "encogimientos",
+    "forearm": "antebrazo",
+    "neck": "cuello",
+    "carry": "acarreos",
+    "plyometric": "pliometría",
+    "cardio": "cardio",
+    "mobility": "movilidad",
+    "other": "otros",
+}
+
+
 def join_es(items: Sequence[str]) -> str:
     """Une una lista en español: «a», «a y b», «a, b y c»."""
     if len(items) <= 1:
