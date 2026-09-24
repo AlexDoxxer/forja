@@ -1,7 +1,6 @@
 """``load`` (§6.6) contra PostgreSQL 16 real (testcontainers)."""
 
 import uuid
-from collections.abc import AsyncIterator
 from dataclasses import replace
 from pathlib import Path
 from typing import Any
@@ -25,14 +24,14 @@ pytestmark = pytest.mark.integration
 
 
 @pytest.fixture
-async def database_url(postgres_url: str) -> AsyncIterator[str]:
+async def database_url(postgres_url: str) -> str:
     """Base de datos vacía y exclusiva para cada test."""
     name = f"t_{uuid.uuid4().hex[:12]}"
     admin = create_async_engine(postgres_url, isolation_level="AUTOCOMMIT")
     async with admin.connect() as conn:
         await conn.execute(text(f'CREATE DATABASE "{name}"'))
     await admin.dispose()
-    yield postgres_url.rsplit("/", 1)[0] + f"/{name}"
+    return postgres_url.rsplit("/", 1)[0] + f"/{name}"
 
 
 @pytest.fixture
@@ -44,11 +43,11 @@ def manifest(dataset_repo: tuple[Path, str], tmp_path: Path) -> Manifest:
     return loaded
 
 
-async def _query(url: str, sql: str) -> list[Any]:
+async def _query(url: str, sql: str, **params: Any) -> list[Any]:
     engine = create_async_engine(url)
     try:
         async with engine.connect() as conn:
-            return list((await conn.execute(text(sql))).all())
+            return list((await conn.execute(text(sql), params)).all())
     finally:
         await engine.dispose()
 
@@ -123,7 +122,7 @@ async def test_updates_deprecations_and_reactivation(
         "deprecated": [removed.exercise.id],
     }
     unchanged = await _query(
-        database_url, f"SELECT name_es FROM exercise WHERE id = '{changed.exercise.id}'"
+        database_url, "SELECT name_es FROM exercise WHERE id = :id", id=changed.exercise.id
     )
     assert unchanged[0][0] == changed.name_es
 
@@ -131,7 +130,8 @@ async def test_updates_deprecations_and_reactivation(
     state = await _query(
         database_url,
         "SELECT id, deprecated_at IS NOT NULL, name_es FROM exercise "
-        f"WHERE id IN ('{removed.exercise.id}', '{changed.exercise.id}') ORDER BY id",
+        "WHERE id = ANY(:ids) ORDER BY id",
+        ids=[removed.exercise.id, changed.exercise.id],
     )
     assert {row[0]: (row[1], row[2]) for row in state} == {
         removed.exercise.id: (True, removed.name_es),
