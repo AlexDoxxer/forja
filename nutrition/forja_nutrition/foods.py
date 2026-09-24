@@ -21,14 +21,19 @@ def _raw_foods_text() -> str:
     return resources.files(_FOODS_PACKAGE).joinpath(_FOODS_FILENAME).read_text(encoding="utf-8")
 
 
+def _ensure_unique_ids(foods: tuple[Food, ...]) -> None:
+    ids = [food.id for food in foods]
+    if len(ids) != len(set(ids)):
+        duplicated = sorted({food_id for food_id in ids if ids.count(food_id) > 1})
+        raise ValueError(f"data/foods.json contiene ids de alimento duplicados: {duplicated}")
+
+
 @lru_cache(maxsize=1)
 def load_foods() -> tuple[Food, ...]:
     """Lee `forja_nutrition/data/foods.json` empaquetado y valida cada alimento."""
     raw_items = json.loads(_raw_foods_text())
     foods = tuple(Food.model_validate(item) for item in raw_items)
-    ids = [food.id for food in foods]
-    if len(ids) != len(set(ids)):
-        raise ValueError("data/foods.json contiene ids de alimento duplicados")
+    _ensure_unique_ids(foods)
     return foods
 
 
