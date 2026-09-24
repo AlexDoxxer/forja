@@ -62,9 +62,9 @@ class NamesReport:
     def summary(self) -> str:
         parts: list[str] = []
         if self.missing:
-            parts.append(f"sin nombre ES: {', '.join(self.missing)}")
+            parts.append(f"sin nombre ES: {_shorten(self.missing)}")
         if self.unknown:
-            parts.append(f"ids inexistentes: {', '.join(self.unknown)}")
+            parts.append(f"ids inexistentes: {_shorten(self.unknown)}")
         parts.extend(f"{key}: {reason}" for key, reason in sorted(self.invalid.items()))
         parts.extend(f"duplicado no declarado: {', '.join(ids)}" for ids in self.duplicates)
         parts.extend(
@@ -72,6 +72,11 @@ class NamesReport:
             for key, terms in sorted(self.glossary_violations.items())
         )
         return "; ".join(parts)
+
+
+def _shorten(ids: tuple[str, ...], limit: int = 20) -> str:
+    extra = f" (+{len(ids) - limit} más)" if len(ids) > limit else ""
+    return ", ".join(ids[:limit]) + extra
 
 
 def fold(text: str) -> str:
