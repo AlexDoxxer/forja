@@ -1,0 +1,144 @@
+# Reglas del motor de rutinas que MASTER_PROMPT §7 describe sin fijar valor numérico en las
+# otras tablas (selección, reparto, ajuste al tiempo, calentamiento/calma, progresión).
+# Propietario: motor-rutinas (ADR 0002). Cambios revisados por experto-entrenamiento.
+version: 1
+
+# §7.1: valores por defecto de include_* cuando la entrada trae null.
+goal_defaults:
+  strength:        { include_warmup: true, include_cooldown: true, include_cardio_finisher: false }
+  hypertrophy:     { include_warmup: true, include_cooldown: true, include_cardio_finisher: false }
+  fat_loss:        { include_warmup: true, include_cooldown: true, include_cardio_finisher: true }
+  toning:          { include_warmup: true, include_cooldown: true, include_cardio_finisher: true }
+  endurance:       { include_warmup: true, include_cooldown: true, include_cardio_finisher: false }
+  general_fitness: { include_warmup: true, include_cooldown: true, include_cardio_finisher: false }
+
+# El propio cuerpo siempre está disponible, sea cual sea el preset.
+always_available_equipment: [bodyweight]
+
+# §7.2 paso 5. Nivel = dificultad máxima sin penalización; los avanzados admiten +1 en accesorios.
+difficulty:
+  cap: { beginner: 2, intermediate: 2, advanced: 2 }
+  accessory_extra: { beginner: 0, intermediate: 0, advanced: 1 }
+
+scoring:
+  pattern_exact: 40
+  target_group: 25
+  staple_in_main: 15
+  favorite: 10
+  used_other_day: -30
+  same_variant_group: -15
+  above_difficulty: -10
+  unilateral_in_strength_main: -20
+
+# Orden de relajación cuando un slot no tiene candidatos (acumulativo).
+relaxation_order: [difficulty, staple, target_group, pattern_affinity]
+# Relajaciones que se comunican con el aviso slot_relaxed (quitar la exigencia de staple es
+# habitual con equipamiento doméstico y solo se explica en rationale_es).
+relaxations_warned: [difficulty, target_group, pattern_affinity]
+max_alternatives: 3
+
+# §7.2 paso 4: límites de series por ejercicio al repartir el volumen semanal.
+allocation:
+  bounds_by_role:
+    main: [2, 5]
+    accessory: [1, 4]
+    core: [1, 4]
+  tolerance_sets: 0.5
+  volume_warning_ratio: 0.15
+
+# Grupo de volumen de un slot añadido por énfasis (split-templates.yaml#emphasis_overrides).
+pattern_groups:
+  squat: quads
+  lunge: quads
+  hinge: hamstrings
+  horizontal_push: chest
+  vertical_push: shoulders
+  horizontal_pull: back
+  vertical_pull: back
+  elbow_flexion: arms
+  elbow_extension: arms
+  shoulder_raise: shoulders
+  chest_fly: chest
+  rear_delt: shoulders
+  knee_extension: quads
+  knee_flexion: hamstrings
+  hip_abduction: glutes
+  hip_adduction: legs_other
+  glute_isolation: glutes
+  calf: calves
+  core_flexion: core
+  core_anti_extension: core
+  core_rotation: core
+  core_lateral: core
+  shrug: back
+  forearm: arms
+  neck: other
+  carry: core
+  plyometric: quads
+  cardio: cardio
+  mobility: other
+  other: other
+emphasis_block_priority: 2
+
+# «Secundarios relevantes» (0,5 series) de los ejercicios compuestos, por patrón. El grupo
+# objetivo del propio ejercicio nunca recibe crédito secundario.
+compound_secondary_groups:
+  squat: [glutes]
+  lunge: [quads, glutes]
+  hinge: [glutes, hamstrings]
+  horizontal_push: [arms]
+  vertical_push: [arms]
+  horizontal_pull: [arms]
+  vertical_pull: [arms]
+  carry: [core]
+  plyometric: []
+
+# §7.2 paso 7 (a): pares de patrones antagonistas que se agrupan en superserie.
+antagonist_pairs:
+  - [horizontal_push, horizontal_pull]
+  - [vertical_push, vertical_pull]
+  - [elbow_flexion, elbow_extension]
+  - [knee_extension, knee_flexion]
+  - [chest_fly, rear_delt]
+  - [hip_abduction, hip_adduction]
+  - [shoulder_raise, rear_delt]
+
+# Calentamiento, vuelta a la calma, finisher y día de recuperación activa.
+warmup:
+  cardio_share: 0.5          # fracción de warmup_minutes para el cardio suave inicial
+  specific_items: 1          # ejercicio ligero del patrón del primer slot principal
+cooldown:
+  items: 2
+finisher:
+  long_session_minutes: 75   # a partir de aquí se usa el máximo de cardio_finisher.minutes
+recovery:
+  cardio_minutes: [5, 20]    # recortado a session_minutes - reserve_minutes
+  reserve_minutes: 10
+  mobility_sets: 1
+  mobility_hold_s: 45
+
+# Nombres de grupos para textos (rationale_es, focus_es).
+group_names_es:
+  chest: pecho
+  back: espalda
+  shoulders: hombros
+  arms: brazos
+  quads: cuádriceps
+  hamstrings: isquiotibiales
+  glutes: glúteos
+  calves: gemelos
+  core: core
+  legs_other: aductores
+  other: movilidad
+  cardio: cardio
+
+# §7.6: pasos de carga para redondear sugerencias y aproximaciones.
+progression_loads:
+  plate_loaded: [barbell]
+  step_kg:
+    dumbbell: 2.0
+    kettlebell: 4.0
+    default: 2.5
+  bodyweight_rep_cap: 20
+  bodyweight_rep_step: 2
+  time_step_s: 5
