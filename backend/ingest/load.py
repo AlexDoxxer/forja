@@ -76,6 +76,13 @@ _COMPARED: Final = (
 )
 
 
+_BATCH: Final = 500  # filas por INSERT (límite de 32.767 parámetros de asyncpg)
+
+
+def _batches[T](items: Sequence[T]) -> list[Sequence[T]]:
+    return [items[start : start + _BATCH] for start in range(0, len(items), _BATCH)]
+
+
 class LoadError(RuntimeError):
     """El catálogo no se puede cargar (manifest incompleto, BD sin esquema…)."""
 
@@ -280,17 +287,18 @@ async def _write_catalog(
     now = datetime.now(UTC)
     changed = [*diff["added"], *diff["updated"]]
     if changed:
-        stmt = insert(Exercise).values([rows[exercise_id] for exercise_id in changed])
-        await conn.execute(
-            stmt.on_conflict_do_update(
-                index_elements=["id"],
-                set_={
-                    **{name: stmt.excluded[name] for name in _COMPARED},
-                    "deprecated_at": None,
-                    "updated_at": now,
-                },
+        for batch in _batches(changed):
+            stmt = insert(Exercise).values([rows[exercise_id] for exercise_id in batch])
+            await conn.execute(
+                stmt.on_conflict_do_update(
+                    index_elements=["id"],
+                    set_={
+                        **{name: stmt.excluded[name] for name in _COMPARED},
+                        "deprecated_at": None,
+                        "updated_at": now,
+                    },
+                )
             )
-        )
         await conn.execute(
             delete(ExerciseSecondaryMuscle).where(ExerciseSecondaryMuscle.exercise_id.in_(changed))
         )
@@ -302,14 +310,15 @@ async def _write_catalog(
             for exercise_id in changed
             for position, code in enumerate(children[exercise_id][0])
         ]
-        if secondary_rows:
-            await conn.execute(insert(ExerciseSecondaryMuscle).values(secondary_rows))
+        for secondary_batch in _batches(secondary_rows):
+            await conn.execute(insert(ExerciseSecondaryMuscle).values(list(secondary_batch)))
         instruction_rows = [
             {"exercise_id": exercise_id, "lang": lang, "text": body, "steps": list(steps)}
             for exercise_id in changed
             for lang, (body, steps) in children[exercise_id][1].items()
         ]
-        await conn.execute(insert(ExerciseInstruction).values(instruction_rows))
+        for instruction_batch in _batches(instruction_rows):
+            await conn.execute(insert(ExerciseInstruction).values(list(instruction_batch)))
     if diff["deprecated"]:
         await conn.execute(
             update(Exercise)
@@ -322,8 +331,8 @@ async def _write_catalog(
         for alternatives in catalog.alternatives.values()
         for alt in alternatives
     ]
-    if alternative_rows:
-        await conn.execute(insert(ExerciseAlternative).values(alternative_rows))
+    for alternative_batch in _batches(alternative_rows):
+        await conn.execute(insert(ExerciseAlternative).values(list(alternative_batch)))
     await conn.execute(_SEARCH_VECTOR_SQL)
 
 
@@ -396,7 +405,7 @@ async def load_catalog(
                     .values(
                         status="failed",
                         finished_at=datetime.now(UTC),
-                        errors=[f"{type(exc).__name__}: {exc}"[:2000]],
+                        errors=[f"{type(exc).__name__}: {str(exc).splitlines()[0][:500]}"],
                         updated_at=datetime.now(UTC),
                     )
                 )

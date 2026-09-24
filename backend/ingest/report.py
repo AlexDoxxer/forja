@@ -174,3 +174,20 @@ def render_report(catalog: Catalog, specs: IngestSpecs, commit: str) -> str:
     )
     lines.append("")
     return "\n".join(lines)
+
+
+def quality_problems(catalog: Catalog, specs: IngestSpecs) -> list[str]:
+    """Requisitos de §6.3: 0 ``other`` sin justificar y >= 2 staples por celda aplicable."""
+    problems = [
+        f"{entry.exercise.id} ({entry.exercise.display_name_en}): patrón other sin justificar"
+        for entry in catalog.entries
+        if entry.enrichment.movement_pattern == "other"
+        and entry.exercise.id not in specs.overrides.other_justified
+    ]
+    problems.extend(
+        f"celda {cell.pattern} x {cell.group}: {len(cell.staple_ids)} staples "
+        f"(mínimo {MIN_STAPLES_PER_CELL})"
+        for cell in staple_matrix(catalog)
+        if not cell.ok
+    )
+    return problems
