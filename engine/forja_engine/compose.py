@@ -42,13 +42,9 @@ def day_focus(day: DraftDay, tables: Tables) -> str:
     if day.is_recovery:
         return "Cardio suave y movilidad para recuperar"
     names = tables.engine_rules.group_names_es
-    groups: list[str] = []
-    for exercise in day.working_exercises():
-        if exercise.slot is None:
-            continue
-        name = names[exercise.slot.group]
-        if name not in groups:
-            groups.append(name)
+    groups = list(
+        dict.fromkeys(names[e.slot.group] for e in day.working_exercises() if e.slot is not None)
+    )
     return f"Trabajo de {join_es(groups[:4])}" if groups else "Sesión adaptada a tu equipamiento"
 
 

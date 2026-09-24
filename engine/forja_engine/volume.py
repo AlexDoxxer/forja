@@ -123,10 +123,6 @@ def blocks_volume(
     return totals
 
 
-def add_volume(total: dict[VolumeGroup, float], extra: Mapping[VolumeGroup, float]) -> None:
-    for group, sets in extra.items():
-        total[group] = total.get(group, 0.0) + sets
-
 
 def ordered_volume(totals: Mapping[VolumeGroup, float]) -> list[tuple[VolumeGroup, float]]:
     """Grupos con series > 0 en el orden de ``VolumeGroup``."""
