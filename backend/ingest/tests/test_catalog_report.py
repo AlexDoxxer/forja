@@ -92,3 +92,12 @@ def test_quality_problems_detect_missing_staples_and_other(
     )
     with_other = Catalog(entries=(orphan,), alternatives={})
     assert any("other sin justificar" in problem for problem in quality_problems(with_other, specs))
+
+
+def test_full_dataset_rejects_references_to_missing_exercises(
+    all_records: tuple[RawExercise, ...], specs: IngestSpecs
+) -> None:
+    records = [record for record in all_records if record.id != "0043"]
+    names = {key: value for key, value in specs.names_es.items() if key != "0043"}
+    with pytest.raises(EnrichmentError, match="0043"):
+        build_catalog(records, replace(specs, names_es=names))

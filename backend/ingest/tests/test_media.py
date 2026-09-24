@@ -217,3 +217,15 @@ def test_manifest_diff(dataset_repo: tuple[Path, str]) -> None:
     smaller = Manifest(repo="r", commit=commit, files=manifest.files[2:])
     assert len(diff_manifests(smaller, manifest).added) == 2
     assert len(diff_manifests(manifest, smaller).removed) == 2
+
+
+@pytest.mark.parametrize("missing", ["source/data/exercises.json", "LICENSES/NOTICE.md"])
+def test_incomplete_volume_is_refetched(
+    dataset_repo: tuple[Path, str], tmp_path: Path, missing: str
+) -> None:
+    repo, commit = dataset_repo
+    media_root = tmp_path / "media"
+    fetch(repo.as_uri(), commit, media_root)
+    (media_root / missing).unlink()
+    assert fetch(repo.as_uri(), commit, media_root).status == "updated"
+    assert (media_root / missing).is_file()
