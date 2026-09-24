@@ -211,17 +211,18 @@ def _variant_kind_and_label(
 def assign_variant_groups(
     exercises: Sequence[NormalizedExercise],
 ) -> tuple[NormalizedExercise, ...]:
-    """Agrupa por nombre base (sin sufijos) y asigna ``variant_group``, tipo y etiqueta.
+    """Agrupa por slug del nombre base (sin sufijos) y asigna ``variant_group``, tipo y etiqueta.
 
     Dentro de un grupo, los registros con idéntico conjunto de sufijos son duplicados: el de
     menor id es la base y el resto reciben ``duplicate`` con «(variante B)», «(variante C)»…
     """
-    by_base: dict[str, list[NormalizedExercise]] = defaultdict(list)
+    by_group: dict[str, list[NormalizedExercise]] = defaultdict(list)
     for exercise in exercises:
-        by_base[exercise.display_name_en.lower()].append(exercise)
+        # El slug agrupa también nombres que solo difieren en guiones o paréntesis
+        # («close-grip press» / «close grip press»).
+        by_group[slugify(exercise.display_name_en)].append(exercise)
     result: list[NormalizedExercise] = []
-    for base_name, members in by_base.items():
-        group = slugify(base_name)
+    for group, members in by_group.items():
         seen_signatures: dict[tuple[object, ...], int] = defaultdict(int)
         for exercise in sorted(members, key=lambda item: item.id):
             signature = (exercise.demo_sex, exercise.version, exercise.camera)

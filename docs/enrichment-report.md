@@ -107,10 +107,10 @@ Requisito: al menos 2 staples en cada celda con candidatos.
 
 | Valor | Nº | % |
 |---|---|---|
-| `base` | 1240 | 93.7 % |
+| `base` | 1238 | 93.5 % |
 | `version` | 40 | 3.0 % |
 | `demonstrator` | 33 | 2.5 % |
-| `duplicate` | 6 | 0.5 % |
+| `duplicate` | 8 | 0.6 % |
 | `camera_angle` | 5 | 0.4 % |
 
 ### Origen de la decisión de patrón
