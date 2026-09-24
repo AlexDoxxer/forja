@@ -7,7 +7,6 @@
 - Registra cada ejecución en ``ingest_run`` (también las fallidas y las de ``--dry-run``).
 """
 
-import os
 import secrets
 import time
 import uuid
@@ -103,14 +102,6 @@ def uuid7() -> uuid.UUID:
     value |= 0b10 << 62
     value |= secrets.randbits(62)
     return uuid.UUID(int=value)
-
-
-def database_url_from_env() -> str:
-    url = os.environ.get("DATABASE_URL", "")
-    if not url.startswith("postgresql+asyncpg://"):
-        msg = "DATABASE_URL debe estar definida con el esquema postgresql+asyncpg://"
-        raise LoadError(msg)
-    return url
 
 
 def exercise_row(entry: CatalogEntry, manifest: Manifest, specs: IngestSpecs) -> dict[str, Any]:
