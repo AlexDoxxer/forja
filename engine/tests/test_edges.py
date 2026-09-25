@@ -119,6 +119,13 @@ def test_reducing_accessory_rests_updates_superset_rest() -> None:
     assert loose.rest_s == loose.rest_floor_s
 
 
+def test_finisher_is_skipped_without_cardio_exercises() -> None:
+    no_cardio = [c for c in catalog() if c.role is not ExerciseRole.CARDIO]
+    plan = generate(make_input(goal=Goal.FAT_LOSS, session_minutes=90), no_cardio)
+    kinds = {b.kind for w in plan.weeks for d in w.days for b in d.blocks}
+    assert BlockKind.FINISHER not in kinds
+
+
 def test_warmup_can_be_disabled() -> None:
     plan = generate(make_input(include_warmup=False), catalog())
     assert all(d.blocks[0].kind is not BlockKind.WARMUP for d in plan.weeks[0].days)
