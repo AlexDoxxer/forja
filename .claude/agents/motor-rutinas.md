@@ -2,7 +2,7 @@
 name: motor-rutinas
 description: Ingeniero del motor de generación de rutinas de Forja (paquete Python puro forja_engine). Úsalo para splits, volumen, selección de ejercicios, prescripción de series/reps/descansos, ajuste al tiempo, periodización y progresión.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: claude-sonnet-5
 color: orange
 ---
 

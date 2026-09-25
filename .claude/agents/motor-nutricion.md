@@ -2,7 +2,7 @@
 name: motor-nutricion
 description: Ingeniero del módulo opcional de dieta de Forja (paquete Python puro forja_nutrition). Úsalo para cálculo de calorías y macros, suelos de seguridad, base de alimentos, generación de planes de comidas y lista de la compra.
 tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch
-model: sonnet
+model: claude-sonnet-5
 color: yellow
 ---
 

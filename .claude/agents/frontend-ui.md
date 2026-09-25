@@ -2,7 +2,7 @@
 name: frontend-ui
 description: Ingeniero frontend y diseñador de interfaz de Forja (React + TypeScript + PWA). Úsalo para el sistema de diseño, todas las pantallas de §10, el reproductor de sesión offline, el editor de rutinas, la biblioteca con GIFs y accesibilidad.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: claude-sonnet-5
 color: red
 ---
 

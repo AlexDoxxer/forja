@@ -4,9 +4,18 @@ import { describe, expect, it } from "vitest";
 import { App } from "../src/App";
 
 describe("App", () => {
-  it("muestra el nombre del producto como encabezado principal", () => {
+  it("monta la navegación principal y la pantalla «Hoy» por defecto", async () => {
     render(<App />);
-    expect(screen.getByRole("heading", { level: 1, name: "Forja" })).toBeInTheDocument();
+
+    expect(await screen.findByRole("navigation", { name: "Forja" })).toBeInTheDocument();
     expect(screen.getByRole("main")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { level: 1, name: "Hoy" })).toBeInTheDocument();
+  });
+
+  it("incluye un enlace para saltar al contenido principal", async () => {
+    render(<App />);
+
+    const skipLink = await screen.findByRole("link", { name: "Saltar al contenido" });
+    expect(skipLink).toHaveAttribute("href", "#main-content");
   });
 });

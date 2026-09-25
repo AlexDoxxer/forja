@@ -2,7 +2,7 @@
 name: ingesta-datos
 description: Especialista en datos de Forja. Úsalo para el pipeline de ingesta del dataset hasaneyldrm/exercises-dataset (descarga fijada por commit, verificación, medios, normalización, enriquecimiento, nombres en español, alternativas y carga en BD).
 tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch
-model: sonnet
+model: claude-sonnet-5
 color: green
 ---
 

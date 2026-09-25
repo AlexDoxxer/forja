@@ -25,6 +25,9 @@ dependencies = [
   "weasyprint>=63.0",
 ]
 
+[project.scripts]
+forja-ingest = "ingest.cli:main"
+
 [dependency-groups]
 dev = [
   "httpx>=0.28",

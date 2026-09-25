@@ -2,7 +2,7 @@
 name: devops-despliegue
 description: Ingeniero DevOps de Forja. Úsalo para Docker multi-stage, docker-compose, nginx (estático, medios con auth_request, proxy, cabeceras, caché), despliegue en contenedor LXC de Proxmox, copias de seguridad, Makefile, variables de entorno y CI de imágenes.
 tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch
-model: sonnet
+model: claude-sonnet-5
 color: cyan
 ---
 

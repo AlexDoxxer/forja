@@ -2,7 +2,7 @@
 name: arquitecto
 description: Arquitecto de Forja. Úsalo en la Fase 0 para crear el monorepo, los contratos (OpenAPI, dominio), ADRs, CI y el tablero de tareas; y siempre que haya que aprobar un cambio de contrato o resolver una decisión transversal.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: claude-sonnet-5
 color: purple
 ---
 

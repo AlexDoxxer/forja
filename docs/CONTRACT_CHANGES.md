@@ -44,3 +44,18 @@ contrato en silencio.**
 - **Compatibilidad**: no aplica (primera versión).
 - **Resolución**: aprobado como **1.0.0**; pendiente de congelar con el tag `contracts-v1`
   por el orquestador (tarea F0-ORQ-01).
+
+### CC-0001 · Orden estable de `exercise_secondary_muscle`
+- **Estado**: propuesto
+- **Propone**: ingesta-datos · **Fecha**: 2026-09-24
+- **Afecta a**: `contracts/domain.md` §4.1 (`exercise_secondary_muscle`)
+- **Motivo**: `ExerciseCard.secondary_muscles` exige «sin duplicados, orden estable»
+  (§5.1), pero la tabla solo tiene PK(`exercise_id`, `muscle_code`) y no conserva el orden
+  del dataset. Sin él, el catálogo reconstruido desde la BD (caché de `backend-api`) no sería
+  idéntico al exportado por `forja-ingest export-cards` y los planes podrían variar.
+- **Cambio propuesto**: añadir `position smallint not null` (0…n-1, orden del dataset tras
+  normalizar y deduplicar) a `exercise_secondary_muscle`. Ya implementado en
+  `backend/app/models/catalog.py` y en `forja-ingest load`.
+- **Compatibilidad**: compatible (columna nueva en una tabla que solo escribe la ingesta; no
+  cambia la API).
+- **Resolución**: _pendiente del arquitecto_.
