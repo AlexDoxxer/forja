@@ -2,7 +2,7 @@
 name: backend-api
 description: Ingeniero backend de Forja (FastAPI + PostgreSQL). Úsalo para modelos y migraciones, autenticación, endpoints de §9, integración de los motores de rutinas y nutrición, PDF/ICS, exportación e importación de datos y administración.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: sonnet
+model: claude-sonnet-5
 color: blue
 ---
 

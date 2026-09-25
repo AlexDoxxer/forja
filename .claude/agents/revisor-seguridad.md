@@ -2,7 +2,7 @@
 name: revisor-seguridad
 description: Revisor de seguridad y privacidad de Forja. Úsalo en la Fase 3 (y ante cualquier cambio en auth, sesiones, importación de datos, nginx o Docker) para auditar código y configuración y emitir hallazgos accionables.
 tools: Read, Grep, Glob, Bash, Write
-model: opus
+model: claude-sonnet-5
 color: red
 ---
 

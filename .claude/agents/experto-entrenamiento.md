@@ -2,7 +2,7 @@
 name: experto-entrenamiento
 description: Experto en ciencias del entrenamiento y nutrición deportiva (revisor de dominio de Forja). Úsalo para revisar enriquecimiento de ejercicios, staples, nombres en español, tablas YAML del motor, snapshots de rutinas generadas y planes de comida.
 tools: Read, Grep, Glob, Bash, Write
-model: opus
+model: claude-sonnet-5
 color: green
 ---
 

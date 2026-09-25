@@ -93,6 +93,5 @@ Los hallazgos de seguridad y QA se asignan a sus propietarios y se re-verifican.
 - Encarga tareas de tamaño medio (una sección del MASTER_PROMPT o menos). Los subagentes
   trabajan mejor con criterios de aceptación cerrados que con «hazlo todo».
 - Pide siempre al subagente que ejecute los tests antes de devolver el control.
-- Los agentes `motor-rutinas`, `frontend-ui`, `arquitecto`, `revisor-seguridad` y
-  `experto-entrenamiento` usan `opus` por su complejidad; el resto `sonnet`. Ajusta el
-  campo `model` de cada fichero si quieres otro equilibrio coste/calidad.
+- Todos los agentes usan `claude-sonnet-5` (campo `model` de `.claude/agents/*.md`).
+  Ajusta ese campo si quieres otro equilibrio coste/calidad.
