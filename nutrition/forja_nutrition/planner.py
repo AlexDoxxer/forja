@@ -328,9 +328,15 @@ def plan_week(nutrition_input: NutritionInput, week_start: date) -> MealPlanOutc
     any_tolerance_exceeded = False
     for day_index in range(_DAYS_PER_WEEK):
         day_date = week_start + timedelta(days=day_index)
-        meals = []
+        meals: list[Meal] = []
+        # Realimentación del error: cada comida apunta al reparto de lo que aún falta del
+        # objetivo diario (no al reparto fijo), de modo que el redondeo de las primeras
+        # comidas se compensa en las siguientes y el día cierra cerca del objetivo.
+        remaining = (target.target_kcal, target.protein_g, target.fat_g, target.carbs_g)
+        remaining_fraction = 1.0
         for slot in slots:
             fraction = fractions[slot]
+            share = fraction / remaining_fraction
             meal = build_meal(
                 slot=slot,
                 foods=foods,
@@ -340,13 +346,20 @@ def plan_week(nutrition_input: NutritionInput, week_start: date) -> MealPlanOutc
                 disliked=disliked,
                 usage_counts=usage_counts,
                 rng=rng,
-                kcal_target=target.target_kcal * fraction,
-                protein_target=target.protein_g * fraction,
-                fat_target=target.fat_g * fraction,
-                carbs_target=target.carbs_g * fraction,
+                kcal_target=max(remaining[0], 0.0) * share,
+                protein_target=max(remaining[1], 0.0) * share,
+                fat_target=max(remaining[2], 0.0) * share,
+                carbs_target=max(remaining[3], 0.0) * share,
                 rounding=tables.rounding,
             )
             meals.append(meal)
+            remaining = (
+                remaining[0] - meal.totals.kcal,
+                remaining[1] - meal.totals.protein_g,
+                remaining[2] - meal.totals.fat_g,
+                remaining[3] - meal.totals.carbs_g,
+            )
+            remaining_fraction -= fraction
         totals = sum_macro_totals(m.totals for m in meals)
         deviation = deviation_for(
             totals, target.target_kcal, target.protein_g, target.fat_g, target.carbs_g
