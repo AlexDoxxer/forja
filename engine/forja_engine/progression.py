@@ -172,18 +172,6 @@ def _bodyweight(
     top_reached: bool,
 ) -> ProgressionSuggestion:
     rep_min, rep_max = reps
-    return _bodyweight_rules(card, rep_min, rep_max, catalog, tables, top_reached=top_reached)
-
-
-def _bodyweight_rules(
-    card: ExerciseCard,
-    rep_min: int,
-    rep_max: int,
-    catalog: Sequence[ExerciseCard],
-    tables: Tables,
-    *,
-    top_reached: bool,
-) -> ProgressionSuggestion:
     loads = tables.engine_rules.progression_loads
     if not top_reached:
         return _suggestion(
