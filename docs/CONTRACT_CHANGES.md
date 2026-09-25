@@ -73,3 +73,18 @@ contrato en silencio.**
 - **Compatibilidad**: compatible (valor de enumeración nuevo en entrada y salida; los clientes
   existentes no lo envían). Requiere versión menor.
 - **Resolución**: pendiente del arquitecto.
+
+### CC-0003 · Códigos de aviso específicos para ejercicios excluidos, evitados o inexistentes
+- **Estado**: propuesto
+- **Propone**: motor-rutinas · **Fecha**: 2026-09-25
+- **Afecta a**: `PlanWarningCode` (`contracts/openapi.yaml`, `contracts/domain.md` §3 y §5.3)
+- **Motivo**: `validate_plan` debe detectar ejercicios excluidos, con músculo objetivo o
+  patrón evitado e ids que ya no existen en el catálogo (domain.md §5.3), pero la
+  enumeración no tiene códigos para ellos. Mientras tanto el motor usa, con `message_es`
+  preciso, `avoided_muscle_substituted` (excluido/evitado) y `deprecated_exercise` (id
+  inexistente), lo que obliga al frontend a distinguir por texto.
+- **Cambio propuesto**: añadir a `PlanWarningCode` los valores `excluded_exercise`,
+  `avoided_exercise` y `unknown_exercise`. Al aprobarse, el motor los emitirá en
+  `forja_engine/ops.py::_exercise_violations` (cambio de una línea por caso).
+- **Compatibilidad**: compatible (valores nuevos en una enumeración de salida ⇒ versión menor).
+- **Resolución**: _pendiente del arquitecto_.
