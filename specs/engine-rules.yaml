@@ -29,6 +29,10 @@ scoring:
   same_variant_group: -15
   above_difficulty: -10
   unilateral_in_strength_main: -20
+  # Extensión de §7.2 (pendiente de revisión del experto): en slots main se prefiere material
+  # que admite carga progresiva frente a banda o peso corporal cuando ambos están disponibles.
+  loadable_in_main: 10
+loadable_equipment: [barbell, dumbbell, ez_bar, trap_bar, machine, smith, sled, cable, kettlebell, weighted]
 
 # Orden de relajación cuando un slot no tiene candidatos (acumulativo).
 relaxation_order: [difficulty, staple, target_group, pattern_affinity]

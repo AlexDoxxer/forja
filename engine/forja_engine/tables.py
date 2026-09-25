@@ -433,6 +433,7 @@ class Scoring(Table):
     same_variant_group: int
     above_difficulty: int
     unilateral_in_strength_main: int
+    loadable_in_main: int
 
 
 Relaxation = Literal["difficulty", "staple", "target_group", "pattern_affinity"]
@@ -498,6 +499,7 @@ class EngineRules(Table):
     always_available_equipment: tuple[EquipmentCode, ...]
     difficulty: DifficultyRules
     scoring: Scoring
+    loadable_equipment: tuple[EquipmentCode, ...]
     relaxation_order: tuple[Relaxation, ...]
     relaxations_warned: tuple[Relaxation, ...]
     max_alternatives: int = Field(ge=0, le=3)

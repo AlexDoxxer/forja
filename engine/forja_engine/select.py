@@ -176,6 +176,8 @@ class Selector:
             and self.inp.goal is Goal.STRENGTH
         ):
             total += weights.unilateral_in_strength_main
+        if slot.role is ExerciseRole.MAIN and card.equipment_code in self.rules.loadable_equipment:
+            total += weights.loadable_in_main
         return total
 
     def choose(
