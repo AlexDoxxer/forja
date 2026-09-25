@@ -65,30 +65,30 @@
 
 **Salida**: `forja-ingest fetch && forja-ingest load` en BD limpia ⇒ 1.324 ejercicios, 2.648 medios verificados, 0 errores.
 
-### `motor-rutinas` (§7) — handoff `docs/handoffs/F1-motor-rutinas.md`
+### `motor-rutinas` (§7) — handoff `docs/handoffs/f1-motor-rutinas.md`
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F1-ENG-01 | `tables.py`: carga y validación Pydantic de todos los YAML, `tables_hash` | YAML inválido o referencia rota (patrón/plantilla inexistente) ⇒ error al cargar; hash estable | F0-ORQ-01 | pendiente |
-| F1-ENG-02 | `models.py`: DTOs `frozen` de `contracts/domain.md` §5 | Test: `model_json_schema()` compatible con los esquemas de `contracts/openapi.yaml` | F0-ORQ-01 | pendiente |
-| F1-ENG-03 | Catálogo de fixture ≥ 150 `ExerciseCard` realistas (todos los patrones y equipamientos) | `engine/tests/fixtures/catalog.json` valida contra `ExerciseCard` | F1-ENG-02 | pendiente |
-| F1-ENG-04 | Paso 1 `normalize.py` (seguridad, semilla derivada) | Tests parametrizados; misma entrada ⇒ misma semilla | F1-ENG-02 | pendiente |
-| F1-ENG-05 | Paso 2 `split.py` + sustituciones por énfasis | Tabla §7.3 verificada para 7 días × 3 niveles | F1-ENG-01 | pendiente |
-| F1-ENG-06 | Paso 3 `volume.py` (objetivo, énfasis, sexo, suelos) | Tests por objetivo × nivel × énfasis | F1-ENG-01 | pendiente |
-| F1-ENG-07 | Paso 4 `allocate.py` (≤ 10 series/grupo/sesión, créditos 1,0/0,5) | Propiedad: nunca > 10 | F1-ENG-05, F1-ENG-06 | pendiente |
-| F1-ENG-08 | Paso 5 `select.py` (puntuación, PRNG, relajación, alternativas) | Tests de cada término de puntuación y de la cadena de relajación; nunca excepción | F1-ENG-03, F1-ENG-07 | pendiente |
-| F1-ENG-09 | Paso 6 `prescribe.py` (§7.5, principiantes, modificadores de sexo) | Tabla §7.5 reproducida en tests | F1-ENG-08 | pendiente |
-| F1-ENG-10 | Paso 7 `timefit.py` (a–d, nunca tocar `main` salvo último recurso) | Propiedad: tiempo ≤ presupuesto × 1,05 o warning | F1-ENG-09 | pendiente |
-| F1-ENG-11 | Paso 8 `periodize.py` (acumulación, descarga, ondulación) | Tests por nivel y objetivo | F1-ENG-09 | pendiente |
-| F1-ENG-12 | Paso 9 `compose.py` + `generate()` con `rationale_es` y `warnings` | Salida valida contra `ProgramPlan`; determinismo byte a byte | F1-ENG-04…11 | pendiente |
-| F1-ENG-13 | `progression.py` (§7.6: doble progresión, e1RM, aproximación, discos) | Tests con casos límite (reps > 10, peso corporal, mancuernas) | F1-ENG-02 | pendiente |
-| F1-ENG-14 | `ops.py`: `regenerate_day`, `swap_exercise`, `rebalance_after_edit`, `validate_plan` | Tests por operación; `validate_plan` detecta cada regla de §7.7 | F1-ENG-12 | pendiente |
-| F1-ENG-15 | 1.890 combinaciones parametrizadas | `pytest` las ejecuta en < 60 s | F1-ENG-12 | pendiente |
-| F1-ENG-16 | Propiedades hypothesis de §7.8 | Determinismo, `validate_plan`, tiempo, exclusiones, equipamiento, volumen ±15 % | F1-ENG-14 | pendiente |
-| F1-ENG-17 | 12 snapshots golden + `engine/tests/golden/README.md` | Perfiles descritos; revisión del experto (F1b-EXP-05) | F1-ENG-12 | pendiente |
-| F1-ENG-18 | Benchmark `generate` < 150 ms p95 con catálogo completo | `pytest-benchmark` | F1-ENG-12, F1-ING-12 | pendiente |
-| F1-ENG-19 | Regenerar fixture con `forja-ingest export-cards` y actualizar snapshots | Tests verdes con el catálogo real exportado | F1-ING-12, F1-ENG-17 | pendiente |
-| F1-ENG-20 | Cobertura 100 % líneas / ≥ 95 % ramas y handoff con 3 perfiles legibles | `make test-engine` verde; handoff | todas las anteriores | pendiente |
+| F1-ENG-01 | `tables.py`: carga y validación Pydantic de todos los YAML, `tables_hash` | YAML inválido o referencia rota (patrón/plantilla inexistente) ⇒ error al cargar; hash estable | F0-ORQ-01 | hecha |
+| F1-ENG-02 | `models.py`: DTOs `frozen` de `contracts/domain.md` §5 | Test: `model_json_schema()` compatible con los esquemas de `contracts/openapi.yaml` | F0-ORQ-01 | hecha |
+| F1-ENG-03 | Catálogo de fixture ≥ 150 `ExerciseCard` realistas (todos los patrones y equipamientos) | `engine/tests/fixtures/catalog.json` valida contra `ExerciseCard` | F1-ENG-02 | hecha |
+| F1-ENG-04 | Paso 1 `normalize.py` (seguridad, semilla derivada) | Tests parametrizados; misma entrada ⇒ misma semilla | F1-ENG-02 | hecha |
+| F1-ENG-05 | Paso 2 `split.py` + sustituciones por énfasis | Tabla §7.3 verificada para 7 días × 3 niveles | F1-ENG-01 | hecha |
+| F1-ENG-06 | Paso 3 `volume.py` (objetivo, énfasis, sexo, suelos) | Tests por objetivo × nivel × énfasis | F1-ENG-01 | hecha |
+| F1-ENG-07 | Paso 4 `allocate.py` (≤ 10 series/grupo/sesión, créditos 1,0/0,5) | Propiedad: nunca > 10 | F1-ENG-05, F1-ENG-06 | hecha |
+| F1-ENG-08 | Paso 5 `select.py` (puntuación, PRNG, relajación, alternativas) | Tests de cada término de puntuación y de la cadena de relajación; nunca excepción | F1-ENG-03, F1-ENG-07 | hecha |
+| F1-ENG-09 | Paso 6 `prescribe.py` (§7.5, principiantes, modificadores de sexo) | Tabla §7.5 reproducida en tests | F1-ENG-08 | hecha |
+| F1-ENG-10 | Paso 7 `timefit.py` (a–d, nunca tocar `main` salvo último recurso) | Propiedad: tiempo ≤ presupuesto × 1,05 o warning | F1-ENG-09 | hecha |
+| F1-ENG-11 | Paso 8 `periodize.py` (acumulación, descarga, ondulación) | Tests por nivel y objetivo | F1-ENG-09 | hecha |
+| F1-ENG-12 | Paso 9 `compose.py` + `generate()` con `rationale_es` y `warnings` | Salida valida contra `ProgramPlan`; determinismo byte a byte | F1-ENG-04…11 | hecha |
+| F1-ENG-13 | `progression.py` (§7.6: doble progresión, e1RM, aproximación, discos) | Tests con casos límite (reps > 10, peso corporal, mancuernas) | F1-ENG-02 | hecha |
+| F1-ENG-14 | `ops.py`: `regenerate_day`, `swap_exercise`, `rebalance_after_edit`, `validate_plan` | Tests por operación; `validate_plan` detecta cada regla de §7.7 | F1-ENG-12 | hecha |
+| F1-ENG-15 | 1.890 combinaciones parametrizadas | `pytest` las ejecuta en < 60 s | F1-ENG-12 | hecha |
+| F1-ENG-16 | Propiedades hypothesis de §7.8 | Determinismo, `validate_plan`, tiempo, exclusiones, equipamiento, volumen ±15 % | F1-ENG-14 | hecha |
+| F1-ENG-17 | 12 snapshots golden + `engine/tests/golden/README.md` | Perfiles descritos; revisión del experto (F1b-EXP-05) | F1-ENG-12 | hecha |
+| F1-ENG-18 | Benchmark `generate` < 150 ms p95 con catálogo completo | `pytest-benchmark` | F1-ENG-12, F1-ING-12 | hecha |
+| F1-ENG-19 | Regenerar fixture con `forja-ingest export-cards` y actualizar snapshots | Tests verdes con el catálogo real exportado | F1-ING-12, F1-ENG-17 | hecha |
+| F1-ENG-20 | Cobertura 100 % líneas / ≥ 95 % ramas y handoff con 3 perfiles legibles | `make test-engine` verde; handoff | todas las anteriores | hecha |
 
 ### `motor-nutricion` (§8) — handoff `docs/handoffs/F1-motor-nutricion.md`
 
