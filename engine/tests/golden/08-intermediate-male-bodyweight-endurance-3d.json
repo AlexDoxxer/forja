@@ -1,0 +1,4475 @@
+{
+ "engine_version": "0.1.0",
+ "tables_hash": "55b940e662f992d8ccd21283fac3b5f1160c9bb23270ef62377379d7da87dd36",
+ "seed": 20260923,
+ "input": {
+  "goal": "endurance",
+  "days_per_week": 3,
+  "sex": "male",
+  "experience": "intermediate",
+  "session_minutes": 40,
+  "equipment": {
+   "preset": "bodyweight",
+   "items": [
+    "bodyweight"
+   ]
+  },
+  "emphasis": "balanced",
+  "avoid_muscles": [],
+  "avoid_patterns": [],
+  "preferred_days": [],
+  "weeks": 5,
+  "include_warmup": true,
+  "include_cooldown": true,
+  "include_cardio_finisher": false,
+  "favorite_exercise_ids": [],
+  "excluded_exercise_ids": [],
+  "seed": 20260923
+ },
+ "split": [
+  "full_body_a",
+  "full_body_b",
+  "full_body_c"
+ ],
+ "weeks": [
+  {
+   "index": 0,
+   "phase": "accumulation",
+   "target_rir": 3,
+   "volume_ratio": 1.0,
+   "days": [
+    {
+     "index": 0,
+     "template": "full_body_a",
+     "name_es": "Cuerpo completo A",
+     "focus_es": "Trabajo de cuádriceps, pecho, espalda y isquiotibiales",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 31,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3211",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0493",
+          "0662"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "horizontal_push",
+          "role": "main",
+          "group": "chest",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "2300",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0499",
+          "3168"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0488",
+          "1352",
+          "3292"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "hinge",
+          "role": "accessory",
+          "group": "hamstrings",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3302",
+         "sets": 2,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Mantén la posición con técnica impecable",
+         "notes_es": null,
+         "alternatives": [
+          "0471"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "shoulder_raise",
+          "role": "accessory",
+          "group": "shoulders",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3239",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0276",
+          "0464",
+          "0805"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_anti_extension",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "0613",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1271",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 4.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 4.0
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "template": "full_body_b",
+     "name_es": "Cuerpo completo B",
+     "focus_es": "Trabajo de isquiotibiales, hombros, espalda y cuádriceps",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 32,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "0488",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1352",
+          "3292",
+          "0489"
+         ],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "hinge",
+          "role": "main",
+          "group": "hamstrings",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0471",
+         "sets": 2,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Mantén la posición con técnica impecable",
+         "notes_es": null,
+         "alternatives": [
+          "3302"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_push",
+          "role": "main",
+          "group": "shoulders",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1429",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0652",
+          "1326"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0809",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": true,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": "Repeticiones o tiempo por lado.",
+         "alternatives": [
+          "2368"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "lunge",
+          "role": "accessory",
+          "group": "quads",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1769",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1770"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_flexion",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0495",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0003",
+          "0476",
+          "0687"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_rotation",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1587",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0669",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 5.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 4.0
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "template": "full_body_c",
+     "name_es": "Cuerpo completo C",
+     "focus_es": "Trabajo de cuádriceps, espalda, pecho y glúteos",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 34,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0652",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1326",
+          "1429"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3216",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0258",
+          "0279"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_push",
+          "role": "accessory",
+          "group": "chest",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3433",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3523",
+          "0130",
+          "0668"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "glute_isolation",
+          "role": "accessory",
+          "group": "glutes",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1399",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0129",
+          "0137",
+          "0259"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_extension",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0284",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 3,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1373",
+          "1386",
+          "1387"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "calf",
+          "role": "accessory",
+          "group": "calves",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3203",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3202",
+          "3204",
+          "0001"
+         ],
+         "order": 6,
+         "slot": {
+          "slot_index": 6,
+          "pattern": "core_flexion",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1512",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1355",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 4.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 3.0
+      },
+      {
+       "group": "calves",
+       "sets": 2.0
+      },
+      {
+       "group": "core",
+       "sets": 2.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "index": 1,
+   "phase": "accumulation",
+   "target_rir": 2,
+   "volume_ratio": 1.0,
+   "days": [
+    {
+     "index": 0,
+     "template": "full_body_a",
+     "name_es": "Cuerpo completo A",
+     "focus_es": "Trabajo de cuádriceps, pecho, espalda y isquiotibiales",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 31,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3211",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0493",
+          "0662"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "horizontal_push",
+          "role": "main",
+          "group": "chest",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "2300",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0499",
+          "3168"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0488",
+          "1352",
+          "3292"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "hinge",
+          "role": "accessory",
+          "group": "hamstrings",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3302",
+         "sets": 2,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Mantén la posición con técnica impecable",
+         "notes_es": null,
+         "alternatives": [
+          "0471"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "shoulder_raise",
+          "role": "accessory",
+          "group": "shoulders",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3239",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0276",
+          "0464",
+          "0805"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_anti_extension",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "0613",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1271",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 4.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 4.0
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "template": "full_body_b",
+     "name_es": "Cuerpo completo B",
+     "focus_es": "Trabajo de isquiotibiales, hombros, espalda y cuádriceps",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 32,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "0488",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1352",
+          "3292",
+          "0489"
+         ],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "hinge",
+          "role": "main",
+          "group": "hamstrings",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0471",
+         "sets": 2,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Mantén la posición con técnica impecable",
+         "notes_es": null,
+         "alternatives": [
+          "3302"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_push",
+          "role": "main",
+          "group": "shoulders",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1429",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0652",
+          "1326"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0809",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": true,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": "Repeticiones o tiempo por lado.",
+         "alternatives": [
+          "2368"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "lunge",
+          "role": "accessory",
+          "group": "quads",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1769",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1770"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_flexion",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0495",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0003",
+          "0476",
+          "0687"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_rotation",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1587",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0669",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 5.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 4.0
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "template": "full_body_c",
+     "name_es": "Cuerpo completo C",
+     "focus_es": "Trabajo de cuádriceps, espalda, pecho y glúteos",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 34,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0652",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1326",
+          "1429"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3216",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0258",
+          "0279"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_push",
+          "role": "accessory",
+          "group": "chest",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3433",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3523",
+          "0130",
+          "0668"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "glute_isolation",
+          "role": "accessory",
+          "group": "glutes",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1399",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0129",
+          "0137",
+          "0259"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_extension",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0284",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1373",
+          "1386",
+          "1387"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "calf",
+          "role": "accessory",
+          "group": "calves",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3203",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3202",
+          "3204",
+          "0001"
+         ],
+         "order": 6,
+         "slot": {
+          "slot_index": 6,
+          "pattern": "core_flexion",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1512",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1355",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 4.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 3.0
+      },
+      {
+       "group": "calves",
+       "sets": 2.0
+      },
+      {
+       "group": "core",
+       "sets": 2.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "phase": "accumulation",
+   "target_rir": 2,
+   "volume_ratio": 1.0,
+   "days": [
+    {
+     "index": 0,
+     "template": "full_body_a",
+     "name_es": "Cuerpo completo A",
+     "focus_es": "Trabajo de cuádriceps, pecho, espalda y isquiotibiales",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 31,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3211",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0493",
+          "0662"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "horizontal_push",
+          "role": "main",
+          "group": "chest",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "2300",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0499",
+          "3168"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0488",
+          "1352",
+          "3292"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "hinge",
+          "role": "accessory",
+          "group": "hamstrings",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3302",
+         "sets": 2,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Mantén la posición con técnica impecable",
+         "notes_es": null,
+         "alternatives": [
+          "0471"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "shoulder_raise",
+          "role": "accessory",
+          "group": "shoulders",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3239",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0276",
+          "0464",
+          "0805"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_anti_extension",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "0613",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1271",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 4.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 4.0
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "template": "full_body_b",
+     "name_es": "Cuerpo completo B",
+     "focus_es": "Trabajo de isquiotibiales, hombros, espalda y cuádriceps",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 32,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "0488",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1352",
+          "3292",
+          "0489"
+         ],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "hinge",
+          "role": "main",
+          "group": "hamstrings",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0471",
+         "sets": 2,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Mantén la posición con técnica impecable",
+         "notes_es": null,
+         "alternatives": [
+          "3302"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_push",
+          "role": "main",
+          "group": "shoulders",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1429",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0652",
+          "1326"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0809",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": true,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": "Repeticiones o tiempo por lado.",
+         "alternatives": [
+          "2368"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "lunge",
+          "role": "accessory",
+          "group": "quads",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1769",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1770"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_flexion",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0495",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0003",
+          "0476",
+          "0687"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_rotation",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1587",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0669",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 5.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 4.0
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "template": "full_body_c",
+     "name_es": "Cuerpo completo C",
+     "focus_es": "Trabajo de cuádriceps, espalda, pecho y glúteos",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 34,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0652",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1326",
+          "1429"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3216",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0258",
+          "0279"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_push",
+          "role": "accessory",
+          "group": "chest",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3433",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3523",
+          "0130",
+          "0668"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "glute_isolation",
+          "role": "accessory",
+          "group": "glutes",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1399",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0129",
+          "0137",
+          "0259"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_extension",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0284",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1373",
+          "1386",
+          "1387"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "calf",
+          "role": "accessory",
+          "group": "calves",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3203",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3202",
+          "3204",
+          "0001"
+         ],
+         "order": 6,
+         "slot": {
+          "slot_index": 6,
+          "pattern": "core_flexion",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1512",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1355",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 4.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 3.0
+      },
+      {
+       "group": "calves",
+       "sets": 2.0
+      },
+      {
+       "group": "core",
+       "sets": 2.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "phase": "accumulation",
+   "target_rir": 1,
+   "volume_ratio": 1.0,
+   "days": [
+    {
+     "index": 0,
+     "template": "full_body_a",
+     "name_es": "Cuerpo completo A",
+     "focus_es": "Trabajo de cuádriceps, pecho, espalda y isquiotibiales",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 31,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3211",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0493",
+          "0662"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "horizontal_push",
+          "role": "main",
+          "group": "chest",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "2300",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0499",
+          "3168"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0488",
+          "1352",
+          "3292"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "hinge",
+          "role": "accessory",
+          "group": "hamstrings",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3302",
+         "sets": 2,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Mantén la posición con técnica impecable",
+         "notes_es": null,
+         "alternatives": [
+          "0471"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "shoulder_raise",
+          "role": "accessory",
+          "group": "shoulders",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3239",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0276",
+          "0464",
+          "0805"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_anti_extension",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "0613",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1271",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 4.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 4.0
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "template": "full_body_b",
+     "name_es": "Cuerpo completo B",
+     "focus_es": "Trabajo de isquiotibiales, hombros, espalda y cuádriceps",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 32,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "0488",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1352",
+          "3292",
+          "0489"
+         ],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "hinge",
+          "role": "main",
+          "group": "hamstrings",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0471",
+         "sets": 2,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Mantén la posición con técnica impecable",
+         "notes_es": null,
+         "alternatives": [
+          "3302"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_push",
+          "role": "main",
+          "group": "shoulders",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1429",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0652",
+          "1326"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0809",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": true,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": "Repeticiones o tiempo por lado.",
+         "alternatives": [
+          "2368"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "lunge",
+          "role": "accessory",
+          "group": "quads",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1769",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1770"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_flexion",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0495",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0003",
+          "0476",
+          "0687"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_rotation",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1587",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0669",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 5.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 4.0
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "template": "full_body_c",
+     "name_es": "Cuerpo completo C",
+     "focus_es": "Trabajo de cuádriceps, espalda, pecho y glúteos",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 34,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 2,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0652",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1326",
+          "1429"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3216",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0258",
+          "0279"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_push",
+          "role": "accessory",
+          "group": "chest",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3433",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3523",
+          "0130",
+          "0668"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "glute_isolation",
+          "role": "accessory",
+          "group": "glutes",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1399",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0129",
+          "0137",
+          "0259"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_extension",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0284",
+         "sets": 2,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1373",
+          "1386",
+          "1387"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "calf",
+          "role": "accessory",
+          "group": "calves",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3203",
+         "sets": 2,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 2,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3202",
+          "3204",
+          "0001"
+         ],
+         "order": 6,
+         "slot": {
+          "slot_index": 6,
+          "pattern": "core_flexion",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1512",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1355",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
+       "group": "back",
+       "sets": 2.0
+      },
+      {
+       "group": "arms",
+       "sets": 4.0
+      },
+      {
+       "group": "quads",
+       "sets": 2.0
+      },
+      {
+       "group": "glutes",
+       "sets": 3.0
+      },
+      {
+       "group": "calves",
+       "sets": 2.0
+      },
+      {
+       "group": "core",
+       "sets": 2.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "index": 4,
+   "phase": "deload",
+   "target_rir": 4,
+   "volume_ratio": 0.5,
+   "days": [
+    {
+     "index": 0,
+     "template": "full_body_a",
+     "name_es": "Cuerpo completo A",
+     "focus_es": "Trabajo de cuádriceps, pecho, espalda y isquiotibiales",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 23,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 1,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3211",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0493",
+          "0662"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "horizontal_push",
+          "role": "main",
+          "group": "chest",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "2300",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0499",
+          "3168"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0488",
+          "1352",
+          "3292"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "hinge",
+          "role": "accessory",
+          "group": "hamstrings",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3302",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0471"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "shoulder_raise",
+          "role": "accessory",
+          "group": "shoulders",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3239",
+         "sets": 1,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0276",
+          "0464",
+          "0805"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_anti_extension",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "0613",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1271",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 1.0
+      },
+      {
+       "group": "back",
+       "sets": 1.0
+      },
+      {
+       "group": "arms",
+       "sets": 2.0
+      },
+      {
+       "group": "quads",
+       "sets": 1.0
+      },
+      {
+       "group": "glutes",
+       "sets": 0.5
+      },
+      {
+       "group": "core",
+       "sets": 2.0
+      }
+     ]
+    },
+    {
+     "index": 1,
+     "template": "full_body_b",
+     "name_es": "Cuerpo completo B",
+     "focus_es": "Trabajo de isquiotibiales, hombros, espalda y cuádriceps",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 23,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0489",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 1,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "0488",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1352",
+          "3292",
+          "0489"
+         ],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "hinge",
+          "role": "main",
+          "group": "hamstrings",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0471",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 30,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3302"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_push",
+          "role": "main",
+          "group": "shoulders",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1429",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0652",
+          "1326"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0809",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": true,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": "Repeticiones o tiempo por lado.",
+         "alternatives": [
+          "2368"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "lunge",
+          "role": "accessory",
+          "group": "quads",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1769",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1770"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_flexion",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0495",
+         "sets": 1,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0003",
+          "0476",
+          "0687"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "core_rotation",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1587",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "0669",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "back",
+       "sets": 1.0
+      },
+      {
+       "group": "arms",
+       "sets": 2.5
+      },
+      {
+       "group": "quads",
+       "sets": 1.0
+      },
+      {
+       "group": "glutes",
+       "sets": 0.5
+      },
+      {
+       "group": "core",
+       "sets": 2.0
+      }
+     ]
+    },
+    {
+     "index": 2,
+     "template": "full_body_c",
+     "name_es": "Cuerpo completo C",
+     "focus_es": "Trabajo de cuádriceps, espalda, pecho y glúteos",
+     "weekday": null,
+     "is_recovery": false,
+     "estimated_minutes": 25,
+     "blocks": [
+      {
+       "order": 0,
+       "kind": "warmup",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "3636",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 180,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Ritmo suave que vaya subiendo poco a poco.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "3132",
+         "sets": 1,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 30,
+         "load_hint": null,
+         "notes_es": "Aproximación ligera para preparar el primer ejercicio: sin llegar a fatigarte.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      },
+      {
+       "order": 1,
+       "kind": "circuit",
+       "rounds": 1,
+       "rest_between_rounds_s": 60,
+       "exercises": [
+        {
+         "exercise_id": "3533",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [],
+         "order": 0,
+         "slot": {
+          "slot_index": 0,
+          "pattern": "squat",
+          "role": "main",
+          "group": "quads",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "0652",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1326",
+          "1429"
+         ],
+         "order": 1,
+         "slot": {
+          "slot_index": 1,
+          "pattern": "vertical_pull",
+          "role": "main",
+          "group": "back",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "3216",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0251",
+          "0258",
+          "0279"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 2,
+          "pattern": "horizontal_push",
+          "role": "accessory",
+          "group": "chest",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "3433",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3523",
+          "0130",
+          "0668"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "glute_isolation",
+          "role": "accessory",
+          "group": "glutes",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1399",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "0129",
+          "0137",
+          "0259"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "elbow_extension",
+          "role": "accessory",
+          "group": "arms",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "0284",
+         "sets": 1,
+         "rep_min": 15,
+         "rep_max": 25,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": "1-0-1-0",
+         "rest_s": 30,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "1373",
+          "1386",
+          "1387"
+         ],
+         "order": 5,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "calf",
+          "role": "accessory",
+          "group": "calves",
+          "priority": 3
+         }
+        },
+        {
+         "exercise_id": "3203",
+         "sets": 1,
+         "rep_min": 10,
+         "rep_max": 20,
+         "duration_s": null,
+         "per_side": false,
+         "target_rir": 4,
+         "tempo": null,
+         "rest_s": 45,
+         "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
+         "notes_es": null,
+         "alternatives": [
+          "3202",
+          "3204",
+          "0001"
+         ],
+         "order": 6,
+         "slot": {
+          "slot_index": 6,
+          "pattern": "core_flexion",
+          "role": "core",
+          "group": "core",
+          "priority": 3
+         }
+        }
+       ]
+      },
+      {
+       "order": 2,
+       "kind": "cooldown",
+       "rounds": 1,
+       "rest_between_rounds_s": null,
+       "exercises": [
+        {
+         "exercise_id": "1512",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 0,
+         "slot": null
+        },
+        {
+         "exercise_id": "1355",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 35,
+         "per_side": true,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Estira sin rebotes y respira con calma.",
+         "alternatives": [],
+         "order": 1,
+         "slot": null
+        }
+       ]
+      }
+     ],
+     "volume": [
+      {
+       "group": "chest",
+       "sets": 1.0
+      },
+      {
+       "group": "back",
+       "sets": 1.0
+      },
+      {
+       "group": "arms",
+       "sets": 2.0
+      },
+      {
+       "group": "quads",
+       "sets": 1.0
+      },
+      {
+       "group": "glutes",
+       "sets": 1.5
+      },
+      {
+       "group": "calves",
+       "sets": 1.0
+      },
+      {
+       "group": "core",
+       "sets": 1.0
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "weekly_volume": [
+  {
+   "group": "chest",
+   "target_min": 8.0,
+   "target_max": 12.0,
+   "planned_sets": 4.0
+  },
+  {
+   "group": "back",
+   "target_min": 8.0,
+   "target_max": 12.0,
+   "planned_sets": 6.0
+  },
+  {
+   "group": "shoulders",
+   "target_min": 8.0,
+   "target_max": 12.0,
+   "planned_sets": 0.0
+  },
+  {
+   "group": "arms",
+   "target_min": 4.0,
+   "target_max": 8.0,
+   "planned_sets": 13.0
+  },
+  {
+   "group": "quads",
+   "target_min": 8.0,
+   "target_max": 12.0,
+   "planned_sets": 6.0
+  },
+  {
+   "group": "hamstrings",
+   "target_min": 8.0,
+   "target_max": 12.0,
+   "planned_sets": 0.0
+  },
+  {
+   "group": "glutes",
+   "target_min": 8.0,
+   "target_max": 12.0,
+   "planned_sets": 5.0
+  },
+  {
+   "group": "calves",
+   "target_min": 4.0,
+   "target_max": 8.0,
+   "planned_sets": 2.0
+  },
+  {
+   "group": "core",
+   "target_min": 8.0,
+   "target_max": 12.0,
+   "planned_sets": 10.0
+  }
+ ],
+ "warnings": [
+  {
+   "code": "slot_relaxed",
+   "message_es": "En «Cuerpo completo A» no había un ejercicio ideal de bisagra de cadera con tu equipamiento: hemos elegido «hiperextensión», con una dificultad superior a tu nivel y otro músculo objetivo.",
+   "week_index": null,
+   "day_index": 0,
+   "exercise_id": "0489"
+  },
+  {
+   "code": "slot_relaxed",
+   "message_es": "En «Cuerpo completo A» no había un ejercicio ideal de elevaciones de hombro con tu equipamiento: hemos elegido «pino», con una dificultad superior a tu nivel, otro músculo objetivo y un patrón de movimiento afín.",
+   "week_index": null,
+   "day_index": 0,
+   "exercise_id": "3302"
+  },
+  {
+   "code": "slot_relaxed",
+   "message_es": "En «Cuerpo completo B» no había un ejercicio ideal de bisagra de cadera con tu equipamiento: hemos elegido «hiperextensión en banco», con una dificultad superior a tu nivel y otro músculo objetivo.",
+   "week_index": null,
+   "day_index": 1,
+   "exercise_id": "0488"
+  },
+  {
+   "code": "slot_relaxed",
+   "message_es": "En «Cuerpo completo B» no había un ejercicio ideal de empuje vertical con tu equipamiento: hemos elegido «flexión en pino», con una dificultad superior a tu nivel y otro músculo objetivo.",
+   "week_index": null,
+   "day_index": 1,
+   "exercise_id": "0471"
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de pecho: 4 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de espalda: 6 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de hombros: 0 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de brazos: 13 series efectivas, por encima del objetivo de 6. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de cuádriceps: 6 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de isquiotibiales: 0 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de glúteos: 5 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de gemelos: 2 series efectivas, por debajo del objetivo de 6. Más días o más tiempo por sesión permitirían acercarse.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  }
+ ],
+ "rationale_es": [
+  "Hemos elegido un reparto de cuerpo completo porque entrenas 3 días por semana y tu nivel es intermedio.",
+  "Para resistencia, los ejercicios principales van a 15-25 repeticiones con 30 s-1 min de descanso y dejando algunas repeticiones en reserva; los accesorios usan rangos algo más altos. Los ejercicios se encadenan en circuito con descansos cortos entre estaciones.",
+  "El mesociclo dura 5 semanas: 4 de acumulación, en las que las repeticiones en reserva bajan poco a poco, y una última de descarga con el 55 % de las series para recuperarte. Cada semana de acumulación suma una serie por grupo muscular mientras haya margen.",
+  "Cada sesión está ajustada a unos 40 minutos, incluyendo calentamiento y vuelta a la calma.",
+  "Hemos preseleccionado un reparto equilibrado. Puedes cambiarlo. El sexo nunca excluye ejercicios ni limita las cargas."
+ ]
+}
