@@ -298,11 +298,10 @@ def _slot_for(exercise: PlanExercise, card: ExerciseCard | None, tables: Tables)
     if card is None:
         msg = "no se puede sustituir un ejercicio sin slot que no está en el catálogo"
         raise PlanOperationError(msg)
-    role = ExerciseRole.CARDIO if card.role is ExerciseRole.WARMUP else card.role
     return SlotRef(
         slot_index=0,
         pattern=card.movement_pattern,
-        role=role,
+        role=card.role,
         group=tables.muscle_group(card.target_muscle),
         priority=3,
     )

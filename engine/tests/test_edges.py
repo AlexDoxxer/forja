@@ -6,11 +6,14 @@ from forja_engine.draft import DraftBlock, DraftDay
 from forja_engine.generator import CreditCache
 from forja_engine.models import (
     BlockKind,
+    EquipmentPreset,
+    EquipmentSelection,
     ExerciseRole,
     Experience,
     Goal,
     MovementPattern,
     MuscleGroup,
+    PlanWarningCode,
     SlotAddress,
     SlotRef,
     VolumeGroup,
@@ -42,6 +45,31 @@ def test_cap_enforcement_stops_at_the_minimum_sets() -> None:
     targets = {g: GroupTarget(g, 1, 2, 1.5) for g in VolumeGroup}
     sets = allocate_sets([day], targets, Goal.STRENGTH, Experience.ADVANCED, TABLES, circuit=False)
     assert all(value == 2 for value in sets.values())
+
+
+def test_bodyweight_vertical_push_relaxes_difficulty_and_warns() -> None:
+    """El dataset solo tiene 2 empujes verticales con peso corporal, ambos de dificultad 3."""
+    inp = make_input(
+        equipment=EquipmentSelection(preset=EquipmentPreset.BODYWEIGHT),
+        experience=Experience.BEGINNER,
+        days_per_week=2,
+    )
+    plan = generate(inp, catalog())
+    chosen = [
+        CARDS[e.exercise_id]
+        for b in plan.weeks[0].days[1].blocks
+        for e in b.exercises
+        if e.slot is not None and e.slot.pattern is MovementPattern.VERTICAL_PUSH
+    ]
+    assert chosen
+    assert chosen[0].difficulty == 3
+    relaxed = [
+        w
+        for w in plan.warnings
+        if w.code is PlanWarningCode.SLOT_RELAXED and w.exercise_id == chosen[0].id
+    ]
+    assert relaxed
+    assert "dificultad superior a tu nivel" in relaxed[0].message_es
 
 
 def test_slot_credits_for_groups_without_volume() -> None:
@@ -80,12 +108,20 @@ def test_reducing_accessory_rests_updates_superset_rest() -> None:
         for i in ("0294", "0201")
     ]
     day = DraftDay(0, "t", "Día", "", is_recovery=False, weekday=None)
+    loose = prescribe_working(CARDS["0294"], slot, 3, inp, TABLES, week_rir=2, circuit=False)
     day.blocks = [
-        DraftBlock(kind=BlockKind.SUPERSET, exercises=pair, rounds=3, rest_between_rounds_s=200)
+        DraftBlock(kind=BlockKind.MAIN, exercises=[loose]),
+        DraftBlock(kind=BlockKind.SUPERSET, exercises=pair, rounds=3, rest_between_rounds_s=200),
     ]
     fitter = _Fitter(day, 60, TABLES, CreditCache(CARDS, TABLES))
     fitter.reduce_accessory_rests()
-    assert day.blocks[0].rest_between_rounds_s == max(e.rest_floor_s for e in pair)
+    assert day.blocks[1].rest_between_rounds_s == max(e.rest_floor_s for e in pair)
+    assert loose.rest_s == loose.rest_floor_s
+
+
+def test_warmup_can_be_disabled() -> None:
+    plan = generate(make_input(include_warmup=False), catalog())
+    assert all(d.blocks[0].kind is not BlockKind.WARMUP for d in plan.weeks[0].days)
 
 
 def test_swap_skips_weeks_where_the_exercise_was_edited() -> None:

@@ -24,17 +24,21 @@ from forja_engine.models import (
     SlotRef,
 )
 from forja_engine.tables import Relaxation, Tables
-from forja_engine.texts import PATTERN_ES
+from forja_engine.texts import PATTERN_ES, join_es
 
 STRENGTH_ROLES = frozenset({ExerciseRole.MAIN, ExerciseRole.ACCESSORY, ExerciseRole.CORE})
 NON_STRENGTH_ROLES = frozenset({ExerciseRole.MOBILITY, ExerciseRole.CARDIO, ExerciseRole.WARMUP})
+WARMUP_ROLES = frozenset({ExerciseRole.WARMUP, ExerciseRole.CARDIO})
 UNCONSTRAINED_GROUPS = frozenset({MuscleGroup.OTHER, MuscleGroup.CARDIO})
 
 
 def role_compatible(slot_role: ExerciseRole, card_role: ExerciseRole) -> bool:
-    """``mobility``/``cardio`` nunca en slots de fuerza; slots de recuperación, su rol exacto."""
+    """``mobility``/``cardio`` nunca en slots de fuerza; calentamiento admite cardio suave;
+    slots de recuperación, su rol exacto."""
     if slot_role in STRENGTH_ROLES:
         return card_role not in NON_STRENGTH_ROLES
+    if slot_role is ExerciseRole.WARMUP:
+        return card_role in WARMUP_ROLES
     return card_role is slot_role
 
 
@@ -233,11 +237,13 @@ class Selector:
         return self._all_available()
 
     def warmup_cardio(self, rng: random.Random, usage: UsageState) -> ExerciseCard | None:
-        """Cardio suave de calentamiento (se prefieren ejercicios marcados ``warmup``)."""
+        """Cardio suave de calentamiento (se prefieren los de rol ``warmup``, p. ej. marcha)."""
         cards = [
             c
             for c in self._all_available()
-            if c.role in {ExerciseRole.WARMUP, ExerciseRole.CARDIO} and c.id not in usage.day_ids
+            if c.role in WARMUP_ROLES
+            and c.movement_pattern is MovementPattern.CARDIO
+            and c.id not in usage.day_ids
         ]
         key = {c.id: (0 if c.role is ExerciseRole.WARMUP else 1, c.difficulty) for c in cards}
         return self._pick(cards, rng, key)
@@ -317,11 +323,12 @@ def relaxation_warning(
     warned = [r for r in choice.relaxed if r in selector.rules.relaxations_warned]
     if not warned:
         return None
-    detail = {
+    details = {
         "difficulty": "una dificultad superior a tu nivel",
         "target_group": "otro músculo objetivo",
         "pattern_affinity": "un patrón de movimiento afín",
-    }[warned[-1]]
+    }
+    detail = join_es([details[relaxation] for relaxation in warned])
     return PlanWarning(
         code=PlanWarningCode.SLOT_RELAXED,
         message_es=(

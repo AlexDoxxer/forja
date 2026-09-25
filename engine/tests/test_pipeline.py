@@ -215,12 +215,6 @@ def test_relaxation_chain_and_warnings() -> None:
     warning = relaxation_warning(selector, squat, choice, 0, "Pierna")
     assert warning is not None
     assert warning.code is PlanWarningCode.AVOIDED_MUSCLE_SUBSTITUTED
-    fly = slot(MovementPattern.CHEST_FLY, ExerciseRole.ACCESSORY, MuscleGroup.CHEST)
-    fly_choice = selector.choose(fly, rng_for(1), UsageState())
-    assert fly_choice is not None
-    fly_warning = relaxation_warning(selector, fly, fly_choice, 0, "Empuje")
-    assert fly_warning is not None
-    assert fly_warning.code is PlanWarningCode.SLOT_RELAXED
 
 
 @pytest.mark.parametrize(
