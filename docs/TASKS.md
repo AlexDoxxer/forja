@@ -94,16 +94,16 @@
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F1-NUT-01 | `models.py` + carga validada de `specs/nutrition.yaml` | DTOs de `contracts/domain.md` §6; YAML inválido ⇒ error | F0-ORQ-01 | pendiente |
-| F1-NUT-02 | `energy.py`: TMB Mifflin (male/female/average), GET con ajuste por días, objetivo | Tests con valores calculados a mano | F1-NUT-01 | pendiente |
-| F1-NUT-03 | `macros.py`: proteína, grasa (suelos), carbohidratos, fibra | Propiedad: macros suman kcal ±2 % | F1-NUT-02 | pendiente |
-| F1-NUT-04 | `safety.py`: bloqueos y suelos de §8.5 como resultado tipado | Propiedad: suelos siempre respetados; < 18, embarazo, lactancia ⇒ `NutritionBlock` | F1-NUT-02 | pendiente |
-| F1-NUT-05 | `data/foods.json` (~200 alimentos USDA FDC con `fdc_id`, ES, categoría, dietas, alérgenos, porción) | Test: `|kcal − (4P+4C+9G)| ≤ 12 %` o `energy_note`; fecha de consulta documentada | F1-NUT-01 | pendiente |
-| F1-NUT-06 | `planner.py`: plantillas, selección sembrada, `lsq_linear`, redondeo, re-verificación | Tolerancias ±5 % kcal / ±10 % macros o aviso; reproducible con semilla | F1-NUT-03, F1-NUT-05 | pendiente |
-| F1-NUT-07 | `shopping.py` | Agregado por categoría en orden de `FoodCategory` | F1-NUT-06 | pendiente |
-| F1-NUT-08 | `swap.py` | Misma categoría y macros de la comida conservados (±10 %) | F1-NUT-06 | pendiente |
-| F1-NUT-09 | Propiedades §8.6 y 6 snapshots (incl. vegano con alergia a frutos secos y usuaria en `lose` cerca del suelo) | `make test-nutrition` verde (100 %/95 %) | F1-NUT-04…08 | pendiente |
-| F1-NUT-10 | Handoff con 2 planes de ejemplo legibles | `docs/handoffs/F1-motor-nutricion.md` | F1-NUT-09 | pendiente |
+| F1-NUT-01 | `models.py` + carga validada de `specs/nutrition.yaml` | DTOs de `contracts/domain.md` §6; YAML inválido ⇒ error | F0-ORQ-01 | hecha |
+| F1-NUT-02 | `energy.py`: TMB Mifflin (male/female/average), GET con ajuste por días, objetivo | Tests con valores calculados a mano | F1-NUT-01 | hecha |
+| F1-NUT-03 | `macros.py`: proteína, grasa (suelos), carbohidratos, fibra | Propiedad: macros suman kcal ±2 % | F1-NUT-02 | hecha |
+| F1-NUT-04 | `safety.py`: bloqueos y suelos de §8.5 como resultado tipado | Propiedad: suelos siempre respetados; < 18, embarazo, lactancia ⇒ `NutritionBlock` | F1-NUT-02 | hecha |
+| F1-NUT-05 | `data/foods.json` (~200 alimentos USDA FDC con `fdc_id`, ES, categoría, dietas, alérgenos, porción) | Test: `|kcal − (4P+4C+9G)| ≤ 12 %` o `energy_note`; fecha de consulta documentada | F1-NUT-01 | hecha |
+| F1-NUT-06 | `planner.py`: plantillas, selección sembrada, `lsq_linear`, redondeo, re-verificación | Tolerancias ±5 % kcal / ±10 % macros o aviso; reproducible con semilla | F1-NUT-03, F1-NUT-05 | hecha |
+| F1-NUT-07 | `shopping.py` | Agregado por categoría en orden de `FoodCategory` | F1-NUT-06 | hecha |
+| F1-NUT-08 | `swap.py` | Misma categoría y macros de la comida conservados (±10 %) | F1-NUT-06 | hecha |
+| F1-NUT-09 | Propiedades §8.6 y 6 snapshots (incl. vegano con alergia a frutos secos y usuaria en `lose` cerca del suelo) | `make test-nutrition` verde (100 %/95 %) | F1-NUT-04…08 | hecha |
+| F1-NUT-10 | Handoff con 2 planes de ejemplo legibles | `docs/handoffs/F1-motor-nutricion.md` | F1-NUT-09 | hecha |
 
 ### `frontend-ui` · Fase 1 (§10) — handoff `docs/handoffs/F1-frontend.md`
 

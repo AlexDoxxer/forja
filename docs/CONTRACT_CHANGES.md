@@ -59,3 +59,17 @@ contrato en silencio.**
 - **Compatibilidad**: compatible (columna nueva en una tabla que solo escribe la ingesta; no
   cambia la API).
 - **Resolución**: _pendiente del arquitecto_.
+
+### CC-0002 · Alérgeno `peanuts` en `Allergen`
+- **Estado**: propuesto
+- **Propone**: motor-nutricion · **Fecha**: 2026-09-25
+- **Afecta a**: enumeración `Allergen` (`contracts/domain.md` §3, `contracts/openapi.yaml`), `NutritionInput.allergens`, `Food.allergens`.
+- **Motivo**: MASTER_PROMPT §8.1 lista «frutos secos» como alérgeno, pero el cacahuete es una
+  legumbre, no un fruto seco de árbol, y es uno de los alérgenos más frecuentes. Con el
+  contrato actual el motor no puede etiquetar `cacahuete` ni `mantequilla_cacahuete` como
+  alérgenos y solo se pueden evitar con `excluded_food_ids`.
+- **Cambio propuesto**: añadir el valor `peanuts` a `Allergen` (7 → 8 valores) y etiquetarlo
+  en `cacahuete` y `mantequilla_cacahuete` de `foods.json`. Interfaz de usuario: «cacahuete».
+- **Compatibilidad**: compatible (valor de enumeración nuevo en entrada y salida; los clientes
+  existentes no lo envían). Requiere versión menor.
+- **Resolución**: pendiente del arquitecto.
