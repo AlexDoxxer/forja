@@ -1,9 +1,134 @@
-# Overrides manuales por id (prevalecen sobre reglas). Revisados por experto-entrenamiento.
-# Campos admitidos: movement_pattern, mechanic, role, difficulty, laterality, load_type, is_staple.
-version: 1
+# Overrides de enriquecimiento (prevalecen sobre specs/enrichment-rules.yaml). Revisados por
+# experto-entrenamiento. Propiedad de ingesta-datos (ADR 0002).
+#
+# Secciones:
+# - pattern_rules: reglas que se evalúan ANTES de las reglas base (misma semántica: AND entre
+#   condiciones, OR dentro de cada lista; `name_none` excluye). Las palabras clave se buscan en
+#   el nombre visible (erratas corregidas, sin sufijos de variante) en minúsculas y rodeado de
+#   un espacio: un espacio en la palabra clave actúa como límite de palabra.
+# - keywords: listas que complementan dificultad, lateralidad, tipo de carga, mecánica y rol
+#   de calentamiento (warmup_name_any: movilidad dinámica y cardio ligero, §6.3).
+# - other_justified: ejercicios que conservan el patrón `other`, con su motivo.
+# - by_id: overrides por id. Campos: movement_pattern, mechanic, role, difficulty,
+#   laterality, load_type, is_staple.
+version: 2
+
+pattern_rules:
+  # Estiramientos antes que cualquier otra regla prioritaria («outstretched» no casa).
+  - { pattern: mobility, name_any: [" stretch"] }
+  # Rodillo de muñeca (la regla base de movilidad casa con «roller »).
+  - { pattern: forearm, name_any: ["wrist roller"] }
+  # Puentes de glúteo antes de la regla de movilidad («outstretched» contiene «stretch»).
+  - { pattern: glute_isolation, name_any: ["bridge"], target: [glutes] }
+  # Anti-extensión con rueda/barra/rodillo (el dataset escribe «rollerout»).
+  - { pattern: core_anti_extension, name_any: ["rollerout", "rollout", "roll out", "fallout", "body saw"] }
+  # Pliometría de tren inferior (antes de sentadilla/zancada) y lanzamientos con balón.
+  - pattern: plyometric
+    name_any: ["jump squat", "squat jump", "plyo squat", "drop jump", "lunge with jump", "jump step", "box jump", "forward jump", "backward jump"]
+    name_none: ["push"]
+    body_part: ["upper legs", "lower legs"]
+  - { pattern: plyometric, name_any: ["throw", " slam", "chest pass", "chest push"], equipment: ["medicine ball"] }
+  # Envión, push press y thruster: empuje vertical; cargadas y arrancadas: bisagra.
+  - { pattern: vertical_push, name_any: [" jerk", "push press", "thruster", "handstand"] }
+  - pattern: hinge
+    name_any: [" clean ", " clean and", " snatch", "tire flip"]
+    name_none: ["clean-grip", "clean grip"]
+  # Press con objetivo deltoides = empuje vertical (incluye «behind neck press», «bradford»).
+  - pattern: vertical_push
+    name_any: [" press"]
+    target: [delts]
+    name_none: ["cuban", "w-press", "bench press", "floor press"]
+  - { pattern: shoulder_raise, name_any: ["upright row"] }
+  - pattern: rear_delt
+    name_any: ["rear delt", "rear fly", "rear lateral", "deltoid rear", "reverse fly", "y-raise"]
+    name_none: ["plank"]
+  - { pattern: horizontal_pull, name_any: [" row"], target: [upper back, lats], name_none: ["upright"] }
+  - { pattern: elbow_flexion, name_any: [" curl"], target: [biceps] }
+  - { pattern: elbow_extension, name_any: ["triceps extension", "tricep extension"], target: [triceps] }
+  - { pattern: horizontal_push, name_any: [" dip"], target: [pectorals] }
+  - pattern: core_flexion
+    name_any: ["leg raise", "knee raise", "leg hip raise", "leg-hip raise"]
+    target: [abs]
+    name_none: ["oblique", "twist"]
+  - pattern: core_lateral
+    name_any: ["side plank", "side bridge", "side crunch", "heel touch", "windmill", " flag ", "bent press"]
+    target: [abs, upper back]
+  - pattern: core_rotation
+    name_any: ["judo flip", "standing lift", "figure 8", "landmine 180", "spell caster", "sledge hammer", "air bike", "bicycle"]
+    target: [abs]
+  - pattern: core_anti_extension
+    name_any: ["planche", "maltese", "front lever ", "shoulder tap", "mountain climber"]
+    target: [abs]
+  - { pattern: core_flexion, name_any: ["l-sit", "v-sit", "skin the cat"] }
+  - pattern: chest_fly
+    name_any: ["cross-over", "crossover", "pullover", "svend", "squeeze", "lateral bent-over"]
+    target: [pectorals]
+  - { pattern: cardio, equipment: ["upper body ergometer", "skierg machine"] }
+  - { pattern: cardio, name_any: ["battling ropes", "boxing", "quick feet"] }
+  - pattern: mobility
+    name_any: [" pose", "sphinx", "upward facing dog", "pelvic tilt", "toe touch", "inchworm", "overhead reach", "wrist circles", "ankle circles", "knees to chest"]
+    name_none: ["bridge", "crunch", "crab"]
+  - { pattern: squat, name_any: ["leg press", "leg wide press", "wall sit", "march sit"], name_none: ["calf"] }
+  - { pattern: hinge, name_any: ["back extension", "hyperextension", "good morning"] }
+  - { pattern: shoulder_raise, name_any: ["shoulder raise"], target: [serratus anterior] }
+  - { pattern: hip_abduction, name_any: ["monster walk"] }
+
+keywords:
+  difficulty_level_1_any: ["kneeling push", "(on knees)", "with support", "supported", "incline push-up", "(wall)"]
+  difficulty_level_3_any:
+    ["muscle-up", "one arm chin", "one hand pull", "l-sit", "v-sit", "skin the cat", " flag ", "stalder", "clap push", "plyo push", "depth jump", "drop push", "turkish get up", "overhead squat", "one leg squat", "single leg squat", "gironda", "korean dips", "elbow dips", "hindu push", "superman push", "spider crawl"]
+  difficulty_level_1_equipment: ["leverage machine", "cable", "smith machine", "sled machine", "assisted", "band", "resistance band"]
+  laterality_unilateral_any: ["one hand", "single-arm", "one-arm", "stork stance", "contralateral", "pistol", "cossack", "curtsey", "step up", "renegade", "one legged"]
+  laterality_bilateral_any: []
+  time_any: ["l-sit", "v-sit", "planche", "front lever ", "back lever", "maltese", " flag ", "isometric", "handstand ", "march sit", "balance board", "circles"]
+  time_none: ["hanging", "hang clean", "hang position", "walking lunge", "walking high knees", "plank tap", "push-up to side plank", "plank with twist", "plank with leg lift", "plank with rear fly", " reps", "monster walk"]
+  isolation_name_any: ["pullover", "straight arm", "french press", "skull"]
+  isolation_name_none: []
+  warmup_name_any:
+    [" toe touch", " circles", "inchworm", "overhead reach", "dynamic chest stretch", "half knee bends", "jack jump", "star jump", "high knee against wall", "world greatest stretch", "balance board", "standing archer", "arm slingers"]
+
+other_justified:
+  "0020": "Tabla de equilibrio: trabajo propioceptivo sin patrón de fuerza; se usa como calentamiento."
+  "0216": "Rotación interna de hombro (manguito rotador): prehabilitación, sin patrón de §6.3."
+  "0235": "Rotación externa de hombro (manguito rotador): prehabilitación, sin patrón de §6.3."
+  "0863": "Rotación externa de hombro tumbado (manguito rotador): prehabilitación."
+  "0864": "Rotación externa de hombro de pie (manguito rotador): prehabilitación."
+  "0984": "Rotación interna de cadera con banda: prehabilitación de rotadores de cadera."
+  "0996": "Rotación interna de cadera sentado con banda: prehabilitación de rotadores de cadera."
+  "0551": "Levantamiento turco: movimiento global en varias fases (suelo-de pie) sin patrón único."
+
 by_id:
   "0814": { movement_pattern: elbow_extension }   # triceps dip
   "0251": { movement_pattern: horizontal_push }   # chest dip
   "0549": { movement_pattern: hinge, mechanic: compound }  # kettlebell swing
   "2133": { movement_pattern: carry, load_type: time }     # farmers walk
   "0276": { movement_pattern: core_anti_extension }        # dead bug
+  "0020": { movement_pattern: other, role: warmup, load_type: time }
+  "0216": { movement_pattern: other, role: warmup }
+  "0235": { movement_pattern: other, role: warmup }
+  "0863": { movement_pattern: other, role: warmup }
+  "0864": { movement_pattern: other, role: warmup }
+  "0984": { movement_pattern: other, role: warmup }
+  "0996": { movement_pattern: other, role: warmup }
+  "0551": { movement_pattern: other, difficulty: 3 }
+  "3546": { movement_pattern: vertical_push }               # dumbbell seated alternate shoulder (press)
+  "0459": { movement_pattern: core_flexion }                # flutter kicks (en supino)
+  "1338": { movement_pattern: core_flexion }                # exercise ball hug
+  "3292": { movement_pattern: hinge }                       # elevator (bisagra con peso corporal)
+  "1332": { movement_pattern: shoulder_raise }              # exercise ball alternating arm ups
+  "1355": { movement_pattern: mobility }                    # one arm against wall
+  "3669": { movement_pattern: mobility }                    # standing archer (rotación dinámica)
+  "3641": { movement_pattern: shoulder_raise }              # weighted kneeling step with swing
+  "3644": { movement_pattern: lunge }                       # weighted lunge with swing
+  "0844": { movement_pattern: rear_delt }                   # weighted round arm (inclinado)
+  "0709": { movement_pattern: core_lateral }                # side hip (on parallel bars)
+  "0642": { movement_pattern: horizontal_push }             # outside leg kick push-up
+  "0661": { movement_pattern: horizontal_push }             # push-up inside leg kick
+  "0778": { movement_pattern: horizontal_push }             # spider crawl push up
+  "3662": { movement_pattern: horizontal_push }             # pike-to-cobra push-up
+  "1466": { movement_pattern: glute_isolation }             # twist hip lift
+  "1743": { movement_pattern: horizontal_push }             # dumbbell twisting bench press
+  "2206": { movement_pattern: core_flexion }                # roller reverse crunch
+  "2328": { movement_pattern: elbow_extension }             # narrow push-up on exercise ball
+  "1336": { movement_pattern: hinge }
+  "1396": { movement_pattern: calf }                        # smith toe raise (tibial anterior)                       # exercise ball back extension with rotation

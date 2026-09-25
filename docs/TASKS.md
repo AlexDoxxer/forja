@@ -44,24 +44,24 @@
 
 ## Fase 1 · Núcleo
 
-### `ingesta-datos` (§2.1, §3, §5.1, §6) — handoff `docs/handoffs/F1-ingesta.md`
+### `ingesta-datos` (§2.1, §3, §5.1, §6) — handoff `docs/handoffs/f1-ingesta-datos.md`
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F1-ING-01 | CLI `forja-ingest` (Typer) con `fetch`, `enrich`, `load`, `report`, `verify`, `export-cards`, todos con `--dry-run` | `uv run forja-ingest --help` lista los 6 subcomandos; entrada `[project.scripts]` añadida a `backend/pyproject.toml` (zona compartida, ADR 0002) | F0-ORQ-01 | pendiente |
-| F1-ING-02 | `fetch`: clon superficial en `DATASET_COMMIT`, validación `jsonschema` contra `data/exercises.schema.json` | Test con repo git local de fixture: commit exacto, esquema válido; esquema inválido ⇒ error | F1-ING-01 | pendiente |
-| F1-ING-03 | Copia byte a byte de medios, `manifest.json` (id, ruta, bytes, SHA-256, ancho, alto), verificación 180×180, copia de `LICENSE`/`NOTICE.md` a `$MEDIA_ROOT/LICENSES/`, idempotencia | Test: SHA-256 de origen = destino; segunda ejecución sin cambios no escribe; imagen ≠ 180×180 ⇒ error | F1-ING-02 | pendiente |
-| F1-ING-04 | Normalización de músculos y equipamiento con `specs/*-normalization.yaml` | Test: valor sin mapear ⇒ fallo; 100 % de los valores de `docs/dataset-analysis.md` mapeados | F1-ING-01 | pendiente |
-| F1-ING-05 | `display_name_en`, sufijos `(male)`/`(female)`, `v. N`, `(back pov)`/`(side pov)`, duplicados y mojibake → `variant_group`, `variant_kind`, `variant_label_es`, `demo_sex` | Tests sobre la fixture de 60 ejercicios; ningún `display_name_en` contiene `в`; 33 con `demo_sex`, 40 `v. N`, 6 duplicados agrupados | F1-ING-04 | pendiente |
-| F1-ING-06 | Motor de reglas `enrich.py` + overrides (patrón, mecánica, rol, dificultad, lateralidad, `load_type`) | Informe con 0 `other` sin justificar (lista explícita de excepciones) | F1-ING-05 | pendiente |
-| F1-ING-07 | Ampliar `specs/overrides/staples.yaml` a 120–160 | Test: ≥ 2 staples por patrón principal × grupo de equipamiento aplicable (gym/home_basic/bodyweight) | F1-ING-06 | pendiente |
-| F1-ING-08 | `docs/enrichment-report.md` (distribuciones, matriz de staples, excepciones) | Generado por `forja-ingest report`; reproducible | F1-ING-07 | pendiente |
-| F1-ING-09 | `specs/overrides/names_es.json` (1.324 nombres, 14 lotes de ≤ 100) con glosario | Test: cobertura 100 %, sin duplicados no intencionados, términos del glosario consistentes; dudosos en `docs/names-es-review.md` | F1-ING-05 | pendiente |
-| F1-ING-10 | Alternativas top 8 (§6.5) | Tests: pesos 0,5/0,3/0,1/0,1; excluye propio `variant_group`; estiramientos solo con estiramientos | F1-ING-06 | pendiente |
-| F1-ING-11 | Modelos de catálogo (si backend-api no los tiene) y `load` transaccional con `ingest_run`, `search_vector`, `deprecated_at` | Test de integración (testcontainers): 1.324 filas, recarga idempotente, ejercicio referenciado nunca se borra | F1-ING-10, F1-ING-09 | pendiente |
-| F1-ING-12 | `export-cards` → JSON de `ExerciseCard[]` validado con `contracts/openapi.yaml#ExerciseCard` | Fichero válido; entregado a motor-rutinas para `engine/tests/fixtures/catalog.json` | F1-ING-11 | pendiente |
-| F1-ING-13 | Test `slow` con el dataset completo que verifica las cifras de `docs/dataset-analysis.md` | `pytest -m slow` en verde: 1.324 registros, 2.648 medios verificados | F1-ING-03, F1-ING-11 | pendiente |
-| F1-ING-14 | Cobertura ≥ 95 % del paquete `ingest` y handoff | `pytest --cov=ingest` ≥ 95 %; `docs/handoffs/F1-ingesta.md` | F1-ING-01…13 | pendiente |
+| F1-ING-01 | CLI `forja-ingest` (Typer) con `fetch`, `enrich`, `load`, `report`, `verify`, `export-cards`, todos con `--dry-run` | `uv run forja-ingest --help` lista los 6 subcomandos; entrada `[project.scripts]` añadida a `backend/pyproject.toml` (zona compartida, ADR 0002) | F0-ORQ-01 | hecha |
+| F1-ING-02 | `fetch`: clon superficial en `DATASET_COMMIT`, validación `jsonschema` contra `data/exercises.schema.json` | Test con repo git local de fixture: commit exacto, esquema válido; esquema inválido ⇒ error | F1-ING-01 | hecha |
+| F1-ING-03 | Copia byte a byte de medios, `manifest.json` (id, ruta, bytes, SHA-256, ancho, alto), verificación 180×180, copia de `LICENSE`/`NOTICE.md` a `$MEDIA_ROOT/LICENSES/`, idempotencia | Test: SHA-256 de origen = destino; segunda ejecución sin cambios no escribe; imagen ≠ 180×180 ⇒ error | F1-ING-02 | hecha |
+| F1-ING-04 | Normalización de músculos y equipamiento con `specs/*-normalization.yaml` | Test: valor sin mapear ⇒ fallo; 100 % de los valores de `docs/dataset-analysis.md` mapeados | F1-ING-01 | hecha |
+| F1-ING-05 | `display_name_en`, sufijos `(male)`/`(female)`, `v. N`, `(back pov)`/`(side pov)`, duplicados y mojibake → `variant_group`, `variant_kind`, `variant_label_es`, `demo_sex` | Tests sobre la fixture de 60 ejercicios; ningún `display_name_en` contiene `в`; 33 con `demo_sex`, 40 `v. N`, 6 duplicados agrupados | F1-ING-04 | hecha |
+| F1-ING-06 | Motor de reglas `enrich.py` + overrides (patrón, mecánica, rol, dificultad, lateralidad, `load_type`) | Informe con 0 `other` sin justificar (lista explícita de excepciones) | F1-ING-05 | hecha |
+| F1-ING-07 | Ampliar `specs/overrides/staples.yaml` a 120–160 | Test: ≥ 2 staples por patrón principal × grupo de equipamiento aplicable (gym/home_basic/bodyweight) | F1-ING-06 | hecha |
+| F1-ING-08 | `docs/enrichment-report.md` (distribuciones, matriz de staples, excepciones) | Generado por `forja-ingest report`; reproducible | F1-ING-07 | hecha |
+| F1-ING-09 | `specs/overrides/names_es.json` (1.324 nombres, 14 lotes de ≤ 100) con glosario | Test: cobertura 100 %, sin duplicados no intencionados, términos del glosario consistentes; dudosos en `docs/names-es-review.md` | F1-ING-05 | hecha |
+| F1-ING-10 | Alternativas top 8 (§6.5) | Tests: pesos 0,5/0,3/0,1/0,1; excluye propio `variant_group`; estiramientos solo con estiramientos | F1-ING-06 | hecha |
+| F1-ING-11 | Modelos de catálogo (si backend-api no los tiene) y `load` transaccional con `ingest_run`, `search_vector`, `deprecated_at` | Test de integración (testcontainers): 1.324 filas, recarga idempotente, ejercicio referenciado nunca se borra | F1-ING-10, F1-ING-09 | hecha |
+| F1-ING-12 | `export-cards` → JSON de `ExerciseCard[]` validado con `contracts/openapi.yaml#ExerciseCard` | Fichero válido; entregado a motor-rutinas para `engine/tests/fixtures/catalog.json` | F1-ING-11 | hecha |
+| F1-ING-13 | Test `slow` con el dataset completo que verifica las cifras de `docs/dataset-analysis.md` | `pytest -m slow` en verde: 1.324 registros, 2.648 medios verificados | F1-ING-03, F1-ING-11 | hecha |
+| F1-ING-14 | Cobertura ≥ 95 % del paquete `ingest` y handoff | `pytest --cov=ingest` ≥ 95 %; `docs/handoffs/F1-ingesta.md` | F1-ING-01…13 | hecha |
 
 **Salida**: `forja-ingest fetch && forja-ingest load` en BD limpia ⇒ 1.324 ejercicios, 2.648 medios verificados, 0 errores.
 
