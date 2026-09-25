@@ -7,6 +7,7 @@ del alimento sustituido.
 
 from __future__ import annotations
 
+import hashlib
 import random
 from typing import TYPE_CHECKING
 
@@ -81,6 +82,12 @@ def _pick_replacement(original: Food, nutrition_input: NutritionInput, seed: int
     pool = preferred or candidates
     rng = random.Random(seed)  # noqa: S311 (PRNG determinista, no criptográfico)
     return rng.choice(sorted(pool, key=lambda food: food.id))
+
+
+def _swap_seed(plan_seed: int, day_index: int, meal: MealSlot, food_id: str) -> int:
+    """Semilla estable entre procesos (no usa `hash()`, que depende de PYTHONHASHSEED)."""
+    key = f"{plan_seed}:{day_index}:{meal.value}:{food_id}".encode()
+    return int.from_bytes(hashlib.sha256(key).digest()[:6], "big")
 
 
 def _locate(plan: MealPlan, day_index: int, meal: MealSlot, food_id: str) -> tuple[int, int]:
@@ -196,7 +203,7 @@ def swap_food(  # noqa: PLR0917 (firma fijada por contracts/domain.md sec 6.3)
     if original_food is None:
         raise ValueError(f"'{food_id}' no existe en la base de alimentos")
 
-    swap_seed = plan.seed + day_index * 1000 + hash(f"{meal.value}:{food_id}") % 1000
+    swap_seed = _swap_seed(plan.seed, day_index, meal, food_id)
     replacement = _resolve_replacement(
         original_food=original_food,
         nutrition_input=nutrition_input,

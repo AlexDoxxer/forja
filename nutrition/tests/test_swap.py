@@ -30,6 +30,7 @@ from forja_nutrition.swap import (
     _locate,
     _pick_replacement,
     _resolve_replacement,
+    _swap_seed,
     swap_food,
 )
 from tests.conftest import MONDAY, make_input
@@ -386,3 +387,9 @@ def test_swap_food_adds_notice_once_even_after_two_swaps() -> None:
     )
     codes_twice = [n.code for n in twice.notices]
     assert codes_twice.count(NutritionNoticeCode.swap_macros_adjusted) == 1
+
+
+def test_swap_seed_is_stable_across_processes() -> None:
+    # valor fijo: falla si la semilla vuelve a depender de hash() / PYTHONHASHSEED
+    assert _swap_seed(1, 0, MealSlot.breakfast, "manzana") == 217_987_986_489_081
+    assert _swap_seed(1, 1, MealSlot.breakfast, "manzana") != 217_987_986_489_081
