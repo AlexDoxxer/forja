@@ -44,10 +44,29 @@ export const api = createClient<paths>({
   fetch: (request) => globalThis.fetch(request),
 });
 
+/**
+ * ADR 0003: la cookie CSRF solo existe tras `GET /auth/csrf`. Login y registro (y cualquier
+ * escritura con la sesión recién abierta) la necesitan antes de tener ninguna, así que si falta
+ * se pide una vez antes de la primera escritura. Los fallos de red se ignoran: la petición
+ * original seguirá y el servidor responderá `csrf_failed`.
+ */
+async function ensureCsrfToken(): Promise<string | null> {
+  const existing = readCookie(CSRF_COOKIE_NAME);
+  if (existing !== null) {
+    return existing;
+  }
+  try {
+    await globalThis.fetch(`${resolveApiBaseUrl()}/auth/csrf`, { credentials: "include" });
+  } catch {
+    return null;
+  }
+  return readCookie(CSRF_COOKIE_NAME);
+}
+
 api.use({
-  onRequest({ request }) {
+  async onRequest({ request }) {
     if (!SAFE_METHODS.has(request.method)) {
-      const token = readCookie(CSRF_COOKIE_NAME);
+      const token = await ensureCsrfToken();
       if (token !== null) {
         request.headers.set(CSRF_HEADER_NAME, token);
       }
