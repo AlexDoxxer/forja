@@ -393,3 +393,13 @@ def test_swap_seed_is_stable_across_processes() -> None:
     # valor fijo: falla si la semilla vuelve a depender de hash() / PYTHONHASHSEED
     assert _swap_seed(1, 0, MealSlot.breakfast, "manzana") == 217_987_986_489_081
     assert _swap_seed(1, 1, MealSlot.breakfast, "manzana") != 217_987_986_489_081
+
+
+def test_is_candidate_rejects_peanuts() -> None:
+    assert not _is_candidate(
+        CATALOG["cacahuete"],
+        original=CATALOG["almendra"],
+        nutrition_input=make_input(),
+        excluded=set(),
+        allergens={Allergen.peanuts},
+    )
