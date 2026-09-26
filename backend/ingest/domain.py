@@ -146,3 +146,14 @@ CORE_PATTERNS: Final[frozenset[MovementPattern]] = frozenset(
 STAPLE_EQUIPMENT_GROUPS: Final[tuple[EquipmentGroup, ...]] = ("gym", "home_basic", "bodyweight")
 INSTRUCTION_LANGS: Final[tuple[InstructionLang, ...]] = get_args(InstructionLang)
 MIN_STAPLES_PER_CELL: Final = 2
+# Celdas patrón x grupo exentas del mínimo de staples, con su motivo (revisión F1b, §5.2).
+STAPLE_CELL_EXEMPTIONS: Final[dict[tuple[MovementPattern, EquipmentGroup], str]] = {
+    ("vertical_push", "bodyweight"): (
+        "solo existen ejercicios gimnásticos (pino y flexión en pino, dificultad 3); "
+        "el motor cae por afinidad a horizontal_push"
+    ),
+    ("hinge", "bodyweight"): (
+        "la única bisagra genuina sin material es 3292 (elevator); la bisagra sin material "
+        "se cubre por afinidad con glute_isolation"
+    ),
+}

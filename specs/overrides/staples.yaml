@@ -4,25 +4,27 @@
 # docs/enrichment-report.md. Cada id debe tener exactamente el patrón bajo el que figura.
 # Cambios respecto a la semilla: 0860 (cable kickback) es de tríceps en el dataset y sale de
 # glute_isolation; 0003 (air bike) es un crunch bicicleta (core_rotation) y sale de cardio.
-# Pendiente de aprobación por experto-entrenamiento (F1b-EXP-02).
-version: 2
+# Revisión F1b (experto-entrenamiento, C1/B3): fuera 0046, 1759, 0044, 0489, 0488, 0251, 0553,
+# 0471, 3302, 3193, 0496 y 1160 (burpee); dentro 3292, 0696, 1766 y 3239. Celdas exentas del
+# mínimo de 2 (con motivo en docs/enrichment-report.md): vertical_push x bodyweight y
+# hinge x bodyweight.
+version: 3
 staples:
   # --- patrones principales (gym · home_basic · bodyweight) ---
-  squat:           ["0043", "0042", "0046", "0770", "0739",   # gym
+  squat:           ["0043", "0042", "0770", "0739",   # gym
                     "0413", "0534", "1760", "1004",           # home_basic
-                    "3533", "3119", "1759"]                   # bodyweight
+                    "3533", "3119"]                          # bodyweight
   lunge:           ["0054", "0078", "0114",
                     "0336", "0381", "0410", "0431",
                     "1460", "2368", "3470"]
-  hinge:           ["0032", "0085", "0117", "0811", "0044",
+  hinge:           ["0032", "0085", "0117", "0811",
                     "0549", "0991", "1459", "1757",
-                    "0489", "0488"]
+                    "3292"]
   horizontal_push: ["0025", "0047", "0577", "2144", "0748",
                     "0289", "0314", "1254",
-                    "0251", "0493", "0662", "3211"]
+                    "0493", "0662", "3211"]
   vertical_push:   ["0091", "0587", "0774",
-                    "0405", "0426", "0553", "0997",
-                    "0471", "3302"]
+                    "0405", "0426", "0997"]
   horizontal_pull: ["0027", "0180", "0861", "3017",
                     "0293", "0292", "3144",
                     "0499", "3168", "2300"]
@@ -37,14 +39,14 @@ staples:
   elbow_flexion:   ["0294", "0031", "0447", "0313", "0165", "0968"]
   elbow_extension: ["0201", "0200", "0060", "0194", "0814", "0283", "0430"]
   knee_extension:  ["0585", "3007", "1489"]
-  knee_flexion:    ["0586", "0599", "0496", "3193"]
+  knee_flexion:    ["0586", "0599", "0696", "1766"]
   hip_abduction:   ["0597", "3006", "0710"]
   hip_adduction:   ["0598", "3667"]
   calf:            ["1372", "1373", "0417", "0605", "0088", "0409", "0999"]
   shrug:           ["0406", "0095", "1018"]
-  core_anti_extension: ["0276", "2135", "0857"]
+  core_anti_extension: ["0276", "2135", "0857", "3239"]
   core_flexion:    ["0472", "0872", "0274", "0175"]
   core_rotation:   ["0687", "0846", "0230"]
   core_lateral:    ["0979", "3544", "0407"]
   carry:           ["2133", "3548"]
-  cardio:          ["2612", "2138", "2141", "3666", "0685", "1160"]
+  cardio:          ["2612", "2138", "2141", "3666", "0685"]

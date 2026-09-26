@@ -81,7 +81,7 @@ async def test_load_creates_catalog_and_is_idempotent(
         "SELECT name_es, movement_pattern, role, is_staple, media_sha256_gif, source_commit "
         "FROM exercise WHERE id = '0043'",
     )
-    assert squat[0][:4] == ("sentadilla profunda con barra", "squat", "main", True)
+    assert squat[0][:4] == ("sentadilla trasera con barra", "squat", "main", True)
     assert squat[0][5] == manifest.commit
     found = await _query(
         database_url,
