@@ -1219,7 +1219,7 @@
   }
  ],
  "diet_type": "omnivore",
- "foods_hash": "a8b1d93ad06a20559bd614ab6fc356e7a54e7a80263f764c9b5a12fa52fae504",
+ "foods_hash": "40e694b00d87539292b02559cfd96e7245960da272a3bd0b21fef8fa6501ab6f",
  "meals_per_day": 3,
  "notices": [
   {
@@ -1235,7 +1235,7 @@
    "message_es": "Algún día del plan se aleja algo más de lo habitual del objetivo calórico o de macros; sigue siendo un plan equilibrado en conjunto."
   }
  ],
- "nutrition_version": "0.1.0",
+ "nutrition_version": "0.1.1",
  "seed": 106,
  "target": {
   "activity_factor": 1.425,

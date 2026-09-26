@@ -3624,7 +3624,9 @@
       "vegetarian",
       "vegan"
     ],
-    "allergens": [],
+    "allergens": [
+      "peanuts"
+    ],
     "macro_role": "fat",
     "typical_portion_g": 25.0,
     "unit_grams": null,
@@ -3676,7 +3678,9 @@
       "vegetarian",
       "vegan"
     ],
-    "allergens": [],
+    "allergens": [
+      "peanuts"
+    ],
     "macro_role": "fat",
     "typical_portion_g": 20.0,
     "unit_grams": null,
