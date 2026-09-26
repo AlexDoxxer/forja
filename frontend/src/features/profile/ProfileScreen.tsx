@@ -10,6 +10,7 @@ import { collectActiveProgramMedia, offlineSupported, requestPrecache } from "..
 import { formatDate } from "../shared/format";
 import shared from "../shared/ui.module.css";
 import { useProfileSummary } from "../today/useProfileSummary";
+import { reloadToHome } from "./navigation";
 import { resolveTheme } from "./theme";
 import { useAboutInfo } from "./useAboutInfo";
 import {
@@ -171,7 +172,7 @@ function DataSection(): React.JSX.Element {
   const onDelete = async (): Promise<void> => {
     try {
       await deleteAccount(password);
-      window.location.assign("/");
+      reloadToHome();
     } catch {
       setMessage({ kind: "alert", text: t("profileB.deleteError") });
     }

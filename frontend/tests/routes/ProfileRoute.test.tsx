@@ -3,12 +3,14 @@ import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { reloadToHome } from "../../src/features/profile/navigation";
 import { i18next } from "../../src/i18n";
 import { collectActiveProgramMedia, offlineSupported, requestPrecache } from "../../src/sw/library";
 import { ProfileRoute } from "../../src/routes/ProfileRoute";
 import { server } from "../../src/mocks/server";
 import { renderRoute } from "../features/renderRoute";
 
+vi.mock("../../src/features/profile/navigation", () => ({ reloadToHome: vi.fn() }));
 vi.mock("../../src/sw/library", () => ({
   offlineSupported: vi.fn(() => false),
   collectActiveProgramMedia: vi.fn(),
@@ -176,8 +178,6 @@ describe("ProfileRoute", () => {
         return new HttpResponse(null, { status: 204 });
       }),
     );
-    const assign = vi.fn();
-    Object.defineProperty(window, "location", { value: { assign }, configurable: true });
     const user = userEvent.setup();
     renderRoute(<ProfileRoute />);
     await user.click(await screen.findByRole("button", { name: "Eliminar mi cuenta" }));
@@ -189,7 +189,7 @@ describe("ProfileRoute", () => {
       expect(sent).toEqual({ password: "secreto123" });
     });
     await waitFor(() => {
-      expect(assign).toHaveBeenCalledWith("/");
+      expect(reloadToHome).toHaveBeenCalled();
     });
   });
 
