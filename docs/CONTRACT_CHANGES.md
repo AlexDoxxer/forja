@@ -90,7 +90,7 @@ contrato en silencio.**
 - **Resolución**: Aprobado; tres códigos añadidos a `PlanWarningCode` en `domain.md` y `openapi.yaml`. Versión resultante **1.1.0**, 2026-09-26 (arquitecto). Avisados: ingesta-datos/backend-api (CC-0001), motor-nutricion (CC-0002), motor-rutinas (CC-0003) en `docs/handoffs/f2-arquitecto.md`.
 
 ### CC-0004 · Semántica de `tolerance_not_met` y campos de realismo en `Food`
-- **Estado**: propuesto
+- **Estado**: aprobado (2026-09-26, orquestador; aplicado en contrato 1.2.0)
 - **Propone**: motor-nutricion · **Fecha**: 2026-09-26
 - **Afecta a**: `contracts/domain.md` §6.2 (`MealPlan`, `Food`) y `contracts/openapi.yaml` (`Food`).
 - **Motivo**: revisión F1b (Riesgo 5, B7, decisión 5). Con la regla actual («kcal ±5 % y macros ±10 %
@@ -104,4 +104,4 @@ contrato en silencio.**
      (vacío = no se selecciona automáticamente) y `weekly_max: integer | null`.
 - **Compatibilidad**: compatible (campos de salida opcionales nuevos; el aviso se emite con menos
   frecuencia). Requiere versión menor.
-- **Resolución**: pendiente (arquitecto).
+- **Resolución**: aprobado y aplicado por arquitecto (2026-09-26): `domain.md` §6.2/§8, `openapi.yaml` `Food`, contrato 1.2.0.
