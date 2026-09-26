@@ -57,7 +57,13 @@ packages = ["app", "ingest"]
 
 [tool.ruff]
 extend = "../ruff.toml"
-extend-exclude = ["migrations/versions"]
+extend-exclude = ["migrations/versions", "app/schemas/api.py"]
+
+[tool.ruff.lint]
+extend-ignore = ["PLR0911", "PLR0912", "PLR0915", "FBT001", "FBT002", "PLC0415"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Header", "fastapi.Path"]
 
 [tool.mypy]
 python_version = "3.12"
@@ -67,7 +73,7 @@ plugins = ["pydantic.mypy"]
 files = ["app", "ingest", "tests"]
 
 [[tool.mypy.overrides]]
-module = ["testcontainers.*"]
+module = ["testcontainers.*", "weasyprint", "weasyprint.*"]
 ignore_missing_imports = true
 
 [tool.pydantic-mypy]
