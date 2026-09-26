@@ -1298,7 +1298,7 @@ export interface components {
          * @description Códigos estables de aviso del motor (ampliables vía CONTRACT_CHANGES).
          * @enum {string}
          */
-        PlanWarningCode: "beginner_high_frequency" | "recovery_day_enforced" | "slot_relaxed" | "slot_dropped" | "time_budget_exceeded" | "main_exercise_trimmed" | "volume_out_of_range" | "session_group_cap" | "rest_below_minimum" | "empty_day" | "mobility_in_main_block" | "equipment_insufficient" | "avoided_muscle_substituted" | "deprecated_exercise";
+        PlanWarningCode: "beginner_high_frequency" | "recovery_day_enforced" | "slot_relaxed" | "slot_dropped" | "time_budget_exceeded" | "main_exercise_trimmed" | "volume_out_of_range" | "session_group_cap" | "rest_below_minimum" | "empty_day" | "mobility_in_main_block" | "equipment_insufficient" | "avoided_muscle_substituted" | "deprecated_exercise" | "excluded_exercise" | "avoided_exercise" | "unknown_exercise";
         /** @enum {string} */
         NutritionGoal: "lose" | "maintain" | "gain" | "recomp";
         /** @enum {string} */
@@ -1306,10 +1306,10 @@ export interface components {
         /** @enum {string} */
         DietType: "omnivore" | "pescatarian" | "vegetarian" | "vegan";
         /**
-         * @description gluten, lactosa, frutos secos (tree_nuts), huevo, pescado, marisco y soja.
+         * @description gluten, lactosa, frutos secos (tree_nuts), huevo, pescado, marisco, soja y cacahuete (peanuts).
          * @enum {string}
          */
-        Allergen: "gluten" | "lactose" | "tree_nuts" | "egg" | "fish" | "shellfish" | "soy";
+        Allergen: "gluten" | "lactose" | "tree_nuts" | "egg" | "fish" | "shellfish" | "soy" | "peanuts";
         /** @enum {string} */
         MealSlot: "breakfast" | "mid_morning" | "lunch" | "snack" | "dinner";
         /**
