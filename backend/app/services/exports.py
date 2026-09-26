@@ -93,7 +93,7 @@ def disposition(name: str, extension: str) -> str:
 # ---------------------------------------------------------------------------- PDF
 def _url_fetcher(media_root: Path) -> Any:
     """Solo ``file://`` dentro de ``MEDIA_ROOT`` (miniaturas locales); nada de red."""
-    from weasyprint.urls import URLFetcher, URLFetcherResponse
+    from weasyprint.urls import URLFetcher, URLFetcherResponse  # noqa: PLC0415
 
     root = media_root.resolve()
 
@@ -131,7 +131,7 @@ def _template_context(detail: api.ProgramDetail, lang: str, media_root: Path) ->
 
 
 def build_pdf(detail: api.ProgramDetail, lang: str, media_root: Path) -> bytes:
-    from weasyprint import HTML
+    from weasyprint import HTML  # noqa: PLC0415
 
     env = Environment(
         loader=FileSystemLoader(TEMPLATES),

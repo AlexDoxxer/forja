@@ -160,7 +160,7 @@ async def test_idempotent_session_and_set_replays(
 async def test_in_progress_key_is_409(
     client: httpx.AsyncClient, user: dict[str, Any], engine: Any
 ) -> None:
-    from sqlalchemy import text
+    from sqlalchemy import text  # noqa: PLC0415
 
     me = (await client.get("/auth/me")).json()["id"]
     async with engine.begin() as conn:
@@ -195,7 +195,7 @@ async def test_in_progress_key_is_409(
 
 
 def _hash(payload: dict[str, Any]) -> str:
-    from app.services.idempotency import request_hash
+    from app.services.idempotency import request_hash  # noqa: PLC0415
 
     return request_hash(payload)
 

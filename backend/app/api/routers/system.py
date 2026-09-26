@@ -66,8 +66,8 @@ async def get_readiness(db: Db, settings: AppSettings) -> JSONResponse:
 
 @router.get("/about", operation_id="getAbout", response_model=api.AboutInfo)
 async def get_about(db: Db, settings: AppSettings) -> api.AboutInfo:
-    from forja_engine import ENGINE_VERSION
-    from forja_nutrition import NUTRITION_VERSION
+    from forja_engine import ENGINE_VERSION  # noqa: PLC0415
+    from forja_nutrition import NUTRITION_VERSION  # noqa: PLC0415
 
     last = (
         await db.execute(

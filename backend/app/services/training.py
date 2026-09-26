@@ -349,7 +349,7 @@ async def _valid_program_exercise(
 ) -> uuid.UUID | None:
     if program_exercise_id is None:
         return None
-    from app.models.program import ProgramBlock, ProgramExercise
+    from app.models.program import ProgramBlock, ProgramExercise  # noqa: PLC0415
 
     found = (
         await db.execute(

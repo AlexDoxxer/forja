@@ -223,11 +223,11 @@ def _pipeline(
 ) -> uuid.UUID:
     """Fetch + enriquecimiento + carga (bloqueante, en un hilo). Devuelve el id de la corrida
     que crea ``load_catalog``."""
-    from ingest.catalog import build_catalog
-    from ingest.load import load_catalog
-    from ingest.media import SOURCE_DIR, fetch, read_manifest, verify_media
-    from ingest.source import load_dataset
-    from ingest.specs import load_specs
+    from ingest.catalog import build_catalog  # noqa: PLC0415
+    from ingest.load import load_catalog  # noqa: PLC0415
+    from ingest.media import SOURCE_DIR, fetch, read_manifest, verify_media  # noqa: PLC0415
+    from ingest.source import load_dataset  # noqa: PLC0415
+    from ingest.specs import load_specs  # noqa: PLC0415
 
     fetch(str(settings.dataset_repo), settings.dataset_commit, settings.media_root, dry_run=dry_run)
     manifest = read_manifest(settings.media_root)

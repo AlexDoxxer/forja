@@ -38,7 +38,7 @@ IMPORT_NAMESPACE = uuid.UUID("6f0f7a3e-3c1c-5d0e-9a53-5b1a0b6f0c11")
 
 # ------------------------------------------------------------------------ export
 async def export_account(db: AsyncSession, user: User) -> api.UserExport:
-    from app.api.routers.system import _app_version
+    from app.api.routers.system import _app_version  # noqa: PLC0415
 
     profile = await profile_service.load_profile(db, user)
     metrics = (

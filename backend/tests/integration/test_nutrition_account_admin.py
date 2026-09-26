@@ -250,7 +250,7 @@ async def test_export_import_roundtrip_is_idempotent(
 async def test_delete_account_removes_everything(
     client: httpx.AsyncClient, other_client: httpx.AsyncClient, engine: Any
 ) -> None:
-    from sqlalchemy import text
+    from sqlalchemy import text  # noqa: PLC0415
 
     await create(other_client, (await preview(other_client))["plan"], activate=True)
     session = await start(other_client)
@@ -391,13 +391,13 @@ async def test_ingest_runs_in_background_and_invalidates_catalog(
     postgres_url: str, tmp_path: Any, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr("app.services.admin.FULL_DATASET", False)
-    from sqlalchemy import text
-    from sqlalchemy.ext.asyncio import create_async_engine
+    from sqlalchemy import text  # noqa: PLC0415
+    from sqlalchemy.ext.asyncio import create_async_engine  # noqa: PLC0415
 
-    from app.core.config import Settings
-    from app.main import create_app
-    from ingest.tests.conftest import make_dataset_repo
-    from tests.integration.conftest import migrate
+    from app.core.config import Settings  # noqa: PLC0415
+    from app.main import create_app  # noqa: PLC0415
+    from ingest.tests.conftest import make_dataset_repo  # noqa: PLC0415
+    from tests.integration.conftest import migrate  # noqa: PLC0415
 
     name = f"ing_{uuid.uuid4().hex[:8]}"
     admin_engine = create_async_engine(postgres_url, isolation_level="AUTOCOMMIT")

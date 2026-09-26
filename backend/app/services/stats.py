@@ -176,7 +176,7 @@ async def overview(db: AsyncSession, user: User) -> api.StatsOverview:
 
 
 def _metric(row: BodyMetric) -> api.BodyMetric:
-    from app.services.profile import metric_dto
+    from app.services.profile import metric_dto  # noqa: PLC0415
 
     return metric_dto(row)
 

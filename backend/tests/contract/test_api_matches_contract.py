@@ -19,7 +19,7 @@ def generated() -> dict[str, Any]:
     os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://u:p@localhost/forja")
     os.environ.setdefault("SECRET_KEY", "k" * 40)
     os.environ.setdefault("PUBLIC_BASE_URL", "https://forja.test")
-    from app.main import create_app
+    from app.main import create_app  # noqa: PLC0415
 
     spec: dict[str, Any] = create_app().openapi()
     return spec

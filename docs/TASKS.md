@@ -136,30 +136,30 @@
 
 ## Fase 2 · Integración
 
-### `backend-api` (§5, §9, §11) — handoff `docs/handoffs/F2-backend.md`
+### `backend-api` (§5, §9, §11) — handoff `docs/handoffs/f2-backend-api.md`
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F2-BE-01 | App factory, errores RFC 9457 centralizados, `X-Request-ID`, logs JSON sin PII | Tests de formato de error para 401/403/404/409/413/422/429 | F0-ORQ-01 | pendiente |
-| F2-BE-02 | Modelos SQLAlchemy de `contracts/domain.md` §4 y migración inicial Alembic con `unaccent`/`pg_trgm` e índices | Test de migraciones upgrade → downgrade → upgrade en testcontainers | F2-BE-01, F1-ING-11 | pendiente |
-| F2-BE-03 | Auth (ADR 0003): registro, login, logout, me, password, check, csrf, sesiones activas | Tests: rotación, expiración deslizante, revocación, tiempo constante, CSRF en toda escritura | F2-BE-02 | pendiente |
-| F2-BE-04 | Rate limiting y cabeceras de seguridad (CSP, HSTS…) | Tests de 429 con `Retry-After` y de cabeceras | F2-BE-03 | pendiente |
-| F2-BE-05 | Perfil, PAR-Q (fuerza `beginner`) y métricas corporales | Tests felices, validación, acceso cruzado ⇒ 404 | F2-BE-03 | pendiente |
-| F2-BE-06 | Catálogo: listado con filtros y búsqueda sin acentos, detalle con `lang`, alternativas, facetas, favoritos, `ETag`/304 | `GET /exercises` p95 < 80 ms con 1.324 filas (`pytest-benchmark`) | F2-BE-02, F1-ING-11 | pendiente |
-| F2-BE-07 | Caché en memoria de `ExerciseCard[]` por proceso, invalidada tras ingesta | Test de invalidación | F2-BE-06 | pendiente |
-| F2-BE-08 | Generador (`preview`, `preview/regenerate-day`, `preview/swap`) y persistencia de programas | `POST /generator/preview` p95 < 400 ms; plan persistido = plan previsualizado | F2-BE-07, F1-ENG-20 | pendiente |
-| F2-BE-09 | Programas: listar, detalle, patch, delete, activar (máx. 1), duplicar, regenerar día, swap, `PUT days/{day_id}` con `validate_plan` | `422 plan_invalid` con `violations`; tests por operación | F2-BE-08 | pendiente |
-| F2-BE-10 | PDF (WeasyPrint, atribución en cada página, `url_fetcher` local) e ICS (RFC 5545) | Test: texto de atribución presente en cada página del PDF; ICS válido | F2-BE-09 | pendiente |
-| F2-BE-11 | Sesiones y series con `Idempotency-Key` (tabla `idempotency_key`) | Tests de repetición, clave reutilizada (422) y concurrente (409) | F2-BE-09 | pendiente |
-| F2-BE-12 | `POST /sync` (ADR 0006) | Tests: `applied`/`duplicate`/`superseded`/`rejected`, tombstones, lote parcial | F2-BE-11 | pendiente |
-| F2-BE-13 | Récords, estadísticas y `GET /sessions/next` con progresión del motor | Sin N+1 (conteo de consultas en test) | F2-BE-11, F1-ENG-13 | pendiente |
-| F2-BE-14 | Nutrición tras `diet_enabled` y `DIET_FEATURE_ENABLED` | `403 diet_disabled`; `422 nutrition_blocked` | F2-BE-05, F1-NUT-10 | pendiente |
-| F2-BE-15 | Exportar/importar/borrar cuenta | Round-trip export → import idempotente; borrado completo verificado | F2-BE-13, F2-BE-14 | pendiente |
-| F2-BE-16 | Admin (ajustes, usuarios, ingesta en segundo plano) + `audit_log`; `GET /about`, `/health`, `/ready` | No se puede degradar al último admin (409) | F2-BE-03, F1-ING-11 | pendiente |
-| F2-BE-17 | Test de contrato: esquema exportado por FastAPI = `contracts/openapi.yaml` | `backend/tests/contract` compara ambos y falla ante cualquier diferencia | F2-BE-01…16 | pendiente |
-| F2-BE-18 | Autorización cruzada en todas las rutas de usuario | Test que recorre todas las operaciones con ids de otro usuario ⇒ 404 | F2-BE-17 | pendiente |
-| F2-BE-19 | `make seed-demo` (solo desarrollo) y colección `httpie`/`curl` | Documentado en el handoff | F2-BE-17 | pendiente |
-| F2-BE-20 | Cobertura ≥ 90 % líneas y ramas y handoff | `make test-backend` verde | todas | pendiente |
+| F2-BE-01 | App factory, errores RFC 9457 centralizados, `X-Request-ID`, logs JSON sin PII | Tests de formato de error para 401/403/404/409/413/422/429 | F0-ORQ-01 | hecha |
+| F2-BE-02 | Modelos SQLAlchemy de `contracts/domain.md` §4 y migración inicial Alembic con `unaccent`/`pg_trgm` e índices | Test de migraciones upgrade → downgrade → upgrade en testcontainers | F2-BE-01, F1-ING-11 | hecha |
+| F2-BE-03 | Auth (ADR 0003): registro, login, logout, me, password, check, csrf, sesiones activas | Tests: rotación, expiración deslizante, revocación, tiempo constante, CSRF en toda escritura | F2-BE-02 | hecha |
+| F2-BE-04 | Rate limiting y cabeceras de seguridad (CSP, HSTS…) | Tests de 429 con `Retry-After` y de cabeceras | F2-BE-03 | hecha |
+| F2-BE-05 | Perfil, PAR-Q (fuerza `beginner`) y métricas corporales | Tests felices, validación, acceso cruzado ⇒ 404 | F2-BE-03 | hecha |
+| F2-BE-06 | Catálogo: listado con filtros y búsqueda sin acentos, detalle con `lang`, alternativas, facetas, favoritos, `ETag`/304 | `GET /exercises` p95 < 80 ms con 1.324 filas (`pytest-benchmark`) | F2-BE-02, F1-ING-11 | hecha |
+| F2-BE-07 | Caché en memoria de `ExerciseCard[]` por proceso, invalidada tras ingesta | Test de invalidación | F2-BE-06 | hecha |
+| F2-BE-08 | Generador (`preview`, `preview/regenerate-day`, `preview/swap`) y persistencia de programas | `POST /generator/preview` p95 < 400 ms; plan persistido = plan previsualizado | F2-BE-07, F1-ENG-20 | hecha |
+| F2-BE-09 | Programas: listar, detalle, patch, delete, activar (máx. 1), duplicar, regenerar día, swap, `PUT days/{day_id}` con `validate_plan` | `422 plan_invalid` con `violations`; tests por operación | F2-BE-08 | hecha |
+| F2-BE-10 | PDF (WeasyPrint, atribución en cada página, `url_fetcher` local) e ICS (RFC 5545) | Test: texto de atribución presente en cada página del PDF; ICS válido | F2-BE-09 | hecha |
+| F2-BE-11 | Sesiones y series con `Idempotency-Key` (tabla `idempotency_key`) | Tests de repetición, clave reutilizada (422) y concurrente (409) | F2-BE-09 | hecha |
+| F2-BE-12 | `POST /sync` (ADR 0006) | Tests: `applied`/`duplicate`/`superseded`/`rejected`, tombstones, lote parcial | F2-BE-11 | hecha |
+| F2-BE-13 | Récords, estadísticas y `GET /sessions/next` con progresión del motor | Sin N+1 (conteo de consultas en test) | F2-BE-11, F1-ENG-13 | hecha |
+| F2-BE-14 | Nutrición tras `diet_enabled` y `DIET_FEATURE_ENABLED` | `403 diet_disabled`; `422 nutrition_blocked` | F2-BE-05, F1-NUT-10 | hecha |
+| F2-BE-15 | Exportar/importar/borrar cuenta | Round-trip export → import idempotente; borrado completo verificado | F2-BE-13, F2-BE-14 | hecha |
+| F2-BE-16 | Admin (ajustes, usuarios, ingesta en segundo plano) + `audit_log`; `GET /about`, `/health`, `/ready` | No se puede degradar al último admin (409) | F2-BE-03, F1-ING-11 | hecha |
+| F2-BE-17 | Test de contrato: esquema exportado por FastAPI = `contracts/openapi.yaml` | `backend/tests/contract` compara ambos y falla ante cualquier diferencia | F2-BE-01…16 | hecha |
+| F2-BE-18 | Autorización cruzada en todas las rutas de usuario | Test que recorre todas las operaciones con ids de otro usuario ⇒ 404 | F2-BE-17 | hecha |
+| F2-BE-19 | `make seed-demo` (solo desarrollo) y colección `httpie`/`curl` | Documentado en el handoff | F2-BE-17 | hecha |
+| F2-BE-20 | Cobertura ≥ 90 % líneas y ramas y handoff | `make test-backend` verde | todas | en curso |
 
 ### `frontend-ui` · Fase 2 (§10.2) — handoff `docs/handoffs/F2-frontend.md`
 
