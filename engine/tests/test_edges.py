@@ -47,8 +47,8 @@ def test_cap_enforcement_stops_at_the_minimum_sets() -> None:
     assert all(value == 2 for value in sets.values())
 
 
-def test_bodyweight_vertical_push_relaxes_difficulty_and_warns() -> None:
-    """El dataset solo tiene 2 empujes verticales con peso corporal, ambos de dificultad 3."""
+def test_beginner_bodyweight_vertical_push_falls_back_to_safer_pattern() -> None:
+    """Solo hay pino (dificultad 3) como empuje vertical: el principiante recibe un patrón afín."""
     inp = make_input(
         equipment=EquipmentSelection(preset=EquipmentPreset.BODYWEIGHT),
         experience=Experience.BEGINNER,
@@ -62,14 +62,15 @@ def test_bodyweight_vertical_push_relaxes_difficulty_and_warns() -> None:
         if e.slot is not None and e.slot.pattern is MovementPattern.VERTICAL_PUSH
     ]
     assert chosen
-    assert chosen[0].difficulty == 3
+    assert chosen[0].difficulty <= 2
+    assert chosen[0].movement_pattern is MovementPattern.HORIZONTAL_PUSH
     relaxed = [
         w
         for w in plan.warnings
         if w.code is PlanWarningCode.SLOT_RELAXED and w.exercise_id == chosen[0].id
     ]
     assert relaxed
-    assert "dificultad superior a tu nivel" in relaxed[0].message_es
+    assert "patrón de movimiento afín" in relaxed[0].message_es
 
 
 def test_slot_credits_for_groups_without_volume() -> None:

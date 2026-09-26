@@ -1,5 +1,5 @@
 {
- "engine_version": "0.1.0",
+ "engine_version": "0.1.1",
  "tables_hash": "55b940e662f992d8ccd21283fac3b5f1160c9bb23270ef62377379d7da87dd36",
  "seed": 20260923,
  "input": {
@@ -338,19 +338,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0471",
+         "exercise_id": "0251",
          "sets": 2,
-         "rep_min": null,
-         "rep_max": null,
-         "duration_s": 20,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
          "per_side": false,
          "target_rir": 3,
-         "tempo": null,
+         "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Mantén la posición con técnica impecable",
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3302"
+          "0493",
+          "0662",
+          "0258"
          ],
          "order": 0,
          "slot": {
@@ -439,12 +441,16 @@
      ],
      "volume": [
       {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
        "group": "back",
        "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.0
+       "sets": 2.0
       },
       {
        "group": "core",
@@ -571,7 +577,7 @@
        "rest_between_rounds_s": 60,
        "exercises": [
         {
-         "exercise_id": "0662",
+         "exercise_id": "0699",
          "sets": 2,
          "rep_min": 12,
          "rep_max": 15,
@@ -583,9 +589,9 @@
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0251",
           "0258",
-          "0279"
+          "0279",
+          "0493"
          ],
          "order": 0,
          "slot": {
@@ -996,19 +1002,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0471",
+         "exercise_id": "0251",
          "sets": 2,
-         "rep_min": null,
-         "rep_max": null,
-         "duration_s": 20,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
          "per_side": false,
          "target_rir": 3,
-         "tempo": null,
+         "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Mantén la posición con técnica impecable",
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3302"
+          "0493",
+          "0662",
+          "0258"
          ],
          "order": 0,
          "slot": {
@@ -1097,12 +1105,16 @@
      ],
      "volume": [
       {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
        "group": "back",
        "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.0
+       "sets": 2.0
       },
       {
        "group": "core",
@@ -1229,7 +1241,7 @@
        "rest_between_rounds_s": 60,
        "exercises": [
         {
-         "exercise_id": "0662",
+         "exercise_id": "0699",
          "sets": 2,
          "rep_min": 12,
          "rep_max": 15,
@@ -1241,9 +1253,9 @@
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0251",
           "0258",
-          "0279"
+          "0279",
+          "0493"
          ],
          "order": 0,
          "slot": {
@@ -1654,19 +1666,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0471",
+         "exercise_id": "0251",
          "sets": 2,
-         "rep_min": null,
-         "rep_max": null,
-         "duration_s": 20,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
          "per_side": false,
          "target_rir": 3,
-         "tempo": null,
+         "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Mantén la posición con técnica impecable",
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3302"
+          "0493",
+          "0662",
+          "0258"
          ],
          "order": 0,
          "slot": {
@@ -1755,12 +1769,16 @@
      ],
      "volume": [
       {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
        "group": "back",
        "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.0
+       "sets": 2.0
       },
       {
        "group": "core",
@@ -1887,7 +1905,7 @@
        "rest_between_rounds_s": 60,
        "exercises": [
         {
-         "exercise_id": "0662",
+         "exercise_id": "0699",
          "sets": 2,
          "rep_min": 12,
          "rep_max": 15,
@@ -1899,9 +1917,9 @@
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0251",
           "0258",
-          "0279"
+          "0279",
+          "0493"
          ],
          "order": 0,
          "slot": {
@@ -2312,19 +2330,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0471",
+         "exercise_id": "0251",
          "sets": 2,
-         "rep_min": null,
-         "rep_max": null,
-         "duration_s": 20,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
          "per_side": false,
          "target_rir": 3,
-         "tempo": null,
+         "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Mantén la posición con técnica impecable",
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3302"
+          "0493",
+          "0662",
+          "0258"
          ],
          "order": 0,
          "slot": {
@@ -2413,12 +2433,16 @@
      ],
      "volume": [
       {
+       "group": "chest",
+       "sets": 2.0
+      },
+      {
        "group": "back",
        "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.0
+       "sets": 2.0
       },
       {
        "group": "core",
@@ -2545,7 +2569,7 @@
        "rest_between_rounds_s": 60,
        "exercises": [
         {
-         "exercise_id": "0662",
+         "exercise_id": "0699",
          "sets": 2,
          "rep_min": 12,
          "rep_max": 15,
@@ -2557,9 +2581,9 @@
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0251",
           "0258",
-          "0279"
+          "0279",
+          "0493"
          ],
          "order": 0,
          "slot": {
@@ -2970,19 +2994,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0471",
+         "exercise_id": "0251",
          "sets": 1,
-         "rep_min": null,
-         "rep_max": null,
-         "duration_s": 20,
+         "rep_min": 8,
+         "rep_max": 12,
+         "duration_s": null,
          "per_side": false,
          "target_rir": 4,
-         "tempo": null,
+         "tempo": "2-0-1-0",
          "rest_s": 105,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3302"
+          "0493",
+          "0662",
+          "0258"
          ],
          "order": 0,
          "slot": {
@@ -3071,12 +3097,16 @@
      ],
      "volume": [
       {
+       "group": "chest",
+       "sets": 1.0
+      },
+      {
        "group": "back",
        "sets": 1.0
       },
       {
        "group": "arms",
-       "sets": 1.5
+       "sets": 1.0
       },
       {
        "group": "core",
@@ -3203,7 +3233,7 @@
        "rest_between_rounds_s": 60,
        "exercises": [
         {
-         "exercise_id": "0662",
+         "exercise_id": "0699",
          "sets": 1,
          "rep_min": 12,
          "rep_max": 15,
@@ -3215,9 +3245,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0251",
           "0258",
-          "0279"
+          "0279",
+          "0493"
          ],
          "order": 0,
          "slot": {
@@ -3328,7 +3358,7 @@
    "group": "chest",
    "target_min": 6.0,
    "target_max": 10.0,
-   "planned_sets": 4.0
+   "planned_sets": 6.0
   },
   {
    "group": "back",
@@ -3346,7 +3376,7 @@
    "group": "arms",
    "target_min": 4.0,
    "target_max": 8.0,
-   "planned_sets": 7.0
+   "planned_sets": 6.0
   },
   {
    "group": "quads",
@@ -3388,15 +3418,15 @@
    "exercise_id": "0489"
   },
   {
-   "code": "slot_relaxed",
-   "message_es": "En «Cuerpo completo A» no había un ejercicio ideal de elevaciones de hombro con tu equipamiento: hemos elegido «pino», con una dificultad superior a tu nivel, otro músculo objetivo y un patrón de movimiento afín.",
+   "code": "equipment_insufficient",
+   "message_es": "En «Cuerpo completo A» no hay ningún ejercicio de elevaciones de hombro con el equipamiento que tienes: hemos quitado ese hueco del día.",
    "week_index": null,
    "day_index": 0,
-   "exercise_id": "3302"
+   "exercise_id": null
   },
   {
    "code": "slot_dropped",
-   "message_es": "Para ajustar «Cuerpo completo A» a 30 minutos hemos quitado el finisher de cardio, «bicho muerto (dead bug)», «pino» y «hiperextensión».",
+   "message_es": "Para ajustar «Cuerpo completo A» a 30 minutos hemos quitado el finisher de cardio, «bicho muerto (dead bug)» y «hiperextensión».",
    "week_index": null,
    "day_index": 0,
    "exercise_id": null
@@ -3417,10 +3447,10 @@
   },
   {
    "code": "slot_relaxed",
-   "message_es": "En «Cuerpo completo B» no había un ejercicio ideal de empuje vertical con tu equipamiento: hemos elegido «flexión en pino», con una dificultad superior a tu nivel y otro músculo objetivo.",
+   "message_es": "En «Cuerpo completo B» no había un ejercicio ideal de empuje vertical con tu equipamiento: hemos elegido «fondos de pecho», con una dificultad superior a tu nivel, otro músculo objetivo y un patrón de movimiento afín.",
    "week_index": null,
    "day_index": 1,
-   "exercise_id": "0471"
+   "exercise_id": "0251"
   },
   {
    "code": "slot_dropped",
@@ -3445,7 +3475,7 @@
   },
   {
    "code": "volume_out_of_range",
-   "message_es": "Volumen semanal de pecho: 4 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.",
+   "message_es": "Volumen semanal de pecho: 6 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.",
    "week_index": null,
    "day_index": null,
    "exercise_id": null
@@ -3460,13 +3490,6 @@
   {
    "code": "volume_out_of_range",
    "message_es": "Volumen semanal de hombros: 0 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.",
-   "week_index": null,
-   "day_index": null,
-   "exercise_id": null
-  },
-  {
-   "code": "volume_out_of_range",
-   "message_es": "Volumen semanal de brazos: 7 series efectivas, por encima del objetivo de 6. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.",
    "week_index": null,
    "day_index": null,
    "exercise_id": null

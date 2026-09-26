@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from forja_engine.models import (
     ExerciseCard,
     ExerciseRole,
+    Experience,
     GeneratorInput,
     Goal,
     Laterality,
@@ -71,6 +72,9 @@ class Choice:
     relaxed: tuple[Relaxation, ...]
 
 
+BEGINNER_UNSAFE_DIFFICULTY = 3
+
+
 class Selector:
     """Catálogo filtrado por la entrada (equipamiento, exclusiones, evitados, deprecated)."""
 
@@ -111,6 +115,15 @@ class Selector:
             cap += self.rules.difficulty.accessory_extra[self.inp.experience]
         return cap
 
+    def _unsafe_for_beginner(self, card: ExerciseCard) -> bool:
+        """Los principiantes nunca reciben pino ni variantes avanzadas de empuje vertical."""
+        return (
+            self.inp.experience is Experience.BEGINNER
+            and card.movement_pattern is MovementPattern.VERTICAL_PUSH
+            and card.equipment_code == "bodyweight"
+            and card.difficulty >= BEGINNER_UNSAFE_DIFFICULTY
+        )
+
     def candidates(
         self,
         slot: SlotRef,
@@ -135,6 +148,7 @@ class Selector:
                     or card.id in exclude
                     or card.variant_group in usage.day_variants
                     or ("difficulty" not in relaxed and card.difficulty > cap)
+                    or self._unsafe_for_beginner(card)
                     or (
                         "staple" not in relaxed
                         and slot.role is ExerciseRole.MAIN

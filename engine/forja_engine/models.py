@@ -265,6 +265,9 @@ class PlanWarningCode(StrEnum):
     EQUIPMENT_INSUFFICIENT = "equipment_insufficient"
     AVOIDED_MUSCLE_SUBSTITUTED = "avoided_muscle_substituted"
     DEPRECATED_EXERCISE = "deprecated_exercise"
+    EXCLUDED_EXERCISE = "excluded_exercise"
+    AVOIDED_EXERCISE = "avoided_exercise"
+    UNKNOWN_EXERCISE = "unknown_exercise"
 
 
 class SuggestionKind(StrEnum):

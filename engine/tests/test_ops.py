@@ -81,7 +81,7 @@ def test_validate_detects_each_rule() -> None:
         validate_plan(edit(plan, address, exercise_id=stretch), catalog())
     )
     assert codes(validate_plan(edit(plan, address, exercise_id="9999"), catalog())) == {
-        PlanWarningCode.DEPRECATED_EXERCISE
+        PlanWarningCode.UNKNOWN_EXERCISE
     }
     used = exercise_at(plan, address)
     deprecated = [
@@ -91,7 +91,17 @@ def test_validate_detects_each_rule() -> None:
     excluded = plan.model_copy(
         update={"input": plan.input.model_copy(update={"excluded_exercise_ids": (used,)})}
     )
-    assert PlanWarningCode.AVOIDED_MUSCLE_SUBSTITUTED in codes(validate_plan(excluded, catalog()))
+    assert PlanWarningCode.EXCLUDED_EXERCISE in codes(validate_plan(excluded, catalog()))
+    avoiding = plan.model_copy(
+        update={
+            "input": plan.input.model_copy(
+                update={
+                    "avoid_muscles": (next(c for c in catalog() if c.id == used).target_muscle,)
+                }
+            )
+        }
+    )
+    assert PlanWarningCode.AVOIDED_EXERCISE in codes(validate_plan(avoiding, catalog()))
     no_gear = plan.model_copy(
         update={
             "input": plan.input.model_copy(

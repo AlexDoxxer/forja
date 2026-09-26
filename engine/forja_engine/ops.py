@@ -95,7 +95,7 @@ def _exercise_violations(
     if card is None:
         return [
             _violation(
-                PlanWarningCode.DEPRECATED_EXERCISE,
+                PlanWarningCode.UNKNOWN_EXERCISE,
                 f"El ejercicio {ex_id} no existe en el catálogo actual.",
                 week,
                 day,
@@ -114,15 +114,21 @@ def _exercise_violations(
                 ex_id,
             )
         )
-    if (
-        ex_id in inp.excluded_exercise_ids
-        or card.target_muscle in inp.avoid_muscles
-        or card.movement_pattern in inp.avoid_patterns
-    ):
+    if ex_id in inp.excluded_exercise_ids:
         found.append(
             _violation(
-                PlanWarningCode.AVOIDED_MUSCLE_SUBSTITUTED,
-                f"«{name}» está excluido o trabaja un músculo o movimiento que quieres evitar.",
+                PlanWarningCode.EXCLUDED_EXERCISE,
+                f"«{name}» está en tu lista de ejercicios excluidos.",
+                week,
+                day,
+                ex_id,
+            )
+        )
+    if card.target_muscle in inp.avoid_muscles or card.movement_pattern in inp.avoid_patterns:
+        found.append(
+            _violation(
+                PlanWarningCode.AVOIDED_EXERCISE,
+                f"«{name}» trabaja un músculo o movimiento que quieres evitar.",
                 week,
                 day,
                 ex_id,
