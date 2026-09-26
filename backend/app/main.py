@@ -54,7 +54,7 @@ def create_app(settings: Settings | None = None, *, rate_limit_scale: int = 1) -
 
     app = FastAPI(
         title="Forja API",
-        version="1.1.0",
+        version="1.2.0",
         docs_url=None,
         redoc_url=None,
         openapi_url=f"{API_PREFIX}/openapi.json",
