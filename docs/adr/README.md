@@ -16,3 +16,4 @@ edita: se sustituye por otro que lo declare «Reemplaza a NNNN».
 | [0008](0008-package-management.md) | Gestión de paquetes: proyectos uv independientes y npm | Aceptado |
 | [0009](0009-api-conventions-and-contract-extensions.md) | Convenciones de API y ampliaciones del contrato de §9 | Aceptado |
 | [0010](0010-ci-and-quality-gates.md) | CI en GitHub Actions y puertas de calidad | Aceptado |
+| [0011](0011-nutrition-tables-single-source.md) | `specs/nutrition.yaml` como fuente única de las tablas de nutrición | Aceptado |
