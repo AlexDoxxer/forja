@@ -9,7 +9,7 @@ from typing import Final
 from fastapi import APIRouter, FastAPI
 from forja_engine import Tables, load_tables
 
-from app.api.routers import auth, catalog, profile, programs, system, training
+from app.api.routers import admin, auth, catalog, nutrition, profile, programs, system, training
 from app.core.config import Settings, get_settings
 from app.core.errors import install_handlers
 from app.core.logging import configure_logging
@@ -17,6 +17,7 @@ from app.db.session import create_engine, create_sessionmaker
 from app.security.middleware import BodyLimitAndCsrfMiddleware, RequestContextMiddleware
 from app.security.ratelimit import RateLimiter
 from app.services.catalog_cache import CatalogCache
+from app.services.nutrition import sync_foods
 
 API_PREFIX: Final = "/api/v1"
 SPECS_DIR_ENV: Final = "FORJA_SPECS_DIR"
@@ -45,6 +46,7 @@ def create_app(settings: Settings | None = None, *, rate_limit_scale: int = 1) -
         app.state.engine = engine
         app.state.sessionmaker = create_sessionmaker(engine)
         app.state.catalog = CatalogCache(app.state.sessionmaker)
+        await sync_foods(app.state.sessionmaker)
         try:
             yield
         finally:
@@ -73,5 +75,7 @@ def create_app(settings: Settings | None = None, *, rate_limit_scale: int = 1) -
     api.include_router(catalog.router)
     api.include_router(programs.router)
     api.include_router(training.router)
+    api.include_router(nutrition.router)
+    api.include_router(admin.router)
     app.include_router(api)
     return app

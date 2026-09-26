@@ -202,6 +202,7 @@ def upgrade() -> None:
     sa.Column('foods_hash', sa.String(length=64), nullable=False),
     sa.Column('target', postgresql.JSONB(astext_type=sa.Text()), nullable=False),
     sa.Column('notices', postgresql.JSONB(astext_type=sa.Text()), nullable=False),
+    sa.Column('snapshot', postgresql.JSONB(astext_type=sa.Text()), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], name=op.f('fk_meal_plan_user_id_user'), ondelete='CASCADE'),

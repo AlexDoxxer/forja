@@ -97,6 +97,8 @@ class MealPlan(TimestampMixin, Base):
     foods_hash: Mapped[str] = mapped_column(String(64), nullable=False)
     target: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
     notices: Mapped[list[Any]] = mapped_column(JSONB, nullable=False)
+    # Plan completo del motor (fuente de lectura); ``meal_plan_item`` es su proyección relacional.
+    snapshot: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
 
 
 class MealPlanItem(TimestampMixin, Base):
