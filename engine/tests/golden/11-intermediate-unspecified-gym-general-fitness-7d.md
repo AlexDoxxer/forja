@@ -16,8 +16,8 @@ _Trabajo de pecho, hombros y brazos_
 | Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | flexión de rodillas (3211) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | press de banca con mancuernas (0289) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Trabajo | press militar a dos manos con kettlebell (0553) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Trabajo | press de banca en multipower (0748) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
+| Trabajo | press militar en máquina (0587) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | press de banca con banda elástica (1254) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | aperturas de pie en polea (0227) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | elevación lateral con mancuernas (0334) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | press francés tumbado con barra (extensión de tríceps) (0060) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
@@ -53,10 +53,10 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla goblet con kettlebell (0534) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Trabajo | peso muerto sumo con barra (0117) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | sentadilla goblet con mancuerna (1760) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | peso muerto rumano con barra (0085) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | zancada atrás con mancuernas (0381) | 2 | 10-15 por lado | 3 | 75 s | 2-0-1-0 |
-| Trabajo | curl femoral inverso con apoyo en banco (0496) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
+| Trabajo | curl femoral tumbado en máquina (0586) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | elevación de talones de pie con barra (apoyo en suelo) (1372) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 1 | 35 s | — | 0 s | — |
 | Vuelta a la calma | estiramiento de isquiotibiales y gemelos de pie con correa (1599) | 1 | 35 s | — | 0 s | — |
@@ -85,10 +85,10 @@ _Trabajo de pecho, hombros y brazos_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de estrella (3223) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | flexión de rodillas (3211) | 1 | 8-12 | — | 30 s | — |
+| Calentamiento | flexión inclinada (0493) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | press de banca inclinado con barra (0047) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Trabajo | press militar de pie en multipower (0774) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Trabajo | flexión (0662) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
+| Trabajo | press por encima de la cabeza de pie con mancuernas (0426) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | press de banca en multipower (0748) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | aperturas sentado en máquina (0596) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | elevación lateral en máquina (0584) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | extensión de tríceps de pie con mancuerna (0430) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
@@ -124,10 +124,10 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 |---|---|---|---|---|---|---|
 | Calentamiento | bicicleta estática a ritmo de caminata (0798) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla goblet con mancuerna (1760) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Trabajo | swing con kettlebell (0549) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | sentadilla trasera con barra (0043) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | peso muerto con barra hexagonal (0811) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | zancada con mancuernas (0336) | 2 | 10-15 por lado | 3 | 75 s | 2-0-1-0 |
-| Trabajo | curl femoral tumbado en máquina (0586) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
+| Trabajo | curl femoral sentado en máquina (0599) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | elevación de talones sentado con barra (0088) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 1 | 35 s | — | 0 s | — |
 | Vuelta a la calma | postura reclinada del dedo gordo con cuerda (1582) | 1 | 35 s | — | 0 s | — |
@@ -162,7 +162,7 @@ Series efectivas: quads 5, hamstrings 5, glutes 4, calves 2
 
 - `recovery_day_enforced`: Con 7 días por semana, uno de ellos es obligatoriamente de recuperación activa (cardio suave y movilidad): el descanso también construye progreso.
 - `slot_dropped`: Para ajustar «Pierna» a 45 minutos hemos quitado «crunch de rodillas en polea».
-- `slot_dropped`: Para ajustar «Pierna» a 45 minutos hemos quitado «elevación de piernas rectas en silla romana».
+- `slot_dropped`: Para ajustar «Pierna» a 45 minutos hemos quitado «curl-up abdominal».
 - `volume_out_of_range`: Volumen semanal de pecho: 14 series efectivas, por encima del objetivo de 10. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.
 - `volume_out_of_range`: Volumen semanal de espalda: 20 series efectivas, por encima del objetivo de 10. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.
 - `volume_out_of_range`: Volumen semanal de hombros: 14 series efectivas, por encima del objetivo de 10. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.

@@ -14,11 +14,11 @@ _Trabajo de cuádriceps, pecho, espalda y isquiotibiales_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | sentadilla profunda en cuclillas (3119) | 1 | 8-12 | — | 30 s | — |
+| Calentamiento | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 1 | 8-12 | — | 30 s | — |
 | Circuito x2 | sentadilla con peso corporal (cuádriceps) (3533) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | flexión de rodillas (3211) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | remo invertido con rodillas flexionadas (2300) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
-| Circuito x2 | ascensor (bisagra de cadera con peso corporal) (3292) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
+| Circuito x2 | bisagra de cadera con peso corporal (elevator) (3292) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | plancha de rodillas con toque de hombro (3239) | 2 | 10-20 | 2 | 45 s | — |
 | Vuelta a la calma | estiramiento de cuádriceps tumbado de lado (0613) | 1 | 35 s | — | 0 s | — |
 | Vuelta a la calma | estiramiento de pecho y parte frontal del hombro (1271) | 1 | 35 s | — | 0 s | — |
@@ -33,7 +33,7 @@ _Trabajo de isquiotibiales, hombros, espalda y cuádriceps_
 |---|---|---|---|---|---|---|
 | Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | extensión lumbar boca abajo (1352) | 1 | 8-12 | — | 30 s | — |
-| Circuito x2 | ascensor (bisagra de cadera con peso corporal) (3292) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
+| Circuito x2 | bisagra de cadera con peso corporal (elevator) (3292) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | flexión inclinada (0493) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | dominada de lado a lado (0720) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | zancada adelante (3470) | 2 | 15-25 por lado | 3 | 30 s | 1-0-1-0 |
@@ -52,7 +52,7 @@ _Trabajo de cuádriceps, espalda, pecho y glúteos_
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con peso corporal (cuádriceps) (3533) | 1 | 8-12 | — | 30 s | — |
-| Circuito x2 | sentadilla profunda en cuclillas (3119) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
+| Circuito x2 | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | dominada de lado a lado (0720) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | flexión (0662) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | puente de glúteo bajo en el suelo (3013) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |

@@ -17,7 +17,7 @@ _Trabajo de pecho, hombros y brazos_
 | Calentamiento | press de banca inclinado con barra (0047) | 3 | 2-8 | — | 30 s | — |
 | Trabajo | press de banca inclinado con barra (0047) | 4 | 3-5 | 3 | 240 s | 2-1-X-0 |
 | Trabajo | press por encima de la cabeza sentado con barra (0091) | 5 | 3-5 | 3 | 240 s | 2-1-X-0 |
-| Trabajo | press de banca en multipower (0748) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |
+| Trabajo | press de banca con banda elástica (1254) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |
 | Trabajo | aperturas de pie en polea (0227) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |
 | Trabajo | elevación lateral con mancuernas (0334) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |
 | Trabajo | press francés tumbado con barra (extensión de tríceps) (0060) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |
@@ -52,11 +52,11 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | sentadilla profunda con barra (0043) | 3 | 2-8 | — | 30 s | — |
-| Trabajo | sentadilla profunda con barra (0043) | 5 | 3-5 | 3 | 240 s | 2-1-X-0 |
-| Trabajo | buenos días con barra (0044) | 5 | 3-6 | 3 | 240 s | 2-1-X-0 |
+| Calentamiento | sentadilla trasera con barra (0043) | 3 | 2-8 | — | 30 s | — |
+| Trabajo | sentadilla trasera con barra (0043) | 5 | 3-5 | 3 | 240 s | 2-1-X-0 |
+| Trabajo | peso muerto rumano con barra (0085) | 5 | 3-5 | 3 | 240 s | 2-1-X-0 |
 | Trabajo | zancada atrás con mancuernas (0381) | 3 | 6-10 por lado | 2 | 105 s | 2-0-1-0 |
-| Trabajo | curl femoral inverso con apoyo en banco (0496) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |
+| Trabajo | curl femoral tumbado en máquina (0586) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |
 | Trabajo | elevación de talones de pie con barra (apoyo en suelo) (1372) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |
 | Trabajo | crunch de rodillas en polea (0175) | 4 | 10-20 | 2 | 45 s | — |
 | Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 2 | 45 s | — | 0 s | — |

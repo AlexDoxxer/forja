@@ -434,9 +434,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
+          "3292",
           "1009",
-          "1010",
-          "1023"
+          "1010"
          ],
          "order": 0,
          "slot": {
@@ -687,7 +687,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0991",
+         "exercise_id": "3292",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -696,9 +696,11 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0991"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -821,9 +823,9 @@
          "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0555",
           "0696",
-          "0730"
+          "0730",
+          "0795"
          ],
          "order": 0,
          "slot": {
@@ -962,7 +964,7 @@
          "slot": null
         },
         {
-         "exercise_id": "1009",
+         "exercise_id": "3292",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -997,7 +999,9 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "3292"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 0,
@@ -1088,9 +1092,9 @@
          "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0555",
           "0730",
-          "0795"
+          "0795",
+          "0697"
          ],
          "order": 0,
          "slot": {
@@ -1170,7 +1174,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3655",
+         "exercise_id": "3638",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -1651,9 +1655,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
+          "3292",
           "1009",
-          "1010",
-          "1023"
+          "1010"
          ],
          "order": 0,
          "slot": {
@@ -1904,7 +1908,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0991",
+         "exercise_id": "3292",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -1913,9 +1917,11 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0991"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -2038,9 +2044,9 @@
          "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0555",
           "0696",
-          "0730"
+          "0730",
+          "0795"
          ],
          "order": 0,
          "slot": {
@@ -2179,7 +2185,7 @@
          "slot": null
         },
         {
-         "exercise_id": "1009",
+         "exercise_id": "3292",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -2214,7 +2220,9 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "3292"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 0,
@@ -2305,9 +2313,9 @@
          "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0555",
           "0730",
-          "0795"
+          "0795",
+          "0697"
          ],
          "order": 0,
          "slot": {
@@ -2387,7 +2395,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3655",
+         "exercise_id": "3638",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -2868,9 +2876,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
+          "3292",
           "1009",
-          "1010",
-          "1023"
+          "1010"
          ],
          "order": 0,
          "slot": {
@@ -3121,7 +3129,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0991",
+         "exercise_id": "3292",
          "sets": 4,
          "rep_min": 8,
          "rep_max": 12,
@@ -3130,9 +3138,11 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0991"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -3255,9 +3265,9 @@
          "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0555",
           "0696",
-          "0730"
+          "0730",
+          "0795"
          ],
          "order": 0,
          "slot": {
@@ -3396,7 +3406,7 @@
          "slot": null
         },
         {
-         "exercise_id": "1009",
+         "exercise_id": "3292",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -3431,7 +3441,9 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "3292"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 0,
@@ -3522,9 +3534,9 @@
          "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0555",
           "0730",
-          "0795"
+          "0795",
+          "0697"
          ],
          "order": 0,
          "slot": {
@@ -3604,7 +3616,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3655",
+         "exercise_id": "3638",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -4085,9 +4097,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
+          "3292",
           "1009",
-          "1010",
-          "1023"
+          "1010"
          ],
          "order": 0,
          "slot": {
@@ -4338,7 +4350,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0991",
+         "exercise_id": "3292",
          "sets": 4,
          "rep_min": 8,
          "rep_max": 12,
@@ -4347,9 +4359,11 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0991"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -4472,9 +4486,9 @@
          "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0555",
           "0696",
-          "0730"
+          "0730",
+          "0795"
          ],
          "order": 0,
          "slot": {
@@ -4613,7 +4627,7 @@
          "slot": null
         },
         {
-         "exercise_id": "1009",
+         "exercise_id": "3292",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -4648,7 +4662,9 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "3292"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 0,
@@ -4739,9 +4755,9 @@
          "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0555",
           "0730",
-          "0795"
+          "0795",
+          "0697"
          ],
          "order": 0,
          "slot": {
@@ -4821,7 +4837,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3655",
+         "exercise_id": "3638",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -5302,9 +5318,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
+          "3292",
           "1009",
-          "1010",
-          "1023"
+          "1010"
          ],
          "order": 0,
          "slot": {
@@ -5555,7 +5571,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0991",
+         "exercise_id": "3292",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -5566,7 +5582,9 @@
          "rest_s": 105,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0991"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -5689,9 +5707,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0555",
           "0696",
-          "0730"
+          "0730",
+          "0795"
          ],
          "order": 0,
          "slot": {
@@ -5830,7 +5848,7 @@
          "slot": null
         },
         {
-         "exercise_id": "1009",
+         "exercise_id": "3292",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -5865,7 +5883,9 @@
          "rest_s": 105,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "3292"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 0,
@@ -5956,9 +5976,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": "Superserie: alterna con el otro ejercicio del bloque y descansa al acabar la ronda.",
          "alternatives": [
-          "0555",
           "0730",
-          "0795"
+          "0795",
+          "0697"
          ],
          "order": 0,
          "slot": {
@@ -6038,7 +6058,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3655",
+         "exercise_id": "3638",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,

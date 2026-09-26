@@ -3274,7 +3274,7 @@
   },
   {
    "code": "slot_dropped",
-   "message_es": "Para ajustar «Cuerpo completo A» a 30 minutos hemos quitado el finisher de cardio, «bicho muerto (dead bug)» y «ascensor (bisagra de cadera con peso corporal)».",
+   "message_es": "Para ajustar «Cuerpo completo A» a 30 minutos hemos quitado el finisher de cardio, «dead bug (bicho muerto)» y «bisagra de cadera con peso corporal (elevator)».",
    "week_index": null,
    "day_index": 0,
    "exercise_id": null
@@ -3309,7 +3309,7 @@
   },
   {
    "code": "slot_dropped",
-   "message_es": "Para ajustar «Cuerpo completo C» a 30 minutos hemos quitado el finisher de cardio, «sprints de piernas tumbado», «elevación de talones de pie con peso corporal», «flexión diamante» y «puente de glúteo bajo en el suelo».",
+   "message_es": "Para ajustar «Cuerpo completo C» a 30 minutos hemos quitado el finisher de cardio, «elevación de piernas y cadera tumbado», «elevación de talones de pie con peso corporal», «flexión diamante» y «puente de glúteo bajo en el suelo».",
    "week_index": null,
    "day_index": 2,
    "exercise_id": null

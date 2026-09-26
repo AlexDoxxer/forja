@@ -536,7 +536,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0586",
+         "exercise_id": "0599",
          "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
@@ -548,9 +548,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "0599",
-          "3193"
+          "0586",
+          "0696",
+          "1766"
          ],
          "order": 0,
          "slot": {
@@ -862,9 +862,9 @@
          "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0251",
           "0289",
-          "0493"
+          "0493",
+          "0662"
          ],
          "order": 0,
          "slot": {
@@ -1164,8 +1164,7 @@
          "notes_es": null,
          "alternatives": [
           "0017",
-          "0198",
-          "0652"
+          "0198"
          ],
          "order": 0,
          "slot": {
@@ -1588,7 +1587,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0599",
+         "exercise_id": "0586",
          "sets": 4,
          "rep_min": 6,
          "rep_max": 10,
@@ -1600,8 +1599,8 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "3193",
+          "0696",
+          "1766",
           "0339"
          ],
          "order": 0,
@@ -1622,7 +1621,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3193",
+         "exercise_id": "1766",
          "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
@@ -1631,12 +1630,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-1",
          "rest_s": 75,
-         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
+          "0696",
           "0339",
-          "0555"
+          "0582"
          ],
          "order": 0,
          "slot": {
@@ -2278,7 +2277,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0586",
+         "exercise_id": "0599",
          "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
@@ -2290,9 +2289,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "0599",
-          "3193"
+          "0586",
+          "0696",
+          "1766"
          ],
          "order": 0,
          "slot": {
@@ -2604,9 +2603,9 @@
          "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0251",
           "0289",
-          "0493"
+          "0493",
+          "0662"
          ],
          "order": 0,
          "slot": {
@@ -2906,8 +2905,7 @@
          "notes_es": null,
          "alternatives": [
           "0017",
-          "0198",
-          "0652"
+          "0198"
          ],
          "order": 0,
          "slot": {
@@ -3330,7 +3328,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0599",
+         "exercise_id": "0586",
          "sets": 4,
          "rep_min": 6,
          "rep_max": 10,
@@ -3342,8 +3340,8 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "3193",
+          "0696",
+          "1766",
           "0339"
          ],
          "order": 0,
@@ -3364,7 +3362,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3193",
+         "exercise_id": "1766",
          "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
@@ -3373,12 +3371,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-1",
          "rest_s": 75,
-         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
+          "0696",
           "0339",
-          "0555"
+          "0582"
          ],
          "order": 0,
          "slot": {
@@ -4020,7 +4018,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0586",
+         "exercise_id": "0599",
          "sets": 4,
          "rep_min": 10,
          "rep_max": 15,
@@ -4032,9 +4030,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "0599",
-          "3193"
+          "0586",
+          "0696",
+          "1766"
          ],
          "order": 0,
          "slot": {
@@ -4346,9 +4344,9 @@
          "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0251",
           "0289",
-          "0493"
+          "0493",
+          "0662"
          ],
          "order": 0,
          "slot": {
@@ -4648,8 +4646,7 @@
          "notes_es": null,
          "alternatives": [
           "0017",
-          "0198",
-          "0652"
+          "0198"
          ],
          "order": 0,
          "slot": {
@@ -5072,7 +5069,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0599",
+         "exercise_id": "0586",
          "sets": 4,
          "rep_min": 6,
          "rep_max": 10,
@@ -5084,8 +5081,8 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "3193",
+          "0696",
+          "1766",
           "0339"
          ],
          "order": 0,
@@ -5106,7 +5103,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3193",
+         "exercise_id": "1766",
          "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
@@ -5115,12 +5112,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-1",
          "rest_s": 75,
-         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
+          "0696",
           "0339",
-          "0555"
+          "0582"
          ],
          "order": 0,
          "slot": {
@@ -5762,7 +5759,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0586",
+         "exercise_id": "0599",
          "sets": 4,
          "rep_min": 10,
          "rep_max": 15,
@@ -5774,9 +5771,9 @@
          "load_hint": "Carga que te deje 1 repetición en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "0599",
-          "3193"
+          "0586",
+          "0696",
+          "1766"
          ],
          "order": 0,
          "slot": {
@@ -6088,9 +6085,9 @@
          "load_hint": "Con tu peso corporal, deja 1 repetición en reserva",
          "notes_es": null,
          "alternatives": [
-          "0251",
           "0289",
-          "0493"
+          "0493",
+          "0662"
          ],
          "order": 0,
          "slot": {
@@ -6390,8 +6387,7 @@
          "notes_es": null,
          "alternatives": [
           "0017",
-          "0198",
-          "0652"
+          "0198"
          ],
          "order": 0,
          "slot": {
@@ -6814,7 +6810,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0599",
+         "exercise_id": "0586",
          "sets": 4,
          "rep_min": 6,
          "rep_max": 10,
@@ -6826,8 +6822,8 @@
          "load_hint": "Carga que te deje 1 repetición en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "3193",
+          "0696",
+          "1766",
           "0339"
          ],
          "order": 0,
@@ -6848,7 +6844,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3193",
+         "exercise_id": "1766",
          "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
@@ -6857,12 +6853,12 @@
          "target_rir": 1,
          "tempo": "2-0-1-1",
          "rest_s": 75,
-         "load_hint": "Con tu peso corporal, deja 1 repetición en reserva",
+         "load_hint": "Ajusta la asistencia para dejar 1 repetición en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
+          "0696",
           "0339",
-          "0555"
+          "0582"
          ],
          "order": 0,
          "slot": {
@@ -7504,7 +7500,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0586",
+         "exercise_id": "0599",
          "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
@@ -7516,9 +7512,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "0599",
-          "3193"
+          "0586",
+          "0696",
+          "1766"
          ],
          "order": 0,
          "slot": {
@@ -7830,9 +7826,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0251",
           "0289",
-          "0493"
+          "0493",
+          "0662"
          ],
          "order": 0,
          "slot": {
@@ -8132,8 +8128,7 @@
          "notes_es": null,
          "alternatives": [
           "0017",
-          "0198",
-          "0652"
+          "0198"
          ],
          "order": 0,
          "slot": {
@@ -8556,7 +8551,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0599",
+         "exercise_id": "0586",
          "sets": 2,
          "rep_min": 6,
          "rep_max": 10,
@@ -8568,8 +8563,8 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
-          "3193",
+          "0696",
+          "1766",
           "0339"
          ],
          "order": 0,
@@ -8590,7 +8585,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3193",
+         "exercise_id": "1766",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8602,9 +8597,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0496",
+          "0696",
           "0339",
-          "0555"
+          "0582"
          ],
          "order": 0,
          "slot": {
@@ -8818,10 +8813,10 @@
   },
   {
    "code": "avoided_muscle_substituted",
-   "message_es": "En «Pierna A (cuádriceps)» hemos sustituido el hueco de bisagra de cadera por «curl femoral tumbado en máquina» para respetar los músculos y movimientos que quieres evitar.",
+   "message_es": "En «Pierna A (cuádriceps)» hemos sustituido el hueco de bisagra de cadera por «curl femoral sentado en máquina» para respetar los músculos y movimientos que quieres evitar.",
    "week_index": null,
    "day_index": 1,
-   "exercise_id": "0586"
+   "exercise_id": "0599"
   },
   {
    "code": "session_group_cap",
@@ -8839,10 +8834,10 @@
   },
   {
    "code": "avoided_muscle_substituted",
-   "message_es": "En «Pierna» hemos sustituido el hueco de bisagra de cadera por «curl femoral sentado en máquina» para respetar los músculos y movimientos que quieres evitar.",
+   "message_es": "En «Pierna» hemos sustituido el hueco de bisagra de cadera por «curl femoral tumbado en máquina» para respetar los músculos y movimientos que quieres evitar.",
    "week_index": null,
    "day_index": 4,
-   "exercise_id": "0599"
+   "exercise_id": "0586"
   },
   {
    "code": "volume_out_of_range",

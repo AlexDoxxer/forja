@@ -33,7 +33,7 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | sentadilla profunda en cuclillas (3119) | 1 | 8-12 | — | 30 s | — |
+| Calentamiento | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla con banda elástica (1004) | 3 | 8-12 | 2 | 105 s | 2-0-1-0 |
 | Superserie x2 | pull through con banda elástica (0991) | 2 | 12-15 | 2 | 50 s | 2-0-1-0 |
 | Superserie x2 | zancada adelante (3470) | 2 | 12-15 por lado | 2 | 50 s | 2-0-1-0 |
@@ -53,12 +53,12 @@ _Trabajo de glúteos, isquiotibiales, cuádriceps y core_
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | puente de glúteo bajo en el suelo (3013) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | pull through con banda elástica (0991) | 3 | 8-12 | 2 | 105 s | 2-0-1-0 |
+| Trabajo | bisagra de cadera con peso corporal (elevator) (3292) | 3 | 8-12 | 2 | 105 s | 2-0-1-0 |
 | Trabajo | hip thrust de rodillas con banda de resistencia (3236) | 3 | 8-13 | 2 | 105 s | 2-0-1-0 |
 | Superserie x2 | sentadilla dividida (2368) | 2 | 12-15 por lado | 2 | 50 s | 2-0-1-0 |
 | Superserie x2 | abducción de cadera tumbado de lado (0710) | 2 | 12-16 | 2 | 50 s | 2-0-1-0 |
 | Trabajo | curl femoral inverso asistido por uno mismo (1766) | 2 | 12-16 | 2 | 50 s | 2-0-1-0 |
-| Trabajo | bicho muerto (dead bug) (0276) | 2 | 10-21 | 2 | 45 s | — |
+| Trabajo | dead bug (bicho muerto) (0276) | 2 | 10-21 | 2 | 45 s | — |
 | Vuelta a la calma | estiramiento de cadera con rodillo (2202) | 1 | 35 s | — | 0 s | — |
 | Vuelta a la calma | secuencia de postura de ángulo abierto sentado (1587) | 1 | 35 s | — | 0 s | — |
 
@@ -71,14 +71,14 @@ _Trabajo de isquiotibiales, glúteos, cuádriceps y gemelos_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de estrella (3223) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | peso muerto con banda elástica y piernas rígidas (1009) | 1 | 8-12 | — | 30 s | — |
+| Calentamiento | bisagra de cadera con peso corporal (elevator) (3292) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | pull through con banda elástica (0991) | 3 | 8-12 | 2 | 105 s | 2-0-1-0 |
 | Superserie x2 | puente de glúteo bajo en el suelo (3013) | 2 | 12-16 | 2 | 50 s | 2-0-1-0 |
-| Superserie x2 | sentadilla profunda en cuclillas (3119) | 2 | 12-15 | 2 | 50 s | 2-0-1-0 |
+| Superserie x2 | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 2 | 12-15 | 2 | 50 s | 2-0-1-0 |
 | Superserie x2 | curl femoral inverso asistido por uno mismo en el suelo (0696) | 2 | 12-16 | 2 | 50 s | 2-0-1-0 |
 | Superserie x2 | elevación de talones de pie con peso corporal (1373) | 2 | 12-16 | 2 | 50 s | 2-0-1-0 |
 | Trabajo | elevación de piernas con giro (2801) | 2 | 10-21 | 2 | 45 s | — |
-| Finisher | zancada caminando con rodillas altas (3655) | 1 | 600 s | — | 0 s | — |
+| Finisher | empuje a carrera (3638) | 1 | 600 s | — | 0 s | — |
 | Vuelta a la calma | secuencia de postura de ángulo abierto sentado (1587) | 1 | 35 s | — | 0 s | — |
 | Vuelta a la calma | estiramiento de cadera y dorsal con rodillo (2205) | 1 | 35 s | — | 0 s | — |
 

@@ -14,7 +14,7 @@ _Trabajo de cuádriceps, pecho, espalda y isquiotibiales_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | sentadilla profunda en cuclillas (3119) | 1 | 8-12 | — | 30 s | — |
+| Calentamiento | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla con peso corporal (cuádriceps) (3533) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | flexión (0662) | 2 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | remo invertido con rodillas flexionadas (2300) | 2 | 8-12 | 3 | 105 s | 2-0-1-0 |
@@ -31,7 +31,7 @@ _Trabajo de isquiotibiales, hombros, espalda y cuádriceps_
 |---|---|---|---|---|---|---|
 | Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | extensión lumbar boca abajo (1352) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | ascensor (bisagra de cadera con peso corporal) (3292) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | bisagra de cadera con peso corporal (elevator) (3292) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | flexión inclinada (0493) | 2 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | dominada de lado a lado (0720) | 2 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Vuelta a la calma | secuencia de postura de ángulo abierto sentado (1587) | 1 | 30 s | — | 0 s | — |
@@ -47,7 +47,7 @@ _Trabajo de cuádriceps, espalda, pecho y glúteos_
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con peso corporal (cuádriceps) (3533) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla profunda en cuclillas (3119) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | dominada de lado a lado (0720) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | flexión de rodillas (3211) | 2 | 12-15 | 3 | 60 s | 2-0-1-0 |
 | Vuelta a la calma | estiramiento de cuádriceps a cuatro apoyos (1512) | 1 | 30 s | — | 0 s | — |
@@ -82,12 +82,12 @@ Series efectivas: chest 2, back 3, arms 1,5, quads 3, glutes 1,5
 ## Avisos
 
 - `equipment_insufficient`: En «Cuerpo completo A» no hay ningún ejercicio de elevaciones de hombro con el equipamiento que tienes: hemos quitado ese hueco del día.
-- `slot_dropped`: Para ajustar «Cuerpo completo A» a 30 minutos hemos quitado el finisher de cardio, «bicho muerto (dead bug)» y «ascensor (bisagra de cadera con peso corporal)».
+- `slot_dropped`: Para ajustar «Cuerpo completo A» a 30 minutos hemos quitado el finisher de cardio, «dead bug (bicho muerto)» y «bisagra de cadera con peso corporal (elevator)».
 - `main_exercise_trimmed`: El tiempo de «Cuerpo completo A» es muy justo: hemos tenido que recortar series o descansos de los ejercicios principales.
 - `slot_relaxed`: En «Cuerpo completo B»: sin material no hay un empuje vertical seguro para tu nivel, así que hemos usado «flexión inclinada». Con mancuernas o bandas podrás trabajar hombros.
 - `slot_dropped`: Para ajustar «Cuerpo completo B» a 30 minutos hemos quitado el finisher de cardio, «giro ruso», «curl de bíceps tumbado de lado con peso corporal» y «zancada caminando».
 - `main_exercise_trimmed`: El tiempo de «Cuerpo completo B» es muy justo: hemos tenido que recortar series o descansos de los ejercicios principales.
-- `slot_dropped`: Para ajustar «Cuerpo completo C» a 30 minutos hemos quitado el finisher de cardio, «sprints de piernas tumbado», «elevación de talones de pie con peso corporal», «flexión diamante» y «puente de glúteo bajo en el suelo».
+- `slot_dropped`: Para ajustar «Cuerpo completo C» a 30 minutos hemos quitado el finisher de cardio, «elevación de piernas y cadera tumbado», «elevación de talones de pie con peso corporal», «flexión diamante» y «puente de glúteo bajo en el suelo».
 - `volume_out_of_range`: Volumen semanal de pecho: 6 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de hombros: 0 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de brazos: 3,9 series efectivas, por debajo del objetivo de 6. Más días o más tiempo por sesión permitirían acercarse.

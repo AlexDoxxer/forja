@@ -17,7 +17,7 @@ _Trabajo de pecho, espalda, hombros y brazos_
 | Calentamiento | press de banca inclinado con barra (0047) | 3 | 2-8 | — | 30 s | — |
 | Trabajo | press de banca inclinado con barra (0047) | 5 | 3-5 | 3 | 240 s | 2-1-X-0 |
 | Trabajo | remo Pendlay con barra (3017) | 5 | 3-5 | 3 | 240 s | 2-1-X-0 |
-| Trabajo | press militar a dos manos con kettlebell (0553) | 2 | 6-10 | 2 | 90 s | 2-0-1-0 |
+| Trabajo | press militar en máquina (0587) | 2 | 6-10 | 2 | 90 s | 2-0-1-0 |
 | Vuelta a la calma | estiramiento de pectoral mayor sentado asistido con fitball (1716) | 1 | 35 s | — | 0 s | — |
 | Vuelta a la calma | estiramiento de dorsal a una mano contra la pared (1355) | 1 | 35 s por lado | — | 0 s | — |
 
@@ -32,7 +32,7 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 | Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla frontal con barra (0042) | 3 | 2-8 | — | 30 s | — |
 | Trabajo | sentadilla frontal con barra (0042) | 4 | 4-7 | 3 | 240 s | 2-1-X-0 |
-| Trabajo | peso muerto rumano con barra (0085) | 3 | 6-10 | 2 | 90 s | 2-0-1-0 |
+| Trabajo | peso muerto sumo con barra (0117) | 3 | 6-10 | 2 | 90 s | 2-0-1-0 |
 | Trabajo | sentadilla búlgara con mancuernas (0410) | 3 | 6-10 por lado | 2 | 90 s | 2-0-1-0 |
 | Trabajo | extensión de cuádriceps en máquina (0585) | 3 | 6-11 | 2 | 90 s | 2-0-1-0 |
 | Trabajo | elevación de talones de pie con peso corporal (1373) | 3 | 6-11 | 2 | 90 s | 2-0-1-0 |
@@ -49,12 +49,12 @@ _Trabajo de glúteos, isquiotibiales, cuádriceps y core_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | puente de glúteo con barra y dos piernas en banco (3562) | 3 | 2-8 | — | 30 s | — |
-| Trabajo | buenos días con barra (0044) | 4 | 3-6 | 3 | 240 s | 2-1-X-0 |
+| Calentamiento | hip thrust con barra (espalda apoyada en banco) (3562) | 3 | 2-8 | — | 30 s | — |
+| Trabajo | peso muerto con barra (0032) | 4 | 3-5 | 3 | 240 s | 2-1-X-0 |
 | Trabajo | zancada atrás con mancuernas (0381) | 2 | 6-10 por lado | 2 | 90 s | 2-0-1-0 |
-| Trabajo | puente de glúteo con barra y dos piernas en banco (3562) | 4 | 3-7 | 3 | 240 s | 2-1-X-0 |
+| Trabajo | hip thrust con barra (espalda apoyada en banco) (3562) | 4 | 3-7 | 3 | 240 s | 2-1-X-0 |
 | Trabajo | abducción de cadera sentado en máquina (0597) | 2 | 6-11 | 2 | 90 s | 2-0-1-0 |
-| Trabajo | elevación glúteo-femoral (3193) | 2 | 6-11 | 2 | 90 s | 2-0-1-0 |
+| Trabajo | curl femoral inverso asistido por uno mismo (1766) | 2 | 6-11 | 2 | 90 s | 2-0-1-0 |
 | Vuelta a la calma | estiramiento de glúteo y piramidal tumbado asistido (1710) | 1 | 35 s | — | 0 s | — |
 | Vuelta a la calma | estiramiento de isquiotibiales y gemelos de pie con correa (1599) | 1 | 35 s | — | 0 s | — |
 
@@ -67,11 +67,11 @@ _Trabajo de isquiotibiales, glúteos, cuádriceps y gemelos_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de estrella (3223) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | peso muerto con barra hexagonal (0811) | 3 | 2-8 | — | 30 s | — |
-| Trabajo | peso muerto con barra hexagonal (0811) | 4 | 4-7 | 3 | 240 s | 2-1-X-0 |
-| Trabajo | sentadilla profunda con barra (0043) | 3 | 6-10 | 2 | 90 s | 2-0-1-0 |
+| Calentamiento | peso muerto rumano con barra (0085) | 3 | 2-8 | — | 30 s | — |
+| Trabajo | peso muerto rumano con barra (0085) | 4 | 4-7 | 3 | 240 s | 2-1-X-0 |
+| Trabajo | sentadilla trasera con barra (0043) | 3 | 6-10 | 2 | 90 s | 2-0-1-0 |
 | Trabajo | hip thrust de rodillas con banda de resistencia (3236) | 3 | 6-11 | 2 | 90 s | 2-0-1-0 |
-| Trabajo | curl femoral inverso con apoyo en banco (0496) | 3 | 6-11 | 2 | 90 s | 2-0-1-0 |
+| Trabajo | curl femoral tumbado en máquina (0586) | 3 | 6-11 | 2 | 90 s | 2-0-1-0 |
 | Trabajo | elevación de talones sentado con barra (0088) | 3 | 6-11 | 2 | 90 s | 2-0-1-0 |
 | Trabajo | elevación de piernas con giro (2801) | 1 | 10-21 | 2 | 45 s | — |
 | Vuelta a la calma | secuencia de postura de ángulo abierto sentado (1587) | 1 | 35 s | — | 0 s | — |

@@ -16,7 +16,7 @@ _Trabajo de pecho, hombros y brazos_
 | Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | press de pecho sentado en polea (2144) | 2 | 8-12 | — | 30 s | — |
 | Trabajo | press de banca con mancuernas (0289) | 3 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | press militar a dos manos con kettlebell (0553) | 3 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | press militar en máquina (0587) | 3 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | flexión de rodillas (3211) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | aperturas de pie en polea (0227) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | elevación lateral con mancuernas (0334) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
@@ -53,10 +53,10 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 2 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla goblet con kettlebell (0534) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | peso muerto sumo con barra (0117) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | sentadilla goblet con mancuerna (1760) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | peso muerto rumano con barra (0085) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | zancada adelante (3470) | 3 | 10-15 por lado | 2 | 75 s | 2-0-1-1 |
-| Trabajo | curl femoral inverso con apoyo en banco (0496) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
+| Trabajo | curl femoral tumbado en máquina (0586) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | elevación de talones de pie con barra (apoyo en suelo) (1372) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | medio abdominal completo (3202) | 4 | 10-20 | 2 | 45 s | — |
 | Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 2 | 45 s | — | 0 s | — |
@@ -111,9 +111,9 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 | Calentamiento | bicicleta elíptica en máquina (2331) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 2 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla frontal con barra (0042) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | peso muerto con barra hexagonal (0811) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | peso muerto rumano con mancuernas (1459) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | sentadilla búlgara con mancuernas (0410) | 3 | 10-15 por lado | 2 | 75 s | 2-0-1-1 |
-| Trabajo | curl femoral tumbado en máquina (0586) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
+| Trabajo | curl femoral sentado en máquina (0599) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | elevación de talones sentado con barra (0088) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | abdominal completo con brazos por encima de la cabeza (3204) | 4 | 10-20 | 2 | 45 s | — |
 | Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 2 | 45 s | — | 0 s | — |

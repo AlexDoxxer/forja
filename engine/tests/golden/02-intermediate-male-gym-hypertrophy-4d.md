@@ -17,7 +17,7 @@ _Trabajo de pecho, espalda, hombros y brazos_
 | Calentamiento | press de pecho sentado en polea (2144) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | press de banca con mancuernas (0289) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | remo inclinado con mancuernas (0293) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | press militar a dos manos con kettlebell (0553) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
+| Trabajo | press militar en máquina (0587) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | aperturas de pie en polea (0227) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Superserie x3 | curl de bíceps con mancuernas (0294) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Superserie x3 | press francés tumbado con barra (extensión de tríceps) (0060) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
@@ -34,8 +34,8 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 |---|---|---|---|---|---|---|
 | Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | prensa de piernas a 45° (0739) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla con mancuernas (0413) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | peso muerto rumano con barra (0085) | 2 | 10-15 | 2 | 75 s | 2-0-1-1 |
+| Trabajo | sentadilla trasera con barra (0043) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | peso muerto sumo con barra (0117) | 2 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | zancada adelante (3470) | 2 | 10-15 por lado | 2 | 75 s | 2-0-1-1 |
 | Trabajo | extensión de cuádriceps en máquina (0585) | 2 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | elevación de talones de pie con peso corporal (1373) | 2 | 10-15 | 2 | 75 s | 2-0-1-1 |
@@ -64,7 +64,7 @@ _Trabajo de espalda, hombros y pecho_
 
 Series efectivas: chest 3, back 7, shoulders 10, arms 4,2
 
-### Día 4 · Pierna B (cadena posterior) (~61 min)
+### Día 4 · Pierna B (cadena posterior) (~63 min)
 
 _Trabajo de isquiotibiales, glúteos, cuádriceps y gemelos_
 
@@ -72,10 +72,10 @@ _Trabajo de isquiotibiales, glúteos, cuádriceps y gemelos_
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de estrella (3223) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | pull through con banda elástica (0991) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | peso muerto rumano con mancuernas (1459) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | peso muerto a una pierna con mancuernas (1757) | 4 | 6-10 por lado | 2 | 150 s | 3-0-1-0 |
 | Trabajo | sentadilla frontal con barra (0042) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
-| Trabajo | puente de glúteo con barra y dos piernas en banco (3562) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
-| Trabajo | curl femoral tumbado en máquina (0586) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
+| Trabajo | hip thrust con barra (espalda apoyada en banco) (3562) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
+| Trabajo | curl femoral sentado en máquina (0599) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | elevación de talones sentado con barra (0088) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | crunch con giro de rodillas con banda elástica (0985) | 4 | 10-20 | 2 | 45 s | — |
 | Vuelta a la calma | secuencia de postura de ángulo abierto sentado (1587) | 1 | 35 s | — | 0 s | — |

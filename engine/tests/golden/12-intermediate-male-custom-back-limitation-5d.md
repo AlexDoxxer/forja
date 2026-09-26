@@ -35,10 +35,10 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | sentadilla profunda en cuclillas (3119) | 1 | 8-12 | — | 30 s | — |
+| Calentamiento | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla con mancuernas (0413) | 3 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | zancada adelante (3470) | 3 | 10-15 por lado | 2 | 75 s | 2-0-1-1 |
-| Trabajo | curl femoral tumbado en máquina (0586) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
+| Trabajo | curl femoral sentado en máquina (0599) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | extensión de cuádriceps en máquina (0585) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | elevación de talones de pie con mancuernas (0417) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | plancha de rodillas con toque de hombro (3239) | 4 | 10-20 | 2 | 45 s | — |
@@ -96,11 +96,11 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | caminata en cinta inclinada (3666) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | sentadilla profunda en cuclillas (3119) | 1 | 8-12 | — | 30 s | — |
+| Calentamiento | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla goblet con mancuerna (1760) | 3 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | sentadilla búlgara con mancuernas (0410) | 2 | 10-15 por lado | 2 | 75 s | 2-0-1-1 |
-| Trabajo | curl femoral sentado en máquina (0599) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | elevación glúteo-femoral (3193) | 2 | 10-15 | 2 | 75 s | 2-0-1-1 |
+| Trabajo | curl femoral tumbado en máquina (0586) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | curl femoral inverso asistido por uno mismo (1766) | 2 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | elevación de talones de pie en máquina (0605) | 2 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | abdominal completo con brazos por encima de la cabeza (3204) | 3 | 10-20 | 2 | 45 s | — |
 | Vuelta a la calma | estiramiento con pierna extendida en silla (1548) | 1 | 35 s | — | 0 s | — |
@@ -135,10 +135,10 @@ Series efectivas: quads 5, hamstrings 6, glutes 2,5, calves 2, core 3
 ## Avisos
 
 - `session_group_cap`: Hemos recortado series en «Torso A» para no superar 10 series efectivas de un mismo grupo en una sesión.
-- `avoided_muscle_substituted`: En «Pierna A (cuádriceps)» hemos sustituido el hueco de bisagra de cadera por «curl femoral tumbado en máquina» para respetar los músculos y movimientos que quieres evitar.
+- `avoided_muscle_substituted`: En «Pierna A (cuádriceps)» hemos sustituido el hueco de bisagra de cadera por «curl femoral sentado en máquina» para respetar los músculos y movimientos que quieres evitar.
 - `session_group_cap`: Hemos recortado series en «Empuje» para no superar 10 series efectivas de un mismo grupo en una sesión.
 - `session_group_cap`: Hemos recortado series en «Tirón» para no superar 10 series efectivas de un mismo grupo en una sesión.
-- `avoided_muscle_substituted`: En «Pierna» hemos sustituido el hueco de bisagra de cadera por «curl femoral sentado en máquina» para respetar los músculos y movimientos que quieres evitar.
+- `avoided_muscle_substituted`: En «Pierna» hemos sustituido el hueco de bisagra de cadera por «curl femoral tumbado en máquina» para respetar los músculos y movimientos que quieres evitar.
 - `volume_out_of_range`: Volumen semanal de hombros: 11 series efectivas, por debajo del objetivo de 14,3. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de brazos: 22,8 series efectivas, por encima del objetivo de 16,5. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.
 - `volume_out_of_range`: Volumen semanal de cuádriceps: 14 series efectivas, por encima del objetivo de 11,7. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.

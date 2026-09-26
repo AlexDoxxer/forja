@@ -34,7 +34,7 @@ _Trabajo de isquiotibiales, hombros, espalda y cuádriceps_
 | Calentamiento | pull through con banda elástica (0991) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | swing con kettlebell (0549) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
 | Trabajo | press de hombro sentado con mancuernas (0405) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
-| Trabajo | dominada con agarre ancho (1429) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
+| Trabajo | jalón con banda elástica y agarre supino (1013) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
 | Vuelta a la calma | secuencia de postura de ángulo abierto sentado (1587) | 1 | 30 s | — | 0 s | — |
 | Vuelta a la calma | estiramiento de deltoides posterior (0669) | 1 | 30 s | — | 0 s | — |
 
@@ -50,9 +50,9 @@ _Trabajo de cuádriceps, espalda, pecho y glúteos_
 | Calentamiento | sentadilla con banda elástica (1004) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla goblet con mancuerna (1760) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
 | Trabajo | dominada asistida con banda elástica (0970) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
-| Trabajo | flexión inclinada (0493) | 2 | 10-15 | 3 | 65 s | 2-0-1-1 |
-| Trabajo | hip thrust de rodillas con banda de resistencia (3236) | 2 | 10-16 | 3 | 65 s | 2-0-1-1 |
+| Trabajo | flexión (0662) | 2 | 10-15 | 3 | 65 s | 2-0-1-1 |
 | Trabajo | fondos de tríceps (0814) | 2 | 10-12 | 3 | 65 s | 2-0-1-1 |
+| Trabajo | hip thrust de rodillas con banda de resistencia (3236) | 2 | 10-16 | 3 | 65 s | 2-0-1-1 |
 | Vuelta a la calma | estiramiento de cuádriceps a cuatro apoyos (1512) | 1 | 30 s | — | 0 s | — |
 | Vuelta a la calma | estiramiento de dorsal a una mano contra la pared (1355) | 1 | 30 s por lado | — | 0 s | — |
 
@@ -84,7 +84,7 @@ Series efectivas: chest 2, back 3, arms 3,5, quads 3, glutes 3,5
 
 ## Avisos
 
-- `slot_dropped`: Para ajustar «Cuerpo completo A» a 45 minutos hemos quitado «bicho muerto (dead bug)» y «elevación lateral con mancuernas».
+- `slot_dropped`: Para ajustar «Cuerpo completo A» a 45 minutos hemos quitado «dead bug (bicho muerto)» y «elevación lateral con mancuernas».
 - `slot_dropped`: Para ajustar «Cuerpo completo B» a 45 minutos hemos quitado «elevación de piernas con giro», «curl de bíceps alterno con banda elástica» y «zancada con mancuernas».
 - `slot_dropped`: Para ajustar «Cuerpo completo C» a 45 minutos hemos quitado «elevación de piernas y cadera en banco inclinado con piernas rectas» y «elevación de talones a una pierna con mancuerna».
 - `volume_out_of_range`: Volumen semanal de pecho: 5 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.

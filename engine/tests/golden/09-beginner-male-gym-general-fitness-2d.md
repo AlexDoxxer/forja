@@ -18,7 +18,7 @@ _Trabajo de cuádriceps, pecho, espalda y isquiotibiales_
 | Trabajo | prensa de piernas a 45° (0739) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
 | Trabajo | press de banca en multipower (0748) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
 | Trabajo | remo sentado en polea (0861) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
-| Trabajo | peso muerto sumo con barra (0117) | 2 | 10-15 | 4 | 75 s | 2-0-1-0 |
+| Trabajo | swing con kettlebell (0549) | 2 | 10-15 | 4 | 75 s | 2-0-1-0 |
 | Trabajo | elevación lateral con mancuernas (0334) | 2 | 10-15 | 4 | 75 s | 2-0-1-0 |
 | Trabajo | plancha de rodillas con toque de hombro (3239) | 3 | 10-20 | 3 | 45 s | — |
 | Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 1 | 30 s | — | 0 s | — |
@@ -34,7 +34,7 @@ _Trabajo de isquiotibiales, hombros, espalda y cuádriceps_
 |---|---|---|---|---|---|---|
 | Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | pull through con banda elástica (0991) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | swing con kettlebell (0549) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
+| Trabajo | peso muerto rumano con mancuernas (1459) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
 | Trabajo | press por encima de la cabeza de pie con mancuernas (0426) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
 | Trabajo | jalón al pecho en polea con recorrido completo (2330) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
 | Trabajo | zancada adelante (3470) | 2 | 10-15 por lado | 4 | 75 s | 2-0-1-0 |
