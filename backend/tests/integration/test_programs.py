@@ -28,7 +28,11 @@ async def preview(client: httpx.AsyncClient, **override: Any) -> dict[str, Any]:
 
 
 async def create(
-    client: httpx.AsyncClient, plan: dict[str, Any], *, activate: bool = False, name: str = "Mi rutina"
+    client: httpx.AsyncClient,
+    plan: dict[str, Any],
+    *,
+    activate: bool = False,
+    name: str = "Mi rutina",
 ) -> dict[str, Any]:
     response = await client.post(
         "/programs", json={"source": "generated", "name": name, "plan": plan, "activate": activate}
@@ -42,7 +46,15 @@ async def create(
 def signature(days: list[dict[str, Any]]) -> list[list[tuple[Any, ...]]]:
     return [
         [
-            (b["kind"], ex["exercise_id"], ex["sets"], ex["rep_min"], ex["rep_max"], ex["rest_s"], ex["target_rir"])
+            (
+                b["kind"],
+                ex["exercise_id"],
+                ex["sets"],
+                ex["rep_min"],
+                ex["rep_max"],
+                ex["rest_s"],
+                ex["target_rir"],
+            )
             for b in d["blocks"]
             for ex in b["exercises"]
         ]
@@ -97,7 +109,8 @@ async def test_preview_is_deterministic_and_complete(
 async def test_preview_validation_and_auth(client: httpx.AsyncClient) -> None:
     assert (await client.post("/generator/preview", json=INPUT)).status_code == 401
     await client.post(
-        "/auth/register", json={"email": "a@b.co", "password": "brasa-y-yunque-2026", "display_name": "a"}
+        "/auth/register",
+        json={"email": "a@b.co", "password": "brasa-y-yunque-2026", "display_name": "a"},
     )
     bad = await client.post("/generator/preview", json={**INPUT, "days_per_week": 9})
     assert bad.status_code == 422
@@ -109,7 +122,12 @@ async def test_preview_validation_and_auth(client: httpx.AsyncClient) -> None:
     assert engine_rule.json()["code"] == "validation_error"
     no_exercises = await client.post(
         "/generator/preview",
-        json={**INPUT, "equipment": {"preset": "custom", "items": ["tire"]}, "avoid_muscles": ["chest"], "avoid_patterns": ["mobility", "cardio"]},
+        json={
+            **INPUT,
+            "equipment": {"preset": "custom", "items": ["tire"]},
+            "avoid_muscles": ["chest"],
+            "avoid_patterns": ["mobility", "cardio"],
+        },
     )
     assert no_exercises.status_code in {200, 422}
     extra = await client.post("/generator/preview", json={**INPUT, "nope": 1})
@@ -131,14 +149,26 @@ async def test_preview_regenerate_day_and_swap(
     first = plan["weeks"][0]["days"][0]["blocks"][1]["exercises"][0]["exercise_id"]
     swapped = await client.post(
         "/generator/preview/swap",
-        json={"plan": plan, "address": address, "exclude_ids": [], "replacement_id": None, "apply_to_all_weeks": True},
+        json={
+            "plan": plan,
+            "address": address,
+            "exclude_ids": [],
+            "replacement_id": None,
+            "apply_to_all_weeks": True,
+        },
     )
     assert swapped.status_code == 200, swapped.text
     now = swapped.json()["plan"]["weeks"][2]["days"][0]["blocks"][1]["exercises"][0]["exercise_id"]
     assert now != first
     bad = await client.post(
         "/generator/preview/swap",
-        json={"plan": plan, "address": address, "exclude_ids": [], "replacement_id": "9999", "apply_to_all_weeks": False},
+        json={
+            "plan": plan,
+            "address": address,
+            "exclude_ids": [],
+            "replacement_id": "9999",
+            "apply_to_all_weeks": False,
+        },
     )
     assert bad.status_code == 422
     out_of_range = await client.post(
@@ -198,7 +228,10 @@ async def test_only_one_active_program_and_lifecycle(
     archived = await client.patch(f"/programs/{a['id']}", json={"archived": True})
     assert archived.json()["archived_at"]
     assert [p["name"] for p in (await client.get("/programs")).json()["items"]] == ["B"]
-    assert [p["name"] for p in (await client.get("/programs", params={"archived": "true"})).json()["items"]] == ["A2"]
+    assert [
+        p["name"]
+        for p in (await client.get("/programs", params={"archived": "true"})).json()["items"]
+    ] == ["A2"]
     assert (await client.post(f"/programs/{a['id']}/activate")).status_code == 409
     restored = await client.patch(f"/programs/{a['id']}", json={"archived": False})
     assert restored.json()["archived_at"] is None
@@ -249,7 +282,11 @@ async def test_regenerate_day_keeps_other_days_and_ids(
     assert signature(after_days)[1] != signature(before_days)[1]
     assert after_days[1]["id"] == before_days[1]["id"]
     assert after_days[0]["blocks"][0]["id"] == before_days[0]["blocks"][0]["id"]
-    assert (await client.post(f"/programs/{program['id']}/regenerate-day", json={"day_index": 6, "seed": None})).status_code == 422
+    assert (
+        await client.post(
+            f"/programs/{program['id']}/regenerate-day", json={"day_index": 6, "seed": None}
+        )
+    ).status_code == 422
 
 
 async def test_swap_exercise_in_saved_program(
@@ -259,20 +296,35 @@ async def test_swap_exercise_in_saved_program(
     target = program["weeks"][0]["days"][0]["blocks"][1]["exercises"][0]
     swapped = await client.post(
         f"/programs/{program['id']}/swap",
-        json={"program_exercise_id": target["id"], "exclude_ids": [], "replacement_id": None, "apply_to_all_weeks": True},
+        json={
+            "program_exercise_id": target["id"],
+            "exclude_ids": [],
+            "replacement_id": None,
+            "apply_to_all_weeks": True,
+        },
     )
     assert swapped.status_code == 200, swapped.text
     for week in swapped.json()["weeks"]:
         assert week["days"][0]["blocks"][1]["exercises"][0]["exercise_id"] != target["exercise_id"]
     missing = await client.post(
         f"/programs/{program['id']}/swap",
-        json={"program_exercise_id": "00000000-0000-0000-0000-000000000000", "exclude_ids": [], "replacement_id": None, "apply_to_all_weeks": False},
+        json={
+            "program_exercise_id": "00000000-0000-0000-0000-000000000000",
+            "exclude_ids": [],
+            "replacement_id": None,
+            "apply_to_all_weeks": False,
+        },
     )
     assert missing.status_code == 404
     fresh = swapped.json()["weeks"][0]["days"][0]["blocks"][1]["exercises"][0]
     invalid = await client.post(
         f"/programs/{program['id']}/swap",
-        json={"program_exercise_id": fresh["id"], "exclude_ids": [], "replacement_id": "9999", "apply_to_all_weeks": False},
+        json={
+            "program_exercise_id": fresh["id"],
+            "exclude_ids": [],
+            "replacement_id": "9999",
+            "apply_to_all_weeks": False,
+        },
     )
     assert invalid.status_code == 422
 
@@ -303,7 +355,9 @@ async def test_replace_day_recomputes_and_validates(
     assert bad.status_code == 422
     assert bad.json()["code"] == "plan_invalid"
     assert bad.json()["violations"]
-    edit["blocks"][1]["exercises"][0]["exercise_id"] = day["blocks"][1]["exercises"][0]["exercise_id"]
+    edit["blocks"][1]["exercises"][0]["exercise_id"] = day["blocks"][1]["exercises"][0][
+        "exercise_id"
+    ]
     edit["blocks"][1]["exercises"][0]["rest_s"] = 0
     low_rest = await client.put(f"/programs/{program['id']}/days/{day['id']}", json=edit)
     assert low_rest.status_code == 422
@@ -335,7 +389,7 @@ async def test_manual_program_roundtrip(client: httpx.AsyncClient, user: dict[st
         "notes_es": None,
         "alternatives": [],
     }
-    body = {
+    body: dict[str, Any] = {
         "source": "manual",
         "name": "A mano",
         "goal": None,
@@ -347,7 +401,14 @@ async def test_manual_program_roundtrip(client: httpx.AsyncClient, user: dict[st
                 "focus": None,
                 "weekday": "mon",
                 "apply_to_all_weeks": False,
-                "blocks": [{"kind": "main", "rounds": 1, "rest_between_rounds_s": None, "exercises": [prescription]}],
+                "blocks": [
+                    {
+                        "kind": "main",
+                        "rounds": 1,
+                        "rest_between_rounds_s": None,
+                        "exercises": [prescription],
+                    }
+                ],
             }
         ],
     }
@@ -359,7 +420,9 @@ async def test_manual_program_roundtrip(client: httpx.AsyncClient, user: dict[st
     assert program["is_active"] is True
     assert len(program["weeks"]) == 2
     assert program["weeks"][0]["days"][0]["estimated_minutes"] >= 1
-    regen = await client.post(f"/programs/{program['id']}/regenerate-day", json={"day_index": 0, "seed": None})
+    regen = await client.post(
+        f"/programs/{program['id']}/regenerate-day", json={"day_index": 0, "seed": None}
+    )
     assert regen.status_code == 409
     assert regen.json()["code"] == "program_not_generated"
     day = program["weeks"][0]["days"][0]
@@ -371,7 +434,15 @@ async def test_manual_program_roundtrip(client: httpx.AsyncClient, user: dict[st
     assert ok.json()["weeks"][1]["days"][0]["blocks"][0]["exercises"][0]["sets"] == 4
     invalid = dict(body)
     invalid["days"] = [
-        {**body["days"][0], "blocks": [{**body["days"][0]["blocks"][0], "exercises": [{**prescription, "exercise_id": "9999"}]}]}
+        {
+            **body["days"][0],
+            "blocks": [
+                {
+                    **body["days"][0]["blocks"][0],
+                    "exercises": [{**prescription, "exercise_id": "9999"}],
+                }
+            ],
+        }
     ]
     assert (await client.post("/programs", json=invalid)).status_code == 422
 
@@ -391,9 +462,13 @@ async def test_pdf_has_attribution_on_every_page_and_ics_is_valid(
         assert "© Gym visual — https://gymvisual.com/" in page.extract_text()
     english = await client.get(f"/programs/{program['id']}/export.pdf", params={"lang": "en"})
     assert "Week" in PdfReader(io.BytesIO(english.content)).pages[0].extract_text() or True
-    assert (await client.get(f"/programs/{program['id']}/export.pdf", params={"lang": "xx"})).status_code == 422
+    assert (
+        await client.get(f"/programs/{program['id']}/export.pdf", params={"lang": "xx"})
+    ).status_code == 422
 
-    ics = await client.get(f"/programs/{program['id']}/calendar.ics", params={"start_date": "2026-10-05"})
+    ics = await client.get(
+        f"/programs/{program['id']}/calendar.ics", params={"start_date": "2026-10-05"}
+    )
     assert ics.status_code == 200
     assert ics.headers["content-type"].startswith("text/calendar")
     text = ics.text
@@ -406,7 +481,11 @@ async def test_pdf_has_attribution_on_every_page_and_ics_is_valid(
     assert len(set(uids)) == 20
     default = await client.get(f"/programs/{program['id']}/calendar.ics")
     assert default.status_code == 200
-    assert (await client.get(f"/programs/{program['id']}/calendar.ics", params={"start_date": "2026-10-06"})).status_code == 422
+    assert (
+        await client.get(
+            f"/programs/{program['id']}/calendar.ics", params={"start_date": "2026-10-06"}
+        )
+    ).status_code == 422
 
 
 async def test_programs_are_private(
@@ -423,7 +502,16 @@ async def test_programs_are_private(
         ("POST", f"/programs/{pid}/activate", None),
         ("POST", f"/programs/{pid}/duplicate", {}),
         ("POST", f"/programs/{pid}/regenerate-day", {"day_index": 0, "seed": None}),
-        ("POST", f"/programs/{pid}/swap", {"program_exercise_id": block_ex["id"], "exclude_ids": [], "replacement_id": None, "apply_to_all_weeks": False}),
+        (
+            "POST",
+            f"/programs/{pid}/swap",
+            {
+                "program_exercise_id": block_ex["id"],
+                "exclude_ids": [],
+                "replacement_id": None,
+                "apply_to_all_weeks": False,
+            },
+        ),
         ("PUT", f"/programs/{pid}/days/{day['id']}", day_edit(day)),
         ("GET", f"/programs/{pid}/export.pdf", None),
         ("GET", f"/programs/{pid}/calendar.ics", None),

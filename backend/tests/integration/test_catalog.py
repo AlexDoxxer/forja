@@ -41,7 +41,12 @@ async def instructions(engine: AsyncEngine) -> None:
 
 
 async def test_requires_authentication(client: httpx.AsyncClient) -> None:
-    for path in ("/exercises", "/exercises/0043", "/exercises/0043/alternatives", "/catalog/facets"):
+    for path in (
+        "/exercises",
+        "/exercises/0043",
+        "/exercises/0043/alternatives",
+        "/catalog/facets",
+    ):
         assert (await client.get(path)).status_code == 401
 
 
@@ -61,7 +66,9 @@ async def test_pagination_covers_the_whole_catalog_without_repeats(
     assert names == sorted(names)
 
 
-async def test_filters_or_within_and_across(client: httpx.AsyncClient, user: dict[str, Any]) -> None:
+async def test_filters_or_within_and_across(
+    client: httpx.AsyncClient, user: dict[str, Any]
+) -> None:
     barbell = await _ids(client, equipment="barbell")
     band = await _ids(client, equipment="band")
     both = await _ids(client, equipment=["barbell", "band"])
@@ -69,7 +76,9 @@ async def test_filters_or_within_and_across(client: httpx.AsyncClient, user: dic
     squat = await _ids(client, equipment="barbell", pattern="squat")
     assert 0 < len(squat) < len(barbell)
     assert set(squat) <= set(barbell)
-    body_part = await _ids(client, body_part="chest", mechanic="compound", difficulty=[1, 2], role="main")
+    body_part = await _ids(
+        client, body_part="chest", mechanic="compound", difficulty=[1, 2], role="main"
+    )
     assert body_part
     page = (await client.get("/exercises", params={"target": "glutes", "limit": 100})).json()
     assert all(i["target_muscle"] == "glutes" for i in page["items"])
@@ -108,7 +117,11 @@ async def test_search_pagination_is_stable(client: httpx.AsyncClient, user: dict
     ids: list[str] = []
     cursor = None
     while True:
-        query = {"q": "press", "limit": 10, **({"cursor": cursor} if cursor else {})}
+        query: dict[str, Any] = {
+            "q": "press",
+            "limit": 10,
+            **({"cursor": cursor} if cursor else {}),
+        }
         body = (await client.get("/exercises", params=query)).json()
         ids += [i["id"] for i in body["items"]]
         cursor = body["next_cursor"]

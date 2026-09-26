@@ -25,7 +25,17 @@ from app.services import catalog as catalog_service
 from app.services import programs as programs_service
 from app.services import training
 
-VOLUME_GROUPS = ("chest", "back", "shoulders", "arms", "quads", "hamstrings", "glutes", "calves", "core")
+VOLUME_GROUPS = (
+    "chest",
+    "back",
+    "shoulders",
+    "arms",
+    "quads",
+    "hamstrings",
+    "glutes",
+    "calves",
+    "core",
+)
 EFFECTIVE_RIR = 4
 SECONDARY_CREDIT = 0.5
 HISTORY_SESSIONS = 3
@@ -57,7 +67,9 @@ async def overview(db: AsyncSession, user: User) -> api.StatsOverview:
         await db.execute(
             select(
                 func.count(),
-                func.coalesce(func.sum(func.coalesce(SetLog.weight_kg, 0) * func.coalesce(SetLog.reps, 0)), 0),
+                func.coalesce(
+                    func.sum(func.coalesce(SetLog.weight_kg, 0) * func.coalesce(SetLog.reps, 0)), 0
+                ),
             )
             .join(WorkoutSession, WorkoutSession.id == SetLog.session_id)
             .where(
@@ -70,7 +82,9 @@ async def overview(db: AsyncSession, user: User) -> api.StatsOverview:
     ).one()
     active = (
         await db.execute(
-            select(Program.days_per_week).where(Program.user_id == user.id, Program.is_active.is_(True))
+            select(Program.days_per_week).where(
+                Program.user_id == user.id, Program.is_active.is_(True)
+            )
         )
     ).scalar_one_or_none()
     planned = int(active or 0)
@@ -107,7 +121,10 @@ async def overview(db: AsyncSession, user: User) -> api.StatsOverview:
     ).first()
     latest = (
         await db.execute(
-            select(BodyMetric).where(BodyMetric.user_id == user.id).order_by(BodyMetric.date.desc()).limit(1)
+            select(BodyMetric)
+            .where(BodyMetric.user_id == user.id)
+            .order_by(BodyMetric.date.desc())
+            .limit(1)
         )
     ).scalar_one_or_none()
     average = None
@@ -126,7 +143,9 @@ async def overview(db: AsyncSession, user: User) -> api.StatsOverview:
         select(
             day_col,
             func.count(func.distinct(WorkoutSession.id)),
-            func.coalesce(func.sum(func.coalesce(SetLog.weight_kg, 0) * func.coalesce(SetLog.reps, 0)), 0),
+            func.coalesce(
+                func.sum(func.coalesce(SetLog.weight_kg, 0) * func.coalesce(SetLog.reps, 0)), 0
+            ),
         )
         .join(SetLog, SetLog.session_id == WorkoutSession.id, isouter=True)
         .where(
@@ -150,13 +169,14 @@ async def overview(db: AsyncSession, user: User) -> api.StatsOverview:
             moving_average_7d_kg=round(float(average), 2) if average is not None else None,
         ),
         activity=[
-            api.ActivityDay(date=d, session_count=c, volume_kg=float(v)) for d, c, v in activity_rows
+            api.ActivityDay(date=d, session_count=c, volume_kg=float(v))
+            for d, c, v in activity_rows
         ],
     )
 
 
 def _metric(row: BodyMetric) -> api.BodyMetric:
-    from app.services.profile import metric_dto  # noqa: PLC0415
+    from app.services.profile import metric_dto
 
     return metric_dto(row)
 
@@ -167,9 +187,13 @@ async def volume(
 ) -> api.VolumeStats:
     this_week = monday_of(datetime.now(UTC).date())
     first = this_week - timedelta(weeks=weeks - 1)
-    groups = {code: group for code, group in await db.execute(select(Muscle.code, Muscle.volume_group))}
+    groups = {
+        code: group for code, group in await db.execute(select(Muscle.code, Muscle.volume_group))
+    }
     rows = await db.execute(
-        select(SetLog.exercise_id, SetLog.rir, SetLog.weight_kg, SetLog.reps, WorkoutSession.started_at)
+        select(
+            SetLog.exercise_id, SetLog.rir, SetLog.weight_kg, SetLog.reps, WorkoutSession.started_at
+        )
         .join(WorkoutSession, WorkoutSession.id == SetLog.session_id)
         .where(
             WorkoutSession.user_id == user.id,
@@ -254,7 +278,9 @@ async def exercise_stats(
                 point["weight"], point["reps"] = weight, row.reps
             if (weight, row.reps) > best_key:
                 best_key = (weight, row.reps)
-                best_set = api.BestSet(weight_kg=weight, reps=row.reps, rir=row.rir, date=started.date())
+                best_set = api.BestSet(
+                    weight_kg=weight, reps=row.reps, rir=row.rir, date=started.date()
+                )
     points = [
         api.ExerciseStatPoint(
             date=p["date"],
@@ -282,16 +308,33 @@ def _weekday_offset(weekday: str | None, position: int, count: int) -> int:
     return round(position * 7 / max(count, 1))
 
 
+def _bare(status: str, program: Program | None) -> api.NextSession:
+    return api.NextSession(
+        status=cast("Any", status),
+        program_id=program.id if program else None,
+        program_name=program.name if program else None,
+        week_index=None,
+        day=None,
+        scheduled_date=None,
+        suggestions=[],
+        exercises=[],
+    )
+
+
 async def next_session(
-    db: AsyncSession, user: User, cards: dict[str, em.ExerciseCard], all_cards: Sequence[em.ExerciseCard], tables: Tables
+    db: AsyncSession,
+    user: User,
+    cards: dict[str, em.ExerciseCard],
+    all_cards: Sequence[em.ExerciseCard],
+    tables: Tables,
 ) -> api.NextSession:
-    empty = {"program_id": None, "program_name": None, "week_index": None, "day": None,
-             "scheduled_date": None, "suggestions": [], "exercises": []}
     program = (
-        await db.execute(select(Program).where(Program.user_id == user.id, Program.is_active.is_(True)))
+        await db.execute(
+            select(Program).where(Program.user_id == user.id, Program.is_active.is_(True))
+        )
     ).scalar_one_or_none()
     if program is None:
-        return api.NextSession(status="no_active_program", **empty)
+        return _bare("no_active_program", None)
     tree = await programs_service.load_tree(db, program)
     done = {
         d
@@ -306,9 +349,8 @@ async def next_session(
     }
     ordered = [(w, d) for w in tree.weeks for d in tree.days.get(w.id, [])]
     nxt = next(((w, d) for w, d in ordered if d.id not in done), None)
-    base = {"program_id": program.id, "program_name": program.name}
     if nxt is None:
-        return api.NextSession(status="program_completed", **{**empty, **base})
+        return _bare("program_completed", program)
     week, day = nxt
     today = datetime.now(UTC).date()
     trained_today = (
@@ -326,9 +368,15 @@ async def next_session(
     delta = (target - today.weekday()) % 7
     if trained_today and delta == 0:
         delta = 7
-    scheduled = today + timedelta(days=delta) if day.weekday else today + timedelta(days=1 if trained_today else 0)
+    scheduled = (
+        today + timedelta(days=delta)
+        if day.weekday
+        else today + timedelta(days=1 if trained_today else 0)
+    )
     day_dto = programs_service.day_dto(tree, day)
-    exercise_rows = [(b, ex) for b in tree.blocks.get(day.id, []) for ex in tree.exercises.get(b.id, [])]
+    exercise_rows = [
+        (b, ex) for b in tree.blocks.get(day.id, []) for ex in tree.exercises.get(b.id, [])
+    ]
     history = await _history(db, user, {ex.exercise_id for _, ex in exercise_rows})
     suggestions: list[api.LoadSuggestion] = []
     extra: list[str] = []
@@ -339,28 +387,27 @@ async def next_session(
         if card is None:
             continue
         prescription = em.ExercisePrescription.model_validate(
-            programs_service._exercise_dto(ex).model_dump(mode="json", exclude={"id", "order"})  # noqa: SLF001
+            programs_service._exercise_dto(ex).model_dump(mode="json", exclude={"id", "order"})
         )
         entries = history.get(ex.exercise_id, [])
         suggestion = progression.suggest(
-            prescription, card, [e for e, _, _ in entries], all_cards, tables
+            prescription, card, [e for e, _ in entries], all_cards, tables
         )
         last = entries[-1] if entries else None
         suggestions.append(
             api.LoadSuggestion(
                 program_exercise_id=ex.id,
                 exercise_id=ex.exercise_id,
-                **{
-                    k: v
-                    for k, v in suggestion.model_dump(mode="json").items()
-                },
+                **{k: v for k, v in suggestion.model_dump(mode="json").items()},
                 last_performance=None
                 if last is None
                 else api.LastPerformance(
                     session_id=last[1],
                     date=last[0].session_date,
                     sets=[
-                        api.SetPerformance(weight_kg=s.weight_kg, reps=s.reps, rir=s.rir, duration_s=s.duration_s)
+                        api.SetPerformance(
+                            weight_kg=s.weight_kg, reps=s.reps, rir=s.rir, duration_s=s.duration_s
+                        )
                         for s in last[0].sets
                     ],
                 ),
@@ -368,7 +415,11 @@ async def next_session(
         )
         if suggestion.suggested_exercise_id:
             extra.append(suggestion.suggested_exercise_id)
-    ids = [ex.exercise_id for _, ex in exercise_rows] + [a for _, ex in exercise_rows for a in ex.alternatives] + extra
+    ids = (
+        [ex.exercise_id for _, ex in exercise_rows]
+        + [a for _, ex in exercise_rows for a in ex.alternatives]
+        + extra
+    )
     return api.NextSession(
         status="rest_day" if trained_today else "scheduled",
         program_id=program.id,

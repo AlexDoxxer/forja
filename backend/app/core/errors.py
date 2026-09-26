@@ -12,6 +12,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.core.logging import get_logger, request_id_var
 
 PROBLEM_MEDIA_TYPE: Final = "application/problem+json"
+HTTP_NOT_FOUND: Final = 404
 
 TITLES: Final[Mapping[int, str]] = {
     400: "Petición incorrecta",
@@ -86,7 +87,9 @@ def problem_response(error: ProblemError, request: Request | None = None) -> JSO
         body["instance"] = request.url.path
     body.update(error.extra)
     headers = {"Content-Type": PROBLEM_MEDIA_TYPE, **error.headers}
-    return JSONResponse(body, status_code=error.status, headers=headers, media_type=PROBLEM_MEDIA_TYPE)
+    return JSONResponse(
+        body, status_code=error.status, headers=headers, media_type=PROBLEM_MEDIA_TYPE
+    )
 
 
 def validation_issues(errors: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
@@ -123,16 +126,20 @@ def install_handlers(app: FastAPI) -> None:
             422,
             "validation_error",
             "Hay datos no válidos en la petición.",
-            extra={"errors": validation_issues(exc.errors(include_url=False, include_context=False))},
+            extra={
+                "errors": validation_issues(exc.errors(include_url=False, include_context=False))
+            },
         )
         return problem_response(error, request)
 
     @app.exception_handler(StarletteHTTPException)
     async def _http(request: Request, exc: StarletteHTTPException) -> JSONResponse:
         code = {404: "not_found", 405: "method_not_allowed", 413: "payload_too_large"}.get(
-            exc.status_code, "conflict" if exc.status_code == 409 else "http_error"
+            exc.status_code, "http_error"
         )
-        error = ProblemError(exc.status_code, code, None if exc.status_code == 404 else str(exc.detail))
+        error = ProblemError(
+            exc.status_code, code, None if exc.status_code == HTTP_NOT_FOUND else str(exc.detail)
+        )
         return problem_response(error, request)
 
     @app.exception_handler(Exception)

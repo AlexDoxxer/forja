@@ -15,7 +15,9 @@ from app.schemas import api
 router = APIRouter(tags=["health", "meta"])
 
 API_VERSION: Final = "1.1.0"
-HEALTH_DISCLAIMER: Final = "Forja no sustituye el consejo de profesionales sanitarios ni de entrenamiento."
+HEALTH_DISCLAIMER: Final = (
+    "Forja no sustituye el consejo de profesionales sanitarios ni de entrenamiento."
+)
 FALLBACK_MEDIA_NOTICE: Final = (
     "Los GIF y miniaturas de ejercicios son © Gym visual — https://gymvisual.com/ y se sirven "
     "sin modificar. No están cubiertos por la licencia MIT del dataset."
@@ -51,7 +53,7 @@ async def get_readiness(db: Db, settings: AppSettings) -> JSONResponse:
     try:
         await db.execute(text("SELECT 1"))
         database = True
-    except Exception:  # noqa: BLE001 - cualquier fallo de conexión significa «no listo»
+    except Exception:
         database = False
     media = (settings.media_root / "manifest.json").is_file()
     ready = database and media
@@ -92,8 +94,6 @@ async def get_about(db: Db, settings: AppSettings) -> api.AboutInfo:
             dataset_mit=_read(licenses / "LICENSE", "MIT License — hasaneyldrm/exercises-dataset"),
             media_notice=_read(licenses / "NOTICE.md", FALLBACK_MEDIA_NOTICE),
         ),
-        media_attribution=api.MediaAttribution(
-            text="© Gym visual", url="https://gymvisual.com/"
-        ),
+        media_attribution=api.MediaAttribution(text="© Gym visual", url="https://gymvisual.com/"),
         health_disclaimer_es=HEALTH_DISCLAIMER,
     )

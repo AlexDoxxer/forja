@@ -52,7 +52,7 @@ async def test_upgrade_downgrade_upgrade(postgres_url: str) -> None:
     await migrate(url)
     tables, indexes = await _tables(url)
     assert set(Base.metadata.tables) <= tables
-    assert EXPECTED_INDEXES <= indexes
+    assert indexes >= EXPECTED_INDEXES
 
     await migrate(url, "base", down=True)
     tables, _ = await _tables(url)

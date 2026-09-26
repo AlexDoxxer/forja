@@ -16,7 +16,8 @@ from app.api.deps import (
 )
 from app.schemas import api
 from app.security.tokens import clear_session_cookie
-from app.services import account, admin as service
+from app.services import account
+from app.services import admin as service
 
 router = APIRouter(tags=["data", "admin"])
 
@@ -25,10 +26,13 @@ Limit = Annotated[int, Query(ge=1, le=100)]
 
 
 @router.get(
-    "/me/export", operation_id="exportAccountData", response_model=api.UserExport, responses=errors(401)
+    "/me/export",
+    operation_id="exportAccountData",
+    response_model=api.UserExport,
+    responses=errors(401),
 )
-async def export_account_data(user: CurrentUserDep, db: Db, settings: AppSettings) -> api.UserExport:
-    return await account.export_account(db, settings, user)
+async def export_account_data(user: CurrentUserDep, db: Db) -> api.UserExport:
+    return await account.export_account(db, user)
 
 
 @router.post(
@@ -85,7 +89,10 @@ async def update_admin_settings(
 
 
 @router.get(
-    "/admin/users", operation_id="listUsers", response_model=api.AdminUserPage, responses=errors(401, 403)
+    "/admin/users",
+    operation_id="listUsers",
+    response_model=api.AdminUserPage,
+    responses=errors(401, 403),
 )
 async def list_users(
     _admin: AdminUser,
@@ -142,4 +149,3 @@ async def list_ingest_runs(
     _admin: AdminUser, db: Db, cursor: Cursor = None, limit: Limit = 20
 ) -> api.IngestRunPage:
     return await service.list_runs(db, cursor=decode_cursor(cursor), limit=limit)
-

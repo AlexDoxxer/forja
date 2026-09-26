@@ -46,9 +46,7 @@ def set_body(**over: Any) -> dict[str, Any]:
     }
 
 
-async def log(
-    client: httpx.AsyncClient, session_id: str, **over: Any
-) -> httpx.Response:
+async def log(client: httpx.AsyncClient, session_id: str, **over: Any) -> httpx.Response:
     body = set_body(**over)
     return await client.post(
         f"/sessions/{session_id}/sets", headers={"Idempotency-Key": body["client_uuid"]}, json=body
@@ -80,11 +78,15 @@ async def test_session_lifecycle_records_and_summary(
     assert edited.json()["reps"] == 8
     deleted = await client.delete(f"/sessions/{session['id']}/sets/{heavier.json()['id']}")
     assert deleted.status_code == 204
-    assert (await client.delete(f"/sessions/{session['id']}/sets/{heavier.json()['id']}")).status_code == 404
+    assert (
+        await client.delete(f"/sessions/{session['id']}/sets/{heavier.json()['id']}")
+    ).status_code == 404
     records = (await client.get("/records", params={"exercise_id": SQUAT})).json()["items"]
     heaviest = next(r for r in records if r["kind"] == "heaviest_set")
     assert heaviest["value"] == 100
-    assert (await client.get("/records", params={"kind": "volume"})).json()["items"][0]["kind"] == "volume"
+    assert (await client.get("/records", params={"kind": "volume"})).json()["items"][0][
+        "kind"
+    ] == "volume"
     finish = await client.post(
         f"/sessions/{session['id']}/finish", json={"finished_at": now(), "perceived_effort": 7}
     )
@@ -114,7 +116,9 @@ async def test_abandon_and_update_session(client: httpx.AsyncClient, user: dict[
     abandoned = await client.patch(f"/sessions/{session['id']}", json={"status": "abandoned"})
     assert abandoned.json()["status"] == "abandoned"
     assert abandoned.json()["finished_at"]
-    assert (await client.post(f"/sessions/{session['id']}/finish", json={"finished_at": now()})).status_code == 409
+    assert (
+        await client.post(f"/sessions/{session['id']}/finish", json={"finished_at": now()})
+    ).status_code == 409
     listed = (await client.get("/sessions", params={"status": "abandoned"})).json()["items"]
     assert [s["id"] for s in listed] == [session["id"]]
     assert (await client.get("/sessions", params={"status": "nope"})).status_code == 422
@@ -156,7 +160,7 @@ async def test_idempotent_session_and_set_replays(
 async def test_in_progress_key_is_409(
     client: httpx.AsyncClient, user: dict[str, Any], engine: Any
 ) -> None:
-    from sqlalchemy import text  # noqa: PLC0415
+    from sqlalchemy import text
 
     me = (await client.get("/auth/me")).json()["id"]
     async with engine.begin() as conn:
@@ -165,18 +169,33 @@ async def test_in_progress_key_is_409(
                 "INSERT INTO idempotency_key (user_id, key, request_hash, status_code, expires_at) "
                 "VALUES (:u, 'session:busy', :h, 0, now() + interval '1 hour')"
             ),
-            {"u": me, "h": _hash({"client_uuid": "22222222-2222-4222-8222-222222222222", "program_day_id": None, "started_at": "2026-01-01T00:00:00Z", "name": None, "notes": None})},
+            {
+                "u": me,
+                "h": _hash(
+                    {
+                        "client_uuid": "22222222-2222-4222-8222-222222222222",
+                        "program_day_id": None,
+                        "started_at": "2026-01-01T00:00:00Z",
+                        "name": None,
+                        "notes": None,
+                    }
+                ),
+            },
         )
     response = await client.post(
         "/sessions",
         headers={"Idempotency-Key": "busy"},
-        json={"client_uuid": "22222222-2222-4222-8222-222222222222", "program_day_id": None, "started_at": "2026-01-01T00:00:00Z"},
+        json={
+            "client_uuid": "22222222-2222-4222-8222-222222222222",
+            "program_day_id": None,
+            "started_at": "2026-01-01T00:00:00Z",
+        },
     )
     assert response.status_code in {409, 422}
 
 
 def _hash(payload: dict[str, Any]) -> str:
-    from app.services.idempotency import request_hash  # noqa: PLC0415
+    from app.services.idempotency import request_hash
 
     return request_hash(payload)
 
@@ -191,18 +210,28 @@ async def test_set_validation_and_ownership(
     foreign = await log(other_client, session["id"])
     assert foreign.status_code == 404
     assert (await other_client.get(f"/sessions/{session['id']}")).status_code == 404
-    assert (await other_client.patch(f"/sessions/{session['id']}", json={"notes": "x"})).status_code == 404
-    assert (await other_client.post(f"/sessions/{session['id']}/finish", json={"finished_at": now()})).status_code == 404
+    assert (
+        await other_client.patch(f"/sessions/{session['id']}", json={"notes": "x"})
+    ).status_code == 404
+    assert (
+        await other_client.post(f"/sessions/{session['id']}/finish", json={"finished_at": now()})
+    ).status_code == 404
     mine = await log(client, session["id"])
     sid = mine.json()["id"]
-    assert (await other_client.patch(f"/sessions/{session['id']}/sets/{sid}", json={"reps": 1})).status_code == 404
+    assert (
+        await other_client.patch(f"/sessions/{session['id']}/sets/{sid}", json={"reps": 1})
+    ).status_code == 404
     assert (await other_client.delete(f"/sessions/{session['id']}/sets/{sid}")).status_code == 404
     assert (await other_client.get("/sessions")).json()["items"] == []
     assert (await other_client.get("/records")).json()["items"] == []
     ghost_day = await other_client.post(
         "/sessions",
         headers={"Idempotency-Key": "g"},
-        json={"client_uuid": str(uuid.uuid4()), "program_day_id": str(uuid.uuid4()), "started_at": now()},
+        json={
+            "client_uuid": str(uuid.uuid4()),
+            "program_day_id": str(uuid.uuid4()),
+            "started_at": now(),
+        },
     )
     assert ghost_day.status_code == 404
 
@@ -232,7 +261,15 @@ async def test_session_from_program_day_and_next_session(
     assert started.json()["name"] == day["name"]
     assert started.json()["program_id"] == program["id"]
     first_ex = day["blocks"][1]["exercises"][0]
-    await log(client, started.json()["id"], exercise_id=first_ex["exercise_id"], program_exercise_id=first_ex["id"], weight_kg=50, reps=first_ex["rep_max"], rir=first_ex["target_rir"])
+    await log(
+        client,
+        started.json()["id"],
+        exercise_id=first_ex["exercise_id"],
+        program_exercise_id=first_ex["id"],
+        weight_kg=50,
+        reps=first_ex["rep_max"],
+        rir=first_ex["target_rir"],
+    )
     await client.post(f"/sessions/{started.json()['id']}/finish", json={"finished_at": now()})
     after = (await client.get("/sessions/next")).json()
     assert after["status"] == "rest_day"
@@ -255,11 +292,25 @@ async def test_next_session_suggests_from_history(
         started = await client.post(
             "/sessions",
             headers={"Idempotency-Key": cid},
-            json={"client_uuid": cid, "program_day_id": week_day["id"], "started_at": now(-60 * 24 * 3)},
+            json={
+                "client_uuid": cid,
+                "program_day_id": week_day["id"],
+                "started_at": now(-60 * 24 * 3),
+            },
         )
         for i in range(ex["sets"]):
-            await log(client, started.json()["id"], exercise_id=ex["exercise_id"], set_index=i + 1, weight_kg=60, reps=ex["rep_max"], rir=ex["target_rir"])
-        await client.post(f"/sessions/{started.json()['id']}/finish", json={"finished_at": now(-60 * 24 * 3 + 40)})
+            await log(
+                client,
+                started.json()["id"],
+                exercise_id=ex["exercise_id"],
+                set_index=i + 1,
+                weight_kg=60,
+                reps=ex["rep_max"],
+                rir=ex["target_rir"],
+            )
+        await client.post(
+            f"/sessions/{started.json()['id']}/finish", json={"finished_at": now(-60 * 24 * 3 + 40)}
+        )
     # la misma primera semana ya está hecha: el siguiente día es el 2.º; su historial está vacío
     nxt = (await client.get("/sessions/next")).json()
     assert nxt["day"]["id"] == days[1]["id"]
@@ -283,7 +334,7 @@ async def test_sync_operations_and_conflicts(
         "notes": None,
         "updated_at": t0.isoformat(),
     }
-    set_op = {
+    set_op: dict[str, Any] = {
         "op": "set_upsert",
         "session_client_uuid": sid,
         "set": set_body(client_uuid=set_id, completed_at=t0.isoformat()),
@@ -296,24 +347,53 @@ async def test_sync_operations_and_conflicts(
     retry = (await client.post("/sync", json=batch)).json()
     assert [r["status"] for r in retry["results"]] == ["duplicate", "duplicate"]
     assert retry["results"][0]["server_id"] == first["results"][0]["server_id"]
-    newer = {**set_op, "set": {**set_op["set"], "reps": 8}, "updated_at": (t0 + timedelta(minutes=5)).isoformat()}
-    older = {**set_op, "set": {**set_op["set"], "reps": 1}, "updated_at": (t0 - timedelta(minutes=5)).isoformat()}
+    newer = {
+        **set_op,
+        "set": {**set_op["set"], "reps": 8},
+        "updated_at": (t0 + timedelta(minutes=5)).isoformat(),
+    }
+    older = {
+        **set_op,
+        "set": {**set_op["set"], "reps": 1},
+        "updated_at": (t0 - timedelta(minutes=5)).isoformat(),
+    }
     results = (await client.post("/sync", json={"operations": [newer, older]})).json()["results"]
     assert [r["status"] for r in results] == ["applied", "superseded"]
     server = (await client.get(f"/sessions/{first['results'][0]['server_id']}")).json()
     assert server["sets"][0]["reps"] == 8
-    finish = {**session_op, "status": "completed", "finished_at": now(), "updated_at": (t0 + timedelta(minutes=50)).isoformat()}
-    assert (await client.post("/sync", json={"operations": [finish]})).json()["results"][0]["status"] == "applied"
-    assert (await client.get(f"/sessions/{sid and first['results'][0]['server_id']}")).json()["status"] == "completed"
-    delete = {"op": "set_delete", "client_uuid": set_id, "deleted_at": (t0 + timedelta(minutes=30)).isoformat()}
+    finish = {
+        **session_op,
+        "status": "completed",
+        "finished_at": now(),
+        "updated_at": (t0 + timedelta(minutes=50)).isoformat(),
+    }
+    assert (await client.post("/sync", json={"operations": [finish]})).json()["results"][0][
+        "status"
+    ] == "applied"
+    assert (await client.get(f"/sessions/{sid and first['results'][0]['server_id']}")).json()[
+        "status"
+    ] == "completed"
+    delete = {
+        "op": "set_delete",
+        "client_uuid": set_id,
+        "deleted_at": (t0 + timedelta(minutes=30)).isoformat(),
+    }
     stale_delete = {**delete, "deleted_at": (t0 + timedelta(minutes=1)).isoformat()}
-    out = (await client.post("/sync", json={"operations": [stale_delete, delete, delete]})).json()["results"]
+    out = (await client.post("/sync", json={"operations": [stale_delete, delete, delete]})).json()[
+        "results"
+    ]
     assert [r["status"] for r in out] == ["superseded", "applied", "duplicate"]
     resurrect = {**set_op, "updated_at": (t0 + timedelta(hours=1)).isoformat()}
-    assert (await client.post("/sync", json={"operations": [resurrect]})).json()["results"][0]["status"] == "superseded"
+    assert (await client.post("/sync", json={"operations": [resurrect]})).json()["results"][0][
+        "status"
+    ] == "superseded"
     assert (await client.get(f"/sessions/{first['results'][0]['server_id']}")).json()["sets"] == []
     assert (await client.get("/records")).json()["items"] == []
-    unknown = (await client.post("/sync", json={"operations": [{**delete, "client_uuid": str(uuid.uuid4())}]})).json()["results"]
+    unknown = (
+        await client.post(
+            "/sync", json={"operations": [{**delete, "client_uuid": str(uuid.uuid4())}]}
+        )
+    ).json()["results"]
     assert unknown[0]["status"] == "duplicate"
 
 
@@ -323,14 +403,52 @@ async def test_sync_partial_failure_does_not_abort_batch(
     sid = str(uuid.uuid4())
     t0 = now(-10)
     ops: list[dict[str, Any]] = [
-        {"op": "set_upsert", "session_client_uuid": str(uuid.uuid4()), "set": set_body(), "updated_at": t0},
-        {"op": "session_upsert", "client_uuid": sid, "program_day_id": str(uuid.uuid4()), "name": None, "started_at": t0, "finished_at": None, "status": "in_progress", "perceived_effort": None, "notes": None, "updated_at": t0},
-        {"op": "session_upsert", "client_uuid": sid, "program_day_id": None, "name": None, "started_at": t0, "finished_at": None, "status": "in_progress", "perceived_effort": None, "notes": None, "updated_at": t0},
-        {"op": "set_upsert", "session_client_uuid": sid, "set": set_body(exercise_id="9999"), "updated_at": t0},
+        {
+            "op": "set_upsert",
+            "session_client_uuid": str(uuid.uuid4()),
+            "set": set_body(),
+            "updated_at": t0,
+        },
+        {
+            "op": "session_upsert",
+            "client_uuid": sid,
+            "program_day_id": str(uuid.uuid4()),
+            "name": None,
+            "started_at": t0,
+            "finished_at": None,
+            "status": "in_progress",
+            "perceived_effort": None,
+            "notes": None,
+            "updated_at": t0,
+        },
+        {
+            "op": "session_upsert",
+            "client_uuid": sid,
+            "program_day_id": None,
+            "name": None,
+            "started_at": t0,
+            "finished_at": None,
+            "status": "in_progress",
+            "perceived_effort": None,
+            "notes": None,
+            "updated_at": t0,
+        },
+        {
+            "op": "set_upsert",
+            "session_client_uuid": sid,
+            "set": set_body(exercise_id="9999"),
+            "updated_at": t0,
+        },
         {"op": "set_upsert", "session_client_uuid": sid, "set": set_body(), "updated_at": t0},
     ]
     results = (await client.post("/sync", json={"operations": ops})).json()["results"]
-    assert [r["status"] for r in results] == ["rejected", "rejected", "applied", "rejected", "applied"]
+    assert [r["status"] for r in results] == [
+        "rejected",
+        "rejected",
+        "applied",
+        "rejected",
+        "applied",
+    ]
     assert results[0]["problem"]["code"] == "not_found"
     assert [r["index"] for r in results] == [0, 1, 2, 3, 4]
     assert (await client.post("/sync", json={"operations": []})).status_code == 422
@@ -341,7 +459,18 @@ async def test_sync_is_isolated_between_users(
 ) -> None:
     sid = str(uuid.uuid4())
     t0 = now(-10)
-    op = {"op": "session_upsert", "client_uuid": sid, "program_day_id": None, "name": None, "started_at": t0, "finished_at": None, "status": "in_progress", "perceived_effort": None, "notes": None, "updated_at": t0}
+    op = {
+        "op": "session_upsert",
+        "client_uuid": sid,
+        "program_day_id": None,
+        "name": None,
+        "started_at": t0,
+        "finished_at": None,
+        "status": "in_progress",
+        "perceived_effort": None,
+        "notes": None,
+        "updated_at": t0,
+    }
     mine = (await client.post("/sync", json={"operations": [op]})).json()["results"][0]
     theirs = (await other_client.post("/sync", json={"operations": [op]})).json()["results"][0]
     assert mine["status"] == theirs["status"] == "applied"
@@ -360,7 +489,9 @@ async def test_stats_overview_volume_and_exercise(
         await log(client, session["id"], set_index=i + 1, weight_kg=80 + 5 * i, reps=5, rir=1)
     await log(client, session["id"], set_index=9, weight_kg=200, reps=1, rir=8)
     await client.post(f"/sessions/{session['id']}/finish", json={"finished_at": now()})
-    await client.post("/body-metrics", json={"date": datetime.now(UTC).date().isoformat(), "weight_kg": 70})
+    await client.post(
+        "/body-metrics", json={"date": datetime.now(UTC).date().isoformat(), "weight_kg": 70}
+    )
     overview = (await client.get("/stats/overview")).json()
     assert overview["sessions_completed"] == 1
     assert overview["sets_completed"] == 4
@@ -381,8 +512,16 @@ async def test_stats_overview_volume_and_exercise(
     assert stats["best_set"]["weight_kg"] == 200
     assert stats["best_e1rm_kg"] > 90
     assert (await client.get("/stats/exercise/9999")).status_code == 404
-    assert (await client.get(f"/stats/exercise/{SQUAT}", params={"from": "2001-01-01", "to": "2001-01-02"})).json()["points"] == []
-    sessions_page = (await client.get("/sessions", params={"from": datetime.now(UTC).date().isoformat(), "limit": 1})).json()
+    assert (
+        await client.get(
+            f"/stats/exercise/{SQUAT}", params={"from": "2001-01-01", "to": "2001-01-02"}
+        )
+    ).json()["points"] == []
+    sessions_page = (
+        await client.get(
+            "/sessions", params={"from": datetime.now(UTC).date().isoformat(), "limit": 1}
+        )
+    ).json()
     assert len(sessions_page["items"]) == 1
     assert sessions_page["items"][0]["set_count"] == 4
     assert (await client.get("/records", params={"limit": 2})).json()["next_cursor"]

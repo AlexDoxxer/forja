@@ -85,7 +85,11 @@ async def test_login_logout_and_me(client: httpx.AsyncClient, user: dict[str, An
     assert bad.json()["code"] == "invalid_credentials"
     unknown = await client.post("/auth/login", json={"email": "no@existe.co", "password": PASSWORD})
     assert unknown.status_code == 401
-    assert unknown.json() == {**bad.json(), "request_id": unknown.json()["request_id"], "instance": bad.json()["instance"]}
+    assert unknown.json() == {
+        **bad.json(),
+        "request_id": unknown.json()["request_id"],
+        "instance": bad.json()["instance"],
+    }
     ok = await client.post("/auth/login", json={"email": user["email"], "password": PASSWORD})
     assert ok.status_code == 200
     assert ok.json()["last_login_at"] is not None
@@ -165,7 +169,9 @@ async def test_sliding_expiration_and_expired_session(
 async def test_password_change_revokes_other_sessions(
     client: httpx.AsyncClient, user: dict[str, Any], app: FastAPI
 ) -> None:
-    second = httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="https://forja.test/api/v1")
+    second = httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="https://forja.test/api/v1"
+    )
     async with second:
         await second.get("/auth/csrf")
         token = second.cookies.get(CSRF_COOKIE) or ""
@@ -179,7 +185,8 @@ async def test_password_change_revokes_other_sessions(
         assert len(sessions) == 2
         assert sum(1 for s in sessions if s["current"]) == 1
         wrong = await client.post(
-            "/auth/password", json={"current_password": "nope-nope-nope", "new_password": "otra-clave-larga-1"}
+            "/auth/password",
+            json={"current_password": "nope-nope-nope", "new_password": "otra-clave-larga-1"},
         )
         assert wrong.status_code == 422
         weak = await client.post(
@@ -187,7 +194,8 @@ async def test_password_change_revokes_other_sessions(
         )
         assert weak.status_code == 422
         changed = await client.post(
-            "/auth/password", json={"current_password": PASSWORD, "new_password": "otra-clave-larga-1"}
+            "/auth/password",
+            json={"current_password": PASSWORD, "new_password": "otra-clave-larga-1"},
         )
         assert changed.status_code == 204
         assert (await second.get("/auth/me")).status_code == 401
@@ -219,7 +227,9 @@ async def test_deactivated_user_cannot_use_session(
     assert login.status_code == 401
 
 
-async def test_rate_limit_returns_429_with_retry_after(app: FastAPI, client: httpx.AsyncClient) -> None:
+async def test_rate_limit_returns_429_with_retry_after(
+    app: FastAPI, client: httpx.AsyncClient
+) -> None:
     original = app.state.rate_limiter
     app.state.rate_limiter = RateLimiter(scale=1)
     try:

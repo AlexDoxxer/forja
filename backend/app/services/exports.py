@@ -93,7 +93,7 @@ def disposition(name: str, extension: str) -> str:
 # ---------------------------------------------------------------------------- PDF
 def _url_fetcher(media_root: Path) -> Any:
     """Solo ``file://`` dentro de ``MEDIA_ROOT`` (miniaturas locales); nada de red."""
-    from weasyprint.urls import URLFetcher, URLFetcherResponse  # noqa: PLC0415
+    from weasyprint.urls import URLFetcher, URLFetcherResponse
 
     root = media_root.resolve()
 
@@ -107,7 +107,9 @@ def _url_fetcher(media_root: Path) -> Any:
             if root not in path.parents:
                 msg = "Ruta fuera de MEDIA_ROOT"
                 raise ValueError(msg)
-            return URLFetcherResponse(url, body=path.read_bytes(), headers={"Content-Type": "image/jpeg"})
+            return URLFetcherResponse(
+                url, body=path.read_bytes(), headers={"Content-Type": "image/jpeg"}
+            )
 
     return LocalFetcher(allowed_protocols=["file"])
 
@@ -115,7 +117,8 @@ def _url_fetcher(media_root: Path) -> Any:
 def _template_context(detail: api.ProgramDetail, lang: str, media_root: Path) -> dict[str, Any]:
     names = {e.id: e for e in detail.exercises}
     thumbs = {
-        e.id: (media_root / e.media.thumb_url.removeprefix("/media/")).as_uri() for e in detail.exercises
+        e.id: (media_root / e.media.thumb_url.removeprefix("/media/")).as_uri()
+        for e in detail.exercises
     }
     return {
         "program": detail,
@@ -128,7 +131,7 @@ def _template_context(detail: api.ProgramDetail, lang: str, media_root: Path) ->
 
 
 def build_pdf(detail: api.ProgramDetail, lang: str, media_root: Path) -> bytes:
-    from weasyprint import HTML  # noqa: PLC0415 - import pesado, solo al exportar
+    from weasyprint import HTML
 
     env = Environment(
         loader=FileSystemLoader(TEMPLATES),
@@ -146,7 +149,11 @@ async def render_pdf(detail: api.ProgramDetail, lang: str, media_root: Path) -> 
 # ---------------------------------------------------------------------------- ICS
 def _escape(text: str) -> str:
     return (
-        text.replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,").replace("\r\n", "\\n").replace("\n", "\\n")
+        text.replace("\\", "\\\\")
+        .replace(";", "\\;")
+        .replace(",", "\\,")
+        .replace("\r\n", "\\n")
+        .replace("\n", "\\n")
     )
 
 
@@ -187,7 +194,9 @@ def render_ics(detail: api.ProgramDetail, start_date: date | None) -> str:
         raise unprocessable(
             "validation_error",
             "start_date debe ser un lunes.",
-            errors=[{"loc": ["query", "start_date"], "msg": "Debe ser lunes", "type": "value_error"}],
+            errors=[
+                {"loc": ["query", "start_date"], "msg": "Debe ser lunes", "type": "value_error"}
+            ],
         )
     names = {e.id: e.name_es for e in detail.exercises}
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")

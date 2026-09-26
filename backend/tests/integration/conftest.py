@@ -152,9 +152,7 @@ async def _assert_matches_contract(response: httpx.Response) -> None:
     """Toda respuesta JSON de la API debe cumplir el esquema del contrato para su operación."""
     path = response.request.url.path.removeprefix("/api/v1")
     method = response.request.method.lower()
-    operation = next(
-        (op for m, rx, op in CONTRACT_ROUTES if m == method and rx.match(path)), None
-    )
+    operation = next((op for m, rx, op in CONTRACT_ROUTES if m == method and rx.match(path)), None)
     if operation is None or "json" not in response.headers.get("content-type", ""):
         return
     spec = operation["responses"].get(str(response.status_code))
@@ -186,9 +184,7 @@ def _sync_csrf(client: httpx.AsyncClient) -> Callable[[httpx.Response], Any]:
 async def client(app: FastAPI, clean_state: None) -> AsyncIterator[httpx.AsyncClient]:
     """Cliente sin sesión (HTTPS para que la cookie ``__Host-`` con ``Secure`` se envíe)."""
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(
-        transport=transport, base_url="https://forja.test/api/v1"
-    ) as http:
+    async with httpx.AsyncClient(transport=transport, base_url="https://forja.test/api/v1") as http:
         http.event_hooks["response"] = [_sync_csrf(http)]
         response = await http.get("/auth/csrf")
         assert response.status_code == 204
@@ -217,9 +213,7 @@ async def other_client(app: FastAPI, user: dict[str, Any]) -> AsyncIterator[http
     """Segundo usuario (rol ``user``) con su propia sesión; ``user`` (admin) se crea antes."""
     _ = user
     transport = httpx.ASGITransport(app=app)
-    async with httpx.AsyncClient(
-        transport=transport, base_url="https://forja.test/api/v1"
-    ) as http:
+    async with httpx.AsyncClient(transport=transport, base_url="https://forja.test/api/v1") as http:
         http.event_hooks["response"] = [_sync_csrf(http)]
         await http.get("/auth/csrf")
         await register_user(http, "mario@example.org", "Mario")

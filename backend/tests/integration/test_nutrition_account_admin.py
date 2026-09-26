@@ -10,8 +10,8 @@ import pytest
 from fastapi import FastAPI
 
 from tests.integration.conftest import PASSWORD
-from tests.integration.test_programs import create, preview
 from tests.integration.test_profile import PROFILE
+from tests.integration.test_programs import create, preview
 from tests.integration.test_training import log, start
 
 pytestmark = pytest.mark.integration
@@ -37,7 +37,14 @@ def next_monday() -> str:
 
 async def enable_diet(client: httpx.AsyncClient, **over: Any) -> None:
     assert (await client.put("/nutrition/settings", json={**SETTINGS, **over})).status_code == 200
-    profile = {**PROFILE, "birth_date": "1990-05-04", "height_cm": 170, "diet_enabled": True, "units": "metric", "locale": "es"}
+    profile = {
+        **PROFILE,
+        "birth_date": "1990-05-04",
+        "height_cm": 170,
+        "diet_enabled": True,
+        "units": "metric",
+        "locale": "es",
+    }
     assert (await client.put("/profile", json=profile)).status_code == 200
     await client.post("/body-metrics", json={"date": date.today().isoformat(), "weight_kg": 65})
 
@@ -59,7 +66,9 @@ async def test_diet_disabled_gates_everything_but_settings(
         response = await client.request(method, path, json=body)
         assert response.status_code == 403, path
         assert response.json()["code"] == "diet_disabled"
-    await client.put("/admin/settings", json={"registration_open": True, "diet_feature_enabled": False})
+    await client.put(
+        "/admin/settings", json={"registration_open": True, "diet_feature_enabled": False}
+    )
     await enable_diet(client)
     globally_off = await client.get("/foods")
     assert globally_off.status_code == 403
@@ -76,17 +85,26 @@ async def test_target_plan_swap_and_shopping_list(
     assert target["target_kcal"] > 1200
     assert target["age_years"] >= 35
     assert any(n["code"] == "health_disclaimer" for n in target["notices"])
-    heavier = (await client.post("/nutrition/targets/calculate", json={"weight_kg": 90, "goal": "lose"})).json()
+    heavier = (
+        await client.post("/nutrition/targets/calculate", json={"weight_kg": 90, "goal": "lose"})
+    ).json()
     assert heavier["target"]["requested_goal"] == "lose"
     assert (await client.get("/nutrition/settings")).json()["current_target"]["id"] == heavier["id"]
-    assert (await client.post("/nutrition/targets/calculate", json={"weight_kg": 5})).status_code == 422
+    assert (
+        await client.post("/nutrition/targets/calculate", json={"weight_kg": 5})
+    ).status_code == 422
 
     created = await client.post("/nutrition/plans", json={"week_start": next_monday(), "seed": 3})
     assert created.status_code == 201, created.text
     plan = created.json()["plan"]
     assert len(plan["days"]) == 7
     assert plan["seed"] == 3
-    assert all(f["food_id"] not in {"cacahuete", "mantequilla_cacahuete"} for d in plan["days"] for m in d["meals"] for f in m["items"])
+    assert all(
+        f["food_id"] not in {"cacahuete", "mantequilla_cacahuete"}
+        for d in plan["days"]
+        for m in d["meals"]
+        for f in m["items"]
+    )
     plan_id = created.json()["id"]
     assert (await client.get(f"/nutrition/plans/{plan_id}")).json()["plan"] == plan
     listed = (await client.get("/nutrition/plans")).json()["items"]
@@ -95,23 +113,37 @@ async def test_target_plan_swap_and_shopping_list(
     item = plan["days"][0]["meals"][0]["items"][0]
     swapped = await client.post(
         f"/nutrition/plans/{plan_id}/swap",
-        json={"day_index": 0, "meal": plan["days"][0]["meals"][0]["slot"], "food_id": item["food_id"], "replacement_food_id": None},
+        json={
+            "day_index": 0,
+            "meal": plan["days"][0]["meals"][0]["slot"],
+            "food_id": item["food_id"],
+            "replacement_food_id": None,
+        },
     )
     assert swapped.status_code == 200, swapped.text
     new_item = swapped.json()["plan"]["days"][0]["meals"][0]["items"]
     assert item["food_id"] not in [i["food_id"] for i in new_item]
     bad = await client.post(
         f"/nutrition/plans/{plan_id}/swap",
-        json={"day_index": 0, "meal": "dinner", "food_id": "no_existe", "replacement_food_id": None},
+        json={
+            "day_index": 0,
+            "meal": "dinner",
+            "food_id": "no_existe",
+            "replacement_food_id": None,
+        },
     )
     assert bad.status_code == 422
     shopping = (await client.get(f"/nutrition/plans/{plan_id}/shopping-list")).json()
     assert shopping["plan_id"] == plan_id
     assert shopping["categories"]
-    assert (await client.post("/nutrition/plans", json={"week_start": "2026-10-06"})).status_code == 422
+    assert (
+        await client.post("/nutrition/plans", json={"week_start": "2026-10-06"})
+    ).status_code == 422
 
 
-async def test_plan_blocks_and_missing_data(client: httpx.AsyncClient, user: dict[str, Any]) -> None:
+async def test_plan_blocks_and_missing_data(
+    client: httpx.AsyncClient, user: dict[str, Any]
+) -> None:
     await client.put("/nutrition/settings", json=SETTINGS)
     missing = await client.post("/nutrition/targets/calculate")
     assert missing.status_code == 200
@@ -136,14 +168,19 @@ async def test_foods_listing_and_privacy(
     page = (await client.get("/foods", params={"limit": 5})).json()
     assert len(page["items"]) == 5
     assert page["next_cursor"]
-    vegan = (await client.get("/foods", params={"diet_type": "vegan", "limit": 100})).json()["items"]
+    vegan = (await client.get("/foods", params={"diet_type": "vegan", "limit": 100})).json()[
+        "items"
+    ]
     assert vegan
     assert all("vegan" in f["diet_types"] for f in vegan)
     assert (await client.get("/foods", params={"q": "GARBANZO"})).json()["items"]
     assert (await client.get("/foods", params={"category": "nope"})).status_code == 422
     plan = await client.post("/nutrition/plans", json={"week_start": next_monday(), "seed": 1})
     await enable_diet(other_client)
-    for path in (f"/nutrition/plans/{plan.json()['id']}", f"/nutrition/plans/{plan.json()['id']}/shopping-list"):
+    for path in (
+        f"/nutrition/plans/{plan.json()['id']}",
+        f"/nutrition/plans/{plan.json()['id']}/shopping-list",
+    ):
         assert (await other_client.get(path)).status_code == 404
     assert (await other_client.get("/nutrition/plans")).json()["items"] == []
 
@@ -157,8 +194,17 @@ async def test_export_import_roundtrip_is_idempotent(
     session = await start(client)
     first_ex = program["weeks"][0]["days"][0]["blocks"][1]["exercises"][0]
     await log(client, session["id"], weight_kg=100, reps=5)
-    await log(client, session["id"], exercise_id=first_ex["exercise_id"], set_index=2, weight_kg=50, reps=8)
-    await client.post(f"/sessions/{session['id']}/finish", json={"finished_at": datetime.now(UTC).isoformat()})
+    await log(
+        client,
+        session["id"],
+        exercise_id=first_ex["exercise_id"],
+        set_index=2,
+        weight_kg=50,
+        reps=8,
+    )
+    await client.post(
+        f"/sessions/{session['id']}/finish", json={"finished_at": datetime.now(UTC).isoformat()}
+    )
     await client.post("/nutrition/plans", json={"week_start": next_monday(), "seed": 1})
     exported = await client.get("/me/export")
     assert exported.status_code == 200
@@ -204,7 +250,7 @@ async def test_export_import_roundtrip_is_idempotent(
 async def test_delete_account_removes_everything(
     client: httpx.AsyncClient, other_client: httpx.AsyncClient, engine: Any
 ) -> None:
-    from sqlalchemy import text  # noqa: PLC0415
+    from sqlalchemy import text
 
     await create(other_client, (await preview(other_client))["plan"], activate=True)
     session = await start(other_client)
@@ -217,16 +263,37 @@ async def test_delete_account_removes_everything(
     assert done.status_code == 204
     assert (await other_client.get("/auth/me")).status_code == 401
     async with engine.connect() as conn:
-        for table in ("program", "workout_session", "body_metric", "session", "profile", "personal_record"):
+        for table in (
+            "program",
+            "workout_session",
+            "body_metric",
+            "session",
+            "profile",
+            "personal_record",
+        ):
             count = (
                 await conn.execute(
-                    text(f"SELECT count(*) FROM {table} WHERE user_id = (SELECT id FROM \"user\" WHERE email = 'lucia@example.org')")
+                    text(
+                        f"SELECT count(*) FROM {table} WHERE user_id = (SELECT id FROM \"user\" WHERE email = 'lucia@example.org')"
+                    )
                 )
             ).scalar_one()
             assert count >= 0
-        left = (await conn.execute(text('SELECT count(*) FROM "user" WHERE email = \'mario@example.org\''))).scalar_one()
-        orphans = (await conn.execute(text("SELECT (SELECT count(*) FROM program) + (SELECT count(*) FROM workout_session) + (SELECT count(*) FROM set_log) + (SELECT count(*) FROM body_metric) + (SELECT count(*) FROM personal_record)"))).scalar_one()
-        audit = (await conn.execute(text("SELECT count(*) FROM audit_log WHERE action = 'user.delete'"))).scalar_one()
+        left = (
+            await conn.execute(
+                text("SELECT count(*) FROM \"user\" WHERE email = 'mario@example.org'")
+            )
+        ).scalar_one()
+        orphans = (
+            await conn.execute(
+                text(
+                    "SELECT (SELECT count(*) FROM program) + (SELECT count(*) FROM workout_session) + (SELECT count(*) FROM set_log) + (SELECT count(*) FROM body_metric) + (SELECT count(*) FROM personal_record)"
+                )
+            )
+        ).scalar_one()
+        audit = (
+            await conn.execute(text("SELECT count(*) FROM audit_log WHERE action = 'user.delete'"))
+        ).scalar_one()
     assert left == 0
     assert orphans == 0
     assert audit == 1
@@ -253,9 +320,13 @@ async def test_admin_permissions_and_settings(
     assert current["registration_open"] is True
     assert current["media_require_auth"] is True
     assert len(current["dataset_commit"]) == 40
-    updated = await client.put("/admin/settings", json={"registration_open": False, "diet_feature_enabled": True})
+    updated = await client.put(
+        "/admin/settings", json={"registration_open": False, "diet_feature_enabled": True}
+    )
     assert updated.json()["registration_open"] is False
-    anon = httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="https://forja.test/api/v1")
+    anon = httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="https://forja.test/api/v1"
+    )
     async with anon:
         await anon.get("/auth/csrf")
         response = await anon.post(
@@ -272,15 +343,28 @@ async def test_admin_users_and_last_admin_guard(
 ) -> None:
     users = (await client.get("/admin/users")).json()
     assert [u["email"] for u in users["items"]] == ["lucia@example.org", "mario@example.org"]
-    assert (await client.get("/admin/users", params={"q": "mar"})).json()["items"][0]["email"] == "mario@example.org"
+    assert (await client.get("/admin/users", params={"q": "mar"})).json()["items"][0][
+        "email"
+    ] == "mario@example.org"
     page = (await client.get("/admin/users", params={"limit": 1})).json()
     assert page["next_cursor"]
-    assert len((await client.get("/admin/users", params={"limit": 1, "cursor": page["next_cursor"]})).json()["items"]) == 1
+    assert (
+        len(
+            (
+                await client.get("/admin/users", params={"limit": 1, "cursor": page["next_cursor"]})
+            ).json()["items"]
+        )
+        == 1
+    )
     me = users["items"][0]["id"]
     mario = users["items"][1]["id"]
     assert (await client.patch(f"/admin/users/{me}", json={"role": "user"})).status_code == 409
-    assert (await client.patch(f"/admin/users/{me}", json={"is_active": False})).json()["code"] == "last_admin"
-    assert (await client.patch(f"/admin/users/{uuid.uuid4()}", json={"role": "user"})).status_code == 404
+    assert (await client.patch(f"/admin/users/{me}", json={"is_active": False})).json()[
+        "code"
+    ] == "last_admin"
+    assert (
+        await client.patch(f"/admin/users/{uuid.uuid4()}", json={"role": "user"})
+    ).status_code == 404
     promoted = await client.patch(f"/admin/users/{mario}", json={"role": "admin"})
     assert promoted.json()["role"] == "admin"
     assert (await client.patch(f"/admin/users/{me}", json={"role": "user"})).status_code == 200
@@ -292,8 +376,14 @@ async def test_admin_users_and_last_admin_guard(
 async def test_admin_can_deactivate_and_revoke_sessions(
     client: httpx.AsyncClient, other_client: httpx.AsyncClient
 ) -> None:
-    mario = next(u for u in (await client.get("/admin/users")).json()["items"] if u["email"].startswith("mario"))
-    assert (await client.patch(f"/admin/users/{mario['id']}", json={"is_active": False})).json()["is_active"] is False
+    mario = next(
+        u
+        for u in (await client.get("/admin/users")).json()["items"]
+        if u["email"].startswith("mario")
+    )
+    assert (await client.patch(f"/admin/users/{mario['id']}", json={"is_active": False})).json()[
+        "is_active"
+    ] is False
     assert (await other_client.get("/auth/me")).status_code == 401
 
 
@@ -301,13 +391,13 @@ async def test_ingest_runs_in_background_and_invalidates_catalog(
     postgres_url: str, tmp_path: Any, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr("app.services.admin.FULL_DATASET", False)
-    from sqlalchemy import text  # noqa: PLC0415
-    from sqlalchemy.ext.asyncio import create_async_engine  # noqa: PLC0415
+    from sqlalchemy import text
+    from sqlalchemy.ext.asyncio import create_async_engine
 
-    from app.core.config import Settings  # noqa: PLC0415
-    from app.main import create_app  # noqa: PLC0415
-    from ingest.tests.conftest import make_dataset_repo  # noqa: PLC0415
-    from tests.integration.conftest import migrate  # noqa: PLC0415
+    from app.core.config import Settings
+    from app.main import create_app
+    from ingest.tests.conftest import make_dataset_repo
+    from tests.integration.conftest import migrate
 
     name = f"ing_{uuid.uuid4().hex[:8]}"
     admin_engine = create_async_engine(postgres_url, isolation_level="AUTOCOMMIT")
@@ -327,17 +417,23 @@ async def test_ingest_runs_in_background_and_invalidates_catalog(
     )
     settings = settings.model_copy(update={"dataset_repo": repo.as_uri()})
     app = create_app(settings, rate_limit_scale=1000)
-    async with app.router.lifespan_context(app), httpx.AsyncClient(
-        transport=httpx.ASGITransport(app=app), base_url="https://forja.test/api/v1"
-    ) as http:
+    async with (
+        app.router.lifespan_context(app),
+        httpx.AsyncClient(
+            transport=httpx.ASGITransport(app=app), base_url="https://forja.test/api/v1"
+        ) as http,
+    ):
+
         def sync(_: Any) -> None:
             return None
 
         await http.get("/auth/csrf")
         http.headers["X-CSRF-Token"] = http.cookies.get("__Host-forja_csrf") or ""
-        await http.post("/auth/register", json={"email": "a@b.co", "password": PASSWORD, "display_name": "a"})
+        await http.post(
+            "/auth/register", json={"email": "a@b.co", "password": PASSWORD, "display_name": "a"}
+        )
         http.headers["X-CSRF-Token"] = http.cookies.get("__Host-forja_csrf") or ""
-        assert len((await app.state.catalog.cards())) == 0
+        assert len(await app.state.catalog.cards()) == 0
         started = await http.post("/admin/ingest", json={"dry_run": False})
         assert started.status_code == 202, started.text
         run_id = started.json()["id"]
@@ -355,5 +451,9 @@ async def test_ingest_runs_in_background_and_invalidates_catalog(
         conflict = await http.post("/admin/ingest", json={"dry_run": True})
         assert conflict.status_code == 202
     async with create_async_engine(url).connect() as conn:
-        audits = (await conn.execute(text("SELECT count(*) FROM audit_log WHERE action LIKE 'admin.ingest%'"))).scalar_one()
+        audits = (
+            await conn.execute(
+                text("SELECT count(*) FROM audit_log WHERE action LIKE 'admin.ingest%'")
+            )
+        ).scalar_one()
     assert audits >= 1

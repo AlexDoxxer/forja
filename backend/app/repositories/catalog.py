@@ -6,7 +6,18 @@ from collections.abc import Sequence
 from dataclasses import dataclass, field
 from typing import Any, Final
 
-from sqlalchemy import ColumnElement, Integer, Row, and_, exists, func, literal, or_, select, union_all
+from sqlalchemy import (
+    ColumnElement,
+    Integer,
+    Row,
+    and_,
+    exists,
+    func,
+    literal,
+    or_,
+    select,
+    union_all,
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.catalog import (
@@ -19,7 +30,7 @@ from app.models.catalog import (
 )
 from app.models.user import FavoriteExercise
 
-TOKEN_SPLIT: Final = str.maketrans({c: " " for c in "&|!():*<>'\"\\-,.;:/"})
+TOKEN_SPLIT: Final = str.maketrans(dict.fromkeys("&|!():*<>'\"\\-,.;:/", " "))
 
 
 def fold(value: str) -> str:
@@ -109,9 +120,10 @@ def rank_expression(q: str) -> ColumnElement[float]:
         func.similarity(func.unaccent(Exercise.display_name_en), folded),
     )
     if tsq:
-        return func.coalesce(
-            func.ts_rank(Exercise.search_vector, func.to_tsquery("simple", tsq)), 0.0
-        ) + similarity
+        return (
+            func.coalesce(func.ts_rank(Exercise.search_vector, func.to_tsquery("simple", tsq)), 0.0)
+            + similarity
+        )
     return similarity
 
 
@@ -136,12 +148,17 @@ async def list_exercises(
             stmt = stmt.where(
                 or_(
                     rank < r,
-                    and_(rank == r, or_(Exercise.name_es > n, and_(Exercise.name_es == n, Exercise.id > i))),
+                    and_(
+                        rank == r,
+                        or_(Exercise.name_es > n, and_(Exercise.name_es == n, Exercise.id > i)),
+                    ),
                 )
             )
         stmt = stmt.order_by(rank.desc(), Exercise.name_es, Exercise.id)
     else:
-        stmt = select(Exercise, favorite.label("is_favorite"), literal(0).label("rank")).where(*where)
+        stmt = select(Exercise, favorite.label("is_favorite"), literal(0).label("rank")).where(
+            *where
+        )
         if cursor:
             n, i = str(cursor["n"]), str(cursor["i"])
             stmt = stmt.where(
@@ -216,7 +233,9 @@ async def summaries_by_ids(
         FavoriteExercise.exercise_id == Exercise.id, FavoriteExercise.user_id == user_id
     )
     rows = (
-        await db.execute(select(Exercise, favorite.label("is_favorite")).where(Exercise.id.in_(ids)))
+        await db.execute(
+            select(Exercise, favorite.label("is_favorite")).where(Exercise.id.in_(ids))
+        )
     ).all()
     order = {exercise_id: position for position, exercise_id in enumerate(ids)}
     return sorted(rows, key=lambda row: order[row.Exercise.id])

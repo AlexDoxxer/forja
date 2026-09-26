@@ -79,7 +79,9 @@ async def _load(db: AsyncSession, fingerprint: str) -> CatalogSnapshot:
     ):
         secondary.setdefault(exercise_id, []).append(muscle)
     rows = await db.execute(
-        select(Exercise, Equipment.group).join(Equipment, Equipment.code == Exercise.equipment_code).order_by(Exercise.id)
+        select(Exercise, Equipment.group)
+        .join(Equipment, Equipment.code == Exercise.equipment_code)
+        .order_by(Exercise.id)
     )
     cards = tuple(
         ExerciseCard.model_validate(

@@ -8,7 +8,6 @@ from typing import Any, cast
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import Settings
 from app.core.errors import conflict, forbidden
 from app.core.ids import uuid7
 from app.models.catalog import Exercise
@@ -23,7 +22,7 @@ from app.models.program import (
     SetLog,
     WorkoutSession,
 )
-from app.models.user import BodyMetric, FavoriteExercise, Profile, User
+from app.models.user import BodyMetric, FavoriteExercise, User
 from app.schemas import api
 from app.security import passwords
 from app.services import admin as admin_service
@@ -38,8 +37,8 @@ IMPORT_NAMESPACE = uuid.UUID("6f0f7a3e-3c1c-5d0e-9a53-5b1a0b6f0c11")
 
 
 # ------------------------------------------------------------------------ export
-async def export_account(db: AsyncSession, settings: Settings, user: User) -> api.UserExport:
-    from app.api.routers.system import _app_version  # noqa: PLC0415
+async def export_account(db: AsyncSession, user: User) -> api.UserExport:
+    from app.api.routers.system import _app_version
 
     profile = await profile_service.load_profile(db, user)
     metrics = (
@@ -81,15 +80,15 @@ async def export_account(db: AsyncSession, settings: Settings, user: User) -> ap
         )
         for row in rows.scalars():
             sets.setdefault(row.session_id, []).append(row)
-    totals = await training._totals(db, [s.id for s in sessions])  # noqa: SLF001
+    totals = await training._totals(db, [s.id for s in sessions])
     session_dtos = [
         api.WorkoutSession(
-            **training._summary(s, totals).model_dump(),  # noqa: SLF001
+            **training._summary(s, totals).model_dump(),
             sets=[training.set_dto(x) for x in sets.get(s.id, [])],
         )
         for s in sessions
     ]
-    records = await training._records_dto(  # noqa: SLF001
+    records = await training._records_dto(
         db, select(PersonalRecord).where(PersonalRecord.user_id == user.id)
     )
     nutrition_settings = await db.get(NutritionSettings, user.id)
@@ -105,7 +104,7 @@ async def export_account(db: AsyncSession, settings: Settings, user: User) -> ap
             select(MealPlan).where(MealPlan.user_id == user.id).order_by(MealPlan.week_start)
         )
     ).scalars()
-    stored = await nutrition_service._settings_row(db, user)  # noqa: SLF001
+    stored = await nutrition_service._settings_row(db, user)
     profile_dto = profile_service.profile_dto(user, profile)
     return api.UserExport(
         format="forja-export",
@@ -140,7 +139,14 @@ async def export_account(db: AsyncSession, settings: Settings, user: User) -> ap
 
 # ------------------------------------------------------------------------ import
 def _zero() -> dict[str, int]:
-    return {"programs": 0, "sessions": 0, "sets": 0, "body_metrics": 0, "favorites": 0, "meal_plans": 0}
+    return {
+        "programs": 0,
+        "sessions": 0,
+        "sets": 0,
+        "body_metrics": 0,
+        "favorites": 0,
+        "meal_plans": 0,
+    }
 
 
 def _derived(user: User, original: uuid.UUID) -> uuid.UUID:
@@ -175,7 +181,9 @@ async def import_account(
     for metric in body.body_metrics:
         existing = (
             await db.execute(
-                select(BodyMetric.id).where(BodyMetric.user_id == user.id, BodyMetric.date == metric.date)
+                select(BodyMetric.id).where(
+                    BodyMetric.user_id == user.id, BodyMetric.date == metric.date
+                )
             )
         ).first()
         if existing:
@@ -186,7 +194,9 @@ async def import_account(
                 user_id=user.id,
                 date=metric.date,
                 weight_kg=Decimal(str(metric.weight_kg)),
-                body_fat_pct=Decimal(str(metric.body_fat_pct)) if metric.body_fat_pct is not None else None,
+                body_fat_pct=Decimal(str(metric.body_fat_pct))
+                if metric.body_fat_pct is not None
+                else None,
                 waist_cm=Decimal(str(metric.waist_cm)) if metric.waist_cm is not None else None,
             )
         )
@@ -194,7 +204,9 @@ async def import_account(
 
     current = set(
         (
-            await db.execute(select(FavoriteExercise.exercise_id).where(FavoriteExercise.user_id == user.id))
+            await db.execute(
+                select(FavoriteExercise.exercise_id).where(FavoriteExercise.user_id == user.id)
+            )
         ).scalars()
     )
     for value in body.favorites:
@@ -213,21 +225,25 @@ async def import_account(
     day_map: dict[uuid.UUID, uuid.UUID] = {}
     program_map: dict[uuid.UUID, uuid.UUID] = {}
     for program in body.programs:
-        await _import_program(db, user, program, known_exercises, day_map, program_map, created, skipped, warnings)
+        await _import_program(
+            db, user, program, known_exercises, day_map, program_map, created, skipped, warnings
+        )
     await db.flush()
 
     touched: set[str] = set()
     for session in body.sessions:
-        existing = (
+        known_session = (
             await db.execute(
                 select(WorkoutSession.id).where(
-                    WorkoutSession.user_id == user.id, WorkoutSession.client_uuid == session.client_uuid
+                    WorkoutSession.user_id == user.id,
+                    WorkoutSession.client_uuid == session.client_uuid,
                 )
             )
         ).scalar_one_or_none()
-        if existing is not None:
+        session_id: uuid.UUID
+        if known_session is not None:
             skipped["sessions"] += 1
-            session_id = existing
+            session_id = known_session
         else:
             session_id = uuid7()
             db.add(
@@ -236,7 +252,9 @@ async def import_account(
                     user_id=user.id,
                     client_uuid=session.client_uuid,
                     program_id=program_map.get(session.program_id) if session.program_id else None,
-                    program_day_id=day_map.get(session.program_day_id) if session.program_day_id else None,
+                    program_day_id=day_map.get(session.program_day_id)
+                    if session.program_day_id
+                    else None,
                     name=session.name,
                     started_at=session.started_at,
                     finished_at=session.finished_at,
@@ -342,7 +360,9 @@ async def _import_program(
         user_id=user.id,
         name=program.name,
         source="imported",
-        generator_input=program.generator_input.model_dump(mode="json") if program.generator_input else None,
+        generator_input=program.generator_input.model_dump(mode="json")
+        if program.generator_input
+        else None,
         generator_version=program.generator_version,
         tables_hash=program.tables_hash,
         seed=program.seed,
@@ -360,7 +380,12 @@ async def _import_program(
     batch = programs_service.RowBatch()
     for week in program.weeks:
         week_row = ProgramWeek(
-            id=uuid7(), program_id=row.id, index=week.index, phase=week.phase, target_rir=2, volume_ratio=Decimal("1.00")
+            id=uuid7(),
+            program_id=row.id,
+            index=week.index,
+            phase=week.phase,
+            target_rir=2,
+            volume_ratio=Decimal("1.00"),
         )
         batch.weeks.append(week_row)
         for day in week.days:
@@ -425,7 +450,11 @@ async def _map_days(
 
 
 async def _import_nutrition(
-    db: AsyncSession, user: User, body: api.UserExport, created: dict[str, int], skipped: dict[str, int]
+    db: AsyncSession,
+    user: User,
+    body: api.UserExport,
+    created: dict[str, int],
+    skipped: dict[str, int],
 ) -> None:
     if body.nutrition.settings is not None and await db.get(NutritionSettings, user.id) is None:
         values = body.nutrition.settings.model_dump(mode="json", exclude={"diet_enabled"})
@@ -433,7 +462,8 @@ async def _import_nutrition(
     for resource in body.nutrition.plans:
         plan_id = _derived(user, resource.id)
         own = await db.get(MealPlan, resource.id)
-        if (own is not None and own.user_id == user.id) or await db.get(MealPlan, plan_id):
+        derived = await db.get(MealPlan, plan_id)
+        if (own is not None and own.user_id == user.id) or derived is not None:
             skipped["meal_plans"] += 1
             continue
         plan = resource.plan
@@ -462,9 +492,7 @@ async def known_exercise_ids(db: AsyncSession) -> set[str]:
 
 
 # ------------------------------------------------------------------------ borrado
-async def delete_account(
-    db: AsyncSession, user: User, body: api.AccountDeleteRequest
-) -> None:
+async def delete_account(db: AsyncSession, user: User, body: api.AccountDeleteRequest) -> None:
     if not await passwords.verify_password_async(user.password_hash, body.password):
         raise forbidden("forbidden", "La contraseña no es correcta.")
     if user.role == "admin" and await admin_service.other_active_admins(db, user.id) == 0:

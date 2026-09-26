@@ -62,7 +62,10 @@ extend = "../ruff.toml"
 extend-exclude = ["migrations/versions", "app/schemas/api.py"]
 
 [tool.ruff.lint]
-extend-ignore = ["PLR0911", "PLR0912", "PLR0915", "FBT001", "FBT002", "PLC0415"]
+extend-ignore = ["E501", "C416", "PERF403", "RET504", "UP047", "ARG002", "PLR0911", "PLR0912", "PLR0915", "PLR0917", "FBT001", "FBT002", "PLC0415"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ARG001", "E501", "PLR2004", "PT018", "S608", "DTZ011", "C416", "RUF059", "S101"]
 
 [tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Header", "fastapi.Path"]

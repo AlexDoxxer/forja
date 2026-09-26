@@ -19,7 +19,7 @@ def generated() -> dict[str, Any]:
     os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://u:p@localhost/forja")
     os.environ.setdefault("SECRET_KEY", "k" * 40)
     os.environ.setdefault("PUBLIC_BASE_URL", "https://forja.test")
-    from app.main import create_app  # noqa: PLC0415
+    from app.main import create_app
 
     spec: dict[str, Any] = create_app().openapi()
     return spec
@@ -74,7 +74,9 @@ def test_parameters_status_codes_and_body_match(key: tuple[str, str]) -> None:
     assert ("requestBody" in contract) == ("requestBody" in mine), key
 
 
-def _properties(schema: dict[str, Any], schemas: dict[str, Any]) -> tuple[set[str], set[str]] | None:
+def _properties(
+    schema: dict[str, Any], schemas: dict[str, Any]
+) -> tuple[set[str], set[str]] | None:
     node = resolve_ref(schema, schemas)
     if "properties" in node:
         return set(node["properties"]), set(node.get("required", []))

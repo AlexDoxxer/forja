@@ -25,7 +25,6 @@ def etag_json(if_none_match: str | None, model: BaseModel) -> Response:
     return Response(content=body, media_type="application/json", headers=headers)
 
 
-
 ERRORS: Final = {code: {"model": api.Problem, "description": TITLES[code]} for code in TITLES}
 
 

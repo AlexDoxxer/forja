@@ -62,7 +62,9 @@ async def list_workout_sessions(
     db: Db,
     from_: Annotated[date | None, Query(alias="from")] = None,
     to: date | None = None,
-    status_: Annotated[Literal["in_progress", "completed", "abandoned"] | None, Query(alias="status")] = None,
+    status_: Annotated[
+        Literal["in_progress", "completed", "abandoned"] | None, Query(alias="status")
+    ] = None,
     cursor: Cursor = None,
     limit: Limit = 20,
 ) -> api.WorkoutSessionPage:

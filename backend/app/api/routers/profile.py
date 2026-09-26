@@ -17,7 +17,9 @@ Cursor = Annotated[str | None, Query(max_length=512)]
 Limit = Annotated[int, Query(ge=1, le=100)]
 
 
-@router.get("/profile", operation_id="getProfile", response_model=api.Profile, responses=errors(401))
+@router.get(
+    "/profile", operation_id="getProfile", response_model=api.Profile, responses=errors(401)
+)
 async def get_profile(user: CurrentUserDep, db: Db) -> api.Profile:
     return await service.get_profile(db, user)
 

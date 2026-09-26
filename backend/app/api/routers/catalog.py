@@ -1,9 +1,8 @@
 """Biblioteca de ejercicios: listado, detalle, alternativas, facetas y favoritos."""
 
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Header, Path, Query, Response, status
-from pydantic import Field
 from forja_engine.models import (
     BodyPart,
     EquipmentCode,
@@ -12,6 +11,7 @@ from forja_engine.models import (
     MovementPattern,
     MuscleCode,
 )
+from pydantic import Field
 
 from app.api.common import decode_cursor, errors, etag_json
 from app.api.deps import CurrentUserDep, Db
@@ -23,7 +23,9 @@ router = APIRouter(tags=["catalog"])
 
 ExerciseIdPath = Annotated[str, Path(pattern=r"^[0-9]{4}$")]
 IfNoneMatch = Annotated[str | None, Header(alias="If-None-Match")]
-NOT_MODIFIED = {304: {"description": "Sin cambios desde el ETag indicado."}}
+NOT_MODIFIED: dict[int | str, dict[str, Any]] = {
+    304: {"description": "Sin cambios desde el ETag indicado."}
+}
 
 
 @router.get(
@@ -105,9 +107,7 @@ async def get_exercise(
     exercise_id: ExerciseIdPath,
     user: CurrentUserDep,
     db: Db,
-    lang: Annotated[
-        str | None, Query(pattern=r"^(en|es|it|tr|ru|zh|hi|pl|ko|fr)$")
-    ] = None,
+    lang: Annotated[str | None, Query(pattern=r"^(en|es|it|tr|ru|zh|hi|pl|ko|fr)$")] = None,
     if_none_match: IfNoneMatch = None,
 ) -> Response:
     return etag_json(if_none_match, await service.get_detail(db, user, exercise_id, lang))

@@ -2,6 +2,7 @@
 
 import uuid
 from datetime import UTC, datetime, timedelta
+from typing import Any
 
 from fastapi import Request, Response
 from sqlalchemy import func, select, update
@@ -25,7 +26,7 @@ from app.services import settings as app_settings
 from app.services.audit import audit
 
 DEFAULT_EQUIPMENT = {"preset": "full_gym", "items": []}
-DEFAULT_LIMITATIONS = {"avoid_muscles": [], "avoid_patterns": [], "notes": None}
+DEFAULT_LIMITATIONS: dict[str, Any] = {"avoid_muscles": [], "avoid_patterns": [], "notes": None}
 DEFAULT_PREFERENCES = {"theme": "system", "sounds": True, "vibration": True, "default_rest_s": None}
 
 
@@ -99,7 +100,13 @@ async def register(
         raise unprocessable(
             "validation_error",
             "La contraseña es demasiado común o fácil de adivinar.",
-            errors=[{"loc": ["body", "password"], "msg": "Contraseña demasiado común", "type": "weak_password"}],
+            errors=[
+                {
+                    "loc": ["body", "password"],
+                    "msg": "Contraseña demasiado común",
+                    "type": "weak_password",
+                }
+            ],
         )
     first = (await db.execute(select(func.count()).select_from(User))).scalar_one() == 0
     user = User(
@@ -168,13 +175,25 @@ async def change_password(
         raise unprocessable(
             "validation_error",
             "La contraseña actual no es correcta.",
-            errors=[{"loc": ["body", "current_password"], "msg": "Contraseña incorrecta", "type": "invalid_password"}],
+            errors=[
+                {
+                    "loc": ["body", "current_password"],
+                    "msg": "Contraseña incorrecta",
+                    "type": "invalid_password",
+                }
+            ],
         )
     if passwords.is_weak_password(body.new_password, auth_user.email):
         raise unprocessable(
             "validation_error",
             "La contraseña nueva es demasiado común o fácil de adivinar.",
-            errors=[{"loc": ["body", "new_password"], "msg": "Contraseña demasiado común", "type": "weak_password"}],
+            errors=[
+                {
+                    "loc": ["body", "new_password"],
+                    "msg": "Contraseña demasiado común",
+                    "type": "weak_password",
+                }
+            ],
         )
     auth_user.password_hash = await passwords.hash_password_async(body.new_password)
     now = datetime.now(UTC)
@@ -189,9 +208,7 @@ async def change_password(
     _ = current_session
 
 
-async def list_sessions(
-    db: AsyncSession, user: User, current_id: uuid.UUID
-) -> api.AuthSessionList:
+async def list_sessions(db: AsyncSession, user: User, current_id: uuid.UUID) -> api.AuthSessionList:
     now = datetime.now(UTC)
     rows = (
         await db.execute(

@@ -20,7 +20,9 @@ router = APIRouter(tags=["nutrition"])
     response_model=api.NutritionSettings,
     responses=errors(401),
 )
-async def get_nutrition_settings(user: CurrentUserDep, db: Db, settings: AppSettings) -> api.NutritionSettings:
+async def get_nutrition_settings(
+    user: CurrentUserDep, db: Db, settings: AppSettings
+) -> api.NutritionSettings:
     return await service.get_settings(db, settings, user)
 
 

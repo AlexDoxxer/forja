@@ -116,7 +116,9 @@ async def update_user(
         raise not_found("El usuario no existe.")
     new_role = body.role or target.role
     new_active = target.is_active if body.is_active is None else body.is_active
-    demoting = target.role == "admin" and target.is_active and (new_role != "admin" or not new_active)
+    demoting = (
+        target.role == "admin" and target.is_active and (new_role != "admin" or not new_active)
+    )
     if demoting and await other_active_admins(db, target.id) == 0:
         raise conflict("last_admin", "No se puede degradar ni desactivar al último administrador.")
     target.role = new_role
@@ -179,19 +181,28 @@ async def start_ingest(
     )
     db.add(run)
     await audit(
-        db, "admin.ingest.start", actor=actor.id, target=str(run.id), details={"dry_run": body.dry_run}
+        db,
+        "admin.ingest.start",
+        actor=actor.id,
+        target=str(run.id),
+        details={"dry_run": body.dry_run},
     )
     await db.commit()
     return run
 
 
-async def list_runs(db: AsyncSession, *, cursor: dict[str, Any] | None, limit: int) -> api.IngestRunPage:
+async def list_runs(
+    db: AsyncSession, *, cursor: dict[str, Any] | None, limit: int
+) -> api.IngestRunPage:
     stmt = select(IngestRun)
     if cursor:
         created = datetime.fromisoformat(str(cursor["c"]))
         last = uuid.UUID(str(cursor["i"]))
         stmt = stmt.where(
-            or_(IngestRun.created_at < created, (IngestRun.created_at == created) & (IngestRun.id < last))
+            or_(
+                IngestRun.created_at < created,
+                (IngestRun.created_at == created) & (IngestRun.id < last),
+            )
         )
     rows = list(
         (
@@ -207,14 +218,16 @@ async def list_runs(db: AsyncSession, *, cursor: dict[str, Any] | None, limit: i
     return api.IngestRunPage(items=[run_dto(r) for r in rows], next_cursor=next_cursor)
 
 
-def _pipeline(settings: Settings, database_url: str, actor: uuid.UUID | None, dry_run: bool) -> uuid.UUID:
+def _pipeline(
+    settings: Settings, database_url: str, actor: uuid.UUID | None, dry_run: bool
+) -> uuid.UUID:
     """Fetch + enriquecimiento + carga (bloqueante, en un hilo). Devuelve el id de la corrida
     que crea ``load_catalog``."""
-    from ingest.catalog import build_catalog  # noqa: PLC0415
-    from ingest.load import load_catalog  # noqa: PLC0415
-    from ingest.media import SOURCE_DIR, fetch, read_manifest, verify_media  # noqa: PLC0415
-    from ingest.source import load_dataset  # noqa: PLC0415
-    from ingest.specs import load_specs  # noqa: PLC0415
+    from ingest.catalog import build_catalog
+    from ingest.load import load_catalog
+    from ingest.media import SOURCE_DIR, fetch, read_manifest, verify_media
+    from ingest.source import load_dataset
+    from ingest.specs import load_specs
 
     fetch(str(settings.dataset_repo), settings.dataset_commit, settings.media_root, dry_run=dry_run)
     manifest = read_manifest(settings.media_root)
@@ -261,7 +274,7 @@ async def run_ingest_task(
         inner_id = await asyncio.to_thread(
             _pipeline, settings, str(settings.database_url), actor, dry_run
         )
-    except Exception as exc:  # noqa: BLE001 - toda causa de fallo se registra en la corrida
+    except Exception as exc:
         _log.warning("ingest_failed", extra={"error_type": type(exc).__name__})
         async with sessionmaker() as db:
             await db.execute(
@@ -270,7 +283,9 @@ async def run_ingest_task(
                 .values(
                     status="failed",
                     finished_at=datetime.now(UTC),
-                    errors=[f"{type(exc).__name__}: {str(exc).splitlines()[0][:500] if str(exc) else ''}"],
+                    errors=[
+                        f"{type(exc).__name__}: {str(exc).splitlines()[0][:500] if str(exc) else ''}"
+                    ],
                 )
             )
             await db.commit()

@@ -15,21 +15,106 @@ _HASHER: Final = PasswordHasher(
 )
 
 COMMON_PASSWORDS: Final = frozenset(
-    """
-    1234567890 0123456789 123456789012 1q2w3e4r5t 1qaz2wsx3edc qwertyuiop qwerty1234 qwerty12345
-    qwertyuiop123 asdfghjkl1 asdfghjklñ zxcvbnm123 password12 password123 password1234 password1!
-    passw0rd12 passw0rd123 p@ssw0rd12 p@ssword123 contraseña contraseña1 contraseña12
-    contraseña123 contraseña1234 micontraseña mipassword1 miclave1234 clave12345 clave123456
-    abcdefghij abcd123456 abc1234567 iloveyou12 iloveyou123 letmein123 welcome123 welcome1234
-    admin12345 admin123456 administrator changeme123 trustno1234 football123 baseball123
-    superman123 monkey12345 dragon12345 master12345 shadow12345 sunshine123 princess123
-    starwars123 whatever123 freedom123 hello12345 hola123456 holamundo1 holamundo123 bienvenido1
-    barcelona10 realmadrid1 realmadrid10 futbol12345 gimnasio123 entrenar123 forja12345
-    forja123456 forjaforja1 1111111111 0000000000 2222222222 1212121212 1234512345 9876543210
-    0987654321 12345678910 123456789a a123456789 a1234567890 qazwsxedc12 zaq12wsxcde qweasdzxc1
-    q1w2e3r4t5 q1w2e3r4t5y6 1q2w3e4r5t6y 1qazxsw23edc passpass12 password00 password11
-    password99 letmein1234 iloveyou1234 sunshine12 princess12 michael1234 jennifer123 jordan2323
-    """.split()
+    [
+        "1234567890",
+        "0123456789",
+        "123456789012",
+        "1q2w3e4r5t",
+        "1qaz2wsx3edc",
+        "qwertyuiop",
+        "qwerty1234",
+        "qwerty12345",
+        "qwertyuiop123",
+        "asdfghjkl1",
+        "asdfghjklñ",
+        "zxcvbnm123",
+        "password12",
+        "password123",
+        "password1234",
+        "password1!",
+        "passw0rd12",
+        "passw0rd123",
+        "p@ssw0rd12",
+        "p@ssword123",
+        "contraseña",
+        "contraseña1",
+        "contraseña12",
+        "contraseña123",
+        "contraseña1234",
+        "micontraseña",
+        "mipassword1",
+        "miclave1234",
+        "clave12345",
+        "clave123456",
+        "abcdefghij",
+        "abcd123456",
+        "abc1234567",
+        "iloveyou12",
+        "iloveyou123",
+        "letmein123",
+        "welcome123",
+        "welcome1234",
+        "admin12345",
+        "admin123456",
+        "administrator",
+        "changeme123",
+        "trustno1234",
+        "football123",
+        "baseball123",
+        "superman123",
+        "monkey12345",
+        "dragon12345",
+        "master12345",
+        "shadow12345",
+        "sunshine123",
+        "princess123",
+        "starwars123",
+        "whatever123",
+        "freedom123",
+        "hello12345",
+        "hola123456",
+        "holamundo1",
+        "holamundo123",
+        "bienvenido1",
+        "barcelona10",
+        "realmadrid1",
+        "realmadrid10",
+        "futbol12345",
+        "gimnasio123",
+        "entrenar123",
+        "forja12345",
+        "forja123456",
+        "forjaforja1",
+        "1111111111",
+        "0000000000",
+        "2222222222",
+        "1212121212",
+        "1234512345",
+        "9876543210",
+        "0987654321",
+        "12345678910",
+        "123456789a",
+        "a123456789",
+        "a1234567890",
+        "qazwsxedc12",
+        "zaq12wsxcde",
+        "qweasdzxc1",
+        "q1w2e3r4t5",
+        "q1w2e3r4t5y6",
+        "1q2w3e4r5t6y",
+        "1qazxsw23edc",
+        "passpass12",
+        "password00",
+        "password11",
+        "password99",
+        "letmein1234",
+        "iloveyou1234",
+        "sunshine12",
+        "princess12",
+        "michael1234",
+        "jennifer123",
+        "jordan2323",
+    ]
 )
 
 

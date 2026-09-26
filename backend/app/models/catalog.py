@@ -145,7 +145,8 @@ class Exercise(TimestampMixin, Base):
         CheckConstraint(in_check("laterality", LATERALITIES), name="laterality"),
         CheckConstraint(f"demo_sex IS NULL OR {in_check('demo_sex', DEMO_SEXES)}", name="demo_sex"),
         CheckConstraint(
-            f"variant_kind IS NULL OR {in_check('variant_kind', VARIANT_KINDS)}", name="variant_kind"
+            f"variant_kind IS NULL OR {in_check('variant_kind', VARIANT_KINDS)}",
+            name="variant_kind",
         ),
         CheckConstraint(in_check("load_type", LOAD_TYPES), name="load_type"),
         Index("ix_exercise_search_vector", "search_vector", postgresql_using="gin"),

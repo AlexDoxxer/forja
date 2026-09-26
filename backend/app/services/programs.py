@@ -82,46 +82,34 @@ async def load_tree(db: AsyncSession, program: Program) -> ProgramTree:
         ).scalars()
     )
     week_ids = [w.id for w in tree.weeks]
-    days = (
-        (
-            await db.execute(
-                select(ProgramDay)
-                .where(ProgramDay.week_id.in_(week_ids))
-                .order_by(ProgramDay.week_id, ProgramDay.index)
-            )
-        ).scalars()
-        if week_ids
-        else []
+    if not week_ids:
+        return tree
+    day_rows = await db.execute(
+        select(ProgramDay)
+        .where(ProgramDay.week_id.in_(week_ids))
+        .order_by(ProgramDay.week_id, ProgramDay.index)
     )
-    for day in days:
+    for day in day_rows.scalars():
         tree.days.setdefault(day.week_id, []).append(day)
     day_ids = [d.id for d in tree.all_days()]
-    blocks = (
-        (
-            await db.execute(
-                select(ProgramBlock)
-                .where(ProgramBlock.day_id.in_(day_ids))
-                .order_by(ProgramBlock.day_id, ProgramBlock.order)
-            )
-        ).scalars()
-        if day_ids
-        else []
+    if not day_ids:
+        return tree
+    block_rows = await db.execute(
+        select(ProgramBlock)
+        .where(ProgramBlock.day_id.in_(day_ids))
+        .order_by(ProgramBlock.day_id, ProgramBlock.order)
     )
-    for block in blocks:
+    for block in block_rows.scalars():
         tree.blocks.setdefault(block.day_id, []).append(block)
     block_ids = [b.id for group in tree.blocks.values() for b in group]
-    exercises = (
-        (
-            await db.execute(
-                select(ProgramExercise)
-                .where(ProgramExercise.block_id.in_(block_ids))
-                .order_by(ProgramExercise.block_id, ProgramExercise.order)
-            )
-        ).scalars()
-        if block_ids
-        else []
+    if not block_ids:
+        return tree
+    exercise_rows = await db.execute(
+        select(ProgramExercise)
+        .where(ProgramExercise.block_id.in_(block_ids))
+        .order_by(ProgramExercise.block_id, ProgramExercise.order)
     )
-    for ex in exercises:
+    for ex in exercise_rows.scalars():
         tree.exercises.setdefault(ex.block_id, []).append(ex)
     return tree
 
@@ -443,7 +431,9 @@ async def list_programs(
     db: AsyncSession, user: User, *, archived: bool, cursor: dict[str, Any] | None, limit: int
 ) -> api.ProgramPage:
     stmt = select(Program).where(Program.user_id == user.id)
-    stmt = stmt.where(Program.archived_at.is_not(None) if archived else Program.archived_at.is_(None))
+    stmt = stmt.where(
+        Program.archived_at.is_not(None) if archived else Program.archived_at.is_(None)
+    )
     if cursor:
         active = bool(cursor["a"])
         created = datetime.fromisoformat(str(cursor["c"]))
@@ -602,7 +592,9 @@ async def create_from_plan(
     return await get_detail(db, user, program.id)
 
 
-def _edit_block_dicts(blocks: Sequence[api.BlockEdit], old_slots: dict[str, Any]) -> list[dict[str, Any]]:
+def _edit_block_dicts(
+    blocks: Sequence[api.BlockEdit], old_slots: dict[str, Any]
+) -> list[dict[str, Any]]:
     result: list[dict[str, Any]] = []
     for b_index, block in enumerate(blocks):
         result.append(
@@ -775,7 +767,9 @@ async def swap(
 ) -> api.ProgramDetail:
     program = await get_owned(db, user, program_id)
     if program.generator_input is None:
-        raise conflict("program_not_generated", "Solo los programas generados admiten cambios automáticos.")
+        raise conflict(
+            "program_not_generated", "Solo los programas generados admiten cambios automáticos."
+        )
     tree = await load_tree(db, program)
     address = _address_of(tree, body.program_exercise_id)
     plan = await engine.rebalance(catalog, tables, tree_to_plan(tree, tables))
@@ -846,7 +840,11 @@ async def replace_day(
     week_row, day_row = located
     old_plan = tree_to_plan(tree, tables)
     old_day = next(
-        d for w in old_plan.weeks if w.index == week_row.index for d in w.days if d.index == day_row.index
+        d
+        for w in old_plan.weeks
+        if w.index == week_row.index
+        for d in w.days
+        if d.index == day_row.index
     )
     old_slots = {
         ex.exercise_id: ex.slot.model_dump(mode="json")

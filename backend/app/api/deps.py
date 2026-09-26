@@ -14,7 +14,6 @@ from app.core.errors import forbidden, unauthenticated
 from app.db.session import get_db
 from app.models.user import AuthSession, User
 from app.security.ratelimit import RateLimiter
-from app.services.catalog_cache import CatalogCache
 from app.security.tokens import (
     SESSION_COOKIE,
     client_ip,
@@ -22,6 +21,7 @@ from app.security.tokens import (
     hash_token,
     set_session_cookie,
 )
+from app.services.catalog_cache import CatalogCache
 
 # Como mucho una escritura de renovación por minuto y sesión (ADR 0003).
 RENEW_INTERVAL: Final = timedelta(minutes=1)
@@ -72,9 +72,7 @@ async def find_valid_session(db: AsyncSession, token: str | None) -> Auth | None
     return Auth(user=row[1], session=row[0]) if row else None
 
 
-async def current_auth(
-    request: Request, response: Response, db: Db, settings: AppSettings
-) -> Auth:
+async def current_auth(request: Request, response: Response, db: Db, settings: AppSettings) -> Auth:
     """Usuario autenticado; renueva de forma deslizante la sesión y la cookie."""
     auth = await find_valid_session(db, request.cookies.get(SESSION_COOKIE))
     if auth is None:

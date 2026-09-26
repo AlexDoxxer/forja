@@ -13,12 +13,14 @@ REGISTRATION_OPEN = "registration_open"
 DIET_FEATURE_ENABLED = "diet_feature_enabled"
 
 
-async def get_bool(db: AsyncSession, key: str, default: bool) -> bool:  # noqa: FBT001
-    row = (await db.execute(select(AppSetting.value).where(AppSetting.key == key))).scalar_one_or_none()
+async def get_bool(db: AsyncSession, key: str, default: bool) -> bool:
+    row = (
+        await db.execute(select(AppSetting.value).where(AppSetting.key == key))
+    ).scalar_one_or_none()
     return bool(row) if row is not None else default
 
 
-async def set_bool(db: AsyncSession, key: str, value: bool) -> None:  # noqa: FBT001
+async def set_bool(db: AsyncSession, key: str, value: bool) -> None:
     stmt = insert(AppSetting).values(key=key, value=value)
     await db.execute(
         stmt.on_conflict_do_update(

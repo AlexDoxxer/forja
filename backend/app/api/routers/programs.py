@@ -263,7 +263,9 @@ async def replace_program_day(
     catalog: Catalog,
     tables: EngineTables,
 ) -> api.ProgramDetail:
-    return await service.replace_day(db, user, program_id, day_id, body, await catalog.cards(), tables)
+    return await service.replace_day(
+        db, user, program_id, day_id, body, await catalog.cards(), tables
+    )
 
 
 @router.get(

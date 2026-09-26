@@ -134,7 +134,9 @@ async def list_metrics(
         stmt = stmt.where(BodyMetric.date <= to_date)
     if cursor and "d" in cursor:
         stmt = stmt.where(BodyMetric.date < date.fromisoformat(str(cursor["d"])))
-    rows = (await db.execute(stmt.order_by(BodyMetric.date.desc()).limit(limit + 1))).scalars().all()
+    rows = (
+        (await db.execute(stmt.order_by(BodyMetric.date.desc()).limit(limit + 1))).scalars().all()
+    )
     page = rows[:limit]
     next_cursor = encode_cursor({"d": page[-1].date.isoformat()}) if len(rows) > limit else None
     return api.BodyMetricPage(items=[metric_dto(r) for r in page], next_cursor=next_cursor)

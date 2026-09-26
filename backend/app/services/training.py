@@ -67,7 +67,9 @@ async def _totals(
         select(
             SetLog.session_id,
             func.count(),
-            func.coalesce(func.sum(func.coalesce(SetLog.weight_kg, 0) * func.coalesce(SetLog.reps, 0)), 0),
+            func.coalesce(
+                func.sum(func.coalesce(SetLog.weight_kg, 0) * func.coalesce(SetLog.reps, 0)), 0
+            ),
         )
         .where(
             SetLog.session_id.in_(session_ids),
@@ -79,7 +81,9 @@ async def _totals(
     return {sid: (count, float(volume)) for sid, count, volume in rows}
 
 
-def _summary(row: WorkoutSession, totals: dict[uuid.UUID, tuple[int, float]]) -> api.WorkoutSessionSummary:
+def _summary(
+    row: WorkoutSession, totals: dict[uuid.UUID, tuple[int, float]]
+) -> api.WorkoutSessionSummary:
     count, volume = totals.get(row.id, (0, 0.0))
     return api.WorkoutSessionSummary(
         id=row.id,
@@ -108,9 +112,7 @@ async def session_dto(db: AsyncSession, row: WorkoutSession) -> api.WorkoutSessi
             .order_by(SetLog.completed_at, SetLog.set_index)
         )
     ).scalars()
-    return api.WorkoutSession(
-        **_summary(row, totals).model_dump(), sets=[set_dto(s) for s in sets]
-    )
+    return api.WorkoutSession(**_summary(row, totals).model_dump(), sets=[set_dto(s) for s in sets])
 
 
 async def get_owned_session(db: AsyncSession, user: User, session_id: uuid.UUID) -> WorkoutSession:
@@ -121,9 +123,7 @@ async def get_owned_session(db: AsyncSession, user: User, session_id: uuid.UUID)
 
 
 # ---------------------------------------------------------------------- sesiones
-async def _day_context(
-    db: AsyncSession, user: User, day_id: uuid.UUID
-) -> tuple[uuid.UUID, str]:
+async def _day_context(db: AsyncSession, user: User, day_id: uuid.UUID) -> tuple[uuid.UUID, str]:
     found = (
         await db.execute(
             select(ProgramDay.name, Program.id)
@@ -210,7 +210,9 @@ async def list_sessions(
         rows = rows[:limit]
         next_cursor = encode_cursor({"s": rows[-1].started_at.isoformat(), "i": str(rows[-1].id)})
     totals = await _totals(db, [r.id for r in rows])
-    return api.WorkoutSessionPage(items=[_summary(r, totals) for r in rows], next_cursor=next_cursor)
+    return api.WorkoutSessionPage(
+        items=[_summary(r, totals) for r in rows], next_cursor=next_cursor
+    )
 
 
 async def update_session(
@@ -285,7 +287,13 @@ async def _check_exercise(db: AsyncSession, exercise_id: str) -> None:
         raise unprocessable(
             "validation_error",
             "El ejercicio no existe.",
-            errors=[{"loc": ["body", "exercise_id"], "msg": "Ejercicio inexistente", "type": "not_found"}],
+            errors=[
+                {
+                    "loc": ["body", "exercise_id"],
+                    "msg": "Ejercicio inexistente",
+                    "type": "not_found",
+                }
+            ],
         )
 
 
@@ -341,7 +349,7 @@ async def _valid_program_exercise(
 ) -> uuid.UUID | None:
     if program_exercise_id is None:
         return None
-    from app.models.program import ProgramBlock, ProgramExercise  # noqa: PLC0415
+    from app.models.program import ProgramBlock, ProgramExercise
 
     found = (
         await db.execute(
@@ -444,7 +452,10 @@ async def recompute_records(
             if current is None or key > (current["value"], current["row"].reps):
                 best[kind] = {"value": value, "row": row}
         total, last = volumes.get(row.session_id, (0.0, row))
-        volumes[row.session_id] = (total + weight * row.reps, row if row.completed_at >= last.completed_at else last)
+        volumes[row.session_id] = (
+            total + weight * row.reps,
+            row if row.completed_at >= last.completed_at else last,
+        )
     if volumes:
         session_id, (total, row) = max(volumes.items(), key=lambda item: item[1][0])
         best["volume"] = {"value": round(total, 2), "row": row, "session": session_id}
@@ -461,20 +472,22 @@ async def recompute_records(
     result: dict[str, PersonalRecord] = {}
     for kind in RECORD_KINDS:
         entry = best.get(kind)
-        current = existing.get(kind)
+        stored = existing.get(kind)
         if entry is None:
-            if current is not None:
-                await db.delete(current)
+            if stored is not None:
+                await db.delete(stored)
             continue
         row = entry["row"]
-        target = current or PersonalRecord(id=uuid7(), user_id=user.id, exercise_id=exercise_id, kind=kind)
+        target = stored or PersonalRecord(
+            id=uuid7(), user_id=user.id, exercise_id=exercise_id, kind=kind
+        )
         target.value = Decimal(str(entry["value"]))
         target.weight_kg = row.weight_kg if kind != "volume" else None
         target.reps = row.reps if kind != "volume" else None
         target.achieved_at = row.completed_at
         target.session_id = entry.get("session", row.session_id)
         target.set_id = row.id if kind != "volume" else None
-        if current is None:
+        if stored is None:
             db.add(target)
         result[kind] = target
     await db.flush()
@@ -534,7 +547,9 @@ async def list_records(
     next_cursor = None
     if len(found) > limit:
         found = found[:limit]
-        next_cursor = encode_cursor({"a": found[-1].achieved_at.isoformat(), "i": str(found[-1].id)})
+        next_cursor = encode_cursor(
+            {"a": found[-1].achieved_at.isoformat(), "i": str(found[-1].id)}
+        )
     return api.PersonalRecordPage(items=found, next_cursor=next_cursor)
 
 
@@ -548,11 +563,18 @@ def _rejected(index: int, op: str, client_uuid: uuid.UUID, error: ProblemError) 
         detail=error.detail,
     )
     return api.SyncResult(
-        index=index, op=cast("Any", op), client_uuid=client_uuid, status="rejected", server_id=None, problem=problem
+        index=index,
+        op=cast("Any", op),
+        client_uuid=client_uuid,
+        status="rejected",
+        server_id=None,
+        problem=problem,
     )
 
 
-def _result(index: int, op: str, client_uuid: uuid.UUID, status: str, server_id: uuid.UUID | None) -> api.SyncResult:
+def _result(
+    index: int, op: str, client_uuid: uuid.UUID, status: str, server_id: uuid.UUID | None
+) -> api.SyncResult:
     return api.SyncResult(
         index=index,
         op=cast("Any", op),
@@ -700,7 +722,9 @@ async def sync_batch(db: AsyncSession, user: User, body: api.SyncRequest) -> api
     results: list[api.SyncResult] = []
     touched: set[str] = set()
     for index, op in enumerate(body.operations):
-        client_uuid = op.client_uuid if not isinstance(op, api.SyncSetUpsert) else op.set.client_uuid
+        client_uuid = (
+            op.client_uuid if not isinstance(op, api.SyncSetUpsert) else op.set.client_uuid
+        )
         try:
             async with db.begin_nested():
                 if isinstance(op, api.SyncSessionUpsert):
@@ -713,7 +737,12 @@ async def sync_batch(db: AsyncSession, user: User, body: api.SyncRequest) -> api
             results.append(_rejected(index, op.op, client_uuid, error))
         except IntegrityError:
             results.append(
-                _rejected(index, op.op, client_uuid, ProblemError(409, "conflict", "Conflicto de integridad."))
+                _rejected(
+                    index,
+                    op.op,
+                    client_uuid,
+                    ProblemError(409, "conflict", "Conflicto de integridad."),
+                )
             )
     for exercise_id in touched:
         await recompute_records(db, user, exercise_id)

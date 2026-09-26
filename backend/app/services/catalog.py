@@ -77,7 +77,9 @@ async def list_page(
     )
 
 
-async def get_detail(db: AsyncSession, user: User, exercise_id: str, lang: str | None) -> api.ExerciseDetail:
+async def get_detail(
+    db: AsyncSession, user: User, exercise_id: str, lang: str | None
+) -> api.ExerciseDetail:
     exercise = await db.get(Exercise, exercise_id)
     if exercise is None:
         raise not_found("El ejercicio no existe.")
@@ -118,7 +120,6 @@ async def get_detail(db: AsyncSession, user: User, exercise_id: str, lang: str |
 
 async def _equipment_group(db: AsyncSession, code: str) -> str:
 
-
     equipment = await db.get(Equipment, code)
     return equipment.group if equipment else "other"
 
@@ -140,17 +141,23 @@ async def get_alternatives(
     )
 
 
-def _facet(counts: dict[str, int], names: dict[str, tuple[str, str]], order: Sequence[str] | None = None) -> list[api.FacetValue]:
+def _facet(
+    counts: dict[str, int], names: dict[str, tuple[str, str]], order: Sequence[str] | None = None
+) -> list[api.FacetValue]:
     keys = list(order) if order else sorted(names, key=lambda k: names[k][0].lower())
     values = [
-        api.FacetValue(value=key, label_es=names[key][0], label_en=names[key][1], count=counts.get(key, 0))
+        api.FacetValue(
+            value=key, label_es=names[key][0], label_en=names[key][1], count=counts.get(key, 0)
+        )
         for key in keys
         if key in names
     ]
     return values
 
 
-async def get_facets(db: AsyncSession, user: User, filters: repo.ExerciseFilters) -> api.CatalogFacets:
+async def get_facets(
+    db: AsyncSession, user: User, filters: repo.ExerciseFilters
+) -> api.CatalogFacets:
     total, counts = await repo.facet_counts(db, filters, user.id)
     muscles = await repo.muscle_names(db)
     equipment = await repo.equipment_names(db)

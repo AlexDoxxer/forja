@@ -75,7 +75,9 @@ async def sync_foods(sessionmaker: async_sessionmaker[AsyncSession]) -> int:
         stmt = insert(Food).values(rows)
         columns = {c: stmt.excluded[c] for c in rows[0] if c != "id"}
         await db.execute(
-            stmt.on_conflict_do_update(index_elements=[Food.id], set_={**columns, "updated_at": func.now()})
+            stmt.on_conflict_do_update(
+                index_elements=[Food.id], set_={**columns, "updated_at": func.now()}
+            )
         )
         await db.commit()
     return len(rows)
@@ -105,9 +107,7 @@ def target_record_dto(row: NutritionTarget) -> api.NutritionTargetRecord:
     )
 
 
-async def get_settings(
-    db: AsyncSession, settings: Settings, user: User
-) -> api.NutritionSettings:
+async def get_settings(db: AsyncSession, settings: Settings, user: User) -> api.NutritionSettings:
     profile = await load_profile(db, user)
     latest = (
         await db.execute(
@@ -162,7 +162,9 @@ def missing_data_target(goal: str, pace: str) -> api.NutritionTarget:
         carbs_g=None,
         fiber_g=None,
         blocked=True,
-        block=api.NutritionBlock(reason_code="missing_profile_data", message_es=MISSING_DATA_MESSAGE),
+        block=api.NutritionBlock(
+            reason_code="missing_profile_data", message_es=MISSING_DATA_MESSAGE
+        ),
         notices=[api.NutritionNotice(code="health_disclaimer", message_es=DISCLAIMER)],
     )
 
@@ -198,7 +200,9 @@ async def build_input(
         return None, stored
     days = (
         await db.execute(
-            select(Program.days_per_week).where(Program.user_id == user.id, Program.is_active.is_(True))
+            select(Program.days_per_week).where(
+                Program.user_id == user.id, Program.is_active.is_(True)
+            )
         )
     ).scalar_one_or_none()
     payload = {
@@ -237,7 +241,9 @@ async def calculate_target(
     now = datetime.now(UTC)
     if engine_input is None:
         return api.NutritionTargetRecord(
-            id=uuid.uuid4(), calculated_at=now, target=missing_data_target(stored["goal"], stored["pace"])
+            id=uuid.uuid4(),
+            calculated_at=now,
+            target=missing_data_target(stored["goal"], stored["pace"]),
         )
     target = await asyncio.to_thread(forja_nutrition.calculate_target, engine_input)
     result = target.model_dump(mode="json")
@@ -304,22 +310,29 @@ async def create_plan(
         raise unprocessable(
             "validation_error",
             "week_start debe ser un lunes.",
-            errors=[{"loc": ["body", "week_start"], "msg": "Debe ser lunes", "type": "value_error"}],
+            errors=[
+                {"loc": ["body", "week_start"], "msg": "Debe ser lunes", "type": "value_error"}
+            ],
         )
-    engine_input, stored = await build_input(db, user, profile, seed=body.seed)
+    engine_input, _ = await build_input(db, user, profile, seed=body.seed)
     if engine_input is None:
         raise ProblemError(
             422,
             "nutrition_blocked",
             MISSING_DATA_MESSAGE,
-            extra={"block": {"reason_code": "missing_profile_data", "message_es": MISSING_DATA_MESSAGE}},
+            extra={
+                "block": {"reason_code": "missing_profile_data", "message_es": MISSING_DATA_MESSAGE}
+            },
         )
     outcome = await asyncio.to_thread(forja_nutrition.plan_week, engine_input, body.week_start)
     if outcome.plan is None or outcome.block is not None:
         block = outcome.block
         assert block is not None  # noqa: S101 - invariante de MealPlanOutcome
         raise ProblemError(
-            422, "nutrition_blocked", block.message_es, extra={"block": block.model_dump(mode="json")}
+            422,
+            "nutrition_blocked",
+            block.message_es,
+            extra={"block": block.model_dump(mode="json")},
         )
     plan = outcome.plan
     row = MealPlan(
@@ -343,7 +356,9 @@ async def create_plan(
     return plan_resource(row)
 
 
-async def get_plan(db: AsyncSession, settings: Settings, user: User, plan_id: uuid.UUID) -> api.MealPlanResource:
+async def get_plan(
+    db: AsyncSession, settings: Settings, user: User, plan_id: uuid.UUID
+) -> api.MealPlanResource:
     await ensure_enabled(db, settings, user)
     return plan_resource(await _owned_plan(db, user, plan_id))
 
@@ -365,7 +380,9 @@ async def list_plans(
     rows = list(
         (
             await db.execute(
-                stmt.order_by(MealPlan.week_start.desc(), MealPlan.created_at.desc()).limit(limit + 1)
+                stmt.order_by(MealPlan.week_start.desc(), MealPlan.created_at.desc()).limit(
+                    limit + 1
+                )
             )
         ).scalars()
     )
@@ -466,4 +483,3 @@ async def list_foods(
         items=[api.Food.model_validate(catalog[r.id].model_dump(mode="json")) for r in rows],
         next_cursor=next_cursor,
     )
-
