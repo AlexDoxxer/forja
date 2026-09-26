@@ -93,20 +93,23 @@ def disposition(name: str, extension: str) -> str:
 # ---------------------------------------------------------------------------- PDF
 def _url_fetcher(media_root: Path) -> Any:
     """Solo ``file://`` dentro de ``MEDIA_ROOT`` (miniaturas locales); nada de red."""
+    from weasyprint.urls import URLFetcher, URLFetcherResponse  # noqa: PLC0415
+
     root = media_root.resolve()
 
-    def fetch(url: str, *_args: Any, **_kwargs: Any) -> dict[str, Any]:
-        parsed = urlparse(url)
-        if parsed.scheme != "file":
-            msg = f"Recurso externo no permitido en el PDF: {parsed.scheme}"
-            raise ValueError(msg)
-        path = Path(unquote(parsed.path)).resolve()
-        if root not in path.parents:
-            msg = "Ruta fuera de MEDIA_ROOT"
-            raise ValueError(msg)
-        return {"string": path.read_bytes(), "mime_type": "image/jpeg"}
+    class LocalFetcher(URLFetcher):  # type: ignore[misc]  # weasyprint sin tipos
+        def fetch(self, url: str, headers: Any = None) -> Any:
+            parsed = urlparse(url)
+            if parsed.scheme != "file":
+                msg = f"Recurso externo no permitido en el PDF: {parsed.scheme}"
+                raise ValueError(msg)
+            path = Path(unquote(parsed.path)).resolve()
+            if root not in path.parents:
+                msg = "Ruta fuera de MEDIA_ROOT"
+                raise ValueError(msg)
+            return URLFetcherResponse(url, body=path.read_bytes(), headers={"Content-Type": "image/jpeg"})
 
-    return fetch
+    return LocalFetcher(allowed_protocols=["file"])
 
 
 def _template_context(detail: api.ProgramDetail, lang: str, media_root: Path) -> dict[str, Any]:

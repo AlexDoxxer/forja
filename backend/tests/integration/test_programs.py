@@ -269,9 +269,10 @@ async def test_swap_exercise_in_saved_program(
         json={"program_exercise_id": "00000000-0000-0000-0000-000000000000", "exclude_ids": [], "replacement_id": None, "apply_to_all_weeks": False},
     )
     assert missing.status_code == 404
+    fresh = swapped.json()["weeks"][0]["days"][0]["blocks"][1]["exercises"][0]
     invalid = await client.post(
         f"/programs/{program['id']}/swap",
-        json={"program_exercise_id": target["id"], "exclude_ids": [], "replacement_id": "9999", "apply_to_all_weeks": False},
+        json={"program_exercise_id": fresh["id"], "exclude_ids": [], "replacement_id": "9999", "apply_to_all_weeks": False},
     )
     assert invalid.status_code == 422
 
