@@ -88,3 +88,20 @@ contrato en silencio.**
   `forja_engine/ops.py::_exercise_violations` (cambio de una línea por caso).
 - **Compatibilidad**: compatible (valores nuevos en una enumeración de salida ⇒ versión menor).
 - **Resolución**: Aprobado; tres códigos añadidos a `PlanWarningCode` en `domain.md` y `openapi.yaml`. Versión resultante **1.1.0**, 2026-09-26 (arquitecto). Avisados: ingesta-datos/backend-api (CC-0001), motor-nutricion (CC-0002), motor-rutinas (CC-0003) en `docs/handoffs/f2-arquitecto.md`.
+
+### CC-0004 · Semántica de `tolerance_not_met` y campos de realismo en `Food`
+- **Estado**: propuesto
+- **Propone**: motor-nutricion · **Fecha**: 2026-09-26
+- **Afecta a**: `contracts/domain.md` §6.2 (`MealPlan`, `Food`) y `contracts/openapi.yaml` (`Food`).
+- **Motivo**: revisión F1b (Riesgo 5, B7, decisión 5). Con la regla actual («kcal ±5 % y macros ±10 %
+  o aviso») el aviso salía en 286 de 288 planes y dejó de informar. No se sube la tolerancia.
+- **Cambio propuesto**:
+  1. `MealPlan`: `tolerance_not_met` se emite solo si algún día se sale de kcal ±5 %, de proteína
+     ±10 % o supera el techo de grasa del 35 % de las kcal del día (salvo que el propio objetivo de
+     grasa ya lo supere por el suelo de seguridad). La desviación de grasa y carbohidratos deja de
+     generar aviso; `MacroDeviation` sigue informándola.
+  2. `Food` (`foods.json`): campos nuevos `max_portion_g: number > 0`, `meal_slots: MealSlot[]`
+     (vacío = no se selecciona automáticamente) y `weekly_max: integer | null`.
+- **Compatibilidad**: compatible (campos de salida opcionales nuevos; el aviso se emite con menos
+  frecuencia). Requiere versión menor.
+- **Resolución**: pendiente (arquitecto).
