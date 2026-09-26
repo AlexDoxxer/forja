@@ -20,7 +20,7 @@ bootPwa();
  * real con Service Worker (Vitest/jsdom usa `msw/node`, ver `tests/setup.ts`).
  */
 async function enableMocking(): Promise<void> {
-  if (import.meta.env.VITE_USE_MSW !== "1" || !import.meta.env.DEV || typeof navigator === "undefined" || !("serviceWorker" in navigator)) {
+  if (import.meta.env["VITE_USE_MSW"] !== "1" || !import.meta.env.DEV || typeof navigator === "undefined" || !("serviceWorker" in navigator)) {
     return;
   }
   const { worker } = await import("./mocks/browser");
