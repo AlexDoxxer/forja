@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import { App } from "./App";
 import { bootstrapTheme } from "./lib/theme";
+import { bootPwa } from "./sw/register";
 import "./styles/global.css";
 
 const container = document.getElementById("root");
@@ -11,6 +12,7 @@ if (container === null) {
 }
 
 bootstrapTheme();
+bootPwa();
 
 /**
  * En desarrollo, mientras `backend-api` no está integrado (Fase 2, F2-FE-16), la app se sirve

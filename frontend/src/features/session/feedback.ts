@@ -33,7 +33,7 @@ export function beep(times = 2): void {
       osc.start(start);
       osc.stop(start + 0.15);
     }
-    window.setTimeout(() => void ctx.close(), times * 250 + 300);
+    setTimeout(() => void ctx.close(), times * 250 + 300);
   } catch {
     // Sin audio disponible: la vibración y el aviso visual siguen funcionando.
   }

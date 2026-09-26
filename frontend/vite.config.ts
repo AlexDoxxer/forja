@@ -1,9 +1,23 @@
 import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
 import { defineConfig } from "vitest/config";
 
 // Configuración de Vite y Vitest. Umbrales de cobertura: MASTER_PROMPT §2.2 (frontend >= 85 %).
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    // Service worker de Workbox (MASTER_PROMPT §10.3): `src/sw/sw.ts` con el shell precacheado.
+    // El manifiesto es estático (`public/manifest.webmanifest`); el registro lo hace `src/sw/register.ts`.
+    VitePWA({
+      strategies: "injectManifest",
+      srcDir: "src/sw",
+      filename: "sw.ts",
+      manifest: false,
+      injectRegister: false,
+      injectManifest: { globPatterns: ["**/*.{js,css,html,svg,woff2,png,webmanifest}"] },
+      devOptions: { enabled: false },
+    }),
+  ],
   build: {
     target: "es2022",
     sourcemap: true,
@@ -37,6 +51,8 @@ export default defineConfig({
         // Arranque de MSW en un navegador real (Service Worker); en jsdom nunca se ejecuta a
         // propósito (`main.tsx` lo evita fuera de un navegador real).
         "src/mocks/browser.ts",
+        // Service worker: solo se ejecuta en un navegador real; su lógica está en cachePolicy.ts.
+        "src/sw/sw.ts",
       ],
       reporter: ["text", "json-summary", "lcov"],
       thresholds: {
