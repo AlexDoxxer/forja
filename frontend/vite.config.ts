@@ -1,11 +1,49 @@
+import { createReadStream, existsSync, statSync } from "node:fs";
+import { extname, join, normalize } from "node:path";
+
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import type { Plugin } from "vite";
 import { defineConfig } from "vitest/config";
+
+const MEDIA_TYPES: Record<string, string> = {
+  ".jpg": "image/jpeg",
+  ".gif": "image/gif",
+  ".json": "application/json",
+};
+
+/**
+ * Solo desarrollo: sirve `$MEDIA_ROOT` bajo `/media` (en producción lo hace nginx, ADR 0004).
+ * Los ficheros se entregan byte a byte, sin transformar (© Gym visual, MASTER_PROMPT §2.1).
+ */
+function devMedia(root: string | undefined): Plugin {
+  return {
+    name: "forja-dev-media",
+    apply: "serve",
+    configureServer(server) {
+      if (root === undefined || root === "") {
+        return;
+      }
+      server.middlewares.use("/media", (req, res, next) => {
+        const rel = normalize(decodeURIComponent((req.url ?? "/").split("?")[0] ?? "/"));
+        const file = join(root, rel);
+        if (rel.includes("..") || !file.startsWith(root) || !existsSync(file) || !statSync(file).isFile()) {
+          next();
+          return;
+        }
+        res.setHeader("Content-Type", MEDIA_TYPES[extname(file)] ?? "application/octet-stream");
+        res.setHeader("Cache-Control", "public, max-age=3600");
+        createReadStream(file).pipe(res);
+      });
+    },
+  };
+}
 
 // Configuración de Vite y Vitest. Umbrales de cobertura: MASTER_PROMPT §2.2 (frontend >= 85 %).
 export default defineConfig({
   plugins: [
     react(),
+    devMedia(process.env.MEDIA_ROOT),
     // Service worker de Workbox (MASTER_PROMPT §10.3): `src/sw/sw.ts` con el shell precacheado.
     // El manifiesto es estático (`public/manifest.webmanifest`); el registro lo hace `src/sw/register.ts`.
     VitePWA({
@@ -26,8 +64,8 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     proxy: {
-      "/api": "http://localhost:8000",
-      "/media": "http://localhost:8000",
+      // Desarrollo contra la API real (F2-FE-16). `/media` lo sirve `devMedia` desde $MEDIA_ROOT.
+      "/api": process.env.VITE_API_TARGET ?? "http://localhost:8000",
     },
   },
   test: {

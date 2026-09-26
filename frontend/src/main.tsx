@@ -15,13 +15,12 @@ bootstrapTheme();
 bootPwa();
 
 /**
- * En desarrollo, mientras `backend-api` no está integrado (Fase 2, F2-FE-16), la app se sirve
- * contra los mocks de MSW generados desde `contracts/openapi.yaml`. Solo se activa en un
- * navegador real con soporte de Service Worker (nunca en Vitest/jsdom, que ya intercepta las
- * peticiones a nivel de red con `msw/node`, ver `tests/setup.ts`).
+ * Por defecto la app habla con la API real (proxy de Vite). Los mocks de MSW generados desde
+ * `contracts/openapi.yaml` solo se activan con `VITE_USE_MSW=1` en desarrollo y en un navegador
+ * real con Service Worker (Vitest/jsdom usa `msw/node`, ver `tests/setup.ts`).
  */
 async function enableMocking(): Promise<void> {
-  if (!import.meta.env.DEV || typeof navigator === "undefined" || !("serviceWorker" in navigator)) {
+  if (import.meta.env.VITE_USE_MSW !== "1" || !import.meta.env.DEV || typeof navigator === "undefined" || !("serviceWorker" in navigator)) {
     return;
   }
   const { worker } = await import("./mocks/browser");
