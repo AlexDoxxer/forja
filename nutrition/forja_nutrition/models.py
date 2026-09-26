@@ -304,9 +304,20 @@ class Food(_Frozen):
     unit_name_es: str | None = None
 
     energy_note: str | None = None
+    # Realismo del plan (F1b B7/C12): ración máxima por comida, comidas donde puede aparecer
+    # (vacío = no se selecciona automáticamente) y apariciones máximas por semana.
+    max_portion_g: float = Field(gt=0)
+    meal_slots: tuple[MealSlot, ...] = ()
+    weekly_max: int | None = Field(default=None, ge=1)
 
     @model_validator(mode="after")
     def _check_unit_name_matches_grams(self) -> Food:
         if (self.unit_grams is None) != (self.unit_name_es is None):
             raise ValueError("unit_grams y unit_name_es deben informarse juntos")
+        return self
+
+    @model_validator(mode="after")
+    def _check_max_portion_covers_one_unit(self) -> Food:
+        if self.unit_grams is not None and self.max_portion_g < self.unit_grams:
+            raise ValueError("max_portion_g debe admitir al menos una unidad")
         return self

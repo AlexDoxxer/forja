@@ -41,7 +41,9 @@ def _base_table_kwargs() -> dict[str, Any]:
             "min": 1.6,
             "max": 2.2,
         },
-        "fat": {"min_g_per_kg": 0.8, "min_pct_kcal": 0.20},
+        "protein_bodyweight_basis": {"adjusted_if_bmi_ge": 30, "reference_bmi": 27},
+        "protein_max_g_per_day": 220,
+        "fat": {"min_g_per_kg": 0.8, "min_pct_kcal": 0.20, "max_pct_kcal": 0.35},
         "fiber_g_per_1000_kcal": 14,
         "safety": {
             "min_age": 18,
@@ -51,7 +53,12 @@ def _base_table_kwargs() -> dict[str, Any]:
             "block_if": ["pregnant", "breastfeeding", "under_18"],
             "min_meals_per_day": 3,
         },
-        "tolerances": {"kcal": 0.05, "macros": 0.10, "macro_sum_vs_kcal": 0.02},
+        "tolerances": {
+            "kcal": 0.05,
+            "macros": 0.10,
+            "macro_sum_vs_kcal": 0.02,
+            "fat_over_allowed": 0.20,
+        },
         "rounding": {
             "grams_step": 5,
             "unit_foods": ["egg", "banana", "apple", "orange", "yogurt_unit", "bread_slice"],

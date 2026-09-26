@@ -34,6 +34,7 @@ NON_STRENGTH_ROLES = frozenset({ExerciseRole.MOBILITY, ExerciseRole.CARDIO, Exer
 WARMUP_ROLES = frozenset({ExerciseRole.WARMUP, ExerciseRole.CARDIO})
 MOBILITY_ROLES = frozenset({ExerciseRole.MOBILITY, ExerciseRole.WARMUP})
 UNCONSTRAINED_GROUPS = frozenset({MuscleGroup.OTHER, MuscleGroup.CARDIO})
+LOWER_MAIN_PATTERNS = frozenset({MovementPattern.SQUAT, MovementPattern.HINGE})
 
 
 def role_compatible(slot_role: ExerciseRole, card_role: ExerciseRole) -> bool:
@@ -230,10 +231,10 @@ class Selector:
         if slot.role is ExerciseRole.ACCESSORY and card.is_staple:
             total += weights.staple_in_accessory
         if slot.role is ExerciseRole.MAIN:
-            total += self._main_equipment_bonus(card)
+            total += self._main_equipment_bonus(card, slot)
         return total
 
-    def _main_equipment_bonus(self, card: ExerciseCard) -> int:
+    def _main_equipment_bonus(self, card: ExerciseCard, slot: SlotRef) -> int:
         """Preferencia de material cargable en slots main (ADR 0012) y de barra en fuerza (C5)."""
         weights = self.rules.scoring
         level = self.inp.experience
@@ -248,6 +249,11 @@ class Selector:
             and card.equipment_code in self.rules.strength_main_preferred_equipment[level]
         ):
             total += weights.barbell_in_strength_main
+        if (
+            slot.pattern in LOWER_MAIN_PATTERNS
+            and card.equipment_code in self.rules.lower_main_preferred_equipment
+        ):
+            total += weights.lower_main_barbell_or_machine
         return total
 
     def choose(

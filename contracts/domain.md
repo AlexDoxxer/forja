@@ -1,4 +1,4 @@
-# Modelo de dominio de Forja · contrato v1.1.0
+# Modelo de dominio de Forja · contrato v1.2.0
 
 > Contrato compartido entre `ingesta-datos`, `motor-rutinas`, `motor-nutricion`,
 > `backend-api` y `frontend-ui`. Fuente: MASTER_PROMPT §5–§9. Cambios **solo** vía
@@ -178,7 +178,7 @@ Tipos: `uuid` (v7 generado en aplicación), `text`, `citext`, `int`, `numeric(p,
 
 **`nutrition_target`** — `id uuid PK` · `user_id FK` · `calculated_at timestamptz` · `input jsonb` (NutritionInput) · `result jsonb` (NutritionTarget) · columnas desnormalizadas `kcal`, `protein_g`, `fat_g`, `carbs_g`, `fiber_g` `numeric(7,1) null` y `method text`.
 
-**`meal_plan`** — `id uuid PK` · `user_id FK` · `week_start date` · `diet_type text` · `meals_per_day smallint` · `input jsonb` (NutritionInput) · `seed bigint` · `nutrition_version text` · `foods_hash char(64)` · `target jsonb` (NutritionTarget) · `notices jsonb`.
+**`meal_plan`** — `id uuid PK` · `user_id FK` · `week_start date` · `diet_type text` · `meals_per_day smallint` · `input jsonb` (NutritionInput) · `seed bigint` · `nutrition_version text` · `foods_hash char(64)` · `target jsonb` (NutritionTarget) · `notices jsonb` · `snapshot jsonb` (plan completo del motor, fuente de lectura; `meal_plan_item` es su proyección relacional).
 
 **`meal_plan_item`** — `id uuid PK` · `plan_id FK cascade` · `day smallint` (0–6) · `meal text` (MealSlot) · `position smallint` · `food_id FK food` · `grams numeric(6,1)` · `units smallint null`.
 
@@ -372,9 +372,9 @@ nacimiento, altura o peso ⇒ `NutritionBlock(reason_code=missing_profile_data)`
 - `Meal`: `slot: MealSlot`, `items: tuple[MealItem, ...]` (≥ 1), `totals: MacroTotals`.
 - `MacroDeviation`: `kcal`, `protein`, `fat`, `carbs` (`float`, relativo: 0,03 = +3 %).
 - `MealPlanDay`: `day_index` (0–6), `date`, `meals` (longitud = `meals_per_day`), `totals`, `deviation`.
-- `MealPlan`: `nutrition_version`, `foods_hash: Sha256`, `seed: Seed`, `week_start: date` (lunes), `diet_type`, `meals_per_day`, `target: NutritionTarget`, `days` (7), `notices`. Invariantes: ningún alimento excluido o con alérgeno declarado; todos compatibles con `diet_type`; `|deviation.kcal| ≤ 0,05` y macros ≤ 0,10 o aviso `tolerance_not_met`.
+- `MealPlan`: `nutrition_version`, `foods_hash: Sha256`, `seed: Seed`, `week_start: date` (lunes), `diet_type`, `meals_per_day`, `target: NutritionTarget`, `days` (7), `notices`. Invariantes: ningún alimento excluido o con alérgeno declarado; todos compatibles con `diet_type`; `tolerance_not_met` se emite solo si algún día se sale de kcal ±5 %, de proteína ±10 % o supera el techo de grasa del 35 % de las kcal (salvo que el objetivo ya lo supere por el suelo de seguridad); la desviación de grasa y carbohidratos solo se informa en `MacroDeviation` (CC-0004).
 - `ShoppingItem`: `food_id`, `name_es`, `total_grams`, `units | None`; `ShoppingCategory`: `category`, `label_es`, `items`; `ShoppingList`: `week_start`, `categories` (orden de `FoodCategory`).
-- `Food` (registro de `foods.json`): `id: FoodId`, `name_es`, `category: FoodCategory`, `fdc_id: int`, `per_100g: MacroTotals`, `diet_types: tuple[DietType, ...]`, `allergens: tuple[Allergen, ...]`, `macro_role: FoodMacroRole`, `typical_portion_g: float`, `unit_grams: float | None`, `unit_name_es: str | None`, `energy_note: str | None` (justificación si `|kcal − (4P+4C+9G)| > 12 %`).
+- `Food` (registro de `foods.json`): `id: FoodId`, `name_es`, `category: FoodCategory`, `fdc_id: int`, `per_100g: MacroTotals`, `diet_types: tuple[DietType, ...]`, `allergens: tuple[Allergen, ...]`, `macro_role: FoodMacroRole`, `typical_portion_g: float`, `unit_grams: float | None`, `unit_name_es: str | None`, `energy_note: str | None` (justificación si `|kcal − (4P+4C+9G)| > 12 %`), `max_portion_g: float > 0` (tope por ítem), `meal_slots: tuple[MealSlot, ...]` (vacío = no se selecciona automáticamente), `weekly_max: int | None` (máx. apariciones por semana) (CC-0004).
 
 ### 6.3 API pública del motor de nutrición
 ```python
@@ -404,8 +404,9 @@ informado). La API responde `422 nutrition_blocked` con `block` si no hay plan.
 
 ## 8. Versionado
 
-- Este contrato es la versión **1.1.0** (`info.version` de `openapi.yaml`); el orquestador
-  lo congela con la etiqueta `contracts-v1` (1.0.0); 1.1.0 (CC-0001..0003) se etiqueta `contracts-v1.1`.
+- Este contrato es la versión **1.2.0** (`info.version` de `openapi.yaml`); el orquestador
+  lo congela con la etiqueta `contracts-v1` (1.0.0); 1.1.0 (CC-0001..0003) se etiqueta `contracts-v1.1`; 1.2.0 (CC-0004) `contracts-v1.2`.
+- §7.2 paso 5 (motor de rutinas): la puntuación de candidatos de slots `main` incluye `scoring.loadable_in_main: +10` (material que admite carga progresiva); extensión aprobada en ADR 0012.
 - Cambios compatibles (campo opcional nuevo, valor de enumeración nuevo en una salida,
   endpoint nuevo) ⇒ versión menor. Incompatibles ⇒ versión mayor y ADR.
 - Toda propuesta se registra en `docs/CONTRACT_CHANGES.md`; al aprobarla, el arquitecto

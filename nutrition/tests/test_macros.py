@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import pytest
+
 from forja_nutrition.macros import (
     carbs_g_from_remainder,
     clamp_protein_g_per_kg,
     fat_floor_governed_by_percentage,
     fiber_g_for,
+    protein_basis_weight_kg,
     protein_g_per_kg_for_goal,
     resolve_energy_and_fat,
 )
@@ -90,7 +93,7 @@ def test_fiber_g_for() -> None:
 
 
 def test_resolve_energy_and_fat_with_synthetic_table_hits_pct_branch_early() -> None:
-    custom_fat_table = FatTable(min_g_per_kg=0.1, min_pct_kcal=0.5)
+    custom_fat_table = FatTable(min_g_per_kg=0.1, min_pct_kcal=0.5, max_pct_kcal=0.9)
     kcal, fat_g = resolve_energy_and_fat(
         weight_kg=60.0, protein_g=90.0, preliminary_kcal=1800.0, fat_table=custom_fat_table
     )
@@ -101,3 +104,17 @@ def test_resolve_energy_and_fat_with_synthetic_table_hits_pct_branch_early() -> 
 def test_protein_table_is_a_pydantic_model() -> None:
     table = ProteinTable(default=1.8, lose=2.1, recomp=2.0, gain=1.8, min=1.6, max=2.2)
     assert table.default == 1.8
+
+
+BASIS = load_nutrition_tables().protein_bodyweight_basis
+
+
+def test_protein_basis_uses_total_weight_below_the_bmi_threshold() -> None:
+    assert protein_basis_weight_kg(weight_kg=80.0, height_cm=178.0, basis=BASIS) == 80.0
+
+
+def test_protein_basis_uses_weight_at_reference_bmi_in_obesity() -> None:
+    # 130 kg a 175 cm: IMC 42,4 -> peso a IMC 27 = 27 * 1,75^2
+    assert protein_basis_weight_kg(weight_kg=130.0, height_cm=175.0, basis=BASIS) == (
+        pytest.approx(27 * 1.75**2)
+    )

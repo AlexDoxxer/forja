@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Forja API
-  version: 1.1.0
+  version: 1.2.0
   summary: API de Forja, app de entrenamiento autoalojada.
   description: |
     Contrato de la API de Forja (fuente de verdad, MASTER_PROMPT §9). Lo consumen el cliente
@@ -3478,7 +3478,7 @@ components:
       examples: [garbanzos_cocidos]
     Food:
       type: object
-      required: [id, name_es, category, fdc_id, per_100g, diet_types, allergens, macro_role, typical_portion_g, unit_grams, unit_name_es, energy_note]
+      required: [id, name_es, category, fdc_id, per_100g, diet_types, allergens, macro_role, typical_portion_g, unit_grams, unit_name_es, energy_note, max_portion_g, meal_slots, weekly_max]
       properties:
         id: { $ref: "#/components/schemas/FoodId" }
         name_es: { type: string }
@@ -3494,6 +3494,9 @@ components:
         energy_note:
           type: [string, "null"]
           description: "Justificación cuando |kcal − (4P + 4C + 9G)| supera el 12 % (alcohol, fibra, polioles)."
+        max_portion_g: { type: number, exclusiveMinimum: 0, description: "Tope de gramos por ítem en un plan." }
+        meal_slots: { type: array, uniqueItems: true, items: { $ref: "#/components/schemas/MealSlot" }, description: "Comidas donde puede seleccionarse; vacío = no se selecciona automáticamente." }
+        weekly_max: { type: [integer, "null"], minimum: 1, description: "Máximo de apariciones por semana; `null` sin límite." }
       example:
         id: garbanzos_cocidos
         name_es: garbanzos cocidos
@@ -3507,6 +3510,9 @@ components:
         unit_grams: null
         unit_name_es: null
         energy_note: null
+        max_portion_g: 300
+        meal_slots: [lunch, dinner]
+        weekly_max: null
     FoodPage:
       type: object
       required: [items, next_cursor]

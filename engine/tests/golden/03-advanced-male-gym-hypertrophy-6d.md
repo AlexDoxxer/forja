@@ -53,7 +53,7 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 2 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla goblet con mancuerna (1760) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | sentadilla trasera con barra (0043) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | peso muerto rumano con barra (0085) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | zancada adelante (3470) | 3 | 10-15 por lado | 2 | 75 s | 2-0-1-1 |
 | Trabajo | curl femoral tumbado en máquina (0586) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
@@ -111,7 +111,7 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 | Calentamiento | bicicleta elíptica en máquina (2331) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 2 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla frontal con barra (0042) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | peso muerto rumano con mancuernas (1459) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | peso muerto con barra hexagonal (0811) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
 | Trabajo | sentadilla búlgara con mancuernas (0410) | 3 | 10-15 por lado | 2 | 75 s | 2-0-1-1 |
 | Trabajo | curl femoral sentado en máquina (0599) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |
 | Trabajo | elevación de talones sentado con barra (0088) | 3 | 10-15 | 2 | 75 s | 2-0-1-1 |

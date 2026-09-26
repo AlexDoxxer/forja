@@ -13,6 +13,7 @@ from hypothesis import strategies as st
 
 from forja_nutrition.energy import calculate_target
 from forja_nutrition.foods import foods_by_id, load_foods
+from forja_nutrition.macros import protein_basis_weight_kg
 from forja_nutrition.models import (
     ActivityLevel,
     Allergen,
@@ -24,7 +25,7 @@ from forja_nutrition.models import (
     NutritionPace,
     Sex,
 )
-from forja_nutrition.planner import plan_week
+from forja_nutrition.planner import fat_ceiling_g, plan_week
 from forja_nutrition.shopping import shopping_list
 from forja_nutrition.swap import swap_food
 from forja_nutrition.tables import load_nutrition_tables
@@ -129,8 +130,17 @@ def test_safety_floors_are_always_respected(nutrition_input: NutritionInput) -> 
     kcal_floor = TABLES.safety.kcal_floor[nutrition_input.sex]
     assert target.target_kcal >= max(target.bmr_kcal, kcal_floor) - 1e-6
     assert target.tdee_kcal - target.target_kcal <= 500.0 + 1e-6
-    assert target.protein_g >= TABLES.protein_g_per_kg.min * nutrition_input.weight_kg - 1e-6
-    assert target.protein_g <= TABLES.protein_g_per_kg.max * nutrition_input.weight_kg + 1e-6
+    basis_kg = protein_basis_weight_kg(
+        weight_kg=nutrition_input.weight_kg,
+        height_cm=nutrition_input.height_cm,
+        basis=TABLES.protein_bodyweight_basis,
+    )
+    assert target.protein_g <= TABLES.protein_max_g_per_day + 1e-6
+    assert (
+        target.protein_g
+        >= min(TABLES.protein_g_per_kg.min * basis_kg, TABLES.protein_max_g_per_day) - 1e-6
+    )
+    assert target.protein_g <= TABLES.protein_g_per_kg.max * basis_kg + 1e-6
     assert target.fat_g >= TABLES.fat.min_g_per_kg * nutrition_input.weight_kg - 1e-6
     assert target.fat_g * 9 >= TABLES.fat.min_pct_kcal * target.target_kcal - 1e-6
     assert target.carbs_g >= 0.0
@@ -222,8 +232,14 @@ def test_plan_target_floors_and_tolerance_contract(nutrition_input: NutritionInp
 
     exceeded = any(
         abs(day.deviation.kcal) > TABLES.tolerances.kcal
-        or max(abs(day.deviation.protein), abs(day.deviation.fat), abs(day.deviation.carbs))
-        > TABLES.tolerances.macros
+        or abs(day.deviation.protein) > TABLES.tolerances.macros
+        or day.totals.fat_g
+        > fat_ceiling_g(
+            kcal=day.totals.kcal,
+            fat_target_g=target.fat_g or 0.0,
+            max_pct_kcal=TABLES.fat.max_pct_kcal,
+        )
+        + 1e-6
         for day in plan.days
     )
     codes = {n.code for n in plan.notices}

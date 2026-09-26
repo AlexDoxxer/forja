@@ -47,8 +47,9 @@ NOTICE_MESSAGES_ES: dict[NutritionNoticeCode, str] = {
         "Hemos asegurado un mínimo de grasa saludable en tu objetivo diario."
     ),
     NutritionNoticeCode.tolerance_not_met: (
-        "Algún día del plan se aleja algo más de lo habitual del objetivo calórico o de "
-        "macros; sigue siendo un plan equilibrado en conjunto."
+        "Algún día del plan queda un poco por encima o por debajo de tu objetivo de calorías "
+        "o proteína, o cerca del límite de grasa; es normal y el conjunto de la semana sigue "
+        "siendo equilibrado."
     ),
     NutritionNoticeCode.swap_macros_adjusted: (
         "Al intercambiar el alimento hemos ajustado la cantidad para mantener los "
@@ -186,7 +187,16 @@ def calculate_target(nutrition_input: NutritionInput) -> NutritionTarget:
     )
     if protein_clamped:
         notices.append(notice(NutritionNoticeCode.protein_clamped))
-    protein_g = clamped_per_kg * nutrition_input.weight_kg
+    protein_weight_kg = macros.protein_basis_weight_kg(
+        weight_kg=nutrition_input.weight_kg,
+        height_cm=nutrition_input.height_cm,
+        basis=tables.protein_bodyweight_basis,
+    )
+    protein_g = clamped_per_kg * protein_weight_kg
+    if protein_g > tables.protein_max_g_per_day:
+        protein_g = tables.protein_max_g_per_day
+        if not protein_clamped:
+            notices.append(notice(NutritionNoticeCode.protein_clamped))
 
     target_kcal, fat_g = macros.resolve_energy_and_fat(
         weight_kg=nutrition_input.weight_kg,

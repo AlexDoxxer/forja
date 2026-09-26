@@ -21,7 +21,7 @@ PLACEHOLDER_PATTERN := TODO|FIXME|XXX|NotImplementedError|[Ll]orem ipsum
 .PHONY: help install lint lint-python lint-frontend lint-contracts lint-placeholders \
 	typecheck typecheck-python typecheck-frontend test test-engine test-nutrition \
 	test-backend test-backend-unit test-backend-integration test-frontend test-slow e2e \
-	format build clean
+	format build clean seed-demo
 
 help: ## Muestra esta ayuda
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
@@ -107,6 +107,9 @@ format: ## Formatea Python (ruff) y corrige lo autocorregible de ESLint
 build: ## Construye wheels de los paquetes Python y el bundle del frontend
 	@for p in $(PY_PACKAGES); do $(UV) build --project $$p --out-dir dist/$$p; done
 	cd frontend && $(NPM) run --silent build
+
+seed-demo: ## Datos de demostración (solo desarrollo)
+	cd backend && $(UV_RUN) python -m app.cli seed-demo
 
 clean: ## Elimina artefactos generados
 	rm -rf dist frontend/dist frontend/coverage frontend/playwright-report frontend/test-results

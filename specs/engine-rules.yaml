@@ -39,10 +39,13 @@ scoring:
   loadable_in_main: 10
   # C5: en fuerza, intermedios y avanzados prefieren barra o barra hexagonal en slots main.
   barbell_in_strength_main: 10
+  # B1 (ADR 0012): en main de sentadilla/bisagra pesan más barra y máquina que goblet/peso corporal.
+  lower_main_barbell_or_machine: 20
 loadable_equipment:
   beginner:     [dumbbell, machine, smith, sled, cable, kettlebell]
   intermediate: [barbell, dumbbell, ez_bar, trap_bar, machine, smith, sled, cable, kettlebell, weighted]
   advanced:     [barbell, dumbbell, ez_bar, trap_bar, machine, smith, sled, cable, kettlebell, weighted]
+lower_main_preferred_equipment: [barbell, trap_bar, machine, smith]
 strength_main_preferred_equipment:
   beginner: []
   intermediate: [barbell, trap_bar]
