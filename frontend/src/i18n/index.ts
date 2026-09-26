@@ -1,6 +1,7 @@
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 
+import { registerPartA } from "./partA";
 import { DEFAULT_LANGUAGE, resources } from "./resources";
 
 const STORAGE_KEY = "forja-locale";
@@ -20,6 +21,8 @@ void i18next.use(initReactI18next).init({
   interpolation: { escapeValue: false },
   returnNull: false,
 });
+
+registerPartA(i18next);
 
 i18next.on("languageChanged", (language) => {
   try {

@@ -1,0 +1,42 @@
+.svg {
+  display: block;
+  width: 100%;
+  max-width: 14rem;
+  height: auto;
+  margin: 0 auto;
+}
+.body {
+  fill: var(--color-surface-2);
+  stroke: var(--color-border);
+  stroke-width: 0.5;
+}
+.region {
+  fill: var(--color-surface-1);
+  stroke: var(--color-border);
+  stroke-width: 0.6;
+}
+.interactive {
+  cursor: pointer;
+}
+.interactive:hover {
+  fill: var(--color-surface-2);
+}
+.interactive:focus-visible {
+  outline: none;
+}
+.interactive:focus-visible > * {
+  stroke: var(--color-accent-2);
+  stroke-width: 1.6;
+}
+.selected {
+  fill: var(--color-accent);
+  stroke: var(--color-text);
+  stroke-width: 1.4;
+}
+.secondary {
+  fill: var(--color-accent-2);
+  fill-opacity: 0.55;
+  stroke: var(--color-accent-2);
+  stroke-dasharray: 2 1.5;
+  stroke-width: 1;
+}

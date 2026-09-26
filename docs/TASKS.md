@@ -112,7 +112,7 @@
 | F1-FE-01 | Dependencias de §4.1 y `npm run gen:api` (`openapi-typescript` → `src/lib/api/schema.d.ts`) + cliente `openapi-fetch` con middleware CSRF (ADR 0003) | Tipos generados sin `any`; test del middleware (cabecera en métodos no seguros) | F0-ORQ-01 | hecha |
 | F1-FE-02 | Mocks MSW generados de los ejemplos de `contracts/openapi.yaml` | Handlers para todas las operaciones; tests de componentes los usan | F1-FE-01 | hecha |
 | F1-FE-03 | Tokens de diseño «Forja» (§10.1) y tipografía autoalojada (ADR 0007) | Contraste AA verificado en test; fuentes servidas desde `/assets` | F0-ORQ-01 | hecha |
-| F1-FE-04 | Componentes base sobre Radix (Button, Sheet, Dialog, Tabs, Select, Slider, Toast, NumberPad) | Tests con Testing Library + axe sin violaciones | F1-FE-03 | pendiente (fuera del encargo de esta entrega; ver handoff F1) |
+| F1-FE-04 | Componentes base sobre Radix (Button, Sheet, Dialog, Tabs, Select, Slider, Toast, NumberPad) | Tests con Testing Library + axe sin violaciones | F1-FE-03 | hecha (f2/frontend-a) |
 | F1-FE-05 | `ExerciseMedia` único + regla ESLint que prohíbe `<img>` de medios fuera de él | Test que falla sin atribución «© Gym visual — https://gymvisual.com/»; máx. 180 px; `prefers-reduced-motion` | F1-FE-03 | hecha |
 | F1-FE-06 | Shell: TanStack Router, navegación inferior (móvil) y lateral (escritorio) | Navegación entre las 5 secciones con MSW | F1-FE-04 | hecha |
 | F1-FE-07 | i18n `es` (defecto) y `en` con `Intl` | Sin cadenas sin traducir (test) | F1-FE-06 | hecha |
@@ -165,15 +165,15 @@
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F2-FE-01 | Onboarding 4 pasos con PAR-Q y aviso sanitario | Tests del flujo con PAR-Q marcado y sin marcar | F1-FE-08 | pendiente |
+| F2-FE-01 | Onboarding 4 pasos con PAR-Q y aviso sanitario | Tests del flujo con PAR-Q marcado y sin marcar | F1-FE-08 | hecha (f2/frontend-a) |
 | F2-FE-02 | Hoy (sesión del día, resumen semanal, récord, peso rápido) | Estados `scheduled`/`rest_day`/`no_active_program` | F1-FE-08 | pendiente |
-| F2-FE-03 | Generador (wizard) con vista previa, `rationale_es`, gráfico de volumen, regenerar/cambiar/guardar | Tests del wizard; preselección por sexo explicada | F1-FE-08 | pendiente |
-| F2-FE-04 | Editor (dnd-kit accesible, superseries, validación en vivo, deshacer/rehacer) | Tests de teclado y de deshacer | F2-FE-03 | pendiente |
+| F2-FE-03 | Generador (wizard) con vista previa, `rationale_es`, gráfico de volumen, regenerar/cambiar/guardar | Tests del wizard; preselección por sexo explicada | F1-FE-08 | hecha (f2/frontend-a) |
+| F2-FE-04 | Editor (dnd-kit accesible, superseries, validación en vivo, deshacer/rehacer) | Tests de teclado y de deshacer | F2-FE-03 | hecha (f2/frontend-a) |
 | F2-FE-05 | Reproductor: máquina de estados, temporizador por marcas de tiempo, Wake Lock, vibración, notificación, IndexedDB | Tests: reanudar tras recarga, reloj simulado | F1-FE-08 | pendiente |
 | F2-FE-06 | Cola offline + `/sync` (ADR 0006) | Test offline → online con reintentos | F2-FE-05 | pendiente |
 | F2-FE-07 | Resumen de sesión | Récords y esfuerzo percibido | F2-FE-05 | pendiente |
-| F2-FE-08 | Biblioteca virtualizada con búsqueda sin acentos y mapa muscular SVG | 1.324 elementos fluidos | F1-FE-08 | pendiente |
-| F2-FE-09 | Detalle (10 idiomas, ángulo de cámara, alternativas, historial) | Test de conmutadores | F2-FE-08 | pendiente |
+| F2-FE-08 | Biblioteca virtualizada con búsqueda sin acentos y mapa muscular SVG | 1.324 elementos fluidos | F1-FE-08 | hecha (f2/frontend-a) |
+| F2-FE-09 | Detalle (10 idiomas, ángulo de cámara, alternativas, historial) | Test de conmutadores | F2-FE-08 | hecha (f2/frontend-a) |
 | F2-FE-10 | Progreso (calendario, volumen, e1RM, récords, peso con media de 7 días) | Recharts en chunk diferido | F1-FE-08 | pendiente |
 | F2-FE-11 | Nutrición (anillos neutros, plan, intercambio, lista de la compra, avisos) | Sin colores punitivos (revisión) | F1-FE-08 | pendiente |
 | F2-FE-12 | Perfil, ajustes, sesiones activas, exportar/importar/borrar, Créditos (`GET /about`) | Créditos con MIT, aviso de Gym visual y SHA | F1-FE-08 | pendiente |
