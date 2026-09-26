@@ -1,9 +1,11 @@
-import { Link } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
 import { i18next } from "../../i18n";
+import { api } from "../../lib/api/client";
 import type { components } from "../../lib/api/schema";
 import { applyTheme } from "../../lib/theme";
 import { collectActiveProgramMedia, offlineSupported, requestPrecache } from "../../sw/library";
@@ -24,6 +26,7 @@ import {
   useSaveProfile,
   type ProfileFields,
 } from "./queries";
+import "../auth/strings";
 import "./strings";
 
 type Schemas = components["schemas"];
@@ -339,6 +342,31 @@ function OfflineSection(): React.JSX.Element {
   );
 }
 
+function LogoutButton(): React.JSX.Element {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const [failed, setFailed] = useState(false);
+  const logout = async (): Promise<void> => {
+    try {
+      const result = await api.POST("/auth/logout");
+      if (!result.response.ok) throw new Error("logout");
+      queryClient.clear();
+      await navigate({ to: "/login", replace: true });
+    } catch {
+      setFailed(true);
+    }
+  };
+  return (
+    <div className={shared["row"]}>
+      <button type="button" className={shared["btn"]} onClick={() => void logout()}>
+        {t("auth.logout")}
+      </button>
+      {failed && <p role="alert">{t("auth.logoutError")}</p>}
+    </div>
+  );
+}
+
 function CreditsSection(): React.JSX.Element {
   const { t } = useTranslation();
   const about = useAboutInfo();
@@ -423,6 +451,7 @@ export function ProfileScreen(): React.JSX.Element {
         <SessionsSection />
         <OfflineSection />
       </div>
+      <LogoutButton />
       <CreditsSection />
     </section>
   );

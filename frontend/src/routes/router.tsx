@@ -95,7 +95,15 @@ const adminRoute = createRoute({
   component: lazyRouteComponent(() => import("./AdminRoute"), "AdminRoute"),
 });
 
+// Parte B: inicio de sesión (la guarda de sesión vive en `RootLayout` → `AuthGate`).
+const loginRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/login",
+  component: lazyRouteComponent(() => import("../features/auth/LoginScreen"), "LoginScreen"),
+});
+
 const routeTree = rootRoute.addChildren([
+  loginRoute,
   adminRoute,
   nutritionRoute,
   sessionRoute,
