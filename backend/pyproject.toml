@@ -9,6 +9,7 @@ dependencies = [
   "alembic>=1.14,<2",
   "argon2-cffi>=23.1",
   "asyncpg>=0.30",
+  "email-validator>=2.2",
   "fastapi>=0.115,<1",
   "forja-engine",
   "forja-nutrition",
@@ -86,6 +87,7 @@ minversion = "8.0"
 testpaths = ["tests", "ingest/tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
 addopts = [
   "--strict-markers",
   "--strict-config",
