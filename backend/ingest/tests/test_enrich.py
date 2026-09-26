@@ -5,7 +5,12 @@ from dataclasses import replace
 import pytest
 
 from ingest.catalog import Catalog
-from ingest.domain import MAIN_PATTERNS, MIN_STAPLES_PER_CELL, STAPLE_EQUIPMENT_GROUPS
+from ingest.domain import (
+    MAIN_PATTERNS,
+    MIN_STAPLES_PER_CELL,
+    STAPLE_CELL_EXEMPTIONS,
+    STAPLE_EQUIPMENT_GROUPS,
+)
 from ingest.enrich import (
     EnrichmentError,
     classify_pattern,
@@ -49,7 +54,20 @@ def test_every_main_pattern_and_equipment_group_has_two_staples(full_catalog: Ca
     assert len(cells) == len(MAIN_PATTERNS) * len(STAPLE_EQUIPMENT_GROUPS)
     for cell in cells:
         assert cell.applicable, cell
+        if (cell.pattern, cell.group) in STAPLE_CELL_EXEMPTIONS:
+            continue
         assert len(cell.staple_ids) >= MIN_STAPLES_PER_CELL, cell
+
+
+def test_staple_cell_exemptions_are_the_documented_ones(full_catalog: Catalog) -> None:
+    assert set(STAPLE_CELL_EXEMPTIONS) == {
+        ("vertical_push", "bodyweight"),
+        ("hinge", "bodyweight"),
+    }
+    cells = {(c.pattern, c.group): c for c in staple_matrix(full_catalog)}
+    assert cells[("vertical_push", "bodyweight")].staple_ids == ()
+    assert cells[("hinge", "bodyweight")].staple_ids == ("3292",)
+    assert all(cell.ok for cell in cells.values())
 
 
 def test_full_catalog_has_no_quality_problems(full_catalog: Catalog, specs: IngestSpecs) -> None:
@@ -193,3 +211,31 @@ def test_other_justified_must_really_be_other(
     overrides = specs.overrides.model_copy(update={"other_justified": {"0043": "no"}})
     with pytest.raises(EnrichmentError, match="other_justified"):
         enrich_all([normalized["0043"]], replace(specs, overrides=overrides))
+
+
+def test_domain_review_overrides_f1b(full_catalog: Catalog) -> None:
+    """B3, B5, C1 y C10 de la revisión F1b."""
+    by_id = full_catalog.by_id()
+    for skill in ("0471", "3302"):  # pino: d3, ni staple ni main
+        entry = by_id[skill]
+        assert (entry.enrichment.is_staple, entry.enrichment.role) == (False, "accessory")
+        assert entry.enrichment.difficulty == 3
+    assert by_id["0471"].enrichment.load_type == "bodyweight"
+    assert (by_id["2400"].exercise.equipment_code, by_id["2400"].exercise.equipment_group) == (
+        "cable",
+        "gym",
+    )
+    assert by_id["0555"].enrichment.movement_pattern == "knee_extension"
+    assert by_id["0858"].enrichment.movement_pattern == "cardio"
+    assert by_id["0858"].enrichment.role == "cardio"
+    for compound in ("0352", "1625", "0812", "0813", "0814", "0815"):
+        assert by_id[compound].enrichment.mechanic == "compound"
+    for hard in ("0677", "1367", "0670", "0251", "3193", "0496", "1759"):
+        assert by_id[hard].enrichment.difficulty == 3
+    for retired in ("0046", "1759", "0044", "0489", "0488", "0251", "0553", "1160"):
+        assert not by_id[retired].enrichment.is_staple
+    for added in ("3292", "0696", "1766", "3239"):
+        assert by_id[added].enrichment.is_staple
+    # Regla de dificultad: dominadas/fondos estrictos sin asistencia son d3; asistidas no.
+    assert by_id["1429"].enrichment.difficulty == 3
+    assert by_id["0017"].enrichment.difficulty == 1

@@ -106,7 +106,7 @@ def test_mojibake_in_spanish_name_is_invalid(
 
 
 def test_spanish_name_lookup(specs: IngestSpecs) -> None:
-    assert spanish_name("0043", specs) == "sentadilla profunda con barra"
+    assert spanish_name("0043", specs) == "sentadilla trasera con barra"
     with pytest.raises(NamesError, match="9999"):
         spanish_name("9999", specs)
 

@@ -1,0 +1,321 @@
+/* Componentes base «Forja» (F1-FE-04). Solo tokens de src/styles/tokens.css. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target-min);
+  min-width: var(--tap-target-min);
+  padding: 0 var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--color-text);
+  background: var(--color-surface-2);
+  text-decoration: none;
+  transition: filter var(--motion-duration) ease;
+}
+.button:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.primary {
+  background: var(--gradient-accent);
+  color: var(--color-on-accent);
+}
+.secondary {
+  background: var(--color-surface-2);
+  border-color: var(--color-border);
+}
+.ghost {
+  background: transparent;
+  border-color: var(--color-border);
+}
+.danger {
+  background: transparent;
+  border-color: var(--color-error);
+  color: var(--color-error-text);
+}
+.small {
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  font-size: 0.875rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-1);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.chip[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-color: var(--color-accent);
+  font-weight: 700;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.6);
+  z-index: 50;
+}
+.dialog {
+  position: fixed;
+  z-index: 51;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(32rem, calc(100vw - 2rem));
+  max-height: 90dvh;
+  overflow: auto;
+  padding: var(--space-5);
+  background: var(--color-surface-1);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+}
+.sheet {
+  position: fixed;
+  z-index: 51;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 85dvh;
+  overflow: auto;
+  padding: var(--space-5);
+  background: var(--color-surface-1);
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: var(--shadow-2);
+}
+@media (min-width: 1024px) {
+  .sheet {
+    left: auto;
+    top: 0;
+    width: 28rem;
+    max-height: none;
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    border-left: 1px solid var(--color-border);
+    border-top: 0;
+  }
+}
+.dialogTitle {
+  margin: 0 0 var(--space-2);
+  font-size: 1.25rem;
+}
+.dialogDescription {
+  margin: 0 0 var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.tabsList {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  border-bottom: 1px solid var(--color-border);
+}
+.tabsTrigger {
+  min-height: var(--tap-target-min);
+  padding: 0 var(--space-4);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tabsTrigger[data-state="active"] {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+.tabsContent {
+  padding-top: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+.label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.input,
+.selectTrigger {
+  min-height: var(--tap-target-min);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  font: inherit;
+}
+.selectTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+.selectContent {
+  z-index: 60;
+  background: var(--color-surface-1);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
+}
+.selectItem {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  cursor: pointer;
+  outline: none;
+}
+.selectItem[data-highlighted] {
+  background: var(--color-surface-2);
+}
+.fieldError {
+  color: var(--color-error-text);
+  font-size: 0.875rem;
+  margin: 0;
+}
+.hint {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+.checkRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-height: var(--tap-target-min);
+  padding: var(--space-2) 0;
+}
+.checkRow input {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.1rem;
+  accent-color: var(--color-accent);
+}
+
+.sliderRoot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--tap-target-min);
+  touch-action: none;
+  user-select: none;
+}
+.sliderTrack {
+  position: relative;
+  flex-grow: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-surface-2);
+}
+.sliderRange {
+  position: absolute;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--gradient-accent);
+}
+.sliderThumb {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-text);
+  border: 3px solid var(--color-accent);
+  box-shadow: var(--shadow-1);
+}
+
+.toastViewport {
+  position: fixed;
+  z-index: 70;
+  right: var(--space-4);
+  bottom: calc(var(--nav-height) + var(--space-4));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(22rem, calc(100vw - 2rem));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.toast {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-left-width: 6px;
+  box-shadow: var(--shadow-2);
+}
+.toastSuccess {
+  border-left-color: var(--color-success);
+}
+.toastError {
+  border-left-color: var(--color-error);
+}
+.toastInfo {
+  border-left-color: var(--color-accent);
+}
+.toastTitle {
+  font-weight: 700;
+}
+.toastDescription {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  max-width: 20rem;
+}
+.padKey {
+  min-height: 56px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.card {
+  padding: var(--space-4);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.cardSelectable {
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  color: var(--color-text);
+  font: inherit;
+}
+.cardSelectable[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}

@@ -1,0 +1,102 @@
+.root {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+.progress {
+  margin: 0 0 var(--space-2);
+  color: var(--color-text-muted);
+}
+.bar {
+  width: 100%;
+  height: 8px;
+  margin-bottom: var(--space-5);
+  accent-color: var(--color-accent);
+}
+.step {
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+}
+.step legend {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: var(--space-4);
+}
+.label {
+  font-weight: 600;
+  margin: var(--space-4) 0 var(--space-2);
+}
+.hint {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  margin: var(--space-2) 0;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.cards {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+.question {
+  margin-bottom: var(--space-4);
+}
+.question p {
+  margin: 0 0 var(--space-2);
+}
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target-min);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+.radio input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--color-accent);
+}
+.diet {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  min-height: var(--tap-target-min);
+}
+.diet input {
+  width: 1.5rem;
+  height: 1.5rem;
+  accent-color: var(--color-accent);
+}
+.notice {
+  padding: var(--space-3) var(--space-4);
+  border-left: 6px solid var(--color-warning);
+  background: var(--color-surface-1);
+  border-radius: var(--radius-md);
+}
+.error {
+  color: var(--color-error-text);
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target-min);
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--gradient-accent);
+  color: var(--color-on-accent);
+  font-weight: 700;
+  text-decoration: none;
+}

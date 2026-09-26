@@ -489,3 +489,19 @@ def test_plan_week_uses_date_range_starting_at_week_start() -> None:
     assert outcome.plan is not None
     dates = [day.date for day in outcome.plan.days]
     assert dates == [MONDAY + timedelta(days=i) for i in range(7)]
+
+
+def test_peanuts_allergen_tags_and_never_in_plan() -> None:
+    catalog = foods_by_id()
+    for food_id in ("cacahuete", "mantequilla_cacahuete"):
+        assert Allergen.peanuts in catalog[food_id].allergens
+    for diet in (DietType.omnivore, DietType.vegan):
+        for seed in range(3):
+            outcome = plan_week(
+                make_input(allergens=(Allergen.peanuts,), diet_type=diet, seed=seed), MONDAY
+            )
+            assert outcome.plan is not None
+            for day in outcome.plan.days:
+                for meal in day.meals:
+                    for item in meal.items:
+                        assert Allergen.peanuts not in catalog[item.food_id].allergens

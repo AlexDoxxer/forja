@@ -32,12 +32,12 @@ _Trabajo de isquiotibiales, hombros, espalda y cuádriceps_
 | Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | hiperextensión (0489) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | hiperextensión en banco (0488) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Trabajo | flexión en pino (0471) | 2 | 20 s | 3 | 105 s | — |
+| Trabajo | fondos de pecho (0251) | 2 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | dominada con agarre ancho (1429) | 2 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Vuelta a la calma | secuencia de postura de ángulo abierto sentado (1587) | 1 | 30 s por lado | — | 0 s | — |
 | Vuelta a la calma | estiramiento de deltoides posterior (0669) | 1 | 30 s por lado | — | 0 s | — |
 
-Series efectivas: back 2, arms 3, core 3
+Series efectivas: chest 2, back 2, arms 2, core 3
 
 ### Día 3 · Cuerpo completo C (~30 min)
 
@@ -49,7 +49,7 @@ _Trabajo de cuádriceps, espalda, pecho y glúteos_
 | Calentamiento | sentadilla profunda en cuclillas con apoyo (3132) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla con peso corporal (cuádriceps) (3533) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | dominada (0652) | 2 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Superserie x2 | flexión (0662) | 2 | 12-15 | 3 | 60 s | 2-0-1-0 |
+| Superserie x2 | flexión con toque de hombro (0699) | 2 | 12-15 | 3 | 60 s | 2-0-1-0 |
 | Superserie x2 | extensión de cadera en banco (0130) | 2 | 12-15 | 3 | 60 s | 2-0-1-0 |
 | Vuelta a la calma | estiramiento de cuádriceps a cuatro apoyos (1512) | 1 | 30 s por lado | — | 0 s | — |
 | Vuelta a la calma | estiramiento de dorsal a una mano contra la pared (1355) | 1 | 30 s por lado | — | 0 s | — |
@@ -70,10 +70,10 @@ Series efectivas: chest 2, back 2, arms 2, quads 3, glutes 3,5
 
 | Grupo | Objetivo | Planificado |
 |---|---|---|
-| chest | 6-10 | 4 |
+| chest | 6-10 | 6 |
 | back | 6-10 | 6 |
 | shoulders | 6-10 | 0 |
-| arms | 4-8 | 7 |
+| arms | 4-8 | 6 |
 | quads | 6-10 | 6 |
 | hamstrings | 6-10 | 0 |
 | glutes | 6-10 | 5 |
@@ -83,18 +83,17 @@ Series efectivas: chest 2, back 2, arms 2, quads 3, glutes 3,5
 ## Avisos
 
 - `slot_relaxed`: En «Cuerpo completo A» no había un ejercicio ideal de bisagra de cadera con tu equipamiento: hemos elegido «hiperextensión», con una dificultad superior a tu nivel y otro músculo objetivo.
-- `slot_relaxed`: En «Cuerpo completo A» no había un ejercicio ideal de elevaciones de hombro con tu equipamiento: hemos elegido «pino», con una dificultad superior a tu nivel, otro músculo objetivo y un patrón de movimiento afín.
-- `slot_dropped`: Para ajustar «Cuerpo completo A» a 30 minutos hemos quitado el finisher de cardio, «bicho muerto (dead bug)», «pino» y «hiperextensión».
+- `equipment_insufficient`: En «Cuerpo completo A» no hay ningún ejercicio de elevaciones de hombro con el equipamiento que tienes: hemos quitado ese hueco del día.
+- `slot_dropped`: Para ajustar «Cuerpo completo A» a 30 minutos hemos quitado el finisher de cardio, «bicho muerto (dead bug)» y «hiperextensión».
 - `main_exercise_trimmed`: El tiempo de «Cuerpo completo A» es muy justo: hemos tenido que recortar series o descansos de los ejercicios principales.
 - `slot_relaxed`: En «Cuerpo completo B» no había un ejercicio ideal de bisagra de cadera con tu equipamiento: hemos elegido «hiperextensión en banco», con una dificultad superior a tu nivel y otro músculo objetivo.
-- `slot_relaxed`: En «Cuerpo completo B» no había un ejercicio ideal de empuje vertical con tu equipamiento: hemos elegido «flexión en pino», con una dificultad superior a tu nivel y otro músculo objetivo.
+- `slot_relaxed`: En «Cuerpo completo B» no había un ejercicio ideal de empuje vertical con tu equipamiento: hemos elegido «fondos de pecho», con una dificultad superior a tu nivel, otro músculo objetivo y un patrón de movimiento afín.
 - `slot_dropped`: Para ajustar «Cuerpo completo B» a 30 minutos hemos quitado el finisher de cardio, «abdominal completo inclinado con giro», «curl de bíceps tumbado de lado con peso corporal» y «sentadilla dividida en suspensión».
 - `main_exercise_trimmed`: El tiempo de «Cuerpo completo B» es muy justo: hemos tenido que recortar series o descansos de los ejercicios principales.
 - `slot_dropped`: Para ajustar «Cuerpo completo C» a 30 minutos hemos quitado el finisher de cardio, «abdominal completo Janda», «elevación de talones tipo burro» y «fondos en el suelo con apoyo en banco».
-- `volume_out_of_range`: Volumen semanal de pecho: 4 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de pecho: 6 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de espalda: 6 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de hombros: 0 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
-- `volume_out_of_range`: Volumen semanal de brazos: 7 series efectivas, por encima del objetivo de 6. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.
 - `volume_out_of_range`: Volumen semanal de cuádriceps: 6 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de isquiotibiales: 0 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de glúteos: 5 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.

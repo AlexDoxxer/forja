@@ -1,9 +1,6 @@
-import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
+import { createRootRoute, createRoute, createRouter, lazyRouteComponent } from "@tanstack/react-router";
 
 import { SessionRoute, SessionSummaryRoute } from "../features/session/SessionRoute";
-import { AdminRoute } from "./AdminRoute";
-import { LibraryRoute } from "./LibraryRoute";
-import { NutritionRoute } from "./NutritionRoute";
 import { ProfileRoute } from "./ProfileRoute";
 import { ProgramsRoute } from "./ProgramsRoute";
 import { ProgressRoute } from "./ProgressRoute";
@@ -29,10 +26,36 @@ const programsRoute = createRoute({
   component: ProgramsRoute,
 });
 
+// Rutas de la parte A (F2): cargadas bajo demanda para mantener el JS inicial < 200 KB gzip (§10.5).
+// Recharts (generador) y dnd-kit (editor) quedan en chunks propios.
 const libraryRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/biblioteca",
-  component: LibraryRoute,
+  component: lazyRouteComponent(() => import("../features/library/LibraryScreen"), "LibraryScreen"),
+});
+
+const exerciseDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/biblioteca/$exerciseId",
+  component: lazyRouteComponent(() => import("../features/library/ExerciseDetailScreen"), "ExerciseDetailScreen"),
+});
+
+const onboardingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/onboarding",
+  component: lazyRouteComponent(() => import("../features/onboarding/OnboardingScreen"), "OnboardingScreen"),
+});
+
+const generatorRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/rutinas/nueva",
+  component: lazyRouteComponent(() => import("../features/generator/GeneratorScreen"), "GeneratorScreen"),
+});
+
+const editorRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/rutinas/$programId/editar",
+  component: lazyRouteComponent(() => import("../features/editor/EditorScreen"), "EditorScreen"),
 });
 
 const progressRoute = createRoute({
@@ -63,13 +86,13 @@ const sessionSummaryRoute = createRoute({
 const nutritionRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/nutricion",
-  component: NutritionRoute,
+  component: lazyRouteComponent(() => import("./NutritionRoute"), "NutritionRoute"),
 });
 
 const adminRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/admin",
-  component: AdminRoute,
+  component: lazyRouteComponent(() => import("./AdminRoute"), "AdminRoute"),
 });
 
 const routeTree = rootRoute.addChildren([
@@ -80,6 +103,10 @@ const routeTree = rootRoute.addChildren([
   todayRoute,
   programsRoute,
   libraryRoute,
+  exerciseDetailRoute,
+  onboardingRoute,
+  generatorRoute,
+  editorRoute,
   progressRoute,
   profileRoute,
 ]);
