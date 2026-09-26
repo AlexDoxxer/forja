@@ -274,3 +274,14 @@ def test_protein_cap_does_not_duplicate_the_clamped_notice(
     assert target.protein_g == pytest.approx(150.0)
     codes = [n.code for n in target.notices]
     assert codes.count(NutritionNoticeCode.protein_clamped) == 1
+
+
+def test_fat_floor_in_obesity_uses_the_adjusted_bodyweight() -> None:
+    # CAMBIO-N1: 108 kg a 178 cm (IMC 34) en déficit; el suelo de 0,8 g/kg se aplica al peso
+    # ajustado (IMC 27), no al peso total, y la grasa no supera el 35 % de las kcal.
+    target = calculate_target(make_input(weight_kg=108.0, height_cm=178.0, goal=NutritionGoal.lose))
+    assert target.target_kcal is not None
+    assert target.fat_g is not None
+    assert target.fat_g * 9 / target.target_kcal <= 0.35
+    assert target.fat_g >= 0.8 * 27 * 1.78**2 - 1e-6
+    assert target.fat_g < 0.8 * 108.0

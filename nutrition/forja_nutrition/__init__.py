@@ -10,7 +10,7 @@ API pública (`contracts/domain.md` §6.3): :func:`calculate_target`, :func:`pla
 
 from typing import Final
 
-NUTRITION_VERSION: Final[str] = "0.2.0"
+NUTRITION_VERSION: Final[str] = "0.2.1"
 __version__: Final[str] = NUTRITION_VERSION
 
 # Los submódulos se importan después de fijar __version__: planner.py lo usa como

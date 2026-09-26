@@ -4997,10 +4997,7 @@
     "unit_name_es": null,
     "energy_note": null,
     "max_portion_g": 15.0,
-    "meal_slots": [
-      "lunch",
-      "dinner"
-    ],
+    "meal_slots": [],
     "weekly_max": null
   },
   {
@@ -5321,10 +5318,7 @@
     "unit_name_es": null,
     "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
     "max_portion_g": 120.0,
-    "meal_slots": [
-      "lunch",
-      "dinner"
-    ],
+    "meal_slots": [],
     "weekly_max": null
   },
   {

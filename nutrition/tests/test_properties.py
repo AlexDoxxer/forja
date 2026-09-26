@@ -141,7 +141,7 @@ def test_safety_floors_are_always_respected(nutrition_input: NutritionInput) -> 
         >= min(TABLES.protein_g_per_kg.min * basis_kg, TABLES.protein_max_g_per_day) - 1e-6
     )
     assert target.protein_g <= TABLES.protein_g_per_kg.max * basis_kg + 1e-6
-    assert target.fat_g >= TABLES.fat.min_g_per_kg * nutrition_input.weight_kg - 1e-6
+    assert target.fat_g >= TABLES.fat.min_g_per_kg * basis_kg - 1e-6
     assert target.fat_g * 9 >= TABLES.fat.min_pct_kcal * target.target_kcal - 1e-6
     assert target.carbs_g >= 0.0
 
