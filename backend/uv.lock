@@ -496,7 +496,7 @@ dev = [
 
 [[package]]
 name = "forja-nutrition"
-version = "0.2.0"
+version = "0.2.1"
 source = { editable = "../nutrition" }
 dependencies = [
     { name = "numpy" },
