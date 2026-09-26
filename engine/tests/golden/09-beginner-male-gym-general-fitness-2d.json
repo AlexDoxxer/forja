@@ -1,6 +1,6 @@
 {
  "engine_version": "0.2.0",
- "tables_hash": "5e65c2042ee833ccb1e2b50d1742ded0802e047a2cf8fccaa065b33f67eafe48",
+ "tables_hash": "9b0522a74876b46d121e095e9a98607744057030a3d3f2c8cf98548c5e481275",
  "seed": 20260923,
  "input": {
   "goal": "general_fitness",
@@ -118,7 +118,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0739",
+         "exercise_id": "0770",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -130,9 +130,9 @@
          "load_hint": "Carga que te deje 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0413",
-          "0534",
-          "0770"
+          "0042",
+          "0043",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -447,7 +447,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1459",
+         "exercise_id": "0085",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -459,9 +459,9 @@
          "load_hint": "Carga que te deje 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1757",
           "0032",
-          "0085"
+          "0117",
+          "0811"
          ],
          "order": 0,
          "slot": {
@@ -780,7 +780,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0739",
+         "exercise_id": "0770",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -792,9 +792,9 @@
          "load_hint": "Carga que te deje 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0413",
-          "0534",
-          "0770"
+          "0042",
+          "0043",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -1109,7 +1109,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1459",
+         "exercise_id": "0085",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -1121,9 +1121,9 @@
          "load_hint": "Carga que te deje 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1757",
           "0032",
-          "0085"
+          "0117",
+          "0811"
          ],
          "order": 0,
          "slot": {
@@ -1442,7 +1442,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0739",
+         "exercise_id": "0770",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -1454,9 +1454,9 @@
          "load_hint": "Carga que te deje 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0413",
-          "0534",
-          "0770"
+          "0042",
+          "0043",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -1771,7 +1771,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1459",
+         "exercise_id": "0085",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -1783,9 +1783,9 @@
          "load_hint": "Carga que te deje 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1757",
           "0032",
-          "0085"
+          "0117",
+          "0811"
          ],
          "order": 0,
          "slot": {
@@ -2104,7 +2104,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0739",
+         "exercise_id": "0770",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -2116,9 +2116,9 @@
          "load_hint": "Carga que te deje 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0413",
-          "0534",
-          "0770"
+          "0042",
+          "0043",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -2433,7 +2433,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1459",
+         "exercise_id": "0085",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -2445,9 +2445,9 @@
          "load_hint": "Carga que te deje 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1757",
           "0032",
-          "0085"
+          "0117",
+          "0811"
          ],
          "order": 0,
          "slot": {
@@ -2766,7 +2766,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0739",
+         "exercise_id": "0770",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -2778,9 +2778,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0413",
-          "0534",
-          "0770"
+          "0042",
+          "0043",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -3095,7 +3095,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1459",
+         "exercise_id": "0085",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -3107,9 +3107,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1757",
           "0032",
-          "0085"
+          "0117",
+          "0811"
          ],
          "order": 0,
          "slot": {
