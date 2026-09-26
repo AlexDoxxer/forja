@@ -3,6 +3,7 @@
 
 import asyncio
 import hashlib
+import re
 from collections.abc import AsyncIterator, Callable, Iterator
 from pathlib import Path
 from typing import Any
@@ -24,6 +25,11 @@ from ingest.load import load_catalog
 from ingest.media import Manifest, ManifestFile
 from ingest.specs import load_specs
 from ingest.tests.conftest import index_records
+from tests.contract.test_openapi_contract import (
+    operations as contract_operations,
+)
+from tests.contract.test_openapi_contract import resolve as contract_resolve
+from tests.contract.test_openapi_contract import validator_for as contract_validator
 
 POSTGRES_IMAGE = "postgres:16-alpine"
 BACKEND_DIR = Path(__file__).resolve().parents[2]
@@ -131,11 +137,47 @@ async def clean_state(engine: AsyncEngine, app: FastAPI) -> None:
     app.state.rate_limiter.reset()
 
 
+def _operations() -> list[tuple[str, re.Pattern[str], dict[str, Any]]]:
+    found = []
+    for method, path, operation in contract_operations():
+        regex = re.sub(r"\{[^}]+\}", "[^/]+", path)
+        found.append((method, re.compile(f"^{regex}$"), operation))
+    return found
+
+
+CONTRACT_ROUTES = _operations()
+
+
+async def _assert_matches_contract(response: httpx.Response) -> None:
+    """Toda respuesta JSON de la API debe cumplir el esquema del contrato para su operación."""
+    path = response.request.url.path.removeprefix("/api/v1")
+    method = response.request.method.lower()
+    operation = next(
+        (op for m, rx, op in CONTRACT_ROUTES if m == method and rx.match(path)), None
+    )
+    if operation is None or "json" not in response.headers.get("content-type", ""):
+        return
+    spec = operation["responses"].get(str(response.status_code))
+    if spec is None:
+        return
+    body = contract_resolve(spec).get("content", {})
+    media = next((v for k, v in body.items() if "json" in k), None)
+    if media is None or "schema" not in media:
+        return
+    await response.aread()
+    errors = list(contract_validator(media["schema"]).iter_errors(response.json()))
+    assert not errors, (
+        f"{method.upper()} {path} -> {response.status_code} incumple el contrato: "
+        + "; ".join(f"{list(e.path)}: {e.message}" for e in errors[:3])
+    )
+
+
 def _sync_csrf(client: httpx.AsyncClient) -> Callable[[httpx.Response], Any]:
-    async def hook(_response: httpx.Response) -> None:
+    async def hook(response: httpx.Response) -> None:
         token = client.cookies.get(CSRF_COOKIE)
         if token:
             client.headers[CSRF_HEADER] = token
+        await _assert_matches_contract(response)
 
     return hook
 

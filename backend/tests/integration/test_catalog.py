@@ -142,8 +142,8 @@ async def test_favorites_are_idempotent_and_filterable(
     assert (await client.put("/exercises/0043/favorite")).status_code == 204
     assert (await client.put("/exercises/0043/favorite")).status_code == 204
     assert await _ids(client, favorites="true") == ["0043"]
-    mine = (await client.get("/exercises", params={"q": "sentadilla profunda"})).json()["items"]
-    assert next(i for i in mine if i["id"] == "0043")["is_favorite"] is True
+    mine = (await client.get("/exercises", params={"favorites": "true"})).json()["items"]
+    assert [(i["id"], i["is_favorite"]) for i in mine] == [("0043", True)]
     assert await _ids(other_client, favorites="true") == []
     assert (await client.delete("/exercises/0043/favorite")).status_code == 204
     assert (await client.delete("/exercises/0043/favorite")).status_code == 204

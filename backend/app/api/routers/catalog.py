@@ -2,7 +2,7 @@
 
 from typing import Annotated
 
-from fastapi import APIRouter, Path, Query, Request, Response, status
+from fastapi import APIRouter, Header, Path, Query, Response, status
 from pydantic import Field
 from forja_engine.models import (
     BodyPart,
@@ -22,6 +22,7 @@ from app.services import catalog as service
 router = APIRouter(tags=["catalog"])
 
 ExerciseIdPath = Annotated[str, Path(pattern=r"^[0-9]{4}$")]
+IfNoneMatch = Annotated[str | None, Header(alias="If-None-Match")]
 NOT_MODIFIED = {304: {"description": "Sin cambios desde el ETag indicado."}}
 
 
@@ -32,7 +33,6 @@ NOT_MODIFIED = {304: {"description": "Sin cambios desde el ETag indicado."}}
     responses={**NOT_MODIFIED, **errors(401, 422)},
 )
 async def list_exercises(
-    request: Request,
     user: CurrentUserDep,
     db: Db,
     q: Annotated[str | None, Query(min_length=1, max_length=100)] = None,
@@ -48,6 +48,7 @@ async def list_exercises(
     include_deprecated: bool = False,
     cursor: Annotated[str | None, Query(max_length=512)] = None,
     limit: Annotated[int, Query(ge=1, le=100)] = 20,
+    if_none_match: IfNoneMatch = None,
 ) -> Response:
     filters = ExerciseFilters(
         q=q.strip() if q else None,
@@ -63,7 +64,7 @@ async def list_exercises(
         include_deprecated=include_deprecated,
     )
     page = await service.list_page(db, filters, user, cursor=decode_cursor(cursor), limit=limit)
-    return etag_json(request, page)
+    return etag_json(if_none_match, page)
 
 
 @router.get(
@@ -73,7 +74,6 @@ async def list_exercises(
     responses={**NOT_MODIFIED, **errors(401, 422)},
 )
 async def get_catalog_facets(
-    request: Request,
     user: CurrentUserDep,
     db: Db,
     q: Annotated[str | None, Query(min_length=1, max_length=100)] = None,
@@ -82,6 +82,7 @@ async def get_catalog_facets(
     equipment: Annotated[list[EquipmentCode] | None, Query()] = None,
     pattern: Annotated[list[MovementPattern] | None, Query()] = None,
     favorites: bool = False,
+    if_none_match: IfNoneMatch = None,
 ) -> Response:
     filters = ExerciseFilters(
         q=q.strip() if q else None,
@@ -91,7 +92,7 @@ async def get_catalog_facets(
         pattern=[str(v) for v in pattern or ()],
         favorites=favorites,
     )
-    return etag_json(request, await service.get_facets(db, user, filters))
+    return etag_json(if_none_match, await service.get_facets(db, user, filters))
 
 
 @router.get(
@@ -102,14 +103,14 @@ async def get_catalog_facets(
 )
 async def get_exercise(
     exercise_id: ExerciseIdPath,
-    request: Request,
     user: CurrentUserDep,
     db: Db,
     lang: Annotated[
         str | None, Query(pattern=r"^(en|es|it|tr|ru|zh|hi|pl|ko|fr)$")
     ] = None,
+    if_none_match: IfNoneMatch = None,
 ) -> Response:
-    return etag_json(request, await service.get_detail(db, user, exercise_id, lang))
+    return etag_json(if_none_match, await service.get_detail(db, user, exercise_id, lang))
 
 
 @router.get(
@@ -120,15 +121,15 @@ async def get_exercise(
 )
 async def list_exercise_alternatives(
     exercise_id: ExerciseIdPath,
-    request: Request,
     user: CurrentUserDep,
     db: Db,
     equipment: Annotated[list[EquipmentCode] | None, Query()] = None,
+    if_none_match: IfNoneMatch = None,
 ) -> Response:
     result = await service.get_alternatives(
         db, user, exercise_id, [str(v) for v in equipment or ()]
     )
-    return etag_json(request, result)
+    return etag_json(if_none_match, result)
 
 
 @router.put(

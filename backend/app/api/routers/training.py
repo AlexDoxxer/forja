@@ -184,6 +184,7 @@ async def finish_workout_session(
     "/sync",
     operation_id="syncOfflineBatch",
     response_model=api.SyncResponse,
+    response_model_exclude_unset=True,
     responses=errors(401, 403, 413, 422),
 )
 async def sync_offline_batch(

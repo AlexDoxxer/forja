@@ -107,7 +107,12 @@ async def change_password(
     )
 
 
-@router.get("/check", operation_id="checkSession", status_code=status.HTTP_204_NO_CONTENT)
+@router.get(
+    "/check",
+    operation_id="checkSession",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses={401: {"description": "Sin sesión válida (sin cuerpo)."}},
+)
 async def check_session(request: Request, db: Db) -> Response:
     """Para ``auth_request`` de nginx: 204/401 sin cuerpo; no renueva la sesión."""
     auth = await find_valid_session(db, request.cookies.get(SESSION_COOKIE))
