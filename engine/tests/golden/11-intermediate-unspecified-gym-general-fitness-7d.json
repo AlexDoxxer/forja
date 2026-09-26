@@ -1,6 +1,6 @@
 {
- "engine_version": "0.1.1",
- "tables_hash": "55b940e662f992d8ccd21283fac3b5f1160c9bb23270ef62377379d7da87dd36",
+ "engine_version": "0.2.0",
+ "tables_hash": "5e65c2042ee833ccb1e2b50d1742ded0802e047a2cf8fccaa065b33f67eafe48",
  "seed": 20260923,
  "input": {
   "goal": "general_fitness",
@@ -74,7 +74,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 39,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -99,7 +99,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3758",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -191,8 +191,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1283",
-         "sets": 1,
+         "exercise_id": "0748",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -203,9 +203,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0047",
+          "0251"
          ],
          "order": 0,
          "slot": {
@@ -225,8 +225,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0308",
-         "sets": 1,
+         "exercise_id": "0227",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -237,9 +237,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0040",
-          "0155",
-          "0158"
+          "0308",
+          "0596",
+          "0040"
          ],
          "order": 0,
          "slot": {
@@ -259,21 +259,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0355",
-         "sets": 1,
+         "exercise_id": "0334",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0041",
-          "0100",
-          "0107"
+          "0178",
+          "0584",
+          "0041"
          ],
          "order": 0,
          "slot": {
@@ -293,8 +293,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0057",
-         "sets": 1,
+         "exercise_id": "0060",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -305,9 +305,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -327,12 +327,12 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1259",
+         "exercise_id": "1716",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -348,7 +348,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -364,15 +364,15 @@
      "volume": [
       {
        "group": "chest",
-       "sets": 5.0
+       "sets": 7.0
       },
       {
        "group": "shoulders",
-       "sets": 4.0
+       "sets": 5.0
       },
       {
        "group": "arms",
-       "sets": 4.5
+       "sets": 4.4
       }
      ]
     },
@@ -383,7 +383,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 34,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -392,7 +392,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3221",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -408,7 +408,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0232",
+         "exercise_id": "0970",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -433,7 +433,7 @@
        "exercises": [
         {
          "exercise_id": "0017",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -467,7 +467,7 @@
        "exercises": [
         {
          "exercise_id": "0180",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -500,8 +500,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1329",
-         "sets": 1,
+         "exercise_id": "2300",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -509,12 +509,12 @@
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 3 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0293"
          ],
          "order": 0,
          "slot": {
@@ -534,8 +534,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0076",
-         "sets": 1,
+         "exercise_id": "0203",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -546,9 +546,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0075",
-          "0154",
-          "0202"
+          "0383",
+          "0602",
+          "0993"
          ],
          "order": 0,
          "slot": {
@@ -568,8 +568,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0390",
-         "sets": 1,
+         "exercise_id": "0968",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -580,9 +580,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0023",
           "0031",
-          "0038"
+          "0165",
+          "0294"
          ],
          "order": 0,
          "slot": {
@@ -602,8 +602,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0329",
-         "sets": 1,
+         "exercise_id": "0406",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -615,8 +615,8 @@
          "notes_es": null,
          "alternatives": [
           "0095",
-          "0220",
-          "0304"
+          "1018",
+          "0220"
          ],
          "order": 0,
          "slot": {
@@ -657,7 +657,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -673,15 +673,15 @@
      "volume": [
       {
        "group": "back",
-       "sets": 6.0
+       "sets": 10.0
       },
       {
        "group": "shoulders",
-       "sets": 1.0
+       "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 4.4
       }
      ]
     },
@@ -689,10 +689,10 @@
      "index": 2,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 40,
+     "estimated_minutes": 42,
      "blocks": [
       {
        "order": 0,
@@ -701,7 +701,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3224",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -717,12 +717,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2611",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -741,8 +741,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1760",
-         "sets": 4,
+         "exercise_id": "0534",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -753,7 +753,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3533"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -773,7 +775,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
+         "exercise_id": "0117",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -784,7 +786,11 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -803,8 +809,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0769",
-         "sets": 1,
+         "exercise_id": "0381",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -816,7 +822,7 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
+          "0078",
           "0114"
          ],
          "order": 0,
@@ -824,7 +830,7 @@
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -837,8 +843,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0339",
-         "sets": 1,
+         "exercise_id": "0496",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -846,12 +852,12 @@
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 3 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0586",
+          "0599",
+          "3193"
          ],
          "order": 0,
          "slot": {
@@ -871,7 +877,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "2289",
+         "exercise_id": "1372",
          "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
@@ -884,8 +890,8 @@
          "notes_es": null,
          "alternatives": [
           "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417"
          ],
          "order": 0,
          "slot": {
@@ -910,7 +916,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -926,7 +932,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -942,15 +948,15 @@
      "volume": [
       {
        "group": "quads",
-       "sets": 4.5
+       "sets": 5.0
       },
       {
        "group": "hamstrings",
-       "sets": 4.0
+       "sets": 5.0
       },
       {
        "group": "glutes",
-       "sets": 4.5
+       "sets": 4.0
       },
       {
        "group": "calves",
@@ -965,7 +971,7 @@
      "focus_es": "Cardio suave y movilidad para recuperar",
      "weekday": null,
      "is_recovery": true,
-     "estimated_minutes": 26,
+     "estimated_minutes": 36,
      "blocks": [
       {
        "order": 0,
@@ -974,21 +980,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3656",
+         "exercise_id": "2138",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
-         "duration_s": 1200,
+         "duration_s": 1800,
          "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
-         "notes_es": "Intensidad suave: deberías poder mantener una conversación.",
+         "notes_es": "Intensidad suave (RPE 3-4): puedes hablar con frases completas.",
          "alternatives": [
-          "0501",
-          "0630",
-          "0684"
+          "2141",
+          "2311",
+          "3666"
          ],
          "order": 0,
          "slot": {
@@ -1008,21 +1014,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0669",
+         "exercise_id": "0643",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
+          "0257",
           "0613",
-          "0643",
-          "0690"
+          "0669"
          ],
          "order": 0,
          "slot": {
@@ -1034,20 +1040,20 @@
          }
         },
         {
-         "exercise_id": "3147",
+         "exercise_id": "0613",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
-          "0613",
-          "0643",
+          "0257",
+          "0669",
           "0690"
          ],
          "order": 1,
@@ -1056,7 +1062,85 @@
           "pattern": "mobility",
           "role": "mobility",
           "group": "other",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1377",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
           "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1339",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "2567",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 3
          }
         }
        ]
@@ -1071,7 +1155,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 38,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -1080,7 +1164,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3223",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -1096,7 +1180,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0576",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -1188,8 +1272,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1257",
-         "sets": 1,
+         "exercise_id": "0662",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -1197,12 +1281,12 @@
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 3 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0251",
+          "0314"
          ],
          "order": 0,
          "slot": {
@@ -1222,8 +1306,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1284",
-         "sets": 1,
+         "exercise_id": "0596",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -1234,9 +1318,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0308",
           "0040",
-          "0155",
-          "0158"
+          "0155"
          ],
          "order": 0,
          "slot": {
@@ -1256,8 +1340,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0419",
-         "sets": 1,
+         "exercise_id": "0584",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -1268,8 +1352,8 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0178",
           "0041",
-          "0100",
           "0107"
          ],
          "order": 0,
@@ -1290,8 +1374,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0816",
-         "sets": 1,
+         "exercise_id": "0430",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -1299,12 +1383,12 @@
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -1329,7 +1413,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -1345,7 +1429,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -1361,15 +1445,15 @@
      "volume": [
       {
        "group": "chest",
-       "sets": 5.0
+       "sets": 7.0
       },
       {
        "group": "shoulders",
-       "sets": 4.0
+       "sets": 5.0
       },
       {
        "group": "arms",
-       "sets": 4.5
+       "sets": 4.4
       }
      ]
     },
@@ -1380,7 +1464,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 35,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -1389,7 +1473,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "2331",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -1405,7 +1489,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3117",
+         "exercise_id": "2330",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -1430,7 +1514,7 @@
        "exercises": [
         {
          "exercise_id": "0198",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -1464,7 +1548,7 @@
        "exercises": [
         {
          "exercise_id": "3017",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -1497,21 +1581,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1330",
-         "sets": 1,
+         "exercise_id": "0293",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0499"
          ],
          "order": 0,
          "slot": {
@@ -1531,8 +1615,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0075",
-         "sets": 1,
+         "exercise_id": "0383",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -1543,9 +1627,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0154",
-          "0202",
-          "0203"
+          "0602",
+          "0993",
+          "0075"
          ],
          "order": 0,
          "slot": {
@@ -1565,21 +1649,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0353",
-         "sets": 1,
+         "exercise_id": "0031",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0023",
-          "0031",
-          "0038"
+          "0165",
+          "0294",
+          "0313"
          ],
          "order": 0,
          "slot": {
@@ -1599,8 +1683,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0580",
-         "sets": 1,
+         "exercise_id": "1018",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -1654,7 +1738,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -1670,15 +1754,15 @@
      "volume": [
       {
        "group": "back",
-       "sets": 6.0
+       "sets": 10.0
       },
       {
        "group": "shoulders",
-       "sets": 1.0
+       "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 4.4
       }
      ]
     },
@@ -1686,10 +1770,10 @@
      "index": 6,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 40,
+     "estimated_minutes": 42,
      "blocks": [
       {
        "order": 0,
@@ -1698,7 +1782,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "0798",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -1714,12 +1798,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2287",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -1738,8 +1822,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3533",
-         "sets": 4,
+         "exercise_id": "1760",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -1747,10 +1831,12 @@
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1760"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -1770,7 +1856,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
+         "exercise_id": "0549",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -1781,7 +1867,11 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -1800,8 +1890,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0114",
-         "sets": 1,
+         "exercise_id": "0336",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -1813,15 +1903,15 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
-          "0336"
+          "0078",
+          "0114"
          ],
          "order": 0,
          "slot": {
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -1834,8 +1924,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0582",
-         "sets": 1,
+         "exercise_id": "0586",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -1846,9 +1936,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0599",
+          "3193",
+          "0016"
          ],
          "order": 0,
          "slot": {
@@ -1868,7 +1958,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0417",
+         "exercise_id": "0088",
          "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
@@ -1880,9 +1970,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417",
+          "0605"
          ],
          "order": 0,
          "slot": {
@@ -1907,7 +1997,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -1923,7 +2013,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -1939,15 +2029,15 @@
      "volume": [
       {
        "group": "quads",
-       "sets": 4.5
+       "sets": 5.0
       },
       {
        "group": "hamstrings",
-       "sets": 4.0
+       "sets": 5.0
       },
       {
        "group": "glutes",
-       "sets": 4.5
+       "sets": 4.0
       },
       {
        "group": "calves",
@@ -1961,7 +2051,7 @@
    "index": 1,
    "phase": "accumulation",
    "target_rir": 2,
-   "volume_ratio": 1.11,
+   "volume_ratio": 1.04,
    "days": [
     {
      "index": 0,
@@ -1970,7 +2060,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 44,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -1995,7 +2085,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3758",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -2020,7 +2110,7 @@
        "exercises": [
         {
          "exercise_id": "0289",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -2054,7 +2144,7 @@
        "exercises": [
         {
          "exercise_id": "0553",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -2087,8 +2177,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1283",
-         "sets": 1,
+         "exercise_id": "0748",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2099,9 +2189,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0047",
+          "0251"
          ],
          "order": 0,
          "slot": {
@@ -2121,8 +2211,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0308",
-         "sets": 1,
+         "exercise_id": "0227",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2133,9 +2223,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0040",
-          "0155",
-          "0158"
+          "0308",
+          "0596",
+          "0040"
          ],
          "order": 0,
          "slot": {
@@ -2155,21 +2245,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0355",
-         "sets": 1,
+         "exercise_id": "0334",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0041",
-          "0100",
-          "0107"
+          "0178",
+          "0584",
+          "0041"
          ],
          "order": 0,
          "slot": {
@@ -2189,8 +2279,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0057",
-         "sets": 1,
+         "exercise_id": "0060",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2201,9 +2291,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -2223,12 +2313,12 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1259",
+         "exercise_id": "1716",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -2244,7 +2334,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -2260,7 +2350,7 @@
      "volume": [
       {
        "group": "chest",
-       "sets": 6.0
+       "sets": 7.0
       },
       {
        "group": "shoulders",
@@ -2268,7 +2358,7 @@
       },
       {
        "group": "arms",
-       "sets": 5.5
+       "sets": 4.4
       }
      ]
     },
@@ -2279,7 +2369,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 34,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -2288,7 +2378,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3221",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -2304,7 +2394,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0232",
+         "exercise_id": "0970",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -2329,7 +2419,7 @@
        "exercises": [
         {
          "exercise_id": "0017",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -2363,7 +2453,7 @@
        "exercises": [
         {
          "exercise_id": "0180",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -2396,8 +2486,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1329",
-         "sets": 1,
+         "exercise_id": "2300",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2405,12 +2495,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0293"
          ],
          "order": 0,
          "slot": {
@@ -2430,8 +2520,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0076",
-         "sets": 1,
+         "exercise_id": "0203",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2442,9 +2532,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0075",
-          "0154",
-          "0202"
+          "0383",
+          "0602",
+          "0993"
          ],
          "order": 0,
          "slot": {
@@ -2464,8 +2554,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0390",
-         "sets": 1,
+         "exercise_id": "0968",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2476,9 +2566,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0023",
           "0031",
-          "0038"
+          "0165",
+          "0294"
          ],
          "order": 0,
          "slot": {
@@ -2498,8 +2588,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0329",
-         "sets": 1,
+         "exercise_id": "0406",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2511,8 +2601,8 @@
          "notes_es": null,
          "alternatives": [
           "0095",
-          "0220",
-          "0304"
+          "1018",
+          "0220"
          ],
          "order": 0,
          "slot": {
@@ -2553,7 +2643,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -2569,15 +2659,15 @@
      "volume": [
       {
        "group": "back",
-       "sets": 6.0
+       "sets": 10.0
       },
       {
        "group": "shoulders",
-       "sets": 1.0
+       "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 4.4
       }
      ]
     },
@@ -2585,7 +2675,7 @@
      "index": 2,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
      "estimated_minutes": 47,
@@ -2597,7 +2687,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3224",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -2613,12 +2703,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2611",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -2637,8 +2727,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1760",
-         "sets": 5,
+         "exercise_id": "0534",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -2649,7 +2739,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3533"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -2669,8 +2761,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
-         "sets": 4,
+         "exercise_id": "0117",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -2680,7 +2772,11 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -2699,8 +2795,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0769",
-         "sets": 2,
+         "exercise_id": "0381",
+         "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2712,7 +2808,7 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
+          "0078",
           "0114"
          ],
          "order": 0,
@@ -2720,7 +2816,7 @@
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -2733,8 +2829,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0339",
-         "sets": 1,
+         "exercise_id": "0496",
+         "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -2742,12 +2838,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0586",
+          "0599",
+          "3193"
          ],
          "order": 0,
          "slot": {
@@ -2767,7 +2863,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "2289",
+         "exercise_id": "1372",
          "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
@@ -2780,8 +2876,8 @@
          "notes_es": null,
          "alternatives": [
           "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417"
          ],
          "order": 0,
          "slot": {
@@ -2806,7 +2902,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -2822,7 +2918,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -2842,11 +2938,11 @@
       },
       {
        "group": "hamstrings",
-       "sets": 5.0
+       "sets": 6.0
       },
       {
        "group": "glutes",
-       "sets": 6.5
+       "sets": 4.5
       },
       {
        "group": "calves",
@@ -2861,7 +2957,7 @@
      "focus_es": "Cardio suave y movilidad para recuperar",
      "weekday": null,
      "is_recovery": true,
-     "estimated_minutes": 26,
+     "estimated_minutes": 36,
      "blocks": [
       {
        "order": 0,
@@ -2870,21 +2966,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3656",
+         "exercise_id": "2138",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
-         "duration_s": 1200,
+         "duration_s": 1800,
          "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
-         "notes_es": "Intensidad suave: deberías poder mantener una conversación.",
+         "notes_es": "Intensidad suave (RPE 3-4): puedes hablar con frases completas.",
          "alternatives": [
-          "0501",
-          "0630",
-          "0684"
+          "2141",
+          "2311",
+          "3666"
          ],
          "order": 0,
          "slot": {
@@ -2904,21 +3000,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0669",
+         "exercise_id": "0643",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
+          "0257",
           "0613",
-          "0643",
-          "0690"
+          "0669"
          ],
          "order": 0,
          "slot": {
@@ -2930,20 +3026,20 @@
          }
         },
         {
-         "exercise_id": "3147",
+         "exercise_id": "0613",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
-          "0613",
-          "0643",
+          "0257",
+          "0669",
           "0690"
          ],
          "order": 1,
@@ -2952,7 +3048,85 @@
           "pattern": "mobility",
           "role": "mobility",
           "group": "other",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1377",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
           "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1339",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "2567",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 3
          }
         }
        ]
@@ -2967,7 +3141,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 38,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -2976,7 +3150,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3223",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -2992,7 +3166,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0576",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -3084,8 +3258,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1257",
-         "sets": 1,
+         "exercise_id": "0662",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3093,12 +3267,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0251",
+          "0314"
          ],
          "order": 0,
          "slot": {
@@ -3118,8 +3292,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1284",
-         "sets": 1,
+         "exercise_id": "0596",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3130,9 +3304,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0308",
           "0040",
-          "0155",
-          "0158"
+          "0155"
          ],
          "order": 0,
          "slot": {
@@ -3152,8 +3326,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0419",
-         "sets": 1,
+         "exercise_id": "0584",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3164,8 +3338,8 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0178",
           "0041",
-          "0100",
           "0107"
          ],
          "order": 0,
@@ -3186,8 +3360,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0816",
-         "sets": 1,
+         "exercise_id": "0430",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3195,12 +3369,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -3225,7 +3399,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -3241,7 +3415,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -3257,15 +3431,15 @@
      "volume": [
       {
        "group": "chest",
-       "sets": 5.0
+       "sets": 7.0
       },
       {
        "group": "shoulders",
-       "sets": 4.0
+       "sets": 5.0
       },
       {
        "group": "arms",
-       "sets": 4.5
+       "sets": 4.4
       }
      ]
     },
@@ -3276,7 +3450,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 35,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -3285,7 +3459,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "2331",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -3301,7 +3475,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3117",
+         "exercise_id": "2330",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -3326,7 +3500,7 @@
        "exercises": [
         {
          "exercise_id": "0198",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -3360,7 +3534,7 @@
        "exercises": [
         {
          "exercise_id": "3017",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -3393,21 +3567,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1330",
-         "sets": 1,
+         "exercise_id": "0293",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0499"
          ],
          "order": 0,
          "slot": {
@@ -3427,8 +3601,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0075",
-         "sets": 1,
+         "exercise_id": "0383",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3439,9 +3613,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0154",
-          "0202",
-          "0203"
+          "0602",
+          "0993",
+          "0075"
          ],
          "order": 0,
          "slot": {
@@ -3461,21 +3635,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0353",
-         "sets": 1,
+         "exercise_id": "0031",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0023",
-          "0031",
-          "0038"
+          "0165",
+          "0294",
+          "0313"
          ],
          "order": 0,
          "slot": {
@@ -3495,8 +3669,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0580",
-         "sets": 1,
+         "exercise_id": "1018",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3550,7 +3724,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -3566,15 +3740,15 @@
      "volume": [
       {
        "group": "back",
-       "sets": 6.0
+       "sets": 10.0
       },
       {
        "group": "shoulders",
-       "sets": 1.0
+       "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 4.4
       }
      ]
     },
@@ -3582,10 +3756,10 @@
      "index": 6,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 42,
+     "estimated_minutes": 44,
      "blocks": [
       {
        "order": 0,
@@ -3594,7 +3768,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "0798",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -3610,12 +3784,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2287",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -3634,8 +3808,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3533",
-         "sets": 4,
+         "exercise_id": "1760",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -3643,10 +3817,12 @@
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1760"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -3666,7 +3842,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
+         "exercise_id": "0549",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -3677,7 +3853,11 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -3696,8 +3876,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0114",
-         "sets": 1,
+         "exercise_id": "0336",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3709,15 +3889,15 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
-          "0336"
+          "0078",
+          "0114"
          ],
          "order": 0,
          "slot": {
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -3730,8 +3910,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0582",
-         "sets": 1,
+         "exercise_id": "0586",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3742,9 +3922,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0599",
+          "3193",
+          "0016"
          ],
          "order": 0,
          "slot": {
@@ -3764,7 +3944,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0417",
+         "exercise_id": "0088",
          "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
@@ -3776,9 +3956,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417",
+          "0605"
          ],
          "order": 0,
          "slot": {
@@ -3803,7 +3983,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -3819,7 +3999,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -3835,15 +4015,15 @@
      "volume": [
       {
        "group": "quads",
-       "sets": 4.5
+       "sets": 5.0
       },
       {
        "group": "hamstrings",
-       "sets": 4.0
+       "sets": 5.0
       },
       {
        "group": "glutes",
-       "sets": 4.5
+       "sets": 4.0
       },
       {
        "group": "calves",
@@ -3857,7 +4037,7 @@
    "index": 2,
    "phase": "accumulation",
    "target_rir": 2,
-   "volume_ratio": 1.19,
+   "volume_ratio": 1.05,
    "days": [
     {
      "index": 0,
@@ -3866,7 +4046,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 44,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -3891,7 +4071,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3758",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -3916,7 +4096,7 @@
        "exercises": [
         {
          "exercise_id": "0289",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -3950,7 +4130,7 @@
        "exercises": [
         {
          "exercise_id": "0553",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -3983,8 +4163,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1283",
-         "sets": 1,
+         "exercise_id": "0748",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -3995,9 +4175,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0047",
+          "0251"
          ],
          "order": 0,
          "slot": {
@@ -4017,8 +4197,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0308",
-         "sets": 1,
+         "exercise_id": "0227",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4029,9 +4209,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0040",
-          "0155",
-          "0158"
+          "0308",
+          "0596",
+          "0040"
          ],
          "order": 0,
          "slot": {
@@ -4051,21 +4231,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0355",
-         "sets": 1,
+         "exercise_id": "0334",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0041",
-          "0100",
-          "0107"
+          "0178",
+          "0584",
+          "0041"
          ],
          "order": 0,
          "slot": {
@@ -4085,8 +4265,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0057",
-         "sets": 1,
+         "exercise_id": "0060",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4097,9 +4277,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -4119,12 +4299,12 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1259",
+         "exercise_id": "1716",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -4140,7 +4320,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -4156,7 +4336,7 @@
      "volume": [
       {
        "group": "chest",
-       "sets": 6.0
+       "sets": 7.0
       },
       {
        "group": "shoulders",
@@ -4164,7 +4344,7 @@
       },
       {
        "group": "arms",
-       "sets": 5.5
+       "sets": 4.4
       }
      ]
     },
@@ -4175,7 +4355,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 34,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -4184,7 +4364,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3221",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -4200,7 +4380,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0232",
+         "exercise_id": "0970",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -4225,7 +4405,7 @@
        "exercises": [
         {
          "exercise_id": "0017",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -4259,7 +4439,7 @@
        "exercises": [
         {
          "exercise_id": "0180",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -4292,8 +4472,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1329",
-         "sets": 1,
+         "exercise_id": "2300",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4301,12 +4481,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0293"
          ],
          "order": 0,
          "slot": {
@@ -4326,8 +4506,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0076",
-         "sets": 1,
+         "exercise_id": "0203",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4338,9 +4518,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0075",
-          "0154",
-          "0202"
+          "0383",
+          "0602",
+          "0993"
          ],
          "order": 0,
          "slot": {
@@ -4360,8 +4540,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0390",
-         "sets": 1,
+         "exercise_id": "0968",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4372,9 +4552,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0023",
           "0031",
-          "0038"
+          "0165",
+          "0294"
          ],
          "order": 0,
          "slot": {
@@ -4394,8 +4574,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0329",
-         "sets": 1,
+         "exercise_id": "0406",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4407,8 +4587,8 @@
          "notes_es": null,
          "alternatives": [
           "0095",
-          "0220",
-          "0304"
+          "1018",
+          "0220"
          ],
          "order": 0,
          "slot": {
@@ -4449,7 +4629,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -4465,15 +4645,15 @@
      "volume": [
       {
        "group": "back",
-       "sets": 6.0
+       "sets": 10.0
       },
       {
        "group": "shoulders",
-       "sets": 1.0
+       "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 4.4
       }
      ]
     },
@@ -4481,7 +4661,7 @@
      "index": 2,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
      "estimated_minutes": 47,
@@ -4493,7 +4673,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3224",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -4509,12 +4689,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2611",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -4533,8 +4713,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1760",
-         "sets": 5,
+         "exercise_id": "0534",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -4545,7 +4725,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3533"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -4565,8 +4747,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
-         "sets": 4,
+         "exercise_id": "0117",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -4576,7 +4758,11 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -4595,8 +4781,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0769",
-         "sets": 2,
+         "exercise_id": "0381",
+         "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4608,7 +4794,7 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
+          "0078",
           "0114"
          ],
          "order": 0,
@@ -4616,7 +4802,7 @@
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -4629,8 +4815,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0339",
-         "sets": 1,
+         "exercise_id": "0496",
+         "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4638,12 +4824,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0586",
+          "0599",
+          "3193"
          ],
          "order": 0,
          "slot": {
@@ -4663,7 +4849,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "2289",
+         "exercise_id": "1372",
          "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
@@ -4676,8 +4862,8 @@
          "notes_es": null,
          "alternatives": [
           "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417"
          ],
          "order": 0,
          "slot": {
@@ -4702,7 +4888,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -4718,7 +4904,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -4738,11 +4924,11 @@
       },
       {
        "group": "hamstrings",
-       "sets": 5.0
+       "sets": 6.0
       },
       {
        "group": "glutes",
-       "sets": 6.5
+       "sets": 4.5
       },
       {
        "group": "calves",
@@ -4757,7 +4943,7 @@
      "focus_es": "Cardio suave y movilidad para recuperar",
      "weekday": null,
      "is_recovery": true,
-     "estimated_minutes": 26,
+     "estimated_minutes": 36,
      "blocks": [
       {
        "order": 0,
@@ -4766,21 +4952,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3656",
+         "exercise_id": "2138",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
-         "duration_s": 1200,
+         "duration_s": 1800,
          "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
-         "notes_es": "Intensidad suave: deberías poder mantener una conversación.",
+         "notes_es": "Intensidad suave (RPE 3-4): puedes hablar con frases completas.",
          "alternatives": [
-          "0501",
-          "0630",
-          "0684"
+          "2141",
+          "2311",
+          "3666"
          ],
          "order": 0,
          "slot": {
@@ -4800,21 +4986,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0669",
+         "exercise_id": "0643",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
+          "0257",
           "0613",
-          "0643",
-          "0690"
+          "0669"
          ],
          "order": 0,
          "slot": {
@@ -4826,20 +5012,20 @@
          }
         },
         {
-         "exercise_id": "3147",
+         "exercise_id": "0613",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
-          "0613",
-          "0643",
+          "0257",
+          "0669",
           "0690"
          ],
          "order": 1,
@@ -4848,7 +5034,85 @@
           "pattern": "mobility",
           "role": "mobility",
           "group": "other",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1377",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
           "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1339",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "2567",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 3
          }
         }
        ]
@@ -4863,7 +5127,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 43,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -4872,7 +5136,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3223",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -4888,7 +5152,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0576",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -4913,7 +5177,7 @@
        "exercises": [
         {
          "exercise_id": "0047",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -4947,7 +5211,7 @@
        "exercises": [
         {
          "exercise_id": "0774",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -4980,8 +5244,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1257",
-         "sets": 1,
+         "exercise_id": "0662",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -4989,12 +5253,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0251",
+          "0314"
          ],
          "order": 0,
          "slot": {
@@ -5014,8 +5278,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1284",
-         "sets": 1,
+         "exercise_id": "0596",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5026,9 +5290,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0308",
           "0040",
-          "0155",
-          "0158"
+          "0155"
          ],
          "order": 0,
          "slot": {
@@ -5048,8 +5312,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0419",
-         "sets": 1,
+         "exercise_id": "0584",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5060,8 +5324,8 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0178",
           "0041",
-          "0100",
           "0107"
          ],
          "order": 0,
@@ -5082,8 +5346,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0816",
-         "sets": 1,
+         "exercise_id": "0430",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5091,12 +5355,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -5121,7 +5385,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -5137,7 +5401,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -5153,7 +5417,7 @@
      "volume": [
       {
        "group": "chest",
-       "sets": 6.0
+       "sets": 7.0
       },
       {
        "group": "shoulders",
@@ -5161,7 +5425,7 @@
       },
       {
        "group": "arms",
-       "sets": 5.5
+       "sets": 4.4
       }
      ]
     },
@@ -5172,7 +5436,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 35,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -5181,7 +5445,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "2331",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -5197,7 +5461,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3117",
+         "exercise_id": "2330",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -5222,7 +5486,7 @@
        "exercises": [
         {
          "exercise_id": "0198",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -5256,7 +5520,7 @@
        "exercises": [
         {
          "exercise_id": "3017",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -5289,21 +5553,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1330",
-         "sets": 1,
+         "exercise_id": "0293",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0499"
          ],
          "order": 0,
          "slot": {
@@ -5323,8 +5587,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0075",
-         "sets": 1,
+         "exercise_id": "0383",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5335,9 +5599,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0154",
-          "0202",
-          "0203"
+          "0602",
+          "0993",
+          "0075"
          ],
          "order": 0,
          "slot": {
@@ -5357,21 +5621,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0353",
-         "sets": 1,
+         "exercise_id": "0031",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0023",
-          "0031",
-          "0038"
+          "0165",
+          "0294",
+          "0313"
          ],
          "order": 0,
          "slot": {
@@ -5391,8 +5655,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0580",
-         "sets": 1,
+         "exercise_id": "1018",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5446,7 +5710,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -5462,15 +5726,15 @@
      "volume": [
       {
        "group": "back",
-       "sets": 6.0
+       "sets": 10.0
       },
       {
        "group": "shoulders",
-       "sets": 1.0
+       "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 4.4
       }
      ]
     },
@@ -5478,7 +5742,7 @@
      "index": 6,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
      "estimated_minutes": 47,
@@ -5490,7 +5754,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "0798",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -5506,12 +5770,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2287",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -5530,8 +5794,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3533",
-         "sets": 5,
+         "exercise_id": "1760",
+         "sets": 4,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -5539,10 +5803,12 @@
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1760"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -5562,8 +5828,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
-         "sets": 4,
+         "exercise_id": "0549",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -5573,7 +5839,11 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -5592,8 +5862,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0114",
-         "sets": 1,
+         "exercise_id": "0336",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5605,15 +5875,15 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
-          "0336"
+          "0078",
+          "0114"
          ],
          "order": 0,
          "slot": {
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -5626,8 +5896,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0582",
-         "sets": 1,
+         "exercise_id": "0586",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5638,9 +5908,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0599",
+          "3193",
+          "0016"
          ],
          "order": 0,
          "slot": {
@@ -5660,7 +5930,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0417",
+         "exercise_id": "0088",
          "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
@@ -5672,9 +5942,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417",
+          "0605"
          ],
          "order": 0,
          "slot": {
@@ -5699,7 +5969,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -5715,7 +5985,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -5731,7 +6001,7 @@
      "volume": [
       {
        "group": "quads",
-       "sets": 5.5
+       "sets": 6.0
       },
       {
        "group": "hamstrings",
@@ -5739,7 +6009,7 @@
       },
       {
        "group": "glutes",
-       "sets": 5.5
+       "sets": 4.5
       },
       {
        "group": "calves",
@@ -5753,7 +6023,7 @@
    "index": 3,
    "phase": "accumulation",
    "target_rir": 1,
-   "volume_ratio": 1.19,
+   "volume_ratio": 1.05,
    "days": [
     {
      "index": 0,
@@ -5762,7 +6032,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 44,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -5787,7 +6057,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3758",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -5812,7 +6082,7 @@
        "exercises": [
         {
          "exercise_id": "0289",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -5846,7 +6116,7 @@
        "exercises": [
         {
          "exercise_id": "0553",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -5879,8 +6149,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1283",
-         "sets": 1,
+         "exercise_id": "0748",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5891,9 +6161,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0047",
+          "0251"
          ],
          "order": 0,
          "slot": {
@@ -5913,8 +6183,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0308",
-         "sets": 1,
+         "exercise_id": "0227",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5925,9 +6195,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0040",
-          "0155",
-          "0158"
+          "0308",
+          "0596",
+          "0040"
          ],
          "order": 0,
          "slot": {
@@ -5947,21 +6217,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0355",
-         "sets": 1,
+         "exercise_id": "0334",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0041",
-          "0100",
-          "0107"
+          "0178",
+          "0584",
+          "0041"
          ],
          "order": 0,
          "slot": {
@@ -5981,8 +6251,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0057",
-         "sets": 1,
+         "exercise_id": "0060",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -5993,9 +6263,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -6015,12 +6285,12 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1259",
+         "exercise_id": "1716",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -6036,7 +6306,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -6052,7 +6322,7 @@
      "volume": [
       {
        "group": "chest",
-       "sets": 6.0
+       "sets": 7.0
       },
       {
        "group": "shoulders",
@@ -6060,7 +6330,7 @@
       },
       {
        "group": "arms",
-       "sets": 5.5
+       "sets": 4.4
       }
      ]
     },
@@ -6071,7 +6341,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 34,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -6080,7 +6350,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3221",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -6096,7 +6366,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0232",
+         "exercise_id": "0970",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -6121,7 +6391,7 @@
        "exercises": [
         {
          "exercise_id": "0017",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -6155,7 +6425,7 @@
        "exercises": [
         {
          "exercise_id": "0180",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -6188,8 +6458,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1329",
-         "sets": 1,
+         "exercise_id": "2300",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6197,12 +6467,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0293"
          ],
          "order": 0,
          "slot": {
@@ -6222,8 +6492,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0076",
-         "sets": 1,
+         "exercise_id": "0203",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6234,9 +6504,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0075",
-          "0154",
-          "0202"
+          "0383",
+          "0602",
+          "0993"
          ],
          "order": 0,
          "slot": {
@@ -6256,8 +6526,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0390",
-         "sets": 1,
+         "exercise_id": "0968",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6268,9 +6538,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0023",
           "0031",
-          "0038"
+          "0165",
+          "0294"
          ],
          "order": 0,
          "slot": {
@@ -6290,8 +6560,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0329",
-         "sets": 1,
+         "exercise_id": "0406",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6303,8 +6573,8 @@
          "notes_es": null,
          "alternatives": [
           "0095",
-          "0220",
-          "0304"
+          "1018",
+          "0220"
          ],
          "order": 0,
          "slot": {
@@ -6345,7 +6615,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -6361,15 +6631,15 @@
      "volume": [
       {
        "group": "back",
-       "sets": 6.0
+       "sets": 10.0
       },
       {
        "group": "shoulders",
-       "sets": 1.0
+       "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 4.4
       }
      ]
     },
@@ -6377,7 +6647,7 @@
      "index": 2,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
      "estimated_minutes": 47,
@@ -6389,7 +6659,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3224",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -6405,12 +6675,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2611",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -6429,8 +6699,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1760",
-         "sets": 5,
+         "exercise_id": "0534",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -6441,7 +6711,9 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3533"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -6461,8 +6733,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
-         "sets": 4,
+         "exercise_id": "0117",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -6472,7 +6744,11 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -6491,8 +6767,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0769",
-         "sets": 2,
+         "exercise_id": "0381",
+         "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6504,7 +6780,7 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
+          "0078",
           "0114"
          ],
          "order": 0,
@@ -6512,7 +6788,7 @@
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -6525,8 +6801,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0339",
-         "sets": 1,
+         "exercise_id": "0496",
+         "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6534,12 +6810,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0586",
+          "0599",
+          "3193"
          ],
          "order": 0,
          "slot": {
@@ -6559,7 +6835,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "2289",
+         "exercise_id": "1372",
          "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
@@ -6572,8 +6848,8 @@
          "notes_es": null,
          "alternatives": [
           "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417"
          ],
          "order": 0,
          "slot": {
@@ -6598,7 +6874,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -6614,7 +6890,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -6634,11 +6910,11 @@
       },
       {
        "group": "hamstrings",
-       "sets": 5.0
+       "sets": 6.0
       },
       {
        "group": "glutes",
-       "sets": 6.5
+       "sets": 4.5
       },
       {
        "group": "calves",
@@ -6653,7 +6929,7 @@
      "focus_es": "Cardio suave y movilidad para recuperar",
      "weekday": null,
      "is_recovery": true,
-     "estimated_minutes": 26,
+     "estimated_minutes": 36,
      "blocks": [
       {
        "order": 0,
@@ -6662,21 +6938,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3656",
+         "exercise_id": "2138",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
-         "duration_s": 1200,
+         "duration_s": 1800,
          "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
-         "notes_es": "Intensidad suave: deberías poder mantener una conversación.",
+         "notes_es": "Intensidad suave (RPE 3-4): puedes hablar con frases completas.",
          "alternatives": [
-          "0501",
-          "0630",
-          "0684"
+          "2141",
+          "2311",
+          "3666"
          ],
          "order": 0,
          "slot": {
@@ -6696,21 +6972,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0669",
+         "exercise_id": "0643",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
+          "0257",
           "0613",
-          "0643",
-          "0690"
+          "0669"
          ],
          "order": 0,
          "slot": {
@@ -6722,20 +6998,20 @@
          }
         },
         {
-         "exercise_id": "3147",
+         "exercise_id": "0613",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
-          "0613",
-          "0643",
+          "0257",
+          "0669",
           "0690"
          ],
          "order": 1,
@@ -6744,7 +7020,85 @@
           "pattern": "mobility",
           "role": "mobility",
           "group": "other",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1377",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
           "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1339",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "2567",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 3
          }
         }
        ]
@@ -6759,7 +7113,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 43,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -6768,7 +7122,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3223",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -6784,7 +7138,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0576",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -6809,7 +7163,7 @@
        "exercises": [
         {
          "exercise_id": "0047",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -6843,7 +7197,7 @@
        "exercises": [
         {
          "exercise_id": "0774",
-         "sets": 4,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -6876,8 +7230,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1257",
-         "sets": 1,
+         "exercise_id": "0662",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6885,12 +7239,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Carga que te deje 2 repeticiones en reserva",
+         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0251",
+          "0314"
          ],
          "order": 0,
          "slot": {
@@ -6910,8 +7264,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1284",
-         "sets": 1,
+         "exercise_id": "0596",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6922,9 +7276,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0308",
           "0040",
-          "0155",
-          "0158"
+          "0155"
          ],
          "order": 0,
          "slot": {
@@ -6944,8 +7298,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0419",
-         "sets": 1,
+         "exercise_id": "0584",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6956,8 +7310,8 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0178",
           "0041",
-          "0100",
           "0107"
          ],
          "order": 0,
@@ -6978,8 +7332,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0816",
-         "sets": 1,
+         "exercise_id": "0430",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -6987,12 +7341,12 @@
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
-         "load_hint": "Con tu peso corporal, deja 2 repeticiones en reserva",
+         "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -7017,7 +7371,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -7033,7 +7387,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -7049,7 +7403,7 @@
      "volume": [
       {
        "group": "chest",
-       "sets": 6.0
+       "sets": 7.0
       },
       {
        "group": "shoulders",
@@ -7057,7 +7411,7 @@
       },
       {
        "group": "arms",
-       "sets": 5.5
+       "sets": 4.4
       }
      ]
     },
@@ -7068,7 +7422,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 35,
+     "estimated_minutes": 46,
      "blocks": [
       {
        "order": 0,
@@ -7077,7 +7431,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "2331",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -7093,7 +7447,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3117",
+         "exercise_id": "2330",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -7118,7 +7472,7 @@
        "exercises": [
         {
          "exercise_id": "0198",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -7152,7 +7506,7 @@
        "exercises": [
         {
          "exercise_id": "3017",
-         "sets": 2,
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -7185,21 +7539,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1330",
-         "sets": 1,
+         "exercise_id": "0293",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0499"
          ],
          "order": 0,
          "slot": {
@@ -7219,8 +7573,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0075",
-         "sets": 1,
+         "exercise_id": "0383",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -7231,9 +7585,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0154",
-          "0202",
-          "0203"
+          "0602",
+          "0993",
+          "0075"
          ],
          "order": 0,
          "slot": {
@@ -7253,21 +7607,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0353",
-         "sets": 1,
+         "exercise_id": "0031",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 2,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0023",
-          "0031",
-          "0038"
+          "0165",
+          "0294",
+          "0313"
          ],
          "order": 0,
          "slot": {
@@ -7287,8 +7641,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0580",
-         "sets": 1,
+         "exercise_id": "1018",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -7342,7 +7696,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -7358,15 +7712,15 @@
      "volume": [
       {
        "group": "back",
-       "sets": 6.0
+       "sets": 10.0
       },
       {
        "group": "shoulders",
-       "sets": 1.0
+       "sets": 2.0
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 4.4
       }
      ]
     },
@@ -7374,7 +7728,7 @@
      "index": 6,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
      "estimated_minutes": 47,
@@ -7386,7 +7740,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "0798",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -7402,12 +7756,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2287",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -7426,8 +7780,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3533",
-         "sets": 5,
+         "exercise_id": "1760",
+         "sets": 4,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -7435,10 +7789,12 @@
          "target_rir": 3,
          "tempo": "2-0-1-0",
          "rest_s": 105,
-         "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
+         "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1760"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -7458,8 +7814,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
-         "sets": 4,
+         "exercise_id": "0549",
+         "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -7469,7 +7825,11 @@
          "rest_s": 105,
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -7488,8 +7848,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0114",
-         "sets": 1,
+         "exercise_id": "0336",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -7501,15 +7861,15 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
-          "0336"
+          "0078",
+          "0114"
          ],
          "order": 0,
          "slot": {
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -7522,8 +7882,8 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0582",
-         "sets": 1,
+         "exercise_id": "0586",
+         "sets": 2,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
@@ -7534,9 +7894,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0599",
+          "3193",
+          "0016"
          ],
          "order": 0,
          "slot": {
@@ -7556,7 +7916,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0417",
+         "exercise_id": "0088",
          "sets": 3,
          "rep_min": 10,
          "rep_max": 15,
@@ -7568,9 +7928,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417",
+          "0605"
          ],
          "order": 0,
          "slot": {
@@ -7595,7 +7955,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -7611,7 +7971,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -7627,7 +7987,7 @@
      "volume": [
       {
        "group": "quads",
-       "sets": 5.5
+       "sets": 6.0
       },
       {
        "group": "hamstrings",
@@ -7635,7 +7995,7 @@
       },
       {
        "group": "glutes",
-       "sets": 5.5
+       "sets": 4.5
       },
       {
        "group": "calves",
@@ -7649,7 +8009,7 @@
    "index": 4,
    "phase": "deload",
    "target_rir": 4,
-   "volume_ratio": 0.71,
+   "volume_ratio": 0.58,
    "days": [
     {
      "index": 0,
@@ -7658,7 +8018,7 @@
      "focus_es": "Trabajo de pecho, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 35,
+     "estimated_minutes": 34,
      "blocks": [
       {
        "order": 0,
@@ -7683,7 +8043,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3758",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -7775,7 +8135,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1283",
+         "exercise_id": "0748",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -7787,9 +8147,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0047",
+          "0251"
          ],
          "order": 0,
          "slot": {
@@ -7809,7 +8169,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0308",
+         "exercise_id": "0227",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -7821,9 +8181,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0040",
-          "0155",
-          "0158"
+          "0308",
+          "0596",
+          "0040"
          ],
          "order": 0,
          "slot": {
@@ -7843,21 +8203,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0355",
+         "exercise_id": "0334",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 4,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0041",
-          "0100",
-          "0107"
+          "0178",
+          "0584",
+          "0041"
          ],
          "order": 0,
          "slot": {
@@ -7877,7 +8237,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0057",
+         "exercise_id": "0060",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -7889,9 +8249,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -7911,12 +8271,12 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1259",
+         "exercise_id": "1716",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -7932,7 +8292,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -7956,7 +8316,7 @@
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 2.5
       }
      ]
     },
@@ -7967,7 +8327,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 29,
+     "estimated_minutes": 34,
      "blocks": [
       {
        "order": 0,
@@ -7976,7 +8336,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3221",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -7992,7 +8352,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0232",
+         "exercise_id": "0970",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -8017,7 +8377,7 @@
        "exercises": [
         {
          "exercise_id": "0017",
-         "sets": 1,
+         "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -8051,7 +8411,7 @@
        "exercises": [
         {
          "exercise_id": "0180",
-         "sets": 1,
+         "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -8084,7 +8444,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1329",
+         "exercise_id": "2300",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8097,8 +8457,8 @@
          "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0293"
          ],
          "order": 0,
          "slot": {
@@ -8118,7 +8478,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0076",
+         "exercise_id": "0203",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8130,9 +8490,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0075",
-          "0154",
-          "0202"
+          "0383",
+          "0602",
+          "0993"
          ],
          "order": 0,
          "slot": {
@@ -8152,7 +8512,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0390",
+         "exercise_id": "0968",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8164,9 +8524,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0023",
           "0031",
-          "0038"
+          "0165",
+          "0294"
          ],
          "order": 0,
          "slot": {
@@ -8186,7 +8546,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0329",
+         "exercise_id": "0406",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8199,8 +8559,8 @@
          "notes_es": null,
          "alternatives": [
           "0095",
-          "0220",
-          "0304"
+          "1018",
+          "0220"
          ],
          "order": 0,
          "slot": {
@@ -8241,7 +8601,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -8257,7 +8617,7 @@
      "volume": [
       {
        "group": "back",
-       "sets": 4.0
+       "sets": 6.0
       },
       {
        "group": "shoulders",
@@ -8273,7 +8633,7 @@
      "index": 2,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
      "estimated_minutes": 32,
@@ -8285,7 +8645,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3224",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -8301,12 +8661,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2611",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -8325,7 +8685,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1760",
+         "exercise_id": "0534",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -8337,7 +8697,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "3533"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -8357,7 +8719,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
+         "exercise_id": "0117",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -8368,7 +8730,11 @@
          "rest_s": 105,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -8387,7 +8753,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0769",
+         "exercise_id": "0381",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8400,7 +8766,7 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
+          "0078",
           "0114"
          ],
          "order": 0,
@@ -8408,7 +8774,7 @@
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -8421,7 +8787,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0339",
+         "exercise_id": "0496",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8433,9 +8799,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0586",
+          "0599",
+          "3193"
          ],
          "order": 0,
          "slot": {
@@ -8455,7 +8821,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "2289",
+         "exercise_id": "1372",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8468,8 +8834,8 @@
          "notes_es": null,
          "alternatives": [
           "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417"
          ],
          "order": 0,
          "slot": {
@@ -8494,7 +8860,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -8510,7 +8876,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -8526,7 +8892,7 @@
      "volume": [
       {
        "group": "quads",
-       "sets": 2.5
+       "sets": 3.0
       },
       {
        "group": "hamstrings",
@@ -8534,7 +8900,7 @@
       },
       {
        "group": "glutes",
-       "sets": 3.0
+       "sets": 2.5
       },
       {
        "group": "calves",
@@ -8549,7 +8915,7 @@
      "focus_es": "Cardio suave y movilidad para recuperar",
      "weekday": null,
      "is_recovery": true,
-     "estimated_minutes": 26,
+     "estimated_minutes": 36,
      "blocks": [
       {
        "order": 0,
@@ -8558,21 +8924,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3656",
+         "exercise_id": "2138",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
-         "duration_s": 1200,
+         "duration_s": 1800,
          "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
-         "notes_es": "Intensidad suave: deberías poder mantener una conversación.",
+         "notes_es": "Intensidad suave (RPE 3-4): puedes hablar con frases completas.",
          "alternatives": [
-          "0501",
-          "0630",
-          "0684"
+          "2141",
+          "2311",
+          "3666"
          ],
          "order": 0,
          "slot": {
@@ -8592,21 +8958,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0669",
+         "exercise_id": "0643",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
+          "0257",
           "0613",
-          "0643",
-          "0690"
+          "0669"
          ],
          "order": 0,
          "slot": {
@@ -8618,20 +8984,20 @@
          }
         },
         {
-         "exercise_id": "3147",
+         "exercise_id": "0613",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
          "duration_s": 45,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
          "load_hint": null,
          "notes_es": "Movilidad tranquila, sin llegar a molestias.",
          "alternatives": [
-          "0613",
-          "0643",
+          "0257",
+          "0669",
           "0690"
          ],
          "order": 1,
@@ -8640,7 +9006,85 @@
           "pattern": "mobility",
           "role": "mobility",
           "group": "other",
+          "priority": 1
+         }
+        },
+        {
+         "exercise_id": "1377",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 2,
+         "slot": {
+          "slot_index": 3,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
           "priority": 2
+         }
+        },
+        {
+         "exercise_id": "1339",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 3,
+         "slot": {
+          "slot_index": 4,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 2
+         }
+        },
+        {
+         "exercise_id": "2567",
+         "sets": 1,
+         "rep_min": null,
+         "rep_max": null,
+         "duration_s": 45,
+         "per_side": false,
+         "target_rir": null,
+         "tempo": null,
+         "rest_s": 0,
+         "load_hint": null,
+         "notes_es": "Movilidad tranquila, sin llegar a molestias.",
+         "alternatives": [
+          "0257",
+          "0669",
+          "0690"
+         ],
+         "order": 4,
+         "slot": {
+          "slot_index": 5,
+          "pattern": "mobility",
+          "role": "mobility",
+          "group": "other",
+          "priority": 3
          }
         }
        ]
@@ -8664,7 +9108,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "3223",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -8680,7 +9124,7 @@
          "slot": null
         },
         {
-         "exercise_id": "0576",
+         "exercise_id": "3211",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -8772,7 +9216,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1257",
+         "exercise_id": "0662",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8784,9 +9228,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0009",
           "0025",
-          "0033"
+          "0251",
+          "0314"
          ],
          "order": 0,
          "slot": {
@@ -8806,7 +9250,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1284",
+         "exercise_id": "0596",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8818,9 +9262,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0308",
           "0040",
-          "0155",
-          "0158"
+          "0155"
          ],
          "order": 0,
          "slot": {
@@ -8840,7 +9284,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0419",
+         "exercise_id": "0584",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8852,8 +9296,8 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
+          "0178",
           "0041",
-          "0100",
           "0107"
          ],
          "order": 0,
@@ -8874,7 +9318,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0816",
+         "exercise_id": "0430",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -8886,9 +9330,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0018",
-          "0019",
-          "0030"
+          "0194",
+          "0200",
+          "0201"
          ],
          "order": 0,
          "slot": {
@@ -8913,7 +9357,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -8929,7 +9373,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -8953,7 +9397,7 @@
       },
       {
        "group": "arms",
-       "sets": 3.5
+       "sets": 2.5
       }
      ]
     },
@@ -8964,7 +9408,7 @@
      "focus_es": "Trabajo de espalda, hombros y brazos",
      "weekday": null,
      "is_recovery": false,
-     "estimated_minutes": 31,
+     "estimated_minutes": 34,
      "blocks": [
       {
        "order": 0,
@@ -8973,7 +9417,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "2331",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -8989,7 +9433,7 @@
          "slot": null
         },
         {
-         "exercise_id": "3117",
+         "exercise_id": "2330",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -9014,7 +9458,7 @@
        "exercises": [
         {
          "exercise_id": "0198",
-         "sets": 1,
+         "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -9048,7 +9492,7 @@
        "exercises": [
         {
          "exercise_id": "3017",
-         "sets": 1,
+         "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
@@ -9081,21 +9525,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "1330",
+         "exercise_id": "0293",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 4,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
           "0027",
-          "0049",
-          "0064"
+          "0292",
+          "0499"
          ],
          "order": 0,
          "slot": {
@@ -9115,7 +9559,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0075",
+         "exercise_id": "0383",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -9127,9 +9571,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0154",
-          "0202",
-          "0203"
+          "0602",
+          "0993",
+          "0075"
          ],
          "order": 0,
          "slot": {
@@ -9149,21 +9593,21 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0353",
+         "exercise_id": "0031",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": 4,
          "tempo": "2-0-1-0",
          "rest_s": 75,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
-         "notes_es": "Repeticiones o tiempo por lado.",
+         "notes_es": null,
          "alternatives": [
-          "0023",
-          "0031",
-          "0038"
+          "0165",
+          "0294",
+          "0313"
          ],
          "order": 0,
          "slot": {
@@ -9183,7 +9627,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0580",
+         "exercise_id": "1018",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -9238,7 +9682,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -9254,7 +9698,7 @@
      "volume": [
       {
        "group": "back",
-       "sets": 4.0
+       "sets": 6.0
       },
       {
        "group": "shoulders",
@@ -9270,7 +9714,7 @@
      "index": 6,
      "template": "legs",
      "name_es": "Pierna",
-     "focus_es": "Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos",
+     "focus_es": "Trabajo de cuádriceps, isquiotibiales, gemelos y core",
      "weekday": null,
      "is_recovery": false,
      "estimated_minutes": 32,
@@ -9282,7 +9726,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3636",
+         "exercise_id": "0798",
          "sets": 1,
          "rep_min": null,
          "rep_max": null,
@@ -9298,12 +9742,12 @@
          "slot": null
         },
         {
-         "exercise_id": "2287",
+         "exercise_id": "1004",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
          "duration_s": null,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 30,
@@ -9322,7 +9766,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "3533",
+         "exercise_id": "1760",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -9334,7 +9778,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "1760"
+          "0042",
+          "0043",
+          "0046"
          ],
          "order": 0,
          "slot": {
@@ -9354,7 +9800,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0044",
+         "exercise_id": "0549",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -9365,7 +9811,11 @@
          "rest_s": 105,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0032",
+          "0044",
+          "0085"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -9384,7 +9834,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0114",
+         "exercise_id": "0336",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -9397,15 +9847,15 @@
          "notes_es": "Repeticiones o tiempo por lado.",
          "alternatives": [
           "0054",
-          "0077",
-          "0336"
+          "0078",
+          "0114"
          ],
          "order": 0,
          "slot": {
           "slot_index": 2,
           "pattern": "lunge",
           "role": "accessory",
-          "group": "glutes",
+          "group": "quads",
           "priority": 2
          }
         }
@@ -9418,7 +9868,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0582",
+         "exercise_id": "0586",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -9430,9 +9880,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0016",
-          "0496",
-          "0555"
+          "0599",
+          "3193",
+          "0016"
          ],
          "order": 0,
          "slot": {
@@ -9452,7 +9902,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0417",
+         "exercise_id": "0088",
          "sets": 1,
          "rep_min": 10,
          "rep_max": 15,
@@ -9464,9 +9914,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0088",
-          "0108",
-          "0111"
+          "0409",
+          "0417",
+          "0605"
          ],
          "order": 0,
          "slot": {
@@ -9491,7 +9941,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -9507,7 +9957,7 @@
          "rep_min": null,
          "rep_max": null,
          "duration_s": 35,
-         "per_side": true,
+         "per_side": false,
          "target_rir": null,
          "tempo": null,
          "rest_s": 0,
@@ -9523,7 +9973,7 @@
      "volume": [
       {
        "group": "quads",
-       "sets": 2.5
+       "sets": 3.0
       },
       {
        "group": "hamstrings",
@@ -9531,7 +9981,7 @@
       },
       {
        "group": "glutes",
-       "sets": 3.0
+       "sets": 2.5
       },
       {
        "group": "calves",
@@ -9547,43 +9997,43 @@
    "group": "chest",
    "target_min": 8.0,
    "target_max": 12.0,
-   "planned_sets": 10.0
+   "planned_sets": 14.0
   },
   {
    "group": "back",
    "target_min": 8.0,
    "target_max": 12.0,
-   "planned_sets": 12.0
+   "planned_sets": 20.0
   },
   {
    "group": "shoulders",
    "target_min": 8.0,
    "target_max": 12.0,
-   "planned_sets": 10.0
+   "planned_sets": 14.0
   },
   {
    "group": "arms",
    "target_min": 4.0,
    "target_max": 8.0,
-   "planned_sets": 16.0
+   "planned_sets": 17.6
   },
   {
    "group": "quads",
    "target_min": 8.0,
    "target_max": 12.0,
-   "planned_sets": 9.0
+   "planned_sets": 10.0
   },
   {
    "group": "hamstrings",
    "target_min": 8.0,
    "target_max": 12.0,
-   "planned_sets": 8.0
+   "planned_sets": 10.0
   },
   {
    "group": "glutes",
    "target_min": 8.0,
    "target_max": 12.0,
-   "planned_sets": 9.0
+   "planned_sets": 8.0
   },
   {
    "group": "calves",
@@ -9615,28 +10065,42 @@
   },
   {
    "code": "slot_dropped",
-   "message_es": "Para ajustar «Pierna» a 45 minutos hemos quitado «elevación de piernas alterna sentado con barra».",
+   "message_es": "Para ajustar «Pierna» a 45 minutos hemos quitado «elevación de piernas rectas en silla romana».",
    "week_index": null,
    "day_index": 6,
    "exercise_id": null
   },
   {
    "code": "volume_out_of_range",
-   "message_es": "Volumen semanal de espalda: 12 series efectivas, por encima del objetivo de 10. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.",
+   "message_es": "Volumen semanal de pecho: 14 series efectivas, por encima del objetivo de 10. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.",
    "week_index": null,
    "day_index": null,
    "exercise_id": null
   },
   {
    "code": "volume_out_of_range",
-   "message_es": "Volumen semanal de brazos: 16 series efectivas, por encima del objetivo de 6. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.",
+   "message_es": "Volumen semanal de espalda: 20 series efectivas, por encima del objetivo de 10. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.",
    "week_index": null,
    "day_index": null,
    "exercise_id": null
   },
   {
    "code": "volume_out_of_range",
-   "message_es": "Volumen semanal de isquiotibiales: 8 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.",
+   "message_es": "Volumen semanal de hombros: 14 series efectivas, por encima del objetivo de 10. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de brazos: 17,6 series efectivas, por encima del objetivo de 6. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.",
+   "week_index": null,
+   "day_index": null,
+   "exercise_id": null
+  },
+  {
+   "code": "volume_out_of_range",
+   "message_es": "Volumen semanal de glúteos: 8 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.",
    "week_index": null,
    "day_index": null,
    "exercise_id": null

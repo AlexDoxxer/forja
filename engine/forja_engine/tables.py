@@ -10,6 +10,7 @@ cada programa para poder reproducirlo o auditarlo.
 
 import hashlib
 import json
+import re
 from functools import cache
 from pathlib import Path
 from typing import Any, Literal, Self
@@ -22,9 +23,12 @@ from forja_engine.models import (
     EquipmentCode,
     EquipmentGroup,
     EquipmentPreset,
+    ExerciseCard,
     ExerciseRole,
     Experience,
     Goal,
+    LoadType,
+    Mechanic,
     MovementPattern,
     MuscleCode,
     MuscleGroup,
@@ -39,6 +43,7 @@ VOLUME_GROUP_VALUES: frozenset[str] = frozenset(g.value for g in VolumeGroup)
 
 Range = tuple[int, int]
 FloatRange = tuple[float, float]
+MAX_TABLE_RIR = 5
 
 
 class TablesError(ValueError):
@@ -47,6 +52,26 @@ class TablesError(ValueError):
 
 class Table(BaseModel):
     model_config = ConfigDict(frozen=True, extra="forbid", populate_by_name=True)
+
+
+class NameRule(Table):
+    """Ejercicios que casan por palabra completa con ``display_name_en`` o por id."""
+
+    name_en_any: tuple[str, ...] = Field(min_length=1)
+    ids: tuple[str, ...] = ()
+
+    def matches(self, card: ExerciseCard) -> bool:
+        return (
+            card.id in self.ids
+            or _name_pattern(self.name_en_any).search(card.display_name_en) is not None
+        )
+
+
+@cache
+def _name_pattern(terms: tuple[str, ...]) -> re.Pattern[str]:
+    """Coincidencia por palabra completa (``ring`` no casa con «spring»), con plural en ``s``."""
+    alternatives = "|".join(re.escape(term.lower()) for term in terms)
+    return re.compile(rf"(?<![a-z0-9])(?:{alternatives})s?(?![a-z0-9])", re.IGNORECASE)
 
 
 def _check_range(values: tuple[float, float], name: str) -> None:
@@ -137,6 +162,7 @@ class VolumeTargets(Table):
     groups: tuple[VolumeGroup, ...]
     targets: dict[Goal, dict[Experience, dict[str, FloatRange]]]
     set_credit: SetCredit
+    secondary_credit_by_group: dict[VolumeGroup, float] = Field(default_factory=dict)
     max_effective_sets_per_group_per_session: float = Field(gt=0, le=10)
     maintenance_floor_ratio: float = Field(ge=0, le=1)
     emphasis_multipliers: dict[Emphasis, dict[str, float]]
@@ -170,6 +196,10 @@ class VolumeTargets(Table):
     def target_range(self, goal: Goal, level: Experience, group: VolumeGroup) -> FloatRange:
         ranges = self.targets[goal][level]
         return ranges.get(group.value, ranges["default"])
+
+    def secondary_credit(self, group: VolumeGroup) -> float:
+        """Crédito de una serie compuesta al grupo secundario ``group`` (por grupo o el general)."""
+        return self.secondary_credit_by_group.get(group, self.set_credit.relevant_secondary)
 
     def multiplier(self, emphasis: Emphasis, group: VolumeGroup) -> float:
         values = self.emphasis_multipliers[emphasis]
@@ -254,12 +284,25 @@ class TimeModel(Table):
     budget_tolerance: float = Field(ge=0, le=0.5)
 
 
+class BodyweightRepLimits(NameRule):
+    """Techo y suelo de repeticiones en ejercicios de peso corporal muy exigentes (C9)."""
+
+    min: int = Field(ge=1)
+    max: int = Field(ge=1)
+
+    @model_validator(mode="after")
+    def _ordered(self) -> Self:
+        _check_range((self.min, self.max), "bodyweight_rep_limits")
+        return self
+
+
 class Prescription(Table):
     version: int
     table: dict[Goal, dict[Literal["main", "accessory"], RoleRx]]
     common: CommonRx
     experience_adjustments: dict[Experience, ExperienceAdjustment]
     min_rest_s: MinRest
+    bodyweight_rep_limits: BodyweightRepLimits
     time_model: TimeModel
 
     @model_validator(mode="after")
@@ -297,10 +340,45 @@ class UndulationDay(Table):
     rir: int = Field(ge=0, le=5)
 
 
+class HeavyDay(Table):
+    reps_shift: int
+    min_reps: int = Field(ge=1)
+    rir_floor: dict[Experience, int]
+
+    @model_validator(mode="after")
+    def _check_levels(self) -> Self:
+        if set(self.rir_floor) != set(Experience) or any(
+            not 0 <= v <= MAX_TABLE_RIR for v in self.rir_floor.values()
+        ):
+            msg = "heavy_day.rir_floor debe cubrir los tres niveles con RIR entre 0 y 5"
+            raise ValueError(msg)
+        return self
+
+
+class UndulationScope(Table):
+    """Qué ejercicios ondulan: solo compuestos cargables con material que admite carga."""
+
+    mechanic: Mechanic
+    load_type: LoadType
+    equipment_any: tuple[EquipmentCode, ...] = Field(min_length=1)
+
+    def applies(self, card: ExerciseCard) -> bool:
+        return (
+            card.mechanic is self.mechanic
+            and card.load_type is self.load_type
+            and card.equipment_code in self.equipment_any
+        )
+
+
 class StrengthUndulation(Table):
     enabled_for: tuple[Experience, ...]
-    heavy_day: UndulationDay
+    applies_to: UndulationScope
+    excluded_ids: tuple[str, ...] = ()
+    heavy_day: HeavyDay
     medium_day: UndulationDay
+
+    def undulates(self, card: ExerciseCard) -> bool:
+        return self.applies_to.applies(card) and card.id not in self.excluded_ids
 
 
 class ProgressionTable(Table):
@@ -415,6 +493,7 @@ class GoalDefaults(Table):
 class DifficultyRules(Table):
     cap: dict[Experience, int]
     accessory_extra: dict[Experience, int]
+    relax_difficulty_for: tuple[Experience, ...] = ()
 
     @model_validator(mode="after")
     def _check_levels(self) -> Self:
@@ -434,30 +513,39 @@ class Scoring(Table):
     above_difficulty: int
     unilateral_in_strength_main: int
     loadable_in_main: int
+    staple_in_accessory: int
+    barbell_in_strength_main: int
 
 
 Relaxation = Literal["difficulty", "staple", "target_group", "pattern_affinity"]
 
 
 class AllocationRules(Table):
-    bounds_by_role: dict[Literal["main", "accessory", "core"], Range]
+    """Límites de series por ejercicio: main y accesorio salen de ``prescription.yaml`` (B2)."""
+
+    core_bounds: Range
+    min_sets_per_exercise: int = Field(ge=1, le=3)
     tolerance_sets: float = Field(ge=0)
     accumulation_extra_cap: int = Field(ge=0, le=3)
+    accumulation_extra_from_week: int = Field(ge=1)
     volume_warning_ratio: float = Field(gt=0, lt=1)
 
     @model_validator(mode="after")
     def _check_bounds(self) -> Self:
-        if len(self.bounds_by_role) != 3:  # noqa: PLR2004
-            msg = "bounds_by_role debe cubrir main, accessory y core"
-            raise ValueError(msg)
-        for role, bounds in self.bounds_by_role.items():
-            _check_range(bounds, f"bounds_by_role[{role}]")
+        _check_range(self.core_bounds, "core_bounds")
         return self
+
+
+class FixtureGated(NameRule):
+    """Ejercicios que exigen estructura fija: fuera con los presets ``presets``."""
+
+    presets: tuple[EquipmentPreset, ...] = Field(min_length=1)
 
 
 class WarmupRules(Table):
     cardio_share: float = Field(gt=0, le=1)
     specific_items: int = Field(ge=0, le=2)
+    cardio_rotation: bool
 
 
 class CooldownRules(Table):
@@ -473,6 +561,8 @@ class RecoveryRules(Table):
     reserve_minutes: int = Field(ge=0)
     mobility_sets: int = Field(ge=1)
     mobility_hold_s: int = Field(ge=5)
+    cardio_equipment_any: tuple[EquipmentCode, ...] = Field(min_length=1)
+    cardio_ids_any: tuple[str, ...] = ()
 
 
 class ProgressionLoads(Table):
@@ -499,7 +589,14 @@ class EngineRules(Table):
     always_available_equipment: tuple[EquipmentCode, ...]
     difficulty: DifficultyRules
     scoring: Scoring
-    loadable_equipment: tuple[EquipmentCode, ...]
+    loadable_equipment: dict[Experience, tuple[EquipmentCode, ...]]
+    strength_main_preferred_equipment: dict[Experience, tuple[EquipmentCode, ...]]
+    main_requires_compound: bool
+    skill_gated: NameRule
+    contraindicated_default: NameRule
+    fixture_gated: FixtureGated
+    low_quality_ids: tuple[str, ...] = ()
+    lumbar_avoid: NameRule
     relaxation_order: tuple[Relaxation, ...]
     relaxations_warned: tuple[Relaxation, ...]
     max_alternatives: int = Field(ge=0, le=3)
@@ -526,6 +623,10 @@ class EngineRules(Table):
         if set(self.group_names_es) != set(MuscleGroup):
             msg = "group_names_es debe cubrir todos los grupos"
             raise ValueError(msg)
+        for name in ("loadable_equipment", "strength_main_preferred_equipment"):
+            if set(getattr(self, name)) != set(Experience):
+                msg = f"{name} debe cubrir los tres niveles"
+                raise ValueError(msg)
         if sorted(self.relaxation_order) != sorted(
             ("difficulty", "staple", "target_group", "pattern_affinity")
         ) or not set(self.relaxations_warned) <= set(self.relaxation_order):

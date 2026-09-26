@@ -3,8 +3,9 @@
 Duración = calentamiento + Σ(series por (tiempo bajo tensión + descanso)) + transiciones
 (60 s por ejercicio, 30 s en superseries y circuitos) + vuelta a la calma. En superseries el
 descanso se cuenta una vez por ronda. Si la sesión excede ``session_minutes`` en más del 5 %:
-(a) superseries de accesorios antagonistas, (b) quitar 1 serie a los accesorios, (c) quitar slots
-de menor prioridad (el finisher primero), (d) descansos de accesorios al mínimo de la tabla;
+(a) superseries de accesorios antagonistas, (b) quitar 1 serie a los accesorios (nunca por
+debajo de 2: si no cabe, se quita el slot), (c) quitar slots de menor prioridad (el finisher
+primero), (d) descansos de accesorios al mínimo de la tabla;
 solo como último recurso se tocan los ``main``, y se avisa.
 """
 
@@ -15,6 +16,7 @@ from forja_engine.draft import DraftBlock, DraftDay, DraftExercise, TimedBlock, 
 from forja_engine.models import (
     BlockKind,
     ExerciseRole,
+    Mechanic,
     MovementPattern,
     PlanWarning,
     PlanWarningCode,
@@ -161,6 +163,7 @@ class _Fitter:
         self.dropped: list[str] = []
         self.trimmed_main = False
         self.session_minutes = session_minutes
+        self.min_sets = tables.engine_rules.allocation.min_sets_per_exercise
 
     def over(self) -> bool:
         return day_seconds(self.day.blocks, self.model) > self.limit
@@ -179,8 +182,8 @@ class _Fitter:
                 block.kind is BlockKind.MAIN
                 and block.exercises[0].rx_role is ExerciseRole.ACCESSORY
             ):
-                block.exercises[0].sets = max(1, block.exercises[0].sets - 1)
-            elif block.kind is BlockKind.SUPERSET and block.rounds > 1:
+                block.exercises[0].sets = max(self.min_sets, block.exercises[0].sets - 1)
+            elif block.kind is BlockKind.SUPERSET and block.rounds > self.min_sets:
                 block.rounds -= 1
                 for exercise in block.exercises:
                     exercise.sets = block.rounds
@@ -222,9 +225,8 @@ class _Fitter:
                     block.rest_between_rounds_s = max(e.rest_s for e in block.exercises)
 
     def trim_mains(self) -> None:
-        main_low = self.tables.engine_rules.allocation.bounds_by_role["main"][0]
         steps: list[Callable[[], bool]] = [
-            lambda: self._main_sets(main_low),
+            lambda: self._main_sets(self.min_sets),
             self._main_rests,
             self._circuit_rounds,
             self._drop_main,
@@ -317,6 +319,24 @@ class _Fitter:
                 )
             )
         return result
+
+
+def order_working_blocks(day: DraftDay) -> None:
+    """Compuestos en series rectas primero y después los aislamientos y superseries (C6).
+
+    Solo se reordenan los bloques de trabajo entre sí (orden estable); calentamiento, finisher
+    y vuelta a la calma conservan su posición.
+    """
+    positions = [i for i, b in enumerate(day.blocks) if b.kind in _ORDERED_KINDS]
+    ordered = sorted(
+        (day.blocks[i] for i in positions),
+        key=lambda b: any(e.card.mechanic is Mechanic.ISOLATION for e in b.exercises),
+    )
+    for position, block in zip(positions, ordered, strict=True):
+        day.blocks[position] = block
+
+
+_ORDERED_KINDS = frozenset({BlockKind.MAIN, BlockKind.SUPERSET})
 
 
 def fit_day(

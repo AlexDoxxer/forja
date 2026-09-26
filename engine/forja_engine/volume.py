@@ -16,6 +16,7 @@ from forja_engine.models import (
     ExerciseCard,
     GeneratorInput,
     Mechanic,
+    MovementPattern,
     MuscleGroup,
     SlotRef,
     VolumeGroup,
@@ -24,6 +25,18 @@ from forja_engine.tables import VOLUME_GROUP_VALUES, Tables
 from forja_engine.texts import EMPHASIS_ES, join_es
 
 EFFECTIVE_RIR_MAX = 4
+COMPOUND_PATTERNS = frozenset(
+    {
+        MovementPattern.SQUAT,
+        MovementPattern.LUNGE,
+        MovementPattern.HINGE,
+        MovementPattern.HORIZONTAL_PUSH,
+        MovementPattern.VERTICAL_PUSH,
+        MovementPattern.HORIZONTAL_PULL,
+        MovementPattern.VERTICAL_PULL,
+    }
+)
+"""Patrones de los compuestos cuyo grupo de entrenamiento es el del patrón (B1)."""
 
 Credits = tuple[tuple[VolumeGroup, float], ...]
 
@@ -76,30 +89,45 @@ def emphasis_rationale(inp: GeneratorInput, tables: Tables) -> str | None:
     )
 
 
+def training_group(card: ExerciseCard, tables: Tables) -> MuscleGroup:
+    """Grupo que entrena ``card`` a efectos de selección y volumen.
+
+    En los compuestos de patrón principal es el grupo del patrón (sentadilla → cuádriceps,
+    bisagra → isquiotibiales…) aunque el dataset marque otro ``target_muscle`` (p. ej. glúteos);
+    en el resto (aislamientos) sigue siendo el del músculo objetivo (B1).
+    """
+    if card.mechanic is Mechanic.COMPOUND and card.movement_pattern in COMPOUND_PATTERNS:
+        return tables.engine_rules.pattern_groups[card.movement_pattern]
+    return tables.muscle_group(card.target_muscle)
+
+
 def card_credits(card: ExerciseCard, tables: Tables) -> Credits:
     """Créditos de volumen de una serie de ``card``."""
-    credit = tables.volume_targets.set_credit
-    target = tables.volume_group(card.target_muscle)
+    volume = tables.volume_targets
+    group = training_group(card, tables).value
+    target = VolumeGroup(group) if group in VOLUME_GROUP_VALUES else None
     result: dict[VolumeGroup, float] = {}
     if target is not None:
-        result[target] = credit.target
+        result[target] = volume.set_credit.target
     if card.mechanic is Mechanic.COMPOUND:
-        for group in tables.engine_rules.compound_secondary_groups.get(card.movement_pattern, ()):
-            if group is not target:
-                result[group] = credit.relevant_secondary
+        for secondary in tables.engine_rules.compound_secondary_groups.get(
+            card.movement_pattern, ()
+        ):
+            if secondary is not target:
+                result[secondary] = volume.secondary_credit(secondary)
     return tuple(result.items())
 
 
 def slot_credits(slot: SlotRef, tables: Tables) -> Credits:
     """Créditos estimados de un slot antes de elegir ejercicio (paso 4)."""
-    credit = tables.volume_targets.set_credit
+    volume = tables.volume_targets
     result: dict[VolumeGroup, float] = {}
     target = VolumeGroup(slot.group.value) if slot.group.value in VOLUME_GROUP_VALUES else None
     if target is not None:
-        result[target] = credit.target
+        result[target] = volume.set_credit.target
     for group in tables.engine_rules.compound_secondary_groups.get(slot.pattern, ()):
         if group is not target:
-            result[group] = credit.relevant_secondary
+            result[group] = volume.secondary_credit(group)
     return tuple(result.items())
 
 

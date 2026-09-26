@@ -36,6 +36,11 @@ def role_rx(inp: GeneratorInput, role: ExerciseRole, tables: Tables) -> RoleRx:
     return tables.prescription.table[inp.goal]["main" if role is ExerciseRole.MAIN else "accessory"]
 
 
+def bodyweight_limited(card: ExerciseCard, tables: Tables) -> bool:
+    """Dominadas, fondos y similares de peso corporal (C9): techo de repeticiones prescrito."""
+    return tables.prescription.bodyweight_rep_limits.matches(card)
+
+
 def working_rir(inp: GeneratorInput, role: ExerciseRole, week_rir: int, tables: Tables) -> int:
     """RIR de la semana acotado al rango de la tabla del rol, +1 para principiantes."""
     rx = tables.prescription
@@ -109,6 +114,22 @@ def prescribe_working(
         tempo = None
     elif card.mechanic is Mechanic.ISOLATION:
         rep_max = reps[1] + sex.isolation_rep_max_delta
+    notes = "Repeticiones o tiempo por lado." if per_side else None
+    limits = rx.bodyweight_rep_limits
+    if (
+        rep_min is not None
+        and rep_max is not None
+        and card.load_type is LoadType.BODYWEIGHT
+        and bodyweight_limited(card, tables)
+        and rep_max > limits.max
+    ):
+        rep_min = clamp(rep_min, limits.min, limits.max)
+        rep_max = limits.max
+        notes = (
+            f"Este ejercicio exigente se limita a {limits.max} repeticiones por serie: "
+            "cuando te sobre fuerza, pasa a una variante más difícil."
+            + (" Repeticiones por lado." if per_side else "")
+        )
     return DraftExercise(
         card=card,
         slot=slot,
@@ -123,7 +144,7 @@ def prescribe_working(
         rest_s=rest,
         rest_floor_s=min(floor, rest),
         load_hint=load_hint(card, rir),
-        notes_es=("Repeticiones o tiempo por lado." if per_side else None),
+        notes_es=notes,
     )
 
 
@@ -170,6 +191,30 @@ def prescribe_warmup_specific(
     )
 
 
+def prescribe_warmup_ramp(card: ExerciseCard, tables: Tables) -> DraftExercise:
+    """Series de aproximación (``progression.warmup_ramp``) sobre el propio ejercicio (C7)."""
+    ramp = tables.periodization.progression.warmup_ramp
+    steps = "; ".join(f"{round(pct * 100)} % para {reps} repeticiones" for pct, reps in ramp)
+    reps_values = [reps for _, reps in ramp]
+    return DraftExercise(
+        card=card,
+        slot=None,
+        rx_role=ExerciseRole.WARMUP,
+        sets=len(ramp),
+        rep_min=min(reps_values),
+        rep_max=max(reps_values),
+        duration_s=None,
+        per_side=card.laterality is Laterality.UNILATERAL,
+        target_rir=None,
+        tempo=None,
+        rest_s=tables.prescription.common.warmup.rest_s[1],
+        rest_floor_s=tables.prescription.common.warmup.rest_s[0],
+        notes_es=(
+            f"Series de aproximación con tu carga de trabajo ({steps}): sin llegar a fatigarte."
+        ),
+    )
+
+
 def prescribe_cooldown(card: ExerciseCard, inp: GeneratorInput, tables: Tables) -> DraftExercise:
     cooldown = tables.prescription.common.cooldown
     rule = tables.prescription.experience_adjustments[inp.experience].sets
@@ -181,7 +226,7 @@ def prescribe_cooldown(card: ExerciseCard, inp: GeneratorInput, tables: Tables) 
         rep_min=None,
         rep_max=None,
         duration_s=_hold(cooldown.hold_s, inp, tables),
-        per_side=cooldown.per_side,
+        per_side=cooldown.per_side and card.laterality is Laterality.UNILATERAL,
         target_rir=None,
         tempo=None,
         rest_s=cooldown.rest_s[0],
@@ -220,9 +265,10 @@ def prescribe_recovery(
         low, high = recovery.cardio_minutes
         minutes = clamp(inp.session_minutes - recovery.reserve_minutes, low, high)
         sets, duration, per_side = 1, minutes * 60, False
-        notes = "Intensidad suave: deberías poder mantener una conversación."
+        notes = "Intensidad suave (RPE 3-4): puedes hablar con frases completas."
     else:
-        sets, duration, per_side = recovery.mobility_sets, recovery.mobility_hold_s, True
+        sets, duration = recovery.mobility_sets, recovery.mobility_hold_s
+        per_side = card.laterality is Laterality.UNILATERAL
         notes = "Movilidad tranquila, sin llegar a molestias."
     return DraftExercise(
         card=card,

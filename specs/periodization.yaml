@@ -13,8 +13,11 @@ phases:
     load_ratio: 0.9
 strength_undulation:
   enabled_for: [intermediate, advanced]
-  heavy_day: { reps_shift: -2, rir: 1 }
-  medium_day: { reps_shift: 0, rir: 2 }
+  # B4: solo ondulan compuestos con carga externa; heavy 3-6 -> 3-5 y medium 3-6 -> 4-7.
+  applies_to: { mechanic: compound, load_type: external, equipment_any: [barbell, trap_bar, smith, machine, cable, dumbbell] }
+  excluded_ids: ["0044", "0090", "0115", "0749", "3759"]   # buenos días: nunca a alta carga
+  heavy_day: { reps_shift: -1, min_reps: 3, rir_floor: { beginner: 2, intermediate: 2, advanced: 1 } }
+  medium_day: { reps_shift: 1, rir: 2 }
 beginner_linear: true
 progression:
   upper_compound_kg: 2.5

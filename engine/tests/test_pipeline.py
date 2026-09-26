@@ -101,10 +101,12 @@ def test_replacement_is_skipped_when_no_day_matches() -> None:
 
 def test_emphasis_blocks_are_appended_to_matching_days() -> None:
     days = build_days(
-        make_input(emphasis="arms", days_per_week=3, preferred_days=("mon", "wed", "fri")), TABLES
+        make_input(emphasis="arms", days_per_week=4, preferred_days=("mon", "tue", "thu", "fri")),
+        TABLES,
     )
-    assert all(d.slots[-1].pattern is MovementPattern.ELBOW_EXTENSION for d in days)
-    assert [d.weekday for d in days] == ["mon", "wed", "fri"]
+    with_arms = [d for d in days if d.slots[-1].pattern is MovementPattern.ELBOW_EXTENSION]
+    assert [d.template for d in with_arms] == ["upper_a", "upper_b"]  # nunca días de pierna
+    assert [d.weekday for d in days] == ["mon", "tue", "thu", "fri"]
     core_days = build_days(make_input(emphasis="core"), TABLES)
     assert core_days[0].slots[-1].role is ExerciseRole.CORE
 
@@ -156,13 +158,15 @@ def test_safety_warnings_for_beginners_and_seven_days() -> None:
 def test_allocation_skips_non_strength_slots_and_respects_the_session_cap() -> None:
     chest = [
         slot(MovementPattern.HORIZONTAL_PUSH, ExerciseRole.MAIN, MuscleGroup.CHEST, i)
-        for i in range(4)
+        for i in range(3)
     ]
-    cardio = slot(MovementPattern.CARDIO, ExerciseRole.CARDIO, MuscleGroup.CARDIO, 4)
+    cardio = slot(MovementPattern.CARDIO, ExerciseRole.CARDIO, MuscleGroup.CARDIO, 3)
     day = DaySpec(0, "custom", "Custom", (*chest, cardio), is_recovery=False, weekday=None)
     targets = {g: GroupTarget(g, 30, 40, 35) for g in weekly_targets(make_input(), TABLES)}
-    sets = allocate_sets([day], targets, Goal.STRENGTH, Experience.ADVANCED, TABLES, circuit=False)
-    assert (0, 4) not in sets
+    sets = allocate_sets(
+        [day], targets, Goal.HYPERTROPHY, Experience.INTERMEDIATE, TABLES, circuit=False
+    )
+    assert (0, 3) not in sets
     assert sum(sets.values()) <= 10
     assert all(v >= 2 for v in sets.values())
 

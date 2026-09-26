@@ -29,6 +29,11 @@ experience_adjustments:
   intermediate: { rir_delta: 0, sets: mid }
   advanced:     { rir_delta: 0, sets: max }
 min_rest_s: { main: 90, accessory: 30, core: 30 }
+# C9: dominadas, fondos y flexiones en pino con peso corporal: techo 12 y suelo 5 repeticiones.
+bodyweight_rep_limits:
+  name_en_any: ["pull-up", "pull up", "chin-up", "chin up", "dip", "handstand push-up"]
+  min: 5
+  max: 12
 time_model:
   seconds_per_rep: 3.5          # ajustado por tempo si se especifica
   transition_s: 60
