@@ -9,7 +9,7 @@ from typing import Final
 from fastapi import APIRouter, FastAPI
 from forja_engine import Tables, load_tables
 
-from app.api.routers import auth, catalog, profile, programs, system
+from app.api.routers import auth, catalog, profile, programs, system, training
 from app.core.config import Settings, get_settings
 from app.core.errors import install_handlers
 from app.core.logging import configure_logging
@@ -72,5 +72,6 @@ def create_app(settings: Settings | None = None, *, rate_limit_scale: int = 1) -
     api.include_router(profile.router)
     api.include_router(catalog.router)
     api.include_router(programs.router)
+    api.include_router(training.router)
     app.include_router(api)
     return app

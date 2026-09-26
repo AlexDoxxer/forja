@@ -101,6 +101,9 @@ class Base(DeclarativeBase):
 
 
 class TimestampMixin:
+    # Recupera ``created_at``/``updated_at`` generados por el servidor con RETURNING.
+    __mapper_args__ = {"eager_defaults": True}  # noqa: RUF012
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
