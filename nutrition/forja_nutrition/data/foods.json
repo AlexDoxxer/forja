@@ -362,7 +362,9 @@
       "vegetarian",
       "vegan"
     ],
-    "allergens": [],
+    "allergens": [
+      "gluten"
+    ],
     "macro_role": "carb",
     "typical_portion_g": 330.0,
     "unit_grams": null,
@@ -387,8 +389,10 @@
       "vegetarian",
       "vegan"
     ],
-    "allergens": [],
-    "macro_role": "protein",
+    "allergens": [
+      "tree_nuts"
+    ],
+    "macro_role": "carb",
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
@@ -1333,7 +1337,9 @@
       "vegetarian",
       "vegan"
     ],
-    "allergens": [],
+    "allergens": [
+      "tree_nuts"
+    ],
     "macro_role": "fat",
     "typical_portion_g": 10.0,
     "unit_grams": null,
@@ -2608,7 +2614,9 @@
       "vegetarian",
       "vegan"
     ],
-    "allergens": [],
+    "allergens": [
+      "gluten"
+    ],
     "macro_role": "carb",
     "typical_portion_g": 50.0,
     "unit_grams": null,
@@ -2714,7 +2722,9 @@
       "vegetarian",
       "vegan"
     ],
-    "allergens": [],
+    "allergens": [
+      "gluten"
+    ],
     "macro_role": "carb",
     "typical_portion_g": 70.0,
     "unit_grams": null,
@@ -2895,7 +2905,10 @@
       "vegetarian",
       "vegan"
     ],
-    "allergens": [],
+    "allergens": [
+      "peanuts",
+      "tree_nuts"
+    ],
     "macro_role": "protein",
     "typical_portion_g": 40.0,
     "unit_grams": null,
@@ -3625,7 +3638,8 @@
       "vegan"
     ],
     "allergens": [
-      "peanuts"
+      "peanuts",
+      "tree_nuts"
     ],
     "macro_role": "fat",
     "typical_portion_g": 25.0,
@@ -3679,7 +3693,8 @@
       "vegan"
     ],
     "allergens": [
-      "peanuts"
+      "peanuts",
+      "tree_nuts"
     ],
     "macro_role": "fat",
     "typical_portion_g": 20.0,

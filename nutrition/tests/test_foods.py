@@ -5,7 +5,14 @@ from __future__ import annotations
 import pytest
 
 from forja_nutrition.foods import _ensure_unique_ids, foods_by_id, foods_hash, load_foods
-from forja_nutrition.models import DietType, Food, FoodCategory, FoodMacroRole, MacroTotals
+from forja_nutrition.models import (
+    Allergen,
+    DietType,
+    Food,
+    FoodCategory,
+    FoodMacroRole,
+    MacroTotals,
+)
 
 _ENERGY_TOLERANCE = 0.12
 
@@ -94,3 +101,46 @@ def test_ensure_unique_ids_raises_on_duplicates() -> None:
 def test_ensure_unique_ids_accepts_unique() -> None:
     foods = (_make_food("a"), _make_food("b"))
     _ensure_unique_ids(foods)  # no debe lanzar
+
+
+# --- B6: auditoría de alérgenos (F1b, Reglamento (UE) 1169/2011) ------------------------------
+_GLUTEN_FOODS = (
+    "avena bulgur cebada_perlada centeno_grano cuscus harina_trigo pasta pasta_integral "
+    "pan_blanco pan_centeno pan_integral pan_pita panecillo bagel muffin_ingles cerveza "
+    "galleta_salada pan_crujiente_centeno tortita_trigo"
+).split()
+_TREE_NUT_FOODS = (
+    "almendra avellana nuez nuez_brasil nuez_macadamia anacardo pistacho pinones coco_pulpa "
+    "aceite_coco leche_almendra cacahuete mantequilla_cacahuete altramuz"
+).split()
+_PEANUT_FOODS = ("cacahuete", "mantequilla_cacahuete", "altramuz")
+
+
+def test_allergen_audit_gluten_grains_and_beer() -> None:
+    by_id = foods_by_id()
+    assert [i for i in _GLUTEN_FOODS if Allergen.gluten not in by_id[i].allergens] == []
+
+
+def test_allergen_audit_tree_nuts_and_derivatives() -> None:
+    by_id = foods_by_id()
+    assert [i for i in _TREE_NUT_FOODS if Allergen.tree_nuts not in by_id[i].allergens] == []
+
+
+def test_allergen_audit_peanut_foods_carry_peanuts_and_tree_nuts() -> None:
+    by_id = foods_by_id()
+    for food_id in _PEANUT_FOODS:
+        assert Allergen.peanuts in by_id[food_id].allergens
+        assert Allergen.tree_nuts in by_id[food_id].allergens
+
+
+def test_almond_milk_is_not_a_protein_source() -> None:
+    assert foods_by_id()["leche_almendra"].macro_role is FoodMacroRole.carb
+
+
+def test_allergen_keywords_in_ids_are_tagged() -> None:
+    """Cualquier alimento cuyo id sugiera trigo/cebada/centeno/frutos secos debe declararlo."""
+    for food in load_foods():
+        if any(word in food.id for word in ("trigo", "cebada", "centeno", "cerveza", "avena")):
+            assert Allergen.gluten in food.allergens, food.id
+        if any(word in food.id for word in ("almendra", "avellana", "nuez", "anacardo")):
+            assert Allergen.tree_nuts in food.allergens, food.id
