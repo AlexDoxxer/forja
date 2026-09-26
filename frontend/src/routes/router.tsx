@@ -1,5 +1,6 @@
 import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 
+import { SessionRoute, SessionSummaryRoute } from "../features/session/SessionRoute";
 import { LibraryRoute } from "./LibraryRoute";
 import { ProfileRoute } from "./ProfileRoute";
 import { ProgramsRoute } from "./ProgramsRoute";
@@ -44,7 +45,22 @@ const profileRoute = createRoute({
   component: ProfileRoute,
 });
 
+// Parte B (F2): reproductor de sesión, resumen, nutrición y administración.
+const sessionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/sesion",
+  component: SessionRoute,
+});
+
+const sessionSummaryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/sesion/resumen/$uuid",
+  component: SessionSummaryRoute,
+});
+
 const routeTree = rootRoute.addChildren([
+  sessionRoute,
+  sessionSummaryRoute,
   todayRoute,
   programsRoute,
   libraryRoute,

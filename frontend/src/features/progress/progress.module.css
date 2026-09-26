@@ -1,0 +1,66 @@
+.heatmap {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 14px);
+  grid-auto-columns: 14px;
+  gap: 3px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.cell {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+}
+
+.l1 {
+  background: color-mix(in srgb, var(--color-accent) 25%, var(--color-surface-2));
+}
+
+.l2 {
+  background: color-mix(in srgb, var(--color-accent) 50%, var(--color-surface-2));
+}
+
+.l3 {
+  background: color-mix(in srgb, var(--color-accent) 75%, var(--color-surface-2));
+}
+
+.l4 {
+  background: var(--color-accent);
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.records {
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.record {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-2);
+  border-radius: var(--radius-md);
+}
+
+.chartWrap {
+  min-height: 240px;
+  width: 100%;
+}
