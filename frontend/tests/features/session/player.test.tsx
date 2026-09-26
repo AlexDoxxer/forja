@@ -290,7 +290,7 @@ describe("SessionSummary", () => {
         }),
       ),
     );
-    await view.rerender(
+    view.rerender(
       <QueryClientProvider client={client}>
         <SessionSummary sessionUuid={s.sessionUuid} onExit={vi.fn()} />
       </QueryClientProvider>,

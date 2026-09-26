@@ -2,6 +2,7 @@ import { createRootRoute, createRoute, createRouter } from "@tanstack/react-rout
 
 import { SessionRoute, SessionSummaryRoute } from "../features/session/SessionRoute";
 import { LibraryRoute } from "./LibraryRoute";
+import { NutritionRoute } from "./NutritionRoute";
 import { ProfileRoute } from "./ProfileRoute";
 import { ProgramsRoute } from "./ProgramsRoute";
 import { ProgressRoute } from "./ProgressRoute";
@@ -58,7 +59,14 @@ const sessionSummaryRoute = createRoute({
   component: SessionSummaryRoute,
 });
 
+const nutritionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/nutricion",
+  component: NutritionRoute,
+});
+
 const routeTree = rootRoute.addChildren([
+  nutritionRoute,
   sessionRoute,
   sessionSummaryRoute,
   todayRoute,
