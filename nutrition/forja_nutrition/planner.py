@@ -73,6 +73,7 @@ _BASE_SELECTION_WEIGHT = 10.0
 _REPEAT_PENALTY_PER_USE = 3.0
 _DISLIKED_WEIGHT_FACTOR = 0.2
 _MIN_SELECTION_WEIGHT = 0.5
+_SAME_DAY_REPEAT_USES = 4  # un alimento ya usado hoy pesa como si llevara 4 usos extra (N3)
 # Preferencias gastronómicas (C12): el aceite de oliva domina en la cocina española; el coco
 # (grasa saturada casi pura) y el girasol se ofrecen raramente.
 _SELECTION_BIAS: dict[str, float] = {
@@ -664,6 +665,7 @@ def _build_day_meals(
     tables: NutritionTables,
 ) -> list[Meal]:
     meals: list[Meal] = []
+    day_foods: set[str] = set()
     # Realimentación del error: cada comida apunta al reparto de lo que aún falta del
     # objetivo diario (no al reparto fijo), de modo que el redondeo de las primeras
     # comidas se compensa en las siguientes y el día cierra cerca del objetivo.
@@ -672,6 +674,11 @@ def _build_day_meals(
     for slot in slots:
         fraction = fractions[slot]
         share = fraction / remaining_fraction
+        # Preferir alimentos distintos en el día (N3): los ya usados hoy pierden peso de
+        # selección pero siguen siendo elegibles si no hay alternativa.
+        view = dict(usage_counts)
+        for food_id in day_foods:
+            view[food_id] += _SAME_DAY_REPEAT_USES
         meal = build_meal(
             slot=slot,
             foods=foods,
@@ -679,7 +686,7 @@ def _build_day_meals(
             allergens=allergens,
             excluded=excluded,
             disliked=disliked,
-            usage_counts=usage_counts,
+            usage_counts=view,
             rng=rng,
             kcal_target=max(remaining[0], 0.0) * share,
             protein_target=max(remaining[1], 0.0) * share,
@@ -689,6 +696,9 @@ def _build_day_meals(
             fat_max_pct=tables.fat.max_pct_kcal,
         )
         meals.append(meal)
+        for item in meal.items:
+            usage_counts[item.food_id] = usage_counts.get(item.food_id, 0) + 1
+            day_foods.add(item.food_id)
         remaining = (
             remaining[0] - meal.totals.kcal,
             remaining[1] - meal.totals.protein_g,

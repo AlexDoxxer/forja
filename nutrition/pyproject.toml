@@ -1,6 +1,6 @@
 [project]
 name = "forja-nutrition"
-version = "0.2.0"
+version = "0.2.1"
 description = "Motor de nutrición de Forja (opcional): puro, determinista y sin E/S de red."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"

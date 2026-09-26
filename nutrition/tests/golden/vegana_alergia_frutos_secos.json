@@ -175,24 +175,24 @@
    "date": "2026-09-29",
    "day_index": 1,
    "deviation": {
-    "carbs": 0.071466,
-    "fat": 0.043792,
-    "kcal": 0.023823,
-    "protein": 0.006083
+    "carbs": 0.039117,
+    "fat": 0.001146,
+    "kcal": -0.001025,
+    "protein": 0.018602
    },
    "meals": [
     {
      "items": [
       {
        "food_id": "proteina_soja_aislada",
-       "grams": 20.0,
+       "grams": 15.0,
        "name_es": "Proteína de soja aislada",
        "nutrients": {
         "carbs_g": 0.0,
-        "fat_g": 0.678,
+        "fat_g": 0.5085,
         "fiber_g": 0.0,
-        "kcal": 67.0,
-        "protein_g": 17.664
+        "kcal": 50.25,
+        "protein_g": 13.248
        },
        "units": null
       },
@@ -211,67 +211,80 @@
       },
       {
        "food_id": "aguacate",
-       "grams": 70.0,
+       "grams": 60.0,
        "name_es": "Aguacate",
        "nutrients": {
-        "carbs_g": 5.971,
-        "fat_g": 10.262,
-        "fiber_g": 4.69,
-        "kcal": 112.0,
-        "protein_g": 1.4
+        "carbs_g": 5.118,
+        "fat_g": 8.796,
+        "fiber_g": 4.02,
+        "kcal": 96.0,
+        "protein_g": 1.2
        },
        "units": null
       }
      ],
      "slot": "breakfast",
      "totals": {
-      "carbs_g": 84.631,
-      "fat_g": 14.018,
-      "fiber_g": 9.307,
-      "kcal": 580.85,
-      "protein_g": 32.231
+      "carbs_g": 83.778,
+      "fat_g": 12.3825,
+      "fiber_g": 8.637,
+      "kcal": 548.1,
+      "protein_g": 27.615
      }
     },
     {
      "items": [
       {
        "food_id": "alubia_pinta",
-       "grams": 130.0,
+       "grams": 145.0,
        "name_es": "Alubia pinta (seca)",
        "nutrients": {
-        "carbs_g": 81.315,
-        "fat_g": 1.599,
-        "fiber_g": 20.15,
-        "kcal": 451.1,
-        "protein_g": 27.846
+        "carbs_g": 90.6975,
+        "fat_g": 1.7835,
+        "fiber_g": 22.475,
+        "kcal": 503.15,
+        "protein_g": 31.059
        },
        "units": null
       },
       {
        "food_id": "pipas_calabaza",
-       "grams": 35.0,
+       "grams": 30.0,
        "name_es": "Pipas de calabaza",
        "nutrients": {
-        "carbs_g": 3.7485,
-        "fat_g": 17.1675,
-        "fiber_g": 2.1,
-        "kcal": 195.65,
-        "protein_g": 10.5805
+        "carbs_g": 3.213,
+        "fat_g": 14.715,
+        "fiber_g": 1.8,
+        "kcal": 167.7,
+        "protein_g": 9.069
        },
        "units": null
       }
      ],
      "slot": "lunch",
      "totals": {
-      "carbs_g": 85.0635,
-      "fat_g": 18.7665,
-      "fiber_g": 22.25,
-      "kcal": 646.75,
-      "protein_g": 38.4265
+      "carbs_g": 93.9105,
+      "fat_g": 16.4985,
+      "fiber_g": 24.275,
+      "kcal": 670.85,
+      "protein_g": 40.128
      }
     },
     {
      "items": [
+      {
+       "food_id": "edamame",
+       "grams": 65.0,
+       "name_es": "Edamame",
+       "nutrients": {
+        "carbs_g": 5.7915,
+        "fat_g": 3.38,
+        "fiber_g": 3.38,
+        "kcal": 78.65,
+        "protein_g": 7.7415
+       },
+       "units": null
+      },
       {
        "food_id": "tortita_maiz",
        "grams": 60.0,
@@ -284,125 +297,99 @@
         "protein_g": 3.42
        },
        "units": 2
-      },
-      {
-       "food_id": "semilla_chia",
-       "grams": 15.0,
-       "name_es": "Semilla de chía",
-       "nutrients": {
-        "carbs_g": 6.318,
-        "fat_g": 4.611,
-        "fiber_g": 5.16,
-        "kcal": 72.9,
-        "protein_g": 2.481
-       },
-       "units": null
       }
      ],
      "slot": "snack",
      "totals": {
-      "carbs_g": 33.102,
-      "fat_g": 6.321,
-      "fiber_g": 8.94,
-      "kcal": 203.7,
-      "protein_g": 5.901
+      "carbs_g": 32.5755,
+      "fat_g": 5.09,
+      "fiber_g": 7.16,
+      "kcal": 209.45,
+      "protein_g": 11.1615
      }
     },
     {
      "items": [
       {
        "food_id": "alubia_roja",
-       "grams": 120.0,
+       "grams": 115.0,
        "name_es": "Alubia roja (seca)",
        "nutrients": {
-        "carbs_g": 73.548,
-        "fat_g": 1.272,
-        "fiber_g": 18.24,
-        "kcal": 404.4,
-        "protein_g": 27.036
+        "carbs_g": 70.4835,
+        "fat_g": 1.219,
+        "fiber_g": 17.48,
+        "kcal": 387.55,
+        "protein_g": 25.9095
        },
        "units": null
       },
       {
-       "food_id": "tortita_trigo",
-       "grams": 30.0,
-       "name_es": "Tortita de trigo",
+       "food_id": "pipas_girasol",
+       "grams": 25.0,
+       "name_es": "Pipas de girasol",
        "nutrients": {
-        "carbs_g": 14.781,
-        "fat_g": 2.274,
-        "fiber_g": 0.72,
-        "kcal": 89.1,
-        "protein_g": 2.403
-       },
-       "units": 1
-      },
-      {
-       "food_id": "sesamo",
-       "grams": 15.0,
-       "name_es": "Sésamo",
-       "nutrients": {
-        "carbs_g": 3.5175,
-        "fat_g": 7.4505,
-        "fiber_g": 1.77,
-        "kcal": 85.95,
-        "protein_g": 2.6595
+        "carbs_g": 5.0,
+        "fat_g": 12.865,
+        "fiber_g": 2.15,
+        "kcal": 146.0,
+        "protein_g": 5.195
        },
        "units": null
       }
      ],
      "slot": "dinner",
      "totals": {
-      "carbs_g": 91.8465,
-      "fat_g": 10.9965,
-      "fiber_g": 20.73,
-      "kcal": 579.45,
-      "protein_g": 32.0985
+      "carbs_g": 75.4835,
+      "fat_g": 14.084,
+      "fiber_g": 19.63,
+      "kcal": 533.55,
+      "protein_g": 31.1045
      }
     }
    ],
    "totals": {
-    "carbs_g": 294.643,
-    "fat_g": 50.102,
-    "fiber_g": 61.227,
-    "kcal": 2010.75,
-    "protein_g": 108.657
+    "carbs_g": 285.7475,
+    "fat_g": 48.055,
+    "fiber_g": 59.702,
+    "kcal": 1961.95,
+    "protein_g": 110.009
    }
   },
   {
    "date": "2026-09-30",
    "day_index": 2,
    "deviation": {
-    "carbs": 0.031326,
-    "fat": -0.002594,
-    "kcal": -0.004996,
-    "protein": -0.001083
+    "carbs": 0.052685,
+    "fat": 0.036458,
+    "kcal": 0.010987,
+    "protein": -0.011375
    },
    "meals": [
     {
      "items": [
       {
        "food_id": "proteina_soja_aislada",
-       "grams": 25.0,
+       "grams": 15.0,
        "name_es": "Proteína de soja aislada",
        "nutrients": {
         "carbs_g": 0.0,
-        "fat_g": 0.8475,
+        "fat_g": 0.5085,
         "fiber_g": 0.0,
-        "kcal": 83.75,
-        "protein_g": 22.08
+        "kcal": 50.25,
+        "protein_g": 13.248
        },
        "units": null
       },
       {
        "food_id": "panecillo",
-       "grams": 125.0,
+       "grams": 130.0,
        "name_es": "Panecillo tipo chapata",
        "nutrients": {
-        "carbs_g": 65.875,
-        "fat_g": 5.375,
-        "fiber_g": 2.875,
-        "kcal": 366.25,
-        "protein_g": 12.375
+        "carbs_g": 68.51,
+        "fat_g": 5.59,
+        "fiber_g": 2.99,
+        "kcal": 380.9,
+        "protein_g": 12.87
        },
        "units": null
       },
@@ -422,38 +409,38 @@
      ],
      "slot": "breakfast",
      "totals": {
-      "carbs_g": 65.875,
-      "fat_g": 11.2225,
-      "fiber_g": 2.875,
-      "kcal": 494.2,
-      "protein_g": 34.455
+      "carbs_g": 68.51,
+      "fat_g": 11.0985,
+      "fiber_g": 2.99,
+      "kcal": 475.35,
+      "protein_g": 26.118
      }
     },
     {
      "items": [
       {
        "food_id": "alubia_roja",
-       "grams": 130.0,
+       "grams": 135.0,
        "name_es": "Alubia roja (seca)",
        "nutrients": {
-        "carbs_g": 79.677,
-        "fat_g": 1.378,
-        "fiber_g": 19.76,
-        "kcal": 438.1,
-        "protein_g": 29.289
+        "carbs_g": 82.7415,
+        "fat_g": 1.431,
+        "fiber_g": 20.52,
+        "kcal": 454.95,
+        "protein_g": 30.4155
        },
        "units": null
       },
       {
        "food_id": "patata",
-       "grams": 60.0,
+       "grams": 75.0,
        "name_es": "Patata",
        "nutrients": {
-        "carbs_g": 10.494,
-        "fat_g": 0.054,
-        "fiber_g": 1.26,
-        "kcal": 46.2,
-        "protein_g": 1.23
+        "carbs_g": 13.1175,
+        "fat_g": 0.0675,
+        "fiber_g": 1.575,
+        "kcal": 57.75,
+        "protein_g": 1.5375
        },
        "units": null
       },
@@ -473,50 +460,63 @@
      ],
      "slot": "lunch",
      "totals": {
-      "carbs_g": 96.171,
-      "fat_g": 16.87,
-      "fiber_g": 23.6,
-      "kcal": 659.5,
-      "protein_g": 36.753
+      "carbs_g": 101.859,
+      "fat_g": 16.9365,
+      "fiber_g": 24.675,
+      "kcal": 687.9,
+      "protein_g": 38.187
      }
     },
     {
      "items": [
       {
-       "food_id": "panecillo",
-       "grams": 65.0,
-       "name_es": "Panecillo tipo chapata",
+       "food_id": "edamame",
+       "grams": 75.0,
+       "name_es": "Edamame",
        "nutrients": {
-        "carbs_g": 34.255,
-        "fat_g": 2.795,
-        "fiber_g": 1.495,
-        "kcal": 190.45,
-        "protein_g": 6.435
+        "carbs_g": 6.6825,
+        "fat_g": 3.9,
+        "fiber_g": 3.9,
+        "kcal": 90.75,
+        "protein_g": 8.9325
        },
        "units": null
+      },
+      {
+       "food_id": "tortita_arroz",
+       "grams": 27.0,
+       "name_es": "Tortita de arroz",
+       "nutrients": {
+        "carbs_g": 22.005,
+        "fat_g": 0.756,
+        "fiber_g": 1.134,
+        "kcal": 104.49,
+        "protein_g": 2.214
+       },
+       "units": 3
       }
      ],
      "slot": "snack",
      "totals": {
-      "carbs_g": 34.255,
-      "fat_g": 2.795,
-      "fiber_g": 1.495,
-      "kcal": 190.45,
-      "protein_g": 6.435
+      "carbs_g": 28.6875,
+      "fat_g": 4.656,
+      "fiber_g": 5.034,
+      "kcal": 195.24,
+      "protein_g": 11.1465
      }
     },
     {
      "items": [
       {
        "food_id": "alubia_negra",
-       "grams": 140.0,
+       "grams": 145.0,
        "name_es": "Alubia negra (seca)",
        "nutrients": {
-        "carbs_g": 87.304,
-        "fat_g": 1.988,
-        "fiber_g": 21.7,
-        "kcal": 477.4,
-        "protein_g": 30.24
+        "carbs_g": 90.422,
+        "fat_g": 2.059,
+        "fiber_g": 22.475,
+        "kcal": 494.45,
+        "protein_g": 31.32
        },
        "units": null
       },
@@ -536,30 +536,30 @@
      ],
      "slot": "dinner",
      "totals": {
-      "carbs_g": 87.304,
-      "fat_g": 16.988,
-      "fiber_g": 21.7,
-      "kcal": 610.0,
-      "protein_g": 30.24
+      "carbs_g": 90.422,
+      "fat_g": 17.059,
+      "fiber_g": 22.475,
+      "kcal": 627.05,
+      "protein_g": 31.32
      }
     }
    ],
    "totals": {
-    "carbs_g": 283.605,
-    "fat_g": 47.8755,
-    "fiber_g": 49.67,
-    "kcal": 1954.15,
-    "protein_g": 107.883
+    "carbs_g": 289.4785,
+    "fat_g": 49.75,
+    "fiber_g": 55.174,
+    "kcal": 1985.54,
+    "protein_g": 106.7715
    }
   },
   {
    "date": "2026-10-01",
    "day_index": 3,
    "deviation": {
-    "carbs": 0.027362,
-    "fat": 0.02549,
-    "kcal": -0.010653,
-    "protein": 0.01988
+    "carbs": 0.048767,
+    "fat": 0.021427,
+    "kcal": -0.002822,
+    "protein": 0.007546
    },
    "meals": [
     {
@@ -617,38 +617,38 @@
      "items": [
       {
        "food_id": "alubia_negra",
-       "grams": 170.0,
+       "grams": 145.0,
        "name_es": "Alubia negra (seca)",
        "nutrients": {
-        "carbs_g": 106.012,
-        "fat_g": 2.414,
-        "fiber_g": 26.35,
-        "kcal": 579.7,
-        "protein_g": 36.72
+        "carbs_g": 90.422,
+        "fat_g": 2.059,
+        "fiber_g": 22.475,
+        "kcal": 494.45,
+        "protein_g": 31.32
        },
        "units": null
       },
       {
-       "food_id": "sesamo",
-       "grams": 15.0,
-       "name_es": "Sésamo",
+       "food_id": "pipas_girasol",
+       "grams": 30.0,
+       "name_es": "Pipas de girasol",
        "nutrients": {
-        "carbs_g": 3.5175,
-        "fat_g": 7.4505,
-        "fiber_g": 1.77,
-        "kcal": 85.95,
-        "protein_g": 2.6595
+        "carbs_g": 6.0,
+        "fat_g": 15.438,
+        "fiber_g": 2.58,
+        "kcal": 175.2,
+        "protein_g": 6.234
        },
        "units": null
       }
      ],
      "slot": "lunch",
      "totals": {
-      "carbs_g": 109.5295,
-      "fat_g": 9.8645,
-      "fiber_g": 28.12,
-      "kcal": 665.65,
-      "protein_g": 39.3795
+      "carbs_g": 96.422,
+      "fat_g": 17.497,
+      "fiber_g": 25.055,
+      "kcal": 669.65,
+      "protein_g": 37.554
      }
     },
     {
@@ -668,16 +668,16 @@
       },
       {
        "food_id": "tortita_arroz",
-       "grams": 27.0,
+       "grams": 36.0,
        "name_es": "Tortita de arroz",
        "nutrients": {
-        "carbs_g": 22.005,
-        "fat_g": 0.756,
-        "fiber_g": 1.134,
-        "kcal": 104.49,
-        "protein_g": 2.214
+        "carbs_g": 29.34,
+        "fat_g": 1.008,
+        "fiber_g": 1.512,
+        "kcal": 139.32,
+        "protein_g": 2.952
        },
-       "units": 3
+       "units": 4
       },
       {
        "food_id": "aceite_oliva",
@@ -695,222 +695,146 @@
      ],
      "slot": "snack",
      "totals": {
-      "carbs_g": 22.005,
-      "fat_g": 6.095,
-      "fiber_g": 1.134,
-      "kcal": 182.19,
-      "protein_g": 11.046
+      "carbs_g": 29.34,
+      "fat_g": 6.347,
+      "fiber_g": 1.512,
+      "kcal": 217.02,
+      "protein_g": 11.784
      }
     },
     {
      "items": [
       {
        "food_id": "lenteja",
-       "grams": 95.0,
+       "grams": 85.0,
        "name_es": "Lenteja (seca)",
        "nutrients": {
-        "carbs_g": 60.1825,
-        "fat_g": 1.007,
-        "fiber_g": 10.165,
-        "kcal": 334.4,
-        "protein_g": 23.3985
+        "carbs_g": 53.8475,
+        "fat_g": 0.901,
+        "fiber_g": 9.095,
+        "kcal": 299.2,
+        "protein_g": 20.9355
        },
        "units": null
       },
       {
-       "food_id": "pipas_girasol",
-       "grams": 40.0,
-       "name_es": "Pipas de girasol",
+       "food_id": "cebada_perlada",
+       "grams": 30.0,
+       "name_es": "Cebada perlada",
        "nutrients": {
-        "carbs_g": 8.0,
-        "fat_g": 20.584,
-        "fiber_g": 3.44,
-        "kcal": 233.6,
-        "protein_g": 8.312
+        "carbs_g": 23.316,
+        "fat_g": 0.348,
+        "fiber_g": 4.68,
+        "kcal": 105.6,
+        "protein_g": 2.973
+       },
+       "units": null
+      },
+      {
+       "food_id": "pipas_calabaza",
+       "grams": 25.0,
+       "name_es": "Pipas de calabaza",
+       "nutrients": {
+        "carbs_g": 2.6775,
+        "fat_g": 12.2625,
+        "fiber_g": 1.5,
+        "kcal": 139.75,
+        "protein_g": 7.5575
        },
        "units": null
       }
      ],
      "slot": "dinner",
      "totals": {
-      "carbs_g": 68.1825,
-      "fat_g": 21.591,
-      "fiber_g": 13.605,
-      "kcal": 568.0,
-      "protein_g": 31.7105
+      "carbs_g": 79.841,
+      "fat_g": 13.5115,
+      "fiber_g": 15.275,
+      "kcal": 544.55,
+      "protein_g": 31.466
      }
     }
    ],
    "totals": {
-    "carbs_g": 282.515,
-    "fat_g": 49.2235,
-    "fiber_g": 49.557,
-    "kcal": 1943.04,
-    "protein_g": 110.147
+    "carbs_g": 288.401,
+    "fat_g": 49.0285,
+    "fiber_g": 48.54,
+    "kcal": 1958.42,
+    "protein_g": 108.815
    }
   },
   {
    "date": "2026-10-02",
    "day_index": 4,
    "deviation": {
-    "carbs": 0.066409,
-    "fat": 0.020875,
-    "kcal": -0.005607,
-    "protein": 0.003634
+    "carbs": 0.102325,
+    "fat": 0.023198,
+    "kcal": -0.012328,
+    "protein": -0.001944
    },
    "meals": [
     {
      "items": [
       {
        "food_id": "tofu_firme",
-       "grams": 120.0,
+       "grams": 110.0,
        "name_es": "Tofu firme",
        "nutrients": {
-        "carbs_g": 3.336,
-        "fat_g": 10.464,
-        "fiber_g": 2.76,
-        "kcal": 172.8,
-        "protein_g": 20.724
+        "carbs_g": 3.058,
+        "fat_g": 9.592,
+        "fiber_g": 2.53,
+        "kcal": 158.4,
+        "protein_g": 18.997
        },
        "units": null
       },
       {
        "food_id": "alforfon",
-       "grams": 50.0,
+       "grams": 60.0,
        "name_es": "Alforfón (trigo sarraceno)",
        "nutrients": {
-        "carbs_g": 37.475,
-        "fat_g": 1.355,
-        "fiber_g": 5.15,
-        "kcal": 173.0,
-        "protein_g": 5.865
+        "carbs_g": 44.97,
+        "fat_g": 1.626,
+        "fiber_g": 6.18,
+        "kcal": 207.6,
+        "protein_g": 7.038
        },
        "units": null
       },
       {
        "food_id": "arandano",
-       "grams": 185.0,
+       "grams": 200.0,
        "name_es": "Arándano",
        "nutrients": {
-        "carbs_g": 26.8065,
-        "fat_g": 0.6105,
-        "fiber_g": 4.44,
-        "kcal": 105.45,
-        "protein_g": 1.369
+        "carbs_g": 28.98,
+        "fat_g": 0.66,
+        "fiber_g": 4.8,
+        "kcal": 114.0,
+        "protein_g": 1.48
        },
        "units": null
       }
      ],
      "slot": "breakfast",
      "totals": {
-      "carbs_g": 67.6175,
-      "fat_g": 12.4295,
-      "fiber_g": 12.35,
-      "kcal": 451.25,
-      "protein_g": 27.958
+      "carbs_g": 77.008,
+      "fat_g": 11.878,
+      "fiber_g": 13.51,
+      "kcal": 480.0,
+      "protein_g": 27.515
      }
     },
     {
      "items": [
       {
        "food_id": "alubia_blanca",
-       "grams": 160.0,
+       "grams": 165.0,
        "name_es": "Alubia blanca (seca)",
        "nutrients": {
-        "carbs_g": 96.432,
-        "fat_g": 1.36,
-        "fiber_g": 24.32,
-        "kcal": 532.8,
-        "protein_g": 37.376
-       },
-       "units": null
-      },
-      {
-       "food_id": "aguacate",
-       "grams": 95.0,
-       "name_es": "Aguacate",
-       "nutrients": {
-        "carbs_g": 8.1035,
-        "fat_g": 13.927,
-        "fiber_g": 6.365,
-        "kcal": 152.0,
-        "protein_g": 1.9
-       },
-       "units": null
-      }
-     ],
-     "slot": "lunch",
-     "totals": {
-      "carbs_g": 104.5355,
-      "fat_g": 15.287,
-      "fiber_g": 30.685,
-      "kcal": 684.8,
-      "protein_g": 39.276
-     }
-    },
-    {
-     "items": [
-      {
-       "food_id": "edamame",
-       "grams": 70.0,
-       "name_es": "Edamame",
-       "nutrients": {
-        "carbs_g": 6.237,
-        "fat_g": 3.64,
-        "fiber_g": 3.64,
-        "kcal": 84.7,
-        "protein_g": 8.337
-       },
-       "units": null
-      },
-      {
-       "food_id": "pan_pita",
-       "grams": 60.0,
-       "name_es": "Pan de pita",
-       "nutrients": {
-        "carbs_g": 33.42,
-        "fat_g": 0.72,
-        "fiber_g": 1.32,
-        "kcal": 165.0,
-        "protein_g": 5.46
-       },
-       "units": 1
-      },
-      {
-       "food_id": "frambuesa",
-       "grams": 125.0,
-       "name_es": "Frambuesa",
-       "nutrients": {
-        "carbs_g": 14.925,
-        "fat_g": 0.8125,
-        "fiber_g": 8.125,
-        "kcal": 65.0,
-        "protein_g": 1.5
-       },
-       "units": null
-      }
-     ],
-     "slot": "snack",
-     "totals": {
-      "carbs_g": 54.582,
-      "fat_g": 5.1725,
-      "fiber_g": 13.085,
-      "kcal": 314.7,
-      "protein_g": 15.297
-     }
-    },
-    {
-     "items": [
-      {
-       "food_id": "lenteja",
-       "grams": 105.0,
-       "name_es": "Lenteja (seca)",
-       "nutrients": {
-        "carbs_g": 66.5175,
-        "fat_g": 1.113,
-        "fiber_g": 11.235,
-        "kcal": 369.6,
-        "protein_g": 25.8615
+        "carbs_g": 99.4455,
+        "fat_g": 1.4025,
+        "fiber_g": 25.08,
+        "kcal": 549.45,
+        "protein_g": 38.544
        },
        "units": null
       },
@@ -928,46 +852,135 @@
        "units": null
       }
      ],
+     "slot": "lunch",
+     "totals": {
+      "carbs_g": 99.4455,
+      "fat_g": 16.4025,
+      "fiber_g": 25.08,
+      "kcal": 682.05,
+      "protein_g": 38.544
+     }
+    },
+    {
+     "items": [
+      {
+       "food_id": "pan_pita",
+       "grams": 60.0,
+       "name_es": "Pan de pita",
+       "nutrients": {
+        "carbs_g": 33.42,
+        "fat_g": 0.72,
+        "fiber_g": 1.32,
+        "kcal": 165.0,
+        "protein_g": 5.46
+       },
+       "units": 1
+      },
+      {
+       "food_id": "pipas_calabaza",
+       "grams": 10.0,
+       "name_es": "Pipas de calabaza",
+       "nutrients": {
+        "carbs_g": 1.071,
+        "fat_g": 4.905,
+        "fiber_g": 0.6,
+        "kcal": 55.9,
+        "protein_g": 3.023
+       },
+       "units": null
+      }
+     ],
+     "slot": "snack",
+     "totals": {
+      "carbs_g": 34.491,
+      "fat_g": 5.625,
+      "fiber_g": 1.92,
+      "kcal": 220.9,
+      "protein_g": 8.483
+     }
+    },
+    {
+     "items": [
+      {
+       "food_id": "haba",
+       "grams": 350.0,
+       "name_es": "Haba fresca",
+       "nutrients": {
+        "carbs_g": 61.705,
+        "fat_g": 2.555,
+        "fiber_g": 26.25,
+        "kcal": 308.0,
+        "protein_g": 27.72
+       },
+       "units": null
+      },
+      {
+       "food_id": "cuscus",
+       "grams": 30.0,
+       "name_es": "Cuscús",
+       "nutrients": {
+        "carbs_g": 23.229,
+        "fat_g": 0.192,
+        "fiber_g": 1.5,
+        "kcal": 112.8,
+        "protein_g": 3.828
+       },
+       "units": null
+      },
+      {
+       "food_id": "aguacate",
+       "grams": 85.0,
+       "name_es": "Aguacate",
+       "nutrients": {
+        "carbs_g": 7.2505,
+        "fat_g": 12.461,
+        "fiber_g": 5.695,
+        "kcal": 136.0,
+        "protein_g": 1.7
+       },
+       "units": null
+      }
+     ],
      "slot": "dinner",
      "totals": {
-      "carbs_g": 66.5175,
-      "fat_g": 16.113,
-      "fiber_g": 11.235,
-      "kcal": 502.2,
-      "protein_g": 25.8615
+      "carbs_g": 92.1845,
+      "fat_g": 15.208,
+      "fiber_g": 33.445,
+      "kcal": 556.8,
+      "protein_g": 33.248
      }
     }
    ],
    "totals": {
-    "carbs_g": 293.2525,
-    "fat_g": 49.002,
-    "fiber_g": 67.355,
-    "kcal": 1952.95,
-    "protein_g": 108.3925
+    "carbs_g": 303.129,
+    "fat_g": 49.1135,
+    "fiber_g": 73.955,
+    "kcal": 1939.75,
+    "protein_g": 107.79
    }
   },
   {
    "date": "2026-10-03",
    "day_index": 5,
    "deviation": {
-    "carbs": 0.074797,
-    "fat": 0.011302,
-    "kcal": 0.014673,
-    "protein": 0.015347
+    "carbs": 0.006834,
+    "fat": -0.031177,
+    "kcal": -0.039605,
+    "protein": -0.024713
    },
    "meals": [
     {
      "items": [
       {
        "food_id": "tofu_firme",
-       "grams": 110.0,
+       "grams": 100.0,
        "name_es": "Tofu firme",
        "nutrients": {
-        "carbs_g": 3.058,
-        "fat_g": 9.592,
-        "fiber_g": 2.53,
-        "kcal": 158.4,
-        "protein_g": 18.997
+        "carbs_g": 2.78,
+        "fat_g": 8.72,
+        "fiber_g": 2.3,
+        "kcal": 144.0,
+        "protein_g": 17.27
        },
        "units": null
       },
@@ -1000,49 +1013,62 @@
      ],
      "slot": "breakfast",
      "totals": {
-      "carbs_g": 70.568,
-      "fat_g": 11.344,
-      "fiber_g": 9.598,
-      "kcal": 461.38,
-      "protein_g": 25.305
+      "carbs_g": 70.29,
+      "fat_g": 10.472,
+      "fiber_g": 9.368,
+      "kcal": 446.98,
+      "protein_g": 23.578
      }
     },
     {
      "items": [
       {
-       "food_id": "soja_seca",
-       "grams": 75.0,
-       "name_es": "Soja (seca)",
+       "food_id": "lenteja",
+       "grams": 105.0,
+       "name_es": "Lenteja (seca)",
        "nutrients": {
-        "carbs_g": 22.62,
-        "fat_g": 14.955,
-        "fiber_g": 6.975,
-        "kcal": 334.5,
-        "protein_g": 27.3675
+        "carbs_g": 66.5175,
+        "fat_g": 1.113,
+        "fiber_g": 11.235,
+        "kcal": 369.6,
+        "protein_g": 25.8615
        },
        "units": null
       },
       {
        "food_id": "pasta_integral",
-       "grams": 90.0,
+       "grams": 45.0,
        "name_es": "Pasta integral",
        "nutrients": {
-        "carbs_g": 66.033,
-        "fat_g": 2.637,
-        "fiber_g": 8.28,
-        "kcal": 316.8,
-        "protein_g": 12.483
+        "carbs_g": 33.0165,
+        "fat_g": 1.3185,
+        "fiber_g": 4.14,
+        "kcal": 158.4,
+        "protein_g": 6.2415
+       },
+       "units": null
+      },
+      {
+       "food_id": "pipas_girasol",
+       "grams": 30.0,
+       "name_es": "Pipas de girasol",
+       "nutrients": {
+        "carbs_g": 6.0,
+        "fat_g": 15.438,
+        "fiber_g": 2.58,
+        "kcal": 175.2,
+        "protein_g": 6.234
        },
        "units": null
       }
      ],
      "slot": "lunch",
      "totals": {
-      "carbs_g": 88.653,
-      "fat_g": 17.592,
-      "fiber_g": 15.255,
-      "kcal": 651.3,
-      "protein_g": 39.8505
+      "carbs_g": 105.534,
+      "fat_g": 17.8695,
+      "fiber_g": 17.955,
+      "kcal": 703.2,
+      "protein_g": 38.337
      }
     },
     {
@@ -1062,95 +1088,82 @@
       },
       {
        "food_id": "avena",
-       "grams": 40.0,
+       "grams": 50.0,
        "name_es": "Avena",
        "nutrients": {
-        "carbs_g": 26.508,
-        "fat_g": 2.76,
-        "fiber_g": 4.24,
-        "kcal": 155.6,
-        "protein_g": 6.756
+        "carbs_g": 33.135,
+        "fat_g": 3.45,
+        "fiber_g": 5.3,
+        "kcal": 194.5,
+        "protein_g": 8.445
        },
        "units": null
       }
      ],
      "slot": "snack",
      "totals": {
-      "carbs_g": 29.181,
-      "fat_g": 4.32,
-      "fiber_g": 5.8,
-      "kcal": 191.9,
-      "protein_g": 10.329
+      "carbs_g": 35.808,
+      "fat_g": 5.01,
+      "fiber_g": 6.86,
+      "kcal": 230.8,
+      "protein_g": 12.018
      }
     },
     {
      "items": [
       {
-       "food_id": "edamame",
-       "grams": 105.0,
-       "name_es": "Edamame",
+       "food_id": "soja_seca",
+       "grams": 60.0,
+       "name_es": "Soja (seca)",
        "nutrients": {
-        "carbs_g": 9.3555,
-        "fat_g": 5.46,
-        "fiber_g": 5.46,
-        "kcal": 127.05,
-        "protein_g": 12.5055
+        "carbs_g": 18.096,
+        "fat_g": 11.964,
+        "fiber_g": 5.58,
+        "kcal": 267.6,
+        "protein_g": 21.894
        },
        "units": null
       },
       {
        "food_id": "bagel",
-       "grams": 180.0,
+       "grams": 90.0,
        "name_es": "Bagel",
        "nutrients": {
-        "carbs_g": 94.284,
-        "fat_g": 2.376,
-        "fiber_g": 2.88,
-        "kcal": 475.2,
-        "protein_g": 19.008
+        "carbs_g": 47.142,
+        "fat_g": 1.188,
+        "fiber_g": 1.44,
+        "kcal": 237.6,
+        "protein_g": 9.504
        },
-       "units": 2
-      },
-      {
-       "food_id": "sesamo",
-       "grams": 15.0,
-       "name_es": "Sésamo",
-       "nutrients": {
-        "carbs_g": 3.5175,
-        "fat_g": 7.4505,
-        "fiber_g": 1.77,
-        "kcal": 85.95,
-        "protein_g": 2.6595
-       },
-       "units": null
+       "units": 1
       }
      ],
      "slot": "dinner",
      "totals": {
-      "carbs_g": 107.157,
-      "fat_g": 15.2865,
-      "fiber_g": 10.11,
-      "kcal": 688.2,
-      "protein_g": 34.173
+      "carbs_g": 65.238,
+      "fat_g": 13.152,
+      "fiber_g": 7.02,
+      "kcal": 505.2,
+      "protein_g": 31.398
      }
     }
    ],
    "totals": {
-    "carbs_g": 295.559,
-    "fat_g": 48.5425,
-    "fiber_g": 40.763,
-    "kcal": 1992.78,
-    "protein_g": 109.6575
+    "carbs_g": 276.87,
+    "fat_g": 46.5035,
+    "fiber_g": 41.203,
+    "kcal": 1886.18,
+    "protein_g": 105.331
    }
   },
   {
    "date": "2026-10-04",
    "day_index": 6,
    "deviation": {
-    "carbs": 0.106038,
-    "fat": 0.042729,
-    "kcal": -0.001228,
-    "protein": 0.008694
+    "carbs": 0.10613,
+    "fat": 0.038708,
+    "kcal": -0.010088,
+    "protein": 0.002287
    },
    "meals": [
     {
@@ -1208,51 +1221,51 @@
      "items": [
       {
        "food_id": "haba",
-       "grams": 315.0,
+       "grams": 365.0,
        "name_es": "Haba fresca",
        "nutrients": {
-        "carbs_g": 55.5345,
-        "fat_g": 2.2995,
-        "fiber_g": 23.625,
-        "kcal": 277.2,
-        "protein_g": 24.948
+        "carbs_g": 64.3495,
+        "fat_g": 2.6645,
+        "fiber_g": 27.375,
+        "kcal": 321.2,
+        "protein_g": 28.908
        },
        "units": null
       },
       {
        "food_id": "pan_blanco",
-       "grams": 120.0,
+       "grams": 90.0,
        "name_es": "Pan blanco",
        "nutrients": {
-        "carbs_g": 59.304,
-        "fat_g": 3.996,
-        "fiber_g": 3.24,
-        "kcal": 319.2,
-        "protein_g": 10.62
+        "carbs_g": 44.478,
+        "fat_g": 2.997,
+        "fiber_g": 2.43,
+        "kcal": 239.4,
+        "protein_g": 7.965
        },
-       "units": 4
+       "units": 3
       },
       {
-       "food_id": "pipas_girasol",
-       "grams": 20.0,
-       "name_es": "Pipas de girasol",
+       "food_id": "aguacate",
+       "grams": 70.0,
+       "name_es": "Aguacate",
        "nutrients": {
-        "carbs_g": 4.0,
-        "fat_g": 10.292,
-        "fiber_g": 1.72,
-        "kcal": 116.8,
-        "protein_g": 4.156
+        "carbs_g": 5.971,
+        "fat_g": 10.262,
+        "fiber_g": 4.69,
+        "kcal": 112.0,
+        "protein_g": 1.4
        },
        "units": null
       }
      ],
      "slot": "lunch",
      "totals": {
-      "carbs_g": 118.8385,
-      "fat_g": 16.5875,
-      "fiber_g": 28.585,
-      "kcal": 713.2,
-      "protein_g": 39.724
+      "carbs_g": 114.7985,
+      "fat_g": 15.9235,
+      "fiber_g": 34.495,
+      "kcal": 672.6,
+      "protein_g": 38.273
      }
     },
     {
@@ -1272,25 +1285,25 @@
       },
       {
        "food_id": "galleta_salada",
-       "grams": 40.0,
+       "grams": 45.0,
        "name_es": "Galleta salada tipo cracker",
        "nutrients": {
-        "carbs_g": 29.62,
-        "fat_g": 3.456,
-        "fiber_g": 1.12,
-        "kcal": 167.2,
-        "protein_g": 3.784
+        "carbs_g": 33.3225,
+        "fat_g": 3.888,
+        "fiber_g": 1.26,
+        "kcal": 188.1,
+        "protein_g": 4.257
        },
        "units": null
       }
      ],
      "slot": "snack",
      "totals": {
-      "carbs_g": 29.62,
-      "fat_g": 3.795,
-      "fiber_g": 1.12,
-      "kcal": 200.7,
-      "protein_g": 12.616
+      "carbs_g": 33.3225,
+      "fat_g": 4.227,
+      "fiber_g": 1.26,
+      "kcal": 221.6,
+      "protein_g": 13.089
      }
     },
     {
@@ -1323,39 +1336,39 @@
       },
       {
        "food_id": "espinaca",
-       "grams": 145.0,
+       "grams": 155.0,
        "name_es": "Espinaca",
        "nutrients": {
-        "carbs_g": 5.2635,
-        "fat_g": 0.5655,
-        "fiber_g": 3.19,
-        "kcal": 33.35,
-        "protein_g": 4.147
+        "carbs_g": 5.6265,
+        "fat_g": 0.6045,
+        "fiber_g": 3.41,
+        "kcal": 35.65,
+        "protein_g": 4.433
        },
        "units": null
       }
      ],
      "slot": "dinner",
      "totals": {
-      "carbs_g": 92.4915,
-      "fat_g": 15.4155,
-      "fiber_g": 14.53,
-      "kcal": 598.55,
-      "protein_g": 32.668
+      "carbs_g": 92.8545,
+      "fat_g": 15.4545,
+      "fiber_g": 14.75,
+      "kcal": 600.85,
+      "protein_g": 32.954
      }
     }
    ],
    "totals": {
-    "carbs_g": 304.15,
-    "fat_g": 50.051,
-    "fiber_g": 50.815,
-    "kcal": 1961.55,
-    "protein_g": 108.939
+    "carbs_g": 304.1755,
+    "fat_g": 49.858,
+    "fiber_g": 57.085,
+    "kcal": 1944.15,
+    "protein_g": 108.247
    }
   }
  ],
  "diet_type": "vegan",
- "foods_hash": "36bed18121a8a7ce3e4f57e37c73e1f3827a6e859c3b4f3dc3d535a5144b8c83",
+ "foods_hash": "518b33159476bbb5706ea050a69e54a9e1c151f8924b226dfbe2e6f9c175a1ea",
  "meals_per_day": 4,
  "notices": [
   {
@@ -1363,7 +1376,7 @@
    "message_es": "Esta herramienta no sustituye a un profesional sanitario. Consulta a un médico o dietista-nutricionista antes de hacer cambios importantes en tu alimentación."
   }
  ],
- "nutrition_version": "0.2.0",
+ "nutrition_version": "0.2.1",
  "seed": 103,
  "target": {
   "activity_factor": 1.475,

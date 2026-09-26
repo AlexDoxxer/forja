@@ -12,6 +12,7 @@ from forja_nutrition.planner import (
     _selection_weight,
     build_meal_candidates,
     nutrients_for,
+    plan_week,
     polish_day,
     round_grams,
     solve_grams,
@@ -20,7 +21,7 @@ from forja_nutrition.planner import (
 )
 from forja_nutrition.tables import load_nutrition_tables
 from scripts.sweep import run_sweep, sweep_inputs
-from tests.conftest import make_input
+from tests.conftest import MONDAY, make_input
 from tests.test_planner import _food
 
 TABLES = load_nutrition_tables()
@@ -211,3 +212,26 @@ def test_full_288_profile_sweep_meets_the_f1b_targets() -> None:
     assert result.allergen_violations == 0
     assert result.vegan_days_fat_over_allowed / result.vegan_days <= 0.25
     assert "days_fat_above_ceiling" in result.to_json()
+
+
+def test_sesame_and_celery_are_never_auto_selected() -> None:
+    # sin valor de `Allergen` en v1: `meal_slots` vacío los excluye de la selección automática
+    for food_id in ("sesamo", "apio", "mostaza"):
+        assert CATALOG[food_id].meal_slots == (), food_id
+    for inp in sweep_inputs()[:24]:
+        plan = plan_week(inp, MONDAY).plan
+        assert plan is not None
+        used = {i.food_id for d in plan.days for m in d.meals for i in m.items}
+        assert not used & {"sesamo", "apio", "mostaza"}
+
+
+def test_days_prefer_distinct_foods() -> None:
+    repeated = days = 0
+    for inp in sweep_inputs()[:48]:
+        plan = plan_week(inp, MONDAY).plan
+        assert plan is not None
+        for day in plan.days:
+            ids = [i.food_id for m in day.meals for i in m.items]
+            days += 1
+            repeated += len(ids) != len(set(ids))
+    assert repeated / days < 0.30

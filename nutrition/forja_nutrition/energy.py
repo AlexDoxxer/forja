@@ -198,8 +198,9 @@ def calculate_target(nutrition_input: NutritionInput) -> NutritionTarget:
         if not protein_clamped:
             notices.append(notice(NutritionNoticeCode.protein_clamped))
 
+    # el suelo de grasa g/kg usa el mismo peso ajustado que la proteína (CAMBIO-N1)
     target_kcal, fat_g = macros.resolve_energy_and_fat(
-        weight_kg=nutrition_input.weight_kg,
+        weight_kg=protein_weight_kg,
         protein_g=protein_g,
         preliminary_kcal=preliminary_kcal,
         fat_table=tables.fat,
@@ -207,7 +208,7 @@ def calculate_target(nutrition_input: NutritionInput) -> NutritionTarget:
     if target_kcal > preliminary_kcal or preliminary_kcal > adjusted_kcal:
         notices.append(notice(NutritionNoticeCode.kcal_floor_applied))
     if macros.fat_floor_governed_by_percentage(
-        weight_kg=nutrition_input.weight_kg, target_kcal=target_kcal, fat_table=tables.fat
+        weight_kg=protein_weight_kg, target_kcal=target_kcal, fat_table=tables.fat
     ):
         notices.append(notice(NutritionNoticeCode.fat_floor_applied))
 
