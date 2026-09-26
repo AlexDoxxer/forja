@@ -83,7 +83,7 @@ function EditorBody({ program }: { program: ProgramDetail }): React.JSX.Element 
 
   const flush = async (): Promise<void> => {
     const pending = stateRef.current.days.filter(
-      (day) => !dayHasErrors(day) && saved.current.get(day.key) !== JSON.stringify(toDayEdit(day, applyRef.current)),
+      (day) => !dayHasErrors(day) && saved.current.get(day.key) !== JSON.stringify(toDayEdit(day, true)),
     );
     if (pending.length === 0) return;
     setStatus("saving");
@@ -93,7 +93,8 @@ function EditorBody({ program }: { program: ProgramDetail }): React.JSX.Element 
       for (const day of pending) {
         const edit = toDayEdit(day, applyRef.current);
         latest = await saveDay.mutateAsync({ dayId: day.dayId, edit });
-        saved.current.set(day.key, JSON.stringify(edit));
+        // Se compara el contenido, no la opción «todas las semanas» (solo afecta al siguiente guardado).
+        saved.current.set(day.key, JSON.stringify(toDayEdit(day, true)));
       }
       if (latest !== null) {
         setWarnings(latest.warnings);
@@ -117,7 +118,7 @@ function EditorBody({ program }: { program: ProgramDetail }): React.JSX.Element 
     };
     // `flush` lee siempre el estado vigente desde refs.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.revision, applyToAll]);
+  }, [state.revision]);
 
   const current: DayDraft | undefined = state.days.find((day) => day.key === activeDay) ?? state.days[0];
 

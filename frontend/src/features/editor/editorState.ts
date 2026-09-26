@@ -178,28 +178,69 @@ function normalizeBlocks(blocks: BlockDraft[]): BlockDraft[] {
 function moveExercise(day: DayDraft, activeKey: string, overKey: string): DayDraft {
   const from = locate(day, activeKey);
   if (from === null) return day;
+  const over = locate(day, overKey);
   const blocks = day.blocks.map((block) => ({ ...block, exercises: [...block.exercises] }));
   const source = blocks[from.block];
   const moved = source?.exercises[from.index];
   if (source === undefined || moved === undefined) return day;
 
-  let toBlock: number;
-  let toIndex: number;
-  const over = locate(day, overKey);
-  if (over !== null) {
-    toBlock = over.block;
-    toIndex = over.index;
-  } else {
-    // El destino es un contenedor de bloque vacío o su zona libre: se añade al final.
-    toBlock = blocks.findIndex((block) => block.key === overKey);
-    if (toBlock < 0) return day;
-    toIndex = blocks[toBlock]?.exercises.length ?? 0;
+  if (over === null) {
+    // El destino es el contenedor de un bloque: se añade al final de ese bloque.
+    const toBlock = blocks.findIndex((block) => block.key === overKey);
+    const target = blocks[toBlock];
+    if (target === undefined || toBlock === from.block) return day;
+    source.exercises.splice(from.index, 1);
+    target.exercises.push(moved);
+    return { ...day, blocks: normalizeBlocks(blocks) };
   }
-  source.exercises.splice(from.index, 1);
-  const target = blocks[toBlock];
+
+  if (over.block === from.block) {
+    // Mismo bloque: `arrayMove` (el elemento acaba en la posición del destino).
+    source.exercises.splice(from.index, 1);
+    source.exercises.splice(over.index, 0, moved);
+    return { ...day, blocks: normalizeBlocks(blocks) };
+  }
+
+  const target = blocks[over.block];
   if (target === undefined) return day;
-  // Mismo bloque: tras quitar el elemento, el índice de destino ya es el correcto para `arrayMove`.
-  target.exercises.splice(toIndex, 0, moved);
+  if (source.exercises.length === 1 && target.exercises.length === 1) {
+    // Dos bloques de un solo ejercicio: arrastrar reordena los bloques (no crea una superserie;
+    // eso se hace de forma explícita con «Unir con el siguiente»).
+    const [block] = blocks.splice(from.block, 1);
+    if (block === undefined) return day;
+    blocks.splice(over.block, 0, block);
+    return { ...day, blocks };
+  }
+  // Se suelta sobre un ejercicio de otro bloque agrupado: se une a ese bloque.
+  source.exercises.splice(from.index, 1);
+  target.exercises.splice(from.block < over.block ? over.index + 1 : over.index, 0, moved);
+  return { ...day, blocks: normalizeBlocks(blocks) };
+}
+
+/** Paso de teclado: sube/baja una posición; en el borde de un bloque agrupado sale a su propio bloque. */
+function stepExercise(day: DayDraft, exerciseKey: string, delta: -1 | 1): DayDraft {
+  const from = locate(day, exerciseKey);
+  if (from === null) return day;
+  const block = day.blocks[from.block];
+  if (block === undefined) return day;
+  const neighbour = block.exercises[from.index + delta];
+  if (neighbour !== undefined) return moveExercise(day, exerciseKey, neighbour.key);
+
+  const blocks = day.blocks.map((item) => ({ ...item, exercises: [...item.exercises] }));
+  if (block.exercises.length === 1) {
+    const sibling = from.block + delta;
+    if (blocks[sibling] === undefined) return day;
+    const [moved] = blocks.splice(from.block, 1);
+    if (moved === undefined) return day;
+    blocks.splice(sibling, 0, moved);
+    return { ...day, blocks };
+  }
+  const moving = block.exercises[from.index];
+  const source = blocks[from.block];
+  if (moving === undefined || source === undefined) return day;
+  source.exercises.splice(from.index, 1);
+  const alone: BlockDraft = { key: newKey("block"), kind: "main", rounds: 1, rest_between_rounds_s: null, exercises: [moving] };
+  blocks.splice(delta === 1 ? from.block + 1 : from.block, 0, alone);
   return { ...day, blocks: normalizeBlocks(blocks) };
 }
 
@@ -221,21 +262,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
       if (action.activeKey === action.overKey) return state;
       return commit(state, mapDay(state.days, action.dayKey, (day) => moveExercise(day, action.activeKey, action.overKey)));
     case "moveStep":
-      return commit(
-        state,
-        mapDay(state.days, action.dayKey, (day) => {
-          const from = locate(day, action.exerciseKey);
-          if (from === null) return day;
-          const block = day.blocks[from.block];
-          const neighbour = block?.exercises[from.index + action.delta];
-          if (neighbour !== undefined) return moveExercise(day, action.exerciseKey, neighbour.key);
-          // Extremo del bloque: pasa al bloque contiguo.
-          const sibling = day.blocks[from.block + action.delta];
-          if (sibling === undefined) return day;
-          const target = action.delta === 1 ? sibling.exercises[0] : sibling.exercises[sibling.exercises.length - 1];
-          return target === undefined ? day : moveExercise(day, action.exerciseKey, target.key);
-        }),
-      );
+      return commit(state, mapDay(state.days, action.dayKey, (day) => stepExercise(day, action.exerciseKey, action.delta)));
     case "update":
       return commit(
         state,

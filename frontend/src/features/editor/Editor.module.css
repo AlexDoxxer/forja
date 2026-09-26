@@ -42,8 +42,9 @@
   align-items: center;
   gap: var(--space-3);
 }
-.blockHead h3 {
+.blockHead h2 {
   margin: 0;
+  font-size: 1.1rem;
   flex: 1 1 auto;
 }
 .list {

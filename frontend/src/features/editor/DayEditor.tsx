@@ -11,7 +11,7 @@ import {
 } from "@dnd-kit/core";
 import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { Dispatch } from "react";
+import { useEffect, useState, type Dispatch } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "../../components/ui";
@@ -39,24 +39,33 @@ interface NumberFieldProps {
 }
 
 function NumberField({ label, value, onChange, error, min, max, nullable = false }: NumberFieldProps): React.JSX.Element {
+  // Texto en edición: permite vaciar el campo mientras se teclea sin forzar un valor.
+  const [draft, setDraft] = useState(value === null ? "" : String(value));
+  useEffect(() => {
+    setDraft((current) => (current !== "" && Number(current) === value ? current : value === null ? "" : String(value)));
+  }, [value]);
   return (
     <label className={styles["mini"]}>
       <span>{label}</span>
       <input
         type="number"
         inputMode="numeric"
-        value={value ?? ""}
+        value={draft}
         min={min}
         max={max}
         aria-invalid={error === undefined ? undefined : true}
         title={error}
         onChange={(event) => {
           const raw = event.target.value;
+          setDraft(raw);
           if (raw === "") {
             if (nullable) onChange(null);
             return;
           }
           onChange(Number(raw));
+        }}
+        onBlur={() => {
+          setDraft(value === null ? "" : String(value));
         }}
       />
       {error !== undefined && (
@@ -143,8 +152,8 @@ function SortableExercise({ dayKey, exercise, summary, dispatch }: SortableExerc
           <NumberField label={t("editor.duration")} value={exercise.duration_s} min={5} max={3600} error={err("duration")} onChange={(v) => { update({ duration_s: v }); }} />
         ) : (
           <>
-            <NumberField label={t("editor.repMin")} value={exercise.rep_min} min={1} max={100} error={err("reps")} onChange={(v) => { update({ rep_min: v }); }} />
-            <NumberField label={t("editor.repMax")} value={exercise.rep_max} min={1} max={100} onChange={(v) => { update({ rep_max: v }); }} />
+            <NumberField label={t("editor.repMin")} value={exercise.rep_min} min={1} max={100} nullable error={err("reps")} onChange={(v) => { update({ rep_min: v }); }} />
+            <NumberField label={t("editor.repMax")} value={exercise.rep_max} min={1} max={100} nullable onChange={(v) => { update({ rep_max: v }); }} />
           </>
         )}
         <NumberField label="RIR" value={exercise.target_rir} min={0} max={5} nullable error={err("rir")} onChange={(v) => { update({ target_rir: v }); }} />
@@ -204,9 +213,9 @@ function BlockView({ day, block, isLast, exercises, dispatch }: BlockViewProps):
   const { t } = useTranslation();
   const grouped = block.exercises.length > 1;
   return (
-    <section className={styles["block"]} aria-label={t(`enums.blockKind.${block.kind}`)}>
-      <header className={styles["blockHead"]}>
-        <h3>{t(`enums.blockKind.${block.kind}`)}</h3>
+    <div className={styles["block"]} role="group" aria-label={t(`enums.blockKind.${block.kind}`)}>
+      <div className={styles["blockHead"]}>
+        <h2>{t(`enums.blockKind.${block.kind}`)}</h2>
         {grouped && (
           <>
             <NumberField
@@ -240,7 +249,7 @@ function BlockView({ day, block, isLast, exercises, dispatch }: BlockViewProps):
             {t("editor.mergeNext")}
           </Button>
         )}
-      </header>
+      </div>
       <SortableContext items={block.exercises.map((exercise) => exercise.key)} strategy={verticalListSortingStrategy}>
         <ul className={styles["list"]}>
           {block.exercises.map((exercise) => (
@@ -254,7 +263,7 @@ function BlockView({ day, block, isLast, exercises, dispatch }: BlockViewProps):
           ))}
         </ul>
       </SortableContext>
-    </section>
+    </div>
   );
 }
 

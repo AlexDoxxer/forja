@@ -8,7 +8,6 @@ import {
   Outlet,
   RouterProvider,
 } from "@tanstack/react-router";
-import type { ComponentType } from "react";
 
 import { ToastProvider } from "../../src/components/ui";
 
@@ -34,12 +33,12 @@ export interface RenderWithRouterOptions {
  * Renderiza una pantalla dentro de un router en memoria con `QueryClient` y avisos, para que los
  * `Link` y `useParams` funcionen igual que en la aplicación. El resto de rutas son marcadores.
  */
-export function renderWithRouter(Screen: ComponentType, { path, url }: RenderWithRouterOptions): RenderResult {
+export function renderWithRouter(Screen: (props: Record<string, never>) => React.JSX.Element, { path, url }: RenderWithRouterOptions): RenderResult {
   const root = createRootRoute({ component: Outlet });
   const routes = STUB_PATHS.filter((stub) => stub !== path).map((stub) =>
     createRoute({ getParentRoute: () => root, path: stub, component: () => <p>{`ruta:${stub}`}</p> }),
   );
-  routes.push(createRoute({ getParentRoute: () => root, path, component: Screen }));
+  routes.push(createRoute({ getParentRoute: () => root, path, component: () => <Screen {...{}} /> }));
   const router = createRouter({
     routeTree: root.addChildren(routes),
     history: createMemoryHistory({ initialEntries: [url ?? path] }),
