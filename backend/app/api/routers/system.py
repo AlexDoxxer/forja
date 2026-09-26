@@ -14,7 +14,7 @@ from app.schemas import api
 
 router = APIRouter(tags=["health", "meta"])
 
-API_VERSION: Final = "1.1.0"
+API_VERSION: Final = "1.2.0"
 HEALTH_DISCLAIMER: Final = (
     "Forja no sustituye el consejo de profesionales sanitarios ni de entrenamiento."
 )

@@ -986,6 +986,9 @@ class Food(BaseModel):
     unit_grams: Annotated[float | None, Field(description='Gramos por unidad (huevos, frutas…); `null` si se pesa.', gt=0.0)]
     unit_name_es: Annotated[str | None, Field(examples=['huevo'])]
     energy_note: Annotated[str | None, Field(description='Justificación cuando |kcal − (4P + 4C + 9G)| supera el 12 % (alcohol, fibra, polioles).')]
+    max_portion_g: Annotated[float, Field(description='Tope de gramos por ítem en un plan.', gt=0.0)]
+    meal_slots: Annotated[list[Literal['breakfast', 'mid_morning', 'lunch', 'snack', 'dinner']], Field(description='Comidas donde puede seleccionarse; vacío = no se selecciona automáticamente.')]
+    weekly_max: Annotated[int | None, Field(description='Máximo de apariciones por semana; `null` sin límite.', ge=1)]
 
 
 class FoodPage(BaseModel):
