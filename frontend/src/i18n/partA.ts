@@ -1,9 +1,11 @@
 import type { i18n as I18n } from "i18next";
 
 import { editor } from "./partA/editor";
+import { enums } from "./partA/enums";
 import { generator } from "./partA/generator";
 import { library } from "./partA/library";
 import { onboarding } from "./partA/onboarding";
+import { programs } from "./partA/programs";
 import { ui } from "./partA/ui";
 
 /**
@@ -13,11 +15,13 @@ import { ui } from "./partA/ui";
  */
 export const partABundles = {
   ui,
+  enums,
   onboarding,
   // `library` amplía el paquete existente de la Fase 1 (mismo espacio de nombres).
   library,
   generator,
   editor,
+  programs,
 } as const;
 
 export function registerPartA(instance: I18n): void {

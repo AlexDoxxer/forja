@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../components/QueryState";
@@ -11,6 +12,9 @@ export function ProgramsRoute(): React.JSX.Element {
   return (
     <section aria-labelledby="programs-title">
       <h1 id="programs-title">{t("programs.title")}</h1>
+      <p>
+        <Link to="/rutinas/nueva">{t("programs.generate")}</Link>
+      </p>
       <QueryState
         isLoading={programs.isLoading}
         isError={programs.isError}
@@ -25,6 +29,9 @@ export function ProgramsRoute(): React.JSX.Element {
                 <strong>{program.name}</strong>{" "}
                 {program.is_active && <span>({t("programs.active")})</span>}
                 <div>{t("programs.daysPerWeek", { count: program.days_per_week })}</div>
+                <Link to="/rutinas/$programId/editar" params={{ programId: program.id }}>
+                  {t("programs.edit", { name: program.name })}
+                </Link>
               </li>
             ))}
           </ul>

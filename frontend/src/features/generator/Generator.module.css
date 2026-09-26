@@ -1,0 +1,139 @@
+.root {
+  max-width: 60rem;
+}
+.progress {
+  margin: 0 0 var(--space-2);
+  color: var(--color-text-muted);
+}
+.bar {
+  width: 100%;
+  height: 8px;
+  margin-bottom: var(--space-5);
+  accent-color: var(--color-accent);
+}
+.step {
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+}
+.step legend {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: var(--space-4);
+}
+.cards {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin-bottom: var(--space-4);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.label {
+  font-weight: 600;
+  margin: var(--space-4) 0 var(--space-2);
+}
+.hint {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+.explain {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-left: 6px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-1);
+}
+.explain p {
+  margin: var(--space-1) 0;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+.error {
+  color: var(--color-error-text);
+}
+.saveBar {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-1);
+}
+.preview h2 {
+  margin-top: var(--space-5);
+}
+.warnings {
+  padding: var(--space-3) var(--space-4);
+  border-left: 6px solid var(--color-warning);
+  background: var(--color-surface-1);
+  border-radius: var(--radius-md);
+}
+.dayMeta {
+  color: var(--color-text-muted);
+}
+.block h3 {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: 1.05rem;
+}
+.exercises,
+.alternatives {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.exercise {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+@media (max-width: 520px) {
+  .exercise {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.exerciseName {
+  text-transform: capitalize;
+}
+.prescription {
+  margin: var(--space-1) 0;
+  color: var(--color-text-muted);
+}
+.notes {
+  margin: 0 0 var(--space-2);
+  font-size: 0.9rem;
+}
+.alternatives li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.volumeTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-3);
+}
+.volumeTable caption {
+  text-align: left;
+  color: var(--color-text-muted);
+  padding-bottom: var(--space-2);
+}
+.volumeTable th,
+.volumeTable td {
+  text-align: left;
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
