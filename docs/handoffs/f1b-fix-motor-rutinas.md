@@ -61,9 +61,9 @@ FORJA_UPDATE_GOLDEN=1 uv run pytest tests/test_golden.py   # solo para regenerar
 | C16 | hecho | con `lower_back` evitado se excluye `hinge` y `lumbar_avoid`; snapshot 12 sin remo inclinado |
 
 ## 6. Métricas
-Cobertura, ruff y mypy: ver resultado final de la suite completa indicado en el mensaje de entrega.
-Benchmark de p95: sin cobertura `generate` tarda ~25 ms; bajo cobertura y con la máquina cargada
-(load average ~9) superó puntualmente los 150 ms (165–197 ms), sin regresión propia medible.
+Suite completa (incluye 1.890 combinaciones, propiedades y benchmark): 2.128 tests en verde,
+cobertura 100 %; ruff y `mypy --strict` limpios. Una semana con ondulación podía superar el
+presupuesto de tiempo (día medio 4-7 repeticiones): `periodize._refit` vuelve a ajustar y avisa.
 Volúmenes: los avisos `volume_out_of_range` por defecto son la consecuencia esperada de B2 (los
 principales ya no inflan series); brazos dentro de rango en los snapshots 02, 03, 05, 09 y 11 no está
 garantizado: el experto debe re-revisar.
