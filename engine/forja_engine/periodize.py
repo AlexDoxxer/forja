@@ -11,7 +11,7 @@
 
 import math
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from forja_engine.allocate import role_bounds
 from forja_engine.draft import DraftDay, DraftExercise
@@ -21,12 +21,13 @@ from forja_engine.models import (
     Experience,
     GeneratorInput,
     Goal,
+    PlanWarning,
     VolumeGroup,
     WeekPhase,
 )
 from forja_engine.prescribe import clamp, load_hint, working_rir
 from forja_engine.tables import StrengthUndulation, Tables
-from forja_engine.timefit import day_seconds, limit_seconds
+from forja_engine.timefit import day_seconds, fit_day, limit_seconds
 from forja_engine.volume import Credits, GroupTarget, blocks_volume
 
 SLOTTED_ROLES = frozenset({ExerciseRole.MAIN, ExerciseRole.ACCESSORY, ExerciseRole.CORE})
@@ -40,6 +41,7 @@ class WeekDraft:
     phase: WeekPhase
     target_rir: int
     days: list[DraftDay]
+    warnings: list[PlanWarning] = field(default_factory=list)
 
 
 def undulation_enabled(inp: GeneratorInput, tables: Tables) -> bool:
@@ -161,13 +163,25 @@ class _Periodizer:
                     block.rounds = max(1, _round_half_up(block.rounds * phases.deload.volume_ratio))
                     for exercise in block.exercises:
                         exercise.sets = block.rounds
+        warnings = [] if deload else self._refit(days)
         if deload:
             phase, week_rir = WeekPhase.DELOAD, phases.deload.rir
         else:
             week_rir = clamp(raw_rir + delta, 0, MAX_RIR)
             intense = undulating and raw_rir <= INTENSIFICATION_RIR
             phase = WeekPhase.INTENSIFICATION if intense else WeekPhase.ACCUMULATION
-        return WeekDraft(index=index, phase=phase, target_rir=week_rir, days=days)
+        return WeekDraft(
+            index=index, phase=phase, target_rir=week_rir, days=days, warnings=warnings
+        )
+
+    def _refit(self, days: list[DraftDay]) -> list[PlanWarning]:
+        """La ondulación (p. ej. 4-7 repeticiones en el día medio) puede alargar la sesión
+        respecto a la semana tipo ya ajustada: se vuelve a ajustar al presupuesto."""
+        warnings: list[PlanWarning] = []
+        for day in days:
+            if day_seconds(day.blocks, self.model) > self.limit:
+                warnings += fit_day(day, self.inp.session_minutes, self.tables, self.credits_of)
+        return warnings
 
     def _deload_exercise(self, exercise: DraftExercise) -> None:
         deload = self.periodization.phases.deload

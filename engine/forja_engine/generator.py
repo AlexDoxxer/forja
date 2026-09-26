@@ -306,6 +306,8 @@ class _Builder:
             usage.use(card)
         base = [self.build_day(spec, sets, usage) for spec in specs]
         drafts = periodize(base, inp, tables, targets, self.credits)
+        for week in drafts:
+            self.warnings += week.warnings
         weeks_days = [
             [to_plan_day(day, tables, self.credits) for day in week.days] for week in drafts
         ]
