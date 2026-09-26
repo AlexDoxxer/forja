@@ -1,8 +1,7 @@
 """Modelos SQLAlchemy del catálogo y de ``ingest_run`` (``contracts/domain.md`` §4.1 y §4.5).
 
-Creado por ``ingesta-datos`` porque ``backend-api`` aún no tenía modelos (ADR 0002, zona
-compartida); a partir de ahora lo mantiene ``backend-api``, que también escribe la migración
-Alembic equivalente. Las enumeraciones se guardan como ``text`` con ``CHECK``.
+Creado por ``ingesta-datos``; lo mantiene ``backend-api`` (que escribe la migración Alembic
+equivalente). Las enumeraciones se guardan como ``text`` con ``CHECK``.
 """
 
 import uuid
@@ -34,7 +33,7 @@ NAMING_CONVENTION: Final = {
 }
 
 
-def _in(column: str, values: tuple[str, ...]) -> str:
+def in_check(column: str, values: tuple[str, ...]) -> str:
     quoted = ", ".join(f"'{value}'" for value in values)
     return f"{column} IN ({quoted})"
 
@@ -106,13 +105,13 @@ class TimestampMixin:
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
 
 
 class Muscle(TimestampMixin, Base):
     __tablename__ = "muscle"
-    __table_args__ = (CheckConstraint(_in("region", MUSCLE_REGIONS), name="region"),)
+    __table_args__ = (CheckConstraint(in_check("region", MUSCLE_REGIONS), name="region"),)
 
     code: Mapped[str] = mapped_column(Text, primary_key=True)
     name_es: Mapped[str] = mapped_column(Text, nullable=False)
@@ -123,7 +122,7 @@ class Muscle(TimestampMixin, Base):
 
 class Equipment(TimestampMixin, Base):
     __tablename__ = "equipment"
-    __table_args__ = (CheckConstraint(_in('"group"', EQUIPMENT_GROUPS), name="group"),)
+    __table_args__ = (CheckConstraint(in_check('"group"', EQUIPMENT_GROUPS), name="group"),)
 
     code: Mapped[str] = mapped_column(Text, primary_key=True)
     name_es: Mapped[str] = mapped_column(Text, nullable=False)
@@ -135,17 +134,17 @@ class Exercise(TimestampMixin, Base):
     __tablename__ = "exercise"
     __table_args__ = (
         CheckConstraint("id ~ '^[0-9]{4}$'", name="id_format"),
-        CheckConstraint(_in("body_part", BODY_PARTS), name="body_part"),
-        CheckConstraint(_in("movement_pattern", MOVEMENT_PATTERNS), name="movement_pattern"),
-        CheckConstraint(_in("mechanic", MECHANICS), name="mechanic"),
-        CheckConstraint(_in("role", ROLES), name="role"),
+        CheckConstraint(in_check("body_part", BODY_PARTS), name="body_part"),
+        CheckConstraint(in_check("movement_pattern", MOVEMENT_PATTERNS), name="movement_pattern"),
+        CheckConstraint(in_check("mechanic", MECHANICS), name="mechanic"),
+        CheckConstraint(in_check("role", ROLES), name="role"),
         CheckConstraint("difficulty BETWEEN 1 AND 3", name="difficulty"),
-        CheckConstraint(_in("laterality", LATERALITIES), name="laterality"),
-        CheckConstraint(f"demo_sex IS NULL OR {_in('demo_sex', DEMO_SEXES)}", name="demo_sex"),
+        CheckConstraint(in_check("laterality", LATERALITIES), name="laterality"),
+        CheckConstraint(f"demo_sex IS NULL OR {in_check('demo_sex', DEMO_SEXES)}", name="demo_sex"),
         CheckConstraint(
-            f"variant_kind IS NULL OR {_in('variant_kind', VARIANT_KINDS)}", name="variant_kind"
+            f"variant_kind IS NULL OR {in_check('variant_kind', VARIANT_KINDS)}", name="variant_kind"
         ),
-        CheckConstraint(_in("load_type", LOAD_TYPES), name="load_type"),
+        CheckConstraint(in_check("load_type", LOAD_TYPES), name="load_type"),
         Index("ix_exercise_search_vector", "search_vector", postgresql_using="gin"),
         Index(
             "ix_exercise_name_es_trgm",
@@ -208,7 +207,7 @@ class ExerciseSecondaryMuscle(Base):
 
 class ExerciseInstruction(TimestampMixin, Base):
     __tablename__ = "exercise_instruction"
-    __table_args__ = (CheckConstraint(_in("lang", INSTRUCTION_LANGS), name="lang"),)
+    __table_args__ = (CheckConstraint(in_check("lang", INSTRUCTION_LANGS), name="lang"),)
 
     exercise_id: Mapped[str] = mapped_column(
         ForeignKey("exercise.id", ondelete="CASCADE"), primary_key=True
@@ -234,7 +233,7 @@ class ExerciseAlternative(Base):
 
 class IngestRun(TimestampMixin, Base):
     __tablename__ = "ingest_run"
-    __table_args__ = (CheckConstraint(_in("status", INGEST_STATUSES), name="status"),)
+    __table_args__ = (CheckConstraint(in_check("status", INGEST_STATUSES), name="status"),)
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
     commit: Mapped[str] = mapped_column(String(40), nullable=False)
