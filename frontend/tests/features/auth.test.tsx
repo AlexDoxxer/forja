@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { describe, expect, it, vi } from "vitest";
 
+import type { App as AppComponent } from "../../src/App";
+import type { router as appRouter } from "../../src/routes/router";
 import { redirectTarget, UnauthenticatedError } from "../../src/features/auth/session";
 import { server } from "../../src/mocks/server";
 
@@ -15,8 +17,8 @@ const unauth = (): Response =>
 
 /** Módulos de la app nuevos en cada caso: el router y la caché no comparten estado entre pruebas. */
 async function loadApp(path: string): Promise<{
-  App: typeof import("../../src/App").App;
-  router: typeof import("../../src/routes/router").router;
+  App: typeof AppComponent;
+  router: typeof appRouter;
 }> {
   vi.resetModules();
   const { App } = await import("../../src/App");
@@ -101,5 +103,36 @@ describe("guarda de sesión", () => {
     await waitFor(() => {
       expect(router.state.location.pathname).toBe("/login");
     });
+  });
+
+  it.each([
+    [429, "Demasiados intentos. Espera un momento y vuelve a probar."],
+    [500, "No se ha podido iniciar sesión. Inténtalo de nuevo."],
+  ])("login: estado %i muestra el mensaje adecuado", async (status, message) => {
+    server.use(
+      http.get("/api/v1/auth/me", () => unauth()),
+      http.post("/api/v1/auth/login", () => HttpResponse.json({ type: "/p", title: "x", status }, { status })),
+    );
+    const { App } = await loadApp("/login");
+    render(<App />);
+    const u = userEvent.setup();
+    await u.type(await screen.findByLabelText("Correo electrónico"), "a@x.com");
+    await u.type(screen.getByLabelText("Contraseña"), "clave");
+    await u.click(screen.getByRole("button", { name: "Entrar" }));
+    expect(await screen.findByText(message)).toBeInTheDocument();
+  });
+
+  it("login: un fallo de red muestra el mensaje genérico", async () => {
+    server.use(
+      http.get("/api/v1/auth/me", () => unauth()),
+      http.post("/api/v1/auth/login", () => HttpResponse.error()),
+    );
+    const { App } = await loadApp("/login");
+    render(<App />);
+    const u = userEvent.setup();
+    await u.type(await screen.findByLabelText("Correo electrónico"), "a@x.com");
+    await u.type(screen.getByLabelText("Contraseña"), "clave");
+    await u.click(screen.getByRole("button", { name: "Entrar" }));
+    expect(await screen.findByText("No se ha podido iniciar sesión. Inténtalo de nuevo.")).toBeInTheDocument();
   });
 });

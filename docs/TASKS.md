@@ -166,19 +166,19 @@
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
 | F2-FE-01 | Onboarding 4 pasos con PAR-Q y aviso sanitario | Tests del flujo con PAR-Q marcado y sin marcar | F1-FE-08 | hecha (f2/frontend-a) |
-| F2-FE-02 | Hoy (sesión del día, resumen semanal, récord, peso rápido) | Estados `scheduled`/`rest_day`/`no_active_program` | F1-FE-08 | pendiente |
+| F2-FE-02 | Hoy (sesión del día, resumen semanal, récord, peso rápido) | Estados `scheduled`/`rest_day`/`no_active_program` | F1-FE-08 | hecho (f2/frontend-b) |
 | F2-FE-03 | Generador (wizard) con vista previa, `rationale_es`, gráfico de volumen, regenerar/cambiar/guardar | Tests del wizard; preselección por sexo explicada | F1-FE-08 | hecha (f2/frontend-a) |
 | F2-FE-04 | Editor (dnd-kit accesible, superseries, validación en vivo, deshacer/rehacer) | Tests de teclado y de deshacer | F2-FE-03 | hecha (f2/frontend-a) |
-| F2-FE-05 | Reproductor: máquina de estados, temporizador por marcas de tiempo, Wake Lock, vibración, notificación, IndexedDB | Tests: reanudar tras recarga, reloj simulado | F1-FE-08 | pendiente |
-| F2-FE-06 | Cola offline + `/sync` (ADR 0006) | Test offline → online con reintentos | F2-FE-05 | pendiente |
-| F2-FE-07 | Resumen de sesión | Récords y esfuerzo percibido | F2-FE-05 | pendiente |
+| F2-FE-05 | Reproductor: máquina de estados, temporizador por marcas de tiempo, Wake Lock, vibración, notificación, IndexedDB | Tests: reanudar tras recarga, reloj simulado | F1-FE-08 | hecho (f2/frontend-b) |
+| F2-FE-06 | Cola offline + `/sync` (ADR 0006) | Test offline → online con reintentos | F2-FE-05 | hecho (f2/frontend-b) |
+| F2-FE-07 | Resumen de sesión | Récords y esfuerzo percibido | F2-FE-05 | hecho (f2/frontend-b) |
 | F2-FE-08 | Biblioteca virtualizada con búsqueda sin acentos y mapa muscular SVG | 1.324 elementos fluidos | F1-FE-08 | hecha (f2/frontend-a) |
 | F2-FE-09 | Detalle (10 idiomas, ángulo de cámara, alternativas, historial) | Test de conmutadores | F2-FE-08 | hecha (f2/frontend-a) |
-| F2-FE-10 | Progreso (calendario, volumen, e1RM, récords, peso con media de 7 días) | Recharts en chunk diferido | F1-FE-08 | pendiente |
-| F2-FE-11 | Nutrición (anillos neutros, plan, intercambio, lista de la compra, avisos) | Sin colores punitivos (revisión) | F1-FE-08 | pendiente |
-| F2-FE-12 | Perfil, ajustes, sesiones activas, exportar/importar/borrar, Créditos (`GET /about`) | Créditos con MIT, aviso de Gym visual y SHA | F1-FE-08 | pendiente |
-| F2-FE-13 | Admin | Usuarios, registro, dieta global, ingesta | F1-FE-08 | pendiente |
-| F2-FE-14 | PWA: manifest, Workbox según §10.3, descarga de biblioteca | SW controla la página; arranque offline | F2-FE-05 | pendiente |
+| F2-FE-10 | Progreso (calendario, volumen, e1RM, récords, peso con media de 7 días) | Recharts en chunk diferido | F1-FE-08 | hecho (f2/frontend-b) |
+| F2-FE-11 | Nutrición (anillos neutros, plan, intercambio, lista de la compra, avisos) | Sin colores punitivos (revisión) | F1-FE-08 | hecho (f2/frontend-b) |
+| F2-FE-12 | Perfil, ajustes, sesiones activas, exportar/importar/borrar, Créditos (`GET /about`) | Créditos con MIT, aviso de Gym visual y SHA | F1-FE-08 | hecho (f2/frontend-b) |
+| F2-FE-13 | Admin | Usuarios, registro, dieta global, ingesta | F1-FE-08 | hecho (f2/frontend-b) |
+| F2-FE-14 | PWA: manifest, Workbox según §10.3, descarga de biblioteca | SW controla la página; arranque offline | F2-FE-05 | hecho (f2/frontend-b) |
 | F2-FE-15 | Presupuesto de rendimiento (JS inicial < 200 KB gzip) | Informe del build en el handoff | F2-FE-01…14 | pendiente |
 | F2-FE-16 | Cambio de MSW a API real | Flujo de la puerta 2 contra `docker compose` de desarrollo | F2-BE-17 | pendiente |
 | F2-FE-17 | Cobertura ≥ 85 % y capturas de todas las pantallas | `make test-frontend` verde; handoff | todas | pendiente |
