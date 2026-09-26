@@ -515,6 +515,7 @@ class Scoring(Table):
     loadable_in_main: int
     staple_in_accessory: int
     barbell_in_strength_main: int
+    lower_main_barbell_or_machine: int
 
 
 Relaxation = Literal["difficulty", "staple", "target_group", "pattern_affinity"]
@@ -590,6 +591,7 @@ class EngineRules(Table):
     difficulty: DifficultyRules
     scoring: Scoring
     loadable_equipment: dict[Experience, tuple[EquipmentCode, ...]]
+    lower_main_preferred_equipment: tuple[EquipmentCode, ...]
     strength_main_preferred_equipment: dict[Experience, tuple[EquipmentCode, ...]]
     main_requires_compound: bool
     skill_gated: NameRule

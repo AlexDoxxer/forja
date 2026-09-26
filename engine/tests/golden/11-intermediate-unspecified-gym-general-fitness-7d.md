@@ -53,7 +53,7 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 |---|---|---|---|---|---|---|
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla goblet con mancuerna (1760) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | sentadilla trasera con barra (0043) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | peso muerto rumano con barra (0085) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | zancada atrás con mancuernas (0381) | 2 | 10-15 por lado | 3 | 75 s | 2-0-1-0 |
 | Trabajo | curl femoral tumbado en máquina (0586) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
@@ -124,8 +124,8 @@ _Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 |---|---|---|---|---|---|---|
 | Calentamiento | bicicleta estática a ritmo de caminata (0798) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla trasera con barra (0043) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
-| Trabajo | peso muerto con barra hexagonal (0811) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | sentadilla frontal con barra (0042) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
+| Trabajo | peso muerto sumo con barra (0117) | 3 | 8-12 | 3 | 105 s | 2-0-1-0 |
 | Trabajo | zancada con mancuernas (0336) | 2 | 10-15 por lado | 3 | 75 s | 2-0-1-0 |
 | Trabajo | curl femoral sentado en máquina (0599) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |
 | Trabajo | elevación de talones sentado con barra (0088) | 2 | 10-15 | 3 | 75 s | 2-0-1-0 |

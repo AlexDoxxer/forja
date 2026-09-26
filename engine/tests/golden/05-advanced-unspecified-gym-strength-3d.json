@@ -1,6 +1,6 @@
 {
  "engine_version": "0.2.0",
- "tables_hash": "5e65c2042ee833ccb1e2b50d1742ded0802e047a2cf8fccaa065b33f67eafe48",
+ "tables_hash": "9b0522a74876b46d121e095e9a98607744057030a3d3f2c8cf98548c5e481275",
  "seed": 20260923,
  "input": {
   "goal": "strength",
@@ -750,8 +750,8 @@
          "notes_es": "Día pesado: menos repeticiones y más carga.",
          "alternatives": [
           "0042",
-          "0413",
-          "0534"
+          "0770",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -1693,8 +1693,8 @@
          "notes_es": "Día pesado: menos repeticiones y más carga.",
          "alternatives": [
           "0042",
-          "0413",
-          "0534"
+          "0770",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -2636,8 +2636,8 @@
          "notes_es": "Día pesado: menos repeticiones y más carga.",
          "alternatives": [
           "0042",
-          "0413",
-          "0534"
+          "0770",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -3579,8 +3579,8 @@
          "notes_es": "Día pesado: menos repeticiones y más carga.",
          "alternatives": [
           "0042",
-          "0413",
-          "0534"
+          "0770",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -4522,8 +4522,8 @@
          "notes_es": "Día pesado: menos repeticiones y más carga.",
          "alternatives": [
           "0042",
-          "0413",
-          "0534"
+          "0770",
+          "0413"
          ],
          "order": 0,
          "slot": {
@@ -5465,8 +5465,8 @@
          "notes_es": null,
          "alternatives": [
           "0042",
-          "0413",
-          "0534"
+          "0770",
+          "0413"
          ],
          "order": 0,
          "slot": {

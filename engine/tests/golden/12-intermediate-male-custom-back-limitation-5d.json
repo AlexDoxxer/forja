@@ -1,6 +1,6 @@
 {
  "engine_version": "0.2.0",
- "tables_hash": "5e65c2042ee833ccb1e2b50d1742ded0802e047a2cf8fccaa065b33f67eafe48",
+ "tables_hash": "9b0522a74876b46d121e095e9a98607744057030a3d3f2c8cf98548c5e481275",
  "seed": 20260923,
  "input": {
   "goal": "hypertrophy",
@@ -1599,9 +1599,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0696",
-          "1766",
-          "0339"
+          "0582",
+          "3195",
+          "2286"
          ],
          "order": 0,
          "slot": {
@@ -3340,9 +3340,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0696",
-          "1766",
-          "0339"
+          "0582",
+          "3195",
+          "2286"
          ],
          "order": 0,
          "slot": {
@@ -5081,9 +5081,9 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0696",
-          "1766",
-          "0339"
+          "0582",
+          "3195",
+          "2286"
          ],
          "order": 0,
          "slot": {
@@ -6822,9 +6822,9 @@
          "load_hint": "Carga que te deje 1 repetición en reserva",
          "notes_es": null,
          "alternatives": [
-          "0696",
-          "1766",
-          "0339"
+          "0582",
+          "3195",
+          "2286"
          ],
          "order": 0,
          "slot": {
@@ -8563,9 +8563,9 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0696",
-          "1766",
-          "0339"
+          "0582",
+          "3195",
+          "2286"
          ],
          "order": 0,
          "slot": {
