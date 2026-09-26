@@ -9,9 +9,11 @@
 # - keywords: listas que complementan dificultad, lateralidad, tipo de carga, mecánica y rol
 #   de calentamiento (warmup_name_any: movilidad dinámica y cardio ligero, §6.3).
 # - other_justified: ejercicios que conservan el patrón `other`, con su motivo.
+# - difficulty_rules: reglas de dificultad condicionales (name_any / name_none / equipment).
 # - by_id: overrides por id. Campos: movement_pattern, mechanic, role, difficulty,
-#   laterality, load_type, is_staple.
-version: 2
+#   laterality, load_type, is_staple, equipment_code (código de equipamiento forzado; el grupo
+#   se deriva de equipment-normalization.yaml).
+version: 3
 
 pattern_rules:
   # Estiramientos antes que cualquier otra regla prioritaria («outstretched» no casa).
@@ -73,6 +75,13 @@ pattern_rules:
   - { pattern: shoulder_raise, name_any: ["shoulder raise"], target: [serratus anterior] }
   - { pattern: hip_abduction, name_any: ["monster walk"] }
 
+# Dominadas y fondos estrictos con peso corporal son de nivel intermedio-avanzado (F1b, C10).
+difficulty_rules:
+  - difficulty: 3
+    name_any: ["pull-up", "chin-up", "chin up", " dip"]
+    name_none: ["assisted", "band", "negative", "kneeling", "inverted", "bench", "on floor", "between benches", "bench leg", "machine", "floor"]
+    equipment: ["body weight"]
+
 keywords:
   difficulty_level_1_any: ["kneeling push", "(on knees)", "with support", "supported", "incline push-up", "(wall)"]
   difficulty_level_3_any:
@@ -98,8 +107,8 @@ other_justified:
   "0551": "Levantamiento turco: movimiento global en varias fases (suelo-de pie) sin patrón único."
 
 by_id:
-  "0814": { movement_pattern: elbow_extension }   # triceps dip
-  "0251": { movement_pattern: horizontal_push }   # chest dip
+  "0814": { movement_pattern: elbow_extension, mechanic: compound, difficulty: 2 }  # triceps dip
+  "0251": { movement_pattern: horizontal_push, difficulty: 3, is_staple: false }    # chest dip
   "0549": { movement_pattern: hinge, mechanic: compound }  # kettlebell swing
   "2133": { movement_pattern: carry, load_type: time }     # farmers walk
   "0276": { movement_pattern: core_anti_extension }        # dead bug
@@ -132,3 +141,28 @@ by_id:
   "2328": { movement_pattern: elbow_extension }             # narrow push-up on exercise ball
   "1336": { movement_pattern: hinge }
   "1396": { movement_pattern: calf }                        # smith toe raise (tibial anterior)                       # exercise ball back extension with rotation
+
+  # --- Revisión de dominio F1b (C1, C10, B3, B5) ---
+  "0044": { role: accessory, is_staple: false }             # good morning: el estándar es el RDL
+  "0471": { role: accessory, is_staple: false, load_type: bodyweight }  # handstand push-up (d3, skill)
+  "3302": { role: accessory, is_staple: false }             # handstand (d3, skill)
+  "0677": { difficulty: 3 }                                 # ring dips
+  "1367": { difficulty: 3 }                                 # wide grip rear pull-up (tras nuca)
+  "0670": { difficulty: 3 }                                 # rear pull-up (tras nuca)
+  "3193": { difficulty: 3, is_staple: false }               # glute-ham raise
+  "0496": { difficulty: 3, is_staple: false }               # inverse leg curl (apoyo en banco)
+  "0555": { movement_pattern: knee_extension }              # kick out sit: extensión de rodilla
+  "0858": { movement_pattern: cardio, role: cardio, load_type: time }  # wind sprints: carrera
+  "0352": { mechanic: compound }                            # dumbbell neutral grip bench press
+  "1625": { mechanic: compound }                            # smith decline close grip bench press
+  "0812": { mechanic: compound }
+  "0813": { mechanic: compound }
+  "0815": { mechanic: compound, difficulty: 2 }             # triceps dips floor (en suelo)
+  "0688": { difficulty: 2 }                                 # scapular pull-up (activación)
+  "3012": { difficulty: 2 }                                 # scapula dips (activación)
+  "2400": { equipment_code: cable }                         # máquina de dominadas con polea
+  "0046": { is_staple: false }                              # hack squat con barra
+  "1759": { is_staple: false }                              # pistol (d3)
+  "0489": { is_staple: false }                              # hiperextensión: aislamiento lumbar
+  "0488": { is_staple: false }
+  "0553": { is_staple: false }                              # press militar a dos manos con kettlebell

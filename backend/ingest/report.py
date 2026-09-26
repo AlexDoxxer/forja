@@ -12,6 +12,7 @@ from ingest.domain import (
     MAIN_PATTERNS,
     MIN_STAPLES_PER_CELL,
     MOVEMENT_PATTERNS,
+    STAPLE_CELL_EXEMPTIONS,
     STAPLE_EQUIPMENT_GROUPS,
     EquipmentGroup,
     MovementPattern,
@@ -39,8 +40,16 @@ class StapleCell:
         return self.candidates > 0
 
     @property
+    def exemption(self) -> str | None:
+        return STAPLE_CELL_EXEMPTIONS.get((self.pattern, self.group))
+
+    @property
     def ok(self) -> bool:
-        return not self.applicable or len(self.staple_ids) >= MIN_STAPLES_PER_CELL
+        return (
+            not self.applicable
+            or self.exemption is not None
+            or len(self.staple_ids) >= MIN_STAPLES_PER_CELL
+        )
 
 
 def staple_matrix(catalog: Catalog) -> tuple[StapleCell, ...]:
@@ -102,7 +111,8 @@ def render_report(catalog: Catalog, specs: IngestSpecs, commit: str) -> str:
         "",
         "## Matriz de staples (patrón principal x grupo de equipamiento)",
         "",
-        f"Requisito: al menos {MIN_STAPLES_PER_CELL} staples en cada celda con candidatos.",
+        f"Requisito: al menos {MIN_STAPLES_PER_CELL} staples en cada celda con candidatos, "
+        "salvo las exentas.",
         "",
     ]
     matrix = staple_matrix(catalog)
@@ -111,11 +121,20 @@ def render_report(catalog: Catalog, specs: IngestSpecs, commit: str) -> str:
         row: list[object] = [f"`{pattern}`"]
         for group in STAPLE_EQUIPMENT_GROUPS:
             cell = next(c for c in matrix if c.pattern == pattern and c.group == group)
-            mark = "✅" if cell.ok else "❌"
+            mark = "⚠️ exenta" if cell.exemption else ("✅" if cell.ok else "❌")
             ids = ", ".join(cell.staple_ids) or "—"
             row.append(f"{mark} {len(cell.staple_ids)}/{cell.candidates} ({ids})")
         rows.append(row)
     lines += [*_table(("Patrón", *STAPLE_EQUIPMENT_GROUPS), rows), ""]
+    lines += [
+        "Celdas exentas del mínimo (revisión de dominio F1b):",
+        "",
+        *(
+            f"- `{pattern}` x `{group}`: {reason}."
+            for (pattern, group), reason in STAPLE_CELL_EXEMPTIONS.items()
+        ),
+        "",
+    ]
 
     lines += ["## Distribución por patrón y grupo de equipamiento", ""]
     per_pattern: Counter[tuple[str, str]] = Counter(
