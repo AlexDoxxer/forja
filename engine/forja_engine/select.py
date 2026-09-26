@@ -13,7 +13,6 @@ from dataclasses import dataclass, field
 from forja_engine.models import (
     ExerciseCard,
     ExerciseRole,
-    Experience,
     GeneratorInput,
     Goal,
     Laterality,
@@ -280,7 +279,7 @@ class Selector:
                 if other.variant_group not in seen:
                     alternatives.append(other.id)
                     seen.add(other.variant_group)
-            return Choice(card=card, alternatives=tuple(alternatives), relaxed=relaxed)
+            return Choice(card=card, alternatives=tuple(alternatives), relaxed=tuple(relaxed))
         return None
 
     def missing_reason(self, slot: SlotRef, usage: UsageState) -> PlanWarningCode:
@@ -312,12 +311,7 @@ class Selector:
         """
         cap = self.cap_for(ExerciseRole.ACCESSORY)
         return sorted(
-            (
-                card
-                for cards in self.available.values()
-                for card in cards
-                if card.difficulty <= cap
-            ),
+            (card for cards in self.available.values() for card in cards if card.difficulty <= cap),
             key=lambda c: c.id,
         )
 

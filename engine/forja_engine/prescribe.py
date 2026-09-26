@@ -194,7 +194,7 @@ def prescribe_warmup_specific(
 def prescribe_warmup_ramp(card: ExerciseCard, tables: Tables) -> DraftExercise:
     """Series de aproximación (``progression.warmup_ramp``) sobre el propio ejercicio (C7)."""
     ramp = tables.periodization.progression.warmup_ramp
-    steps = "; ".join(f"{round(pct * 100)} % × {reps}" for pct, reps in ramp)
+    steps = "; ".join(f"{round(pct * 100)} % para {reps} repeticiones" for pct, reps in ramp)
     reps_values = [reps for _, reps in ramp]
     return DraftExercise(
         card=card,

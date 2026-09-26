@@ -62,8 +62,8 @@ class NameRule(Table):
 
     def matches(self, card: ExerciseCard) -> bool:
         return (
-            card.id in self.ids or _name_pattern(self.name_en_any).search(card.display_name_en)
-            is not None
+            card.id in self.ids
+            or _name_pattern(self.name_en_any).search(card.display_name_en) is not None
         )
 
 

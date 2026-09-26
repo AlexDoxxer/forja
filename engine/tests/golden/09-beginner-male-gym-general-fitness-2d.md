@@ -7,43 +7,43 @@ Principiante, hombre, gimnasio, forma general, cuerpo completo A/B 2 días de 60
 
 ## Semana 1 (acumulación)
 
-### Día 1 · Cuerpo completo A (~63 min)
+### Día 1 · Cuerpo completo A (~50 min)
 
 _Trabajo de cuádriceps, pecho, espalda y isquiotibiales_
 
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | prensa de piernas a 45° (1464) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | sentadilla goblet con mancuerna (1760) | 5 | 8-12 | 4 | 105 s | 2-0-1-0 |
-| Trabajo | press de banca inclinado con mancuernas (0314) | 5 | 8-12 | 4 | 105 s | 2-0-1-0 |
-| Trabajo | remo inclinado con mancuernas (0293) | 4 | 8-12 | 4 | 105 s | 2-0-1-0 |
-| Trabajo | buenos días con barra (0044) | 2 | 10-15 | 4 | 75 s | 2-0-1-0 |
-| Trabajo | elevación lateral con mancuerna a una mano (0355) | 2 | 10-15 por lado | 4 | 75 s | 2-0-1-0 |
+| Calentamiento | sentadilla con banda elástica (1004) | 1 | 8-12 | — | 30 s | — |
+| Trabajo | prensa de piernas a 45° (0739) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
+| Trabajo | press de banca en multipower (0748) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
+| Trabajo | remo sentado en polea (0861) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
+| Trabajo | peso muerto sumo con barra (0117) | 2 | 10-15 | 4 | 75 s | 2-0-1-0 |
+| Trabajo | elevación lateral con mancuernas (0334) | 2 | 10-15 | 4 | 75 s | 2-0-1-0 |
 | Trabajo | plancha de rodillas con toque de hombro (3239) | 3 | 10-20 | 3 | 45 s | — |
-| Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 1 | 30 s por lado | — | 0 s | — |
-| Vuelta a la calma | estiramiento de pecho con manos tras la cabeza (1259) | 1 | 30 s por lado | — | 0 s | — |
+| Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 1 | 30 s | — | 0 s | — |
+| Vuelta a la calma | estiramiento de pectoral mayor sentado asistido con fitball (1716) | 1 | 30 s | — | 0 s | — |
 
-Series efectivas: chest 5, back 4, shoulders 2, arms 4,5, quads 5, hamstrings 2, glutes 3,5, core 3
+Series efectivas: chest 3, back 3, shoulders 2, arms 1,8, quads 3, hamstrings 2, glutes 2,5, core 3
 
-### Día 2 · Cuerpo completo B (~63 min)
+### Día 2 · Cuerpo completo B (~51 min)
 
 _Trabajo de isquiotibiales, hombros, espalda y cuádriceps_
 
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
-| Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | extensión lumbar en máquina (0573) | 1 | 8-12 | — | 30 s | — |
-| Trabajo | buenos días con barra (0044) | 5 | 8-12 | 4 | 105 s | 2-0-1-0 |
-| Trabajo | press de hombro sentado con mancuernas (0405) | 5 | 8-12 | 4 | 105 s | 2-0-1-0 |
-| Trabajo | jalón al pecho en polea con recorrido completo (2330) | 4 | 8-12 | 4 | 105 s | 2-0-1-0 |
-| Trabajo | sentadilla dividida lateral con barra (0097) | 3 | 10-15 por lado | 4 | 75 s | 2-0-1-0 |
-| Trabajo | curl de bíceps sentado sobre fitball con mancuernas (0390) | 1 | 10-15 | 4 | 75 s | 2-0-1-0 |
+| Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
+| Calentamiento | pull through con banda elástica (0991) | 1 | 8-12 | — | 30 s | — |
+| Trabajo | swing con kettlebell (0549) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
+| Trabajo | press por encima de la cabeza de pie con mancuernas (0426) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
+| Trabajo | jalón al pecho en polea con recorrido completo (2330) | 3 | 8-12 | 4 | 105 s | 2-0-1-0 |
+| Trabajo | zancada adelante (3470) | 2 | 10-15 por lado | 4 | 75 s | 2-0-1-0 |
+| Trabajo | curl de bíceps alterno con banda elástica (0968) | 2 | 10-15 | 4 | 75 s | 2-0-1-0 |
 | Trabajo | abdominal completo inclinado con giro (0495) | 3 | 10-20 | 3 | 45 s | — |
-| Vuelta a la calma | estiramiento del corredor (1585) | 1 | 30 s por lado | — | 0 s | — |
-| Vuelta a la calma | estiramiento de deltoides posterior (0669) | 1 | 30 s por lado | — | 0 s | — |
+| Vuelta a la calma | estiramiento del corredor (1585) | 1 | 30 s | — | 0 s | — |
+| Vuelta a la calma | estiramiento de deltoides posterior (0669) | 1 | 30 s | — | 0 s | — |
 
-Series efectivas: back 4, shoulders 5, arms 5,5, quads 3, hamstrings 5, glutes 4, core 3
+Series efectivas: back 3, shoulders 3, arms 3,8, quads 2, hamstrings 3, glutes 2,5, core 3
 
 ## Progresión del mesociclo
 
@@ -59,20 +59,25 @@ Series efectivas: back 4, shoulders 5, arms 5,5, quads 3, hamstrings 5, glutes 4
 
 | Grupo | Objetivo | Planificado |
 |---|---|---|
-| chest | 6-10 | 5 |
-| back | 6-10 | 8 |
-| shoulders | 6-10 | 7 |
-| arms | 3-6 | 10 |
-| quads | 6-10 | 8 |
-| hamstrings | 6-10 | 7 |
-| glutes | 6-10 | 7,5 |
+| chest | 6-10 | 3 |
+| back | 6-10 | 6 |
+| shoulders | 6-10 | 5 |
+| arms | 3-6 | 5,6 |
+| quads | 6-10 | 5 |
+| hamstrings | 6-10 | 5 |
+| glutes | 6-10 | 5 |
 | calves | 3-6 | 0 |
 | core | 4-8 | 6 |
 
 ## Avisos
 
-- `volume_out_of_range`: Volumen semanal de pecho: 5 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
-- `volume_out_of_range`: Volumen semanal de brazos: 10 series efectivas, por encima del objetivo de 4,5. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.
+- `volume_out_of_range`: Volumen semanal de pecho: 3 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de espalda: 6 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de hombros: 5 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de brazos: 5,6 series efectivas, por encima del objetivo de 4,5. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.
+- `volume_out_of_range`: Volumen semanal de cuádriceps: 5 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de isquiotibiales: 5 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de glúteos: 5 series efectivas, por debajo del objetivo de 8. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de gemelos: 0 series efectivas, por debajo del objetivo de 4,5. Más días o más tiempo por sesión permitirían acercarse.
 
 ## Explicaciones (rationale_es)

@@ -194,7 +194,7 @@ class _Periodizer:
                 rir = max(undulation.heavy_day.rir_floor[self.inp.experience], rir)
             else:
                 rir = max(undulation.medium_day.rir, rir)
-            if exercise.rep_min is not None and exercise.rep_max is not None:
+            if exercise.rep_min is not None and exercise.rep_max is not None:  # pragma: no branch
                 exercise.rep_min, exercise.rep_max = undulated_reps(
                     (exercise.rep_min, exercise.rep_max), heavy=heavy, undulation=undulation
                 )
@@ -216,7 +216,9 @@ class _Periodizer:
                 weeks.append(self.build_week(index, self.base, deload=True))
                 continue
             if index > 0 and grow:
-                late = index + 1 >= self.from_week and self.inp.experience is not Experience.BEGINNER
+                late = (
+                    index + 1 >= self.from_week and self.inp.experience is not Experience.BEGINNER
+                )
                 self.add_extra_sets(state, late=late)
             weeks.append(self.build_week(index, state, deload=False))
         return weeks

@@ -134,6 +134,12 @@ BROKEN: list[tuple[str, Mutation, str]] = [
     ("engine-rules.yaml", _delete(["difficulty", "cap", "advanced"]), "tres niveles"),
     ("engine-rules.yaml", _delete(["allocation", "core_bounds"]), "core_bounds"),
     ("engine-rules.yaml", _set(["allocation", "core_bounds"], [5, 1]), "supera"),
+    (
+        "periodization.yaml",
+        _delete(["strength_undulation", "heavy_day", "rir_floor", "advanced"]),
+        "rir_floor",
+    ),
+    ("engine-rules.yaml", _delete(["loadable_equipment", "beginner"]), "tres niveles"),
     ("engine-rules.yaml", _delete(["progression_loads", "step_kg", "default"]), "step_kg"),
     ("engine-rules.yaml", _set(["progression_loads", "step_kg", "dumbbell"], 0), "step_kg"),
 ]

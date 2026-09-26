@@ -7,24 +7,24 @@ Avanzada, mujer, gimnasio, hipertrofia, 5 días de 60 min con énfasis en tren i
 
 ## Semana 1 (acumulación)
 
-### Día 1 · Empuje (~63 min)
+### Día 1 · Empuje (~57 min)
 
 _Trabajo de pecho, hombros y brazos_
 
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | press de pecho de pie en máquina (3758) | 2 | 8-12 | — | 30 s | — |
+| Calentamiento | flexión de rodillas (3211) | 2 | 8-12 | — | 30 s | — |
 | Trabajo | press de banca con mancuernas (0289) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | press militar a dos manos con kettlebell (0553) | 5 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | press inclinado sobre fitball con mancuernas (1283) | 2 | 10-15 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | aperturas con mancuernas (0308) | 2 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | elevación lateral con mancuerna a una mano (0355) | 3 | 10-16 por lado | 2 | 65 s | 2-0-1-1 |
-| Trabajo | extensión de codos tumbado con barra (0057) | 1 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Vuelta a la calma | estiramiento de pecho con manos tras la cabeza (1259) | 2 | 45 s por lado | — | 0 s | — |
-| Vuelta a la calma | estiramiento de deltoides posterior (0669) | 2 | 45 s por lado | — | 0 s | — |
+| Trabajo | press militar a dos manos con kettlebell (0553) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | press de banca en multipower (0748) | 2 | 10-15 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | aperturas de pie en polea (0227) | 2 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | elevación lateral con mancuernas (0334) | 2 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | press francés tumbado con barra (extensión de tríceps) (0060) | 2 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Vuelta a la calma | estiramiento de pectoral mayor sentado asistido con fitball (1716) | 2 | 45 s | — | 0 s | — |
+| Vuelta a la calma | estiramiento de deltoides posterior (0669) | 2 | 45 s | — | 0 s | — |
 
-Series efectivas: chest 8, shoulders 8, arms 6,5
+Series efectivas: chest 8, shoulders 6, arms 5
 
 ### Día 2 · Tirón (~55 min)
 
@@ -32,74 +32,75 @@ _Trabajo de espalda, hombros y brazos_
 
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
-| Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | jalón de pie en polea con cuerda (0232) | 2 | 8-12 | — | 30 s | — |
-| Trabajo | dominada asistida (0017) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | remo sentado bajo en polea (0180) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | remo con mancuernas y agarre supino (2327) | 1 | 10-15 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | remo para deltoides posterior con barra (0076) | 4 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | curl de bíceps sentado sobre fitball con mancuernas (0390) | 1 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | encogimiento de hombros inclinado con mancuernas (0329) | 1 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
+| Calentamiento | dominada asistida con banda elástica (0970) | 2 | 8-12 | — | 30 s | — |
+| Trabajo | dominada asistida (0017) | 3 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | remo sentado bajo en polea (0180) | 3 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | remo invertido con rodillas flexionadas (2300) | 3 | 10-15 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | remo para deltoides posterior en polea con cuerda (0203) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | curl de bíceps alterno con banda elástica (0968) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | encogimiento de hombros con mancuernas (0406) | 1 | 10-16 | 2 | 65 s | 2-0-1-1 |
 | Vuelta a la calma | estiramiento de dorsal a una mano contra la pared (1355) | 2 | 45 s por lado | — | 0 s | — |
-| Vuelta a la calma | estiramiento de deltoides posterior (0669) | 2 | 45 s por lado | — | 0 s | — |
+| Vuelta a la calma | estiramiento de deltoides posterior (0669) | 2 | 45 s | — | 0 s | — |
 
-Series efectivas: back 10, shoulders 4, arms 5,5
+Series efectivas: back 10, shoulders 3, arms 5,7
 
-### Día 3 · Pierna (~62 min)
+### Día 3 · Pierna (~63 min)
 
-_Trabajo de cuádriceps, isquiotibiales, glúteos y gemelos_
-
-| Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
-|---|---|---|---|---|---|---|
-| Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | prensa horizontal a una pierna en máquina (2611) | 2 | 8-12 por lado | — | 30 s | — |
-| Trabajo | sentadilla goblet con mancuerna (1760) | 5 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | buenos días con barra (0044) | 5 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | zancada de sprint en multipower (0769) | 2 | 10-15 por lado | 2 | 65 s | 2-0-1-1 |
-| Trabajo | curl femoral tumbado con mancuerna (0339) | 2 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | elevación de talones en prensa de máquina (2289) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 2 | 45 s por lado | — | 0 s | — |
-| Vuelta a la calma | estiramiento de isquiotibiales y gemelos de pie con correa (1599) | 2 | 45 s por lado | — | 0 s | — |
-
-Series efectivas: quads 6, hamstrings 7, glutes 7, calves 3
-
-### Día 4 · Glúteo e isquios (~60 min)
-
-_Trabajo de glúteos, isquiotibiales y core_
+_Trabajo de cuádriceps, isquiotibiales, gemelos y core_
 
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
-| Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | extensión de cadera inclinado con banda elástica (0980) | 2 | 8-12 | — | 30 s | — |
+| Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
+| Calentamiento | sentadilla con banda elástica (1004) | 2 | 8-12 | — | 30 s | — |
+| Trabajo | sentadilla goblet con kettlebell (0534) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | peso muerto sumo con barra (0117) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | zancada atrás con mancuernas (0381) | 2 | 10-15 por lado | 2 | 65 s | 2-0-1-1 |
+| Trabajo | curl femoral inverso con apoyo en banco (0496) | 2 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | elevación de talones de pie con barra (apoyo en suelo) (1372) | 2 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | elevación de piernas alterna sentado con barra (2800) | 3 | 10-21 por lado | 2 | 45 s | — |
+| Vuelta a la calma | estiramiento de cuádriceps tumbado boca abajo asistido (1713) | 2 | 45 s | — | 0 s | — |
+| Vuelta a la calma | estiramiento de isquiotibiales y gemelos de pie con correa (1599) | 2 | 45 s | — | 0 s | — |
+
+Series efectivas: quads 6, hamstrings 6, glutes 5, calves 2, core 3
+
+### Día 4 · Glúteo e isquios (~62 min)
+
+_Trabajo de glúteos, isquiotibiales, cuádriceps y core_
+
+| Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
+|---|---|---|---|---|---|---|
+| Calentamiento | salto de estrella (3223) | 1 | 180 s | — | 0 s | — |
+| Calentamiento | extensión de cadera en máquina (2286) | 2 | 8-12 | — | 30 s | — |
+| Trabajo | peso muerto rumano con mancuernas (1459) | 3 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | zancada con barra (0054) | 3 | 10-15 por lado | 2 | 65 s | 2-0-1-1 |
 | Trabajo | puente de glúteo con barra y dos piernas en banco (3562) | 4 | 6-11 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | buenos días con barra (0044) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
-| Trabajo | zancada con balanceo lastrada (3644) | 2 | 10-15 por lado | 2 | 65 s | 2-0-1-1 |
-| Trabajo | caminata monstruo con banda (0628) | 2 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | curl femoral inverso con apoyo en banco (0496) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | abducción de cadera sentado en máquina (0597) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | curl femoral tumbado en máquina (0586) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
 | Trabajo | toque de hombros en plancha (3699) | 2 | 10-21 | 2 | 45 s | — |
-| Vuelta a la calma | estiramiento de glúteo y piramidal tumbado asistido (1710) | 2 | 45 s por lado | — | 0 s | — |
-| Vuelta a la calma | postura reclinada del dedo gordo con cuerda (1582) | 2 | 45 s por lado | — | 0 s | — |
+| Vuelta a la calma | estiramiento de glúteo y piramidal tumbado asistido (1710) | 2 | 45 s | — | 0 s | — |
+| Vuelta a la calma | postura reclinada del dedo gordo con cuerda (1582) | 2 | 45 s | — | 0 s | — |
 
-Series efectivas: quads 1, hamstrings 7, glutes 10, core 2
+Series efectivas: quads 3, hamstrings 6, glutes 10, core 2
 
-### Día 5 · Pierna B (cadena posterior) (~60 min)
+### Día 5 · Pierna B (cadena posterior) (~56 min)
 
 _Trabajo de isquiotibiales, glúteos, cuádriceps y gemelos_
 
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
-| Calentamiento | rodillas altas contra la pared (3636) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | buenos días sentado en máquina (3759) | 2 | 8-12 | — | 30 s | — |
+| Calentamiento | caminata en cinta inclinada (3666) | 1 | 180 s | — | 0 s | — |
+| Calentamiento | pull through con banda elástica (0991) | 2 | 8-12 | — | 30 s | — |
 | Trabajo | buenos días con barra (0044) | 4 | 6-10 | 2 | 150 s | 3-0-1-0 |
+| Trabajo | sentadilla en multipower (0770) | 3 | 10-15 | 2 | 65 s | 2-0-1-1 |
 | Trabajo | hip thrust de rodillas con banda de resistencia (3236) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | sentadilla sobre bosu (1705) | 4 | 10-15 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | curl femoral inverso asistido en polea (3235) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
-| Trabajo | elevación de talones sentado en posición de sentadilla en máquina de prensa de piernas (1385) | 4 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | elevación glúteo-femoral (3193) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
+| Trabajo | elevación de talones de pie en máquina (0605) | 3 | 10-16 | 2 | 65 s | 2-0-1-1 |
 | Trabajo | elevación de piernas con giro (2801) | 2 | 10-21 | 2 | 45 s | — |
-| Vuelta a la calma | estiramiento del corredor (1585) | 2 | 45 s por lado | — | 0 s | — |
-| Vuelta a la calma | estiramiento de glúteo y piramidal tumbado asistido (1710) | 2 | 45 s por lado | — | 0 s | — |
+| Vuelta a la calma | estiramiento del corredor (1585) | 2 | 45 s | — | 0 s | — |
+| Vuelta a la calma | estiramiento de glúteo y piramidal tumbado asistido (1710) | 2 | 45 s | — | 0 s | — |
 
-Series efectivas: quads 4, hamstrings 7, glutes 7, calves 4, core 2
+Series efectivas: quads 3, hamstrings 7, glutes 6,5, calves 3, core 2
 
 ## Progresión del mesociclo
 
@@ -107,8 +108,8 @@ Series efectivas: quads 4, hamstrings 7, glutes 7, calves 4, core 2
 |---|---|---|---|
 | 1 | accumulation | 3 | 1 |
 | 2 | accumulation | 2 | 1 |
-| 3 | accumulation | 2 | 1 |
-| 4 | accumulation | 1 | 1 |
+| 3 | accumulation | 2 | 1,1 |
+| 4 | accumulation | 1 | 1,1 |
 | 5 | deload | 4 | 0,6 |
 
 ## Volumen semanal (semana 1)
@@ -117,23 +118,23 @@ Series efectivas: quads 4, hamstrings 7, glutes 7, calves 4, core 2
 |---|---|---|
 | chest | 11,2-16 | 8 |
 | back | 11,2-16 | 10 |
-| shoulders | 11,2-16 | 12 |
-| arms | 8-12,8 | 12 |
-| quads | 16,8-24 | 11 |
-| hamstrings | 18,2-26 | 21 |
-| glutes | 21-30 | 24 |
-| calves | 6,4-11,2 | 7 |
-| core | 4,8-9,6 | 4 |
+| shoulders | 11,2-16 | 9 |
+| arms | 8-12,8 | 10,7 |
+| quads | 16,8-24 | 12 |
+| hamstrings | 18,2-26 | 19 |
+| glutes | 21-30 | 21,5 |
+| calves | 6,4-11,2 | 5 |
+| core | 4,8-9,6 | 7 |
 
 ## Avisos
 
-- `slot_dropped`: Para ajustar «Pierna» a 60 minutos hemos quitado «elevación de piernas alterna sentado con barra».
+- `session_group_cap`: Hemos recortado series en «Tirón» para no superar 10 series efectivas de un mismo grupo en una sesión.
 - `volume_out_of_range`: Volumen semanal de pecho: 8 series efectivas, por debajo del objetivo de 13,6. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de espalda: 10 series efectivas, por debajo del objetivo de 13,6. Más días o más tiempo por sesión permitirían acercarse.
-- `volume_out_of_range`: Volumen semanal de brazos: 12 series efectivas, por encima del objetivo de 10,4. Proviene sobre todo del trabajo indirecto de los ejercicios compuestos.
-- `volume_out_of_range`: Volumen semanal de cuádriceps: 11 series efectivas, por debajo del objetivo de 20,4. Más días o más tiempo por sesión permitirían acercarse.
-- `volume_out_of_range`: Volumen semanal de gemelos: 7 series efectivas, por debajo del objetivo de 8,8. Más días o más tiempo por sesión permitirían acercarse.
-- `volume_out_of_range`: Volumen semanal de core: 4 series efectivas, por debajo del objetivo de 7,2. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de hombros: 9 series efectivas, por debajo del objetivo de 13,6. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de cuádriceps: 12 series efectivas, por debajo del objetivo de 20,4. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de glúteos: 21,5 series efectivas, por debajo del objetivo de 25,5. Más días o más tiempo por sesión permitirían acercarse.
+- `volume_out_of_range`: Volumen semanal de gemelos: 5 series efectivas, por debajo del objetivo de 8,8. Más días o más tiempo por sesión permitirían acercarse.
 
 ## Explicaciones (rationale_es)
 
