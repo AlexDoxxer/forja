@@ -257,6 +257,7 @@ def test_build_replacement_item_falls_back_to_original_grams_when_replacement_ha
         diet_types=(DietType.omnivore,),
         macro_role=FoodMacroRole.produce,
         typical_portion_g=200.0,
+        max_portion_g=1000.0,
     )
     original_item = MealItem(
         food_id="manzana",
@@ -403,3 +404,20 @@ def test_is_candidate_rejects_peanuts() -> None:
         excluded=set(),
         allergens={Allergen.peanuts},
     )
+
+
+def test_pick_replacement_prefers_substitutes_that_fit_the_meal() -> None:
+    # entre las carnes, solo `jamon_cocido`/`jamon_curado`/`bacon`/`salchicha_cerdo` van en desayuno
+    original = CATALOG["bacon"]
+    replacement = _pick_replacement(original, make_input(), seed=3, slot=MealSlot.breakfast)
+    assert MealSlot.breakfast in replacement.meal_slots
+
+
+def test_swap_never_exceeds_max_portion() -> None:
+    plan = plan_week(make_input(seed=5), MONDAY).plan
+    assert plan is not None
+    meal = plan.days[0].meals[0]
+    item = meal.items[0]
+    swapped = swap_food(plan, make_input(seed=5), 0, meal.slot, item.food_id, None)
+    for changed in swapped.days[0].meals[0].items:
+        assert changed.grams <= CATALOG[changed.food_id].max_portion_g + 1e-9

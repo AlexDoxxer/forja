@@ -24,7 +24,16 @@
     "typical_portion_g": 90.0,
     "unit_grams": 90.0,
     "unit_name_es": "bagel",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 270.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "galleta_salada",
@@ -51,7 +60,13 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 60.0,
+    "meal_slots": [
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "muffin_ingles",
@@ -78,7 +93,16 @@
     "typical_portion_g": 57.0,
     "unit_grams": 57.0,
     "unit_name_es": "muffin",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 171.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pan_blanco",
@@ -105,7 +129,16 @@
     "typical_portion_g": 60.0,
     "unit_grams": 30.0,
     "unit_name_es": "rebanada",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pan_centeno",
@@ -132,7 +165,16 @@
     "typical_portion_g": 60.0,
     "unit_grams": 30.0,
     "unit_name_es": "rebanada",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pan_crujiente_centeno",
@@ -159,7 +201,16 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 60.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pan_integral",
@@ -186,7 +237,16 @@
     "typical_portion_g": 60.0,
     "unit_grams": 30.0,
     "unit_name_es": "rebanada",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pan_pita",
@@ -213,7 +273,16 @@
     "typical_portion_g": 60.0,
     "unit_grams": 60.0,
     "unit_name_es": "pan de pita",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "panecillo",
@@ -240,7 +309,16 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "tortita_arroz",
@@ -265,7 +343,14 @@
     "typical_portion_g": 20.0,
     "unit_grams": 9.0,
     "unit_name_es": "tortita",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 54.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "tortita_maiz",
@@ -290,7 +375,16 @@
     "typical_portion_g": 60.0,
     "unit_grams": 30.0,
     "unit_name_es": "tortita",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "tortita_trigo",
@@ -317,7 +411,16 @@
     "typical_portion_g": 60.0,
     "unit_grams": 30.0,
     "unit_name_es": "tortita",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "cafe_solo",
@@ -342,7 +445,10 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 500.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "cerveza",
@@ -369,7 +475,10 @@
     "typical_portion_g": 330.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "El valor de kcal de USDA FoodData Central incluye el alcohol (7 kcal/g), que no se contabiliza en las columnas de macronutrientes."
+    "energy_note": "El valor de kcal de USDA FoodData Central incluye el alcohol (7 kcal/g), que no se contabiliza en las columnas de macronutrientes.",
+    "max_portion_g": 825.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "leche_almendra",
@@ -396,7 +505,10 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "refresco_cola",
@@ -421,7 +533,10 @@
     "typical_portion_g": 330.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 825.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "te_negro",
@@ -446,7 +561,10 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 500.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "vino_tinto",
@@ -471,7 +589,10 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "El valor de kcal de USDA FoodData Central incluye el alcohol (7 kcal/g), que no se contabiliza en las columnas de macronutrientes."
+    "energy_note": "El valor de kcal de USDA FoodData Central incluye el alcohol (7 kcal/g), que no se contabiliza en las columnas de macronutrientes.",
+    "max_portion_g": 375.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "zumo_manzana",
@@ -496,7 +617,10 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "zumo_naranja",
@@ -521,7 +645,10 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "azucar",
@@ -546,7 +673,10 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 25.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "cacao_polvo",
@@ -571,7 +701,10 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "Alto contenido en fibra: USDA aplica un factor calórico menor para la fibra (~2 kcal/g) que el de 4 kcal/g de otros carbohidratos, lo que reduce la energía total por debajo de 4P+4C+9G."
+    "energy_note": "Alto contenido en fibra: USDA aplica un factor calórico menor para la fibra (~2 kcal/g) que el de 4 kcal/g de otros carbohidratos, lo que reduce la energía total por debajo de 4P+4C+9G.",
+    "max_portion_g": 25.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "ketchup",
@@ -596,7 +729,10 @@
     "typical_portion_g": 15.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 35.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "mayonesa",
@@ -622,7 +758,10 @@
     "typical_portion_g": 15.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 35.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "mermelada",
@@ -647,7 +786,10 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "miel",
@@ -671,7 +813,10 @@
     "typical_portion_g": 15.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 35.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "mostaza",
@@ -696,7 +841,10 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 25.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "salsa_soja",
@@ -724,7 +872,10 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 25.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "sirope_arce",
@@ -749,7 +900,10 @@
     "typical_portion_g": 15.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 35.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "tomate_frito",
@@ -774,7 +928,10 @@
     "typical_portion_g": 50.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 125.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "tomate_triturado",
@@ -799,7 +956,10 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 250.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "vinagre_manzana",
@@ -824,7 +984,10 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 25.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "leche_condensada",
@@ -850,7 +1013,10 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "leche_desnatada",
@@ -876,7 +1042,14 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "leche_entera",
@@ -902,7 +1075,14 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "leche_semidesnatada",
@@ -928,7 +1108,14 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "nata_cocinar",
@@ -954,7 +1141,13 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 75.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "queso_cheddar",
@@ -980,7 +1173,16 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 75.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "queso_cottage",
@@ -1006,7 +1208,14 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 250.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "queso_crema",
@@ -1032,7 +1241,14 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 75.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "queso_feta",
@@ -1058,7 +1274,13 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 75.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "queso_mozzarella",
@@ -1084,7 +1306,13 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 75.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "queso_parmesano",
@@ -1110,7 +1338,13 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 30.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "requeson",
@@ -1136,7 +1370,14 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 250.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "yogur_desnatado",
@@ -1162,7 +1403,14 @@
     "typical_portion_g": 125.0,
     "unit_grams": 125.0,
     "unit_name_es": "yogur",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "yogur_griego",
@@ -1188,7 +1436,14 @@
     "typical_portion_g": 125.0,
     "unit_grams": 125.0,
     "unit_name_es": "yogur",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "yogur_natural",
@@ -1214,7 +1469,14 @@
     "typical_portion_g": 125.0,
     "unit_grams": 125.0,
     "unit_name_es": "yogur",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "clara_huevo",
@@ -1240,7 +1502,14 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 400.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "huevo",
@@ -1266,7 +1535,14 @@
     "typical_portion_g": 50.0,
     "unit_grams": 50.0,
     "unit_name_es": "huevo",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "yema_huevo",
@@ -1292,7 +1568,10 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 80.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "aceite_canola",
@@ -1317,7 +1596,16 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 20.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "aceite_coco",
@@ -1344,7 +1632,13 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 10.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "aceite_girasol",
@@ -1369,7 +1663,13 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 10.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "aceite_oliva",
@@ -1394,7 +1694,16 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 30.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "mantequilla",
@@ -1420,7 +1729,14 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 20.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "margarina",
@@ -1444,7 +1760,14 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 20.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "almeja",
@@ -1469,7 +1792,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "anchoa_lata",
@@ -1494,7 +1823,13 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 30.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": 2
   },
   {
     "id": "atun_fresco",
@@ -1519,7 +1854,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "atun_lata",
@@ -1544,7 +1885,15 @@
     "typical_portion_g": 80.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 320.0,
+    "meal_slots": [
+      "mid_morning",
+      "snack",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "bacalao",
@@ -1569,7 +1918,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "boqueron",
@@ -1594,7 +1949,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 400.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "caballa",
@@ -1619,7 +1980,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "calamar",
@@ -1644,7 +2011,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "cangrejo",
@@ -1669,7 +2042,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 400.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "gamba",
@@ -1694,7 +2073,13 @@
     "typical_portion_g": 120.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 480.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "lubina",
@@ -1719,7 +2104,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "mejillon",
@@ -1744,7 +2135,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pescadilla",
@@ -1769,7 +2166,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pulpo",
@@ -1794,7 +2197,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "salmon",
@@ -1819,7 +2228,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "sardina_lata",
@@ -1844,7 +2259,13 @@
     "typical_portion_g": 80.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 320.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "trucha",
@@ -1869,7 +2290,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "aguacate",
@@ -1894,7 +2321,16 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "albaricoque",
@@ -1919,7 +2355,16 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "arandano",
@@ -1944,7 +2389,16 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "cereza",
@@ -1969,7 +2423,16 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "ciruela",
@@ -1994,7 +2457,16 @@
     "typical_portion_g": 70.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 140.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "datil",
@@ -2019,7 +2491,16 @@
     "typical_portion_g": 40.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 80.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "frambuesa",
@@ -2044,7 +2525,16 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "Alto contenido en fibra: USDA aplica un factor calórico menor para la fibra (~2 kcal/g) que el de 4 kcal/g de otros carbohidratos, lo que reduce la energía total por debajo de 4P+4C+9G."
+    "energy_note": "Alto contenido en fibra: USDA aplica un factor calórico menor para la fibra (~2 kcal/g) que el de 4 kcal/g de otros carbohidratos, lo que reduce la energía total por debajo de 4P+4C+9G.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "fresa",
@@ -2069,7 +2559,16 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "granada",
@@ -2094,7 +2593,16 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "higo",
@@ -2119,7 +2627,16 @@
     "typical_portion_g": 80.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 160.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "kiwi",
@@ -2144,7 +2661,16 @@
     "typical_portion_g": 90.0,
     "unit_grams": 90.0,
     "unit_name_es": "kiwi",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "limon",
@@ -2169,7 +2695,16 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 120.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "mandarina",
@@ -2194,7 +2729,16 @@
     "typical_portion_g": 90.0,
     "unit_grams": 90.0,
     "unit_name_es": "mandarina",
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 180.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "mango",
@@ -2219,7 +2763,16 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "manzana",
@@ -2244,7 +2797,16 @@
     "typical_portion_g": 180.0,
     "unit_grams": 180.0,
     "unit_name_es": "manzana",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 360.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "melocoton",
@@ -2269,7 +2831,16 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "melon",
@@ -2294,7 +2865,16 @@
     "typical_portion_g": 250.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "naranja",
@@ -2319,7 +2899,16 @@
     "typical_portion_g": 200.0,
     "unit_grams": 200.0,
     "unit_name_es": "naranja",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 400.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "papaya",
@@ -2344,7 +2933,16 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pera",
@@ -2369,7 +2967,16 @@
     "typical_portion_g": 170.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pina",
@@ -2394,7 +3001,16 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "platano",
@@ -2419,7 +3035,16 @@
     "typical_portion_g": 120.0,
     "unit_grams": 120.0,
     "unit_name_es": "plátano",
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pomelo",
@@ -2444,7 +3069,16 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "sandia",
@@ -2469,7 +3103,16 @@
     "typical_portion_g": 250.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "uva",
@@ -2494,7 +3137,16 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "alforfon",
@@ -2519,7 +3171,14 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "arroz_blanco",
@@ -2544,7 +3203,13 @@
     "typical_portion_g": 70.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 280.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "arroz_integral",
@@ -2569,7 +3234,13 @@
     "typical_portion_g": 70.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 280.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "arroz_salvaje",
@@ -2594,7 +3265,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "avena",
@@ -2621,7 +3298,14 @@
     "typical_portion_g": 50.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "bulgur",
@@ -2648,7 +3332,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "cebada_perlada",
@@ -2675,7 +3365,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "centeno_grano",
@@ -2702,7 +3398,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "cuscus",
@@ -2729,7 +3431,13 @@
     "typical_portion_g": 70.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 280.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "harina_trigo",
@@ -2756,7 +3464,10 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 120.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "maiz_dulce",
@@ -2781,7 +3492,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 400.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "mijo",
@@ -2806,7 +3523,14 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pasta",
@@ -2833,7 +3557,13 @@
     "typical_portion_g": 80.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 320.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pasta_integral",
@@ -2860,7 +3590,13 @@
     "typical_portion_g": 80.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 320.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "quinoa",
@@ -2885,7 +3621,14 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "altramuz",
@@ -2913,7 +3656,13 @@
     "typical_portion_g": 40.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 160.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "alubia_blanca",
@@ -2938,7 +3687,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "alubia_negra",
@@ -2963,7 +3718,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "alubia_pinta",
@@ -2988,7 +3749,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "alubia_roja",
@@ -3013,7 +3780,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "garbanzo",
@@ -3038,7 +3811,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "guisante_partido",
@@ -3063,7 +3842,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "haba",
@@ -3088,7 +3873,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "Alto contenido en fibra: USDA aplica un factor calórico menor para la fibra (~2 kcal/g) que el de 4 kcal/g de otros carbohidratos, lo que reduce la energía total por debajo de 4P+4C+9G."
+    "energy_note": "Alto contenido en fibra: USDA aplica un factor calórico menor para la fibra (~2 kcal/g) que el de 4 kcal/g de otros carbohidratos, lo que reduce la energía total por debajo de 4P+4C+9G.",
+    "max_portion_g": 400.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "lenteja",
@@ -3113,7 +3904,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "soja_seca",
@@ -3140,7 +3937,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "bacon",
@@ -3162,7 +3965,14 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 60.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": 2
   },
   {
     "id": "conejo",
@@ -3184,7 +3994,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "higado_vacuno",
@@ -3206,7 +4022,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 100.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": 1
   },
   {
     "id": "jamon_cocido",
@@ -3228,7 +4050,16 @@
     "typical_portion_g": 50.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 60.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": 2
   },
   {
     "id": "jamon_curado",
@@ -3250,7 +4081,16 @@
     "typical_portion_g": 40.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 60.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": 2
   },
   {
     "id": "lomo_cerdo",
@@ -3272,7 +4112,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "muslo_pollo",
@@ -3294,7 +4140,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pato",
@@ -3316,7 +4168,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pavo_picado",
@@ -3338,7 +4196,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pechuga_pavo",
@@ -3360,7 +4224,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pechuga_pollo",
@@ -3382,7 +4252,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pierna_cerdo",
@@ -3404,7 +4280,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pierna_cordero",
@@ -3426,7 +4308,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "redondo_ternera",
@@ -3448,7 +4336,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "salchicha_cerdo",
@@ -3470,7 +4364,14 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 60.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": 2
   },
   {
     "id": "solomillo_ternera",
@@ -3492,7 +4393,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "ternera_filete",
@@ -3514,7 +4421,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "ternera_picada",
@@ -3536,7 +4449,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 600.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "almendra",
@@ -3563,7 +4482,15 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "anacardo",
@@ -3590,7 +4517,15 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "avellana",
@@ -3617,7 +4552,15 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "cacahuete",
@@ -3645,7 +4588,15 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "coco_pulpa",
@@ -3672,7 +4623,14 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "mantequilla_cacahuete",
@@ -3700,7 +4658,14 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 40.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "nuez",
@@ -3727,7 +4692,15 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "nuez_brasil",
@@ -3754,7 +4727,15 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "nuez_macadamia",
@@ -3781,7 +4762,15 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pinones",
@@ -3808,7 +4797,13 @@
     "typical_portion_g": 15.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 30.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pipas_calabaza",
@@ -3833,7 +4828,16 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 40.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pipas_girasol",
@@ -3858,7 +4862,16 @@
     "typical_portion_g": 20.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 40.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pistacho",
@@ -3885,7 +4898,15 @@
     "typical_portion_g": 25.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 50.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "semilla_chia",
@@ -3910,7 +4931,14 @@
     "typical_portion_g": 15.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 25.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "semilla_lino",
@@ -3935,7 +4963,14 @@
     "typical_portion_g": 15.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 25.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "sesamo",
@@ -3960,7 +4995,13 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 15.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "edamame",
@@ -3987,7 +5028,15 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 250.0,
+    "meal_slots": [
+      "mid_morning",
+      "snack",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "harina_soja",
@@ -4014,7 +5063,10 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 75.0,
+    "meal_slots": [],
+    "weekly_max": null
   },
   {
     "id": "proteina_soja_aislada",
@@ -4041,7 +5093,14 @@
     "typical_portion_g": 30.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 75.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "tempeh",
@@ -4068,7 +5127,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 250.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "tofu_firme",
@@ -4095,7 +5160,14 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 250.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "tofu_sedoso",
@@ -4122,7 +5194,14 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 250.0,
+    "meal_slots": [
+      "breakfast",
+      "mid_morning",
+      "snack"
+    ],
+    "weekly_max": null
   },
   {
     "id": "acelga",
@@ -4147,7 +5226,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "ajo",
@@ -4172,7 +5257,13 @@
     "typical_portion_g": 10.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 20.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "alcachofa",
@@ -4197,7 +5288,13 @@
     "typical_portion_g": 120.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "apio",
@@ -4222,7 +5319,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 120.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "berenjena",
@@ -4247,7 +5350,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "boniato",
@@ -4272,7 +5381,13 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "brocoli",
@@ -4297,7 +5412,13 @@
     "typical_portion_g": 120.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "calabacin",
@@ -4322,7 +5443,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "calabaza",
@@ -4347,7 +5474,13 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "cebolla",
@@ -4372,7 +5505,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 120.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "champinon",
@@ -4397,7 +5536,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "col",
@@ -4422,7 +5567,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "coliflor",
@@ -4447,7 +5598,13 @@
     "typical_portion_g": 120.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "endibia",
@@ -4472,7 +5629,13 @@
     "typical_portion_g": 80.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 160.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "esparrago",
@@ -4497,7 +5660,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "espinaca",
@@ -4522,7 +5691,13 @@
     "typical_portion_g": 80.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 160.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "guisante",
@@ -4547,7 +5722,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "judia_verde",
@@ -4572,7 +5753,13 @@
     "typical_portion_g": 120.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 240.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "lechuga",
@@ -4597,7 +5784,13 @@
     "typical_portion_g": 80.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 160.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "nabo",
@@ -4622,7 +5815,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "patata",
@@ -4647,7 +5846,13 @@
     "typical_portion_g": 200.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 500.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pepino",
@@ -4672,7 +5877,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pimiento_rojo",
@@ -4697,7 +5908,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "pimiento_verde",
@@ -4722,7 +5939,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "puerro",
@@ -4747,7 +5970,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "rabanito",
@@ -4772,7 +6001,13 @@
     "typical_portion_g": 60.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 120.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "remolacha",
@@ -4797,7 +6032,13 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "rucula",
@@ -4822,7 +6063,13 @@
     "typical_portion_g": 40.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 80.0,
+    "meal_slots": [
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "tomate",
@@ -4847,7 +6094,14 @@
     "typical_portion_g": 150.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña."
+    "energy_note": "USDA FoodData Central calcula la energía con factores de Atwater específicos de este alimento (no los genéricos 4-4-9); en alimentos de baja densidad calórica esa diferencia se amplifica en términos relativos aunque la diferencia absoluta es pequeña.",
+    "max_portion_g": 300.0,
+    "meal_slots": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "weekly_max": null
   },
   {
     "id": "zanahoria",
@@ -4872,6 +6126,14 @@
     "typical_portion_g": 100.0,
     "unit_grams": null,
     "unit_name_es": null,
-    "energy_note": null
+    "energy_note": null,
+    "max_portion_g": 200.0,
+    "meal_slots": [
+      "mid_morning",
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "weekly_max": null
   }
 ]

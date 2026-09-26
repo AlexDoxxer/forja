@@ -89,6 +89,7 @@ def _make_food(food_id: str) -> Food:
         diet_types=(DietType.omnivore,),
         macro_role=FoodMacroRole.produce,
         typical_portion_g=100,
+        max_portion_g=1000.0,
     )
 
 
@@ -105,14 +106,42 @@ def test_ensure_unique_ids_accepts_unique() -> None:
 
 # --- B6: auditoría de alérgenos (F1b, Reglamento (UE) 1169/2011) ------------------------------
 _GLUTEN_FOODS = (
-    "avena bulgur cebada_perlada centeno_grano cuscus harina_trigo pasta pasta_integral "
-    "pan_blanco pan_centeno pan_integral pan_pita panecillo bagel muffin_ingles cerveza "
-    "galleta_salada pan_crujiente_centeno tortita_trigo"
-).split()
+    "avena",
+    "bulgur",
+    "cebada_perlada",
+    "centeno_grano",
+    "cuscus",
+    "harina_trigo",
+    "pasta",
+    "pasta_integral",
+    "pan_blanco",
+    "pan_centeno",
+    "pan_integral",
+    "pan_pita",
+    "panecillo",
+    "bagel",
+    "muffin_ingles",
+    "cerveza",
+    "galleta_salada",
+    "pan_crujiente_centeno",
+    "tortita_trigo",
+)
 _TREE_NUT_FOODS = (
-    "almendra avellana nuez nuez_brasil nuez_macadamia anacardo pistacho pinones coco_pulpa "
-    "aceite_coco leche_almendra cacahuete mantequilla_cacahuete altramuz"
-).split()
+    "almendra",
+    "avellana",
+    "nuez",
+    "nuez_brasil",
+    "nuez_macadamia",
+    "anacardo",
+    "pistacho",
+    "pinones",
+    "coco_pulpa",
+    "aceite_coco",
+    "leche_almendra",
+    "cacahuete",
+    "mantequilla_cacahuete",
+    "altramuz",
+)
 _PEANUT_FOODS = ("cacahuete", "mantequilla_cacahuete", "altramuz")
 
 

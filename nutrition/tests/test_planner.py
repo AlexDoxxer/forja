@@ -57,6 +57,9 @@ def _food(
     unit_grams: float | None = None,
     unit_name_es: str | None = None,
     typical_portion_g: float = 100.0,
+    max_portion_g: float = 1000.0,
+    meal_slots: tuple[MealSlot, ...] = tuple(MealSlot),
+    weekly_max: int | None = None,
 ) -> Food:
     return Food(
         id=food_id,
@@ -70,6 +73,9 @@ def _food(
         allergens=allergens,
         macro_role=macro_role,
         typical_portion_g=typical_portion_g,
+        max_portion_g=max_portion_g,
+        meal_slots=meal_slots,
+        weekly_max=weekly_max,
         unit_grams=unit_grams,
         unit_name_es=unit_name_es,
     )
@@ -309,6 +315,7 @@ def test_build_meal_produces_at_least_one_item() -> None:
         fat_target=20.0,
         carbs_target=60.0,
         rounding=TABLES.rounding,
+        fat_max_pct=TABLES.fat.max_pct_kcal,
     )
     assert len(meal.items) >= 1
     assert meal.totals.kcal >= 0
@@ -342,6 +349,7 @@ def test_build_meal_falls_back_to_minimum_ration_when_everything_rounds_to_zero(
         fat_target=0.001,
         carbs_target=0.001,
         rounding=TABLES.rounding,
+        fat_max_pct=TABLES.fat.max_pct_kcal,
     )
     assert len(meal.items) == 1
     assert meal.items[0].food_id == "condimento_potente"
@@ -451,17 +459,43 @@ def test_plan_week_only_uses_foods_matching_diet_type() -> None:
                 assert DietType.vegan in food.diet_types
 
 
-def test_plan_week_flags_tolerance_not_met_when_a_day_drifts() -> None:
-    # Dieta vegana + alergia a frutos secos reduce mucho el catálogo elegible para "fat" y
-    # empuja la desviación de grasa más allá de la tolerancia en al menos un día (observado
-    # de forma determinista con esta semilla).
-    nutrition_input = make_input(
-        diet_type=DietType.vegan,
-        allergens=(Allergen.tree_nuts,),
-        goal=NutritionGoal.maintain,
-        seed=42,
-    )
-    outcome = plan_week(nutrition_input, MONDAY)
+def _flag_codes(
+    monkeypatch: pytest.MonkeyPatch, deviation: MacroDeviation
+) -> set[NutritionNoticeCode]:
+    monkeypatch.setattr(planner_module, "deviation_for", lambda *_args, **_kwargs: deviation)
+    outcome = plan_week(make_input(seed=1), MONDAY)
+    assert outcome.plan is not None
+    return {n.code for n in outcome.plan.notices}
+
+
+def test_plan_week_flags_tolerance_not_met_when_kcal_drifts(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    deviation = MacroDeviation(kcal=0.2, protein=0.0, fat=0.0, carbs=0.0)
+    assert NutritionNoticeCode.tolerance_not_met in _flag_codes(monkeypatch, deviation)
+
+
+def test_plan_week_flags_tolerance_not_met_when_protein_drifts(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    deviation = MacroDeviation(kcal=0.0, protein=-0.3, fat=0.0, carbs=0.0)
+    assert NutritionNoticeCode.tolerance_not_met in _flag_codes(monkeypatch, deviation)
+
+
+def test_plan_week_does_not_flag_fat_or_carbs_deviation_alone(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    deviation = MacroDeviation(kcal=0.0, protein=0.0, fat=0.9, carbs=0.9)
+    assert NutritionNoticeCode.tolerance_not_met not in _flag_codes(monkeypatch, deviation)
+
+
+def test_plan_week_flags_tolerance_not_met_when_fat_ceiling_is_exceeded(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(planner_module, "_fat_over_ceiling", lambda *_args: True)
+    monkeypatch.setattr(planner_module, "_DAY_ATTEMPTS_FAT_CEILING", 2)
+    monkeypatch.setattr(planner_module, "_DAY_ATTEMPTS", 1)
+    outcome = plan_week(make_input(seed=1), MONDAY)
     assert outcome.plan is not None
     codes = {n.code for n in outcome.plan.notices}
     assert NutritionNoticeCode.tolerance_not_met in codes

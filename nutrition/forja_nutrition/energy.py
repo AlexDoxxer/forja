@@ -47,8 +47,9 @@ NOTICE_MESSAGES_ES: dict[NutritionNoticeCode, str] = {
         "Hemos asegurado un mínimo de grasa saludable en tu objetivo diario."
     ),
     NutritionNoticeCode.tolerance_not_met: (
-        "Algún día del plan se aleja algo más de lo habitual del objetivo calórico o de "
-        "macros; sigue siendo un plan equilibrado en conjunto."
+        "Algún día del plan queda un poco por encima o por debajo de tu objetivo de calorías "
+        "o proteína, o cerca del límite de grasa; es normal y el conjunto de la semana sigue "
+        "siendo equilibrado."
     ),
     NutritionNoticeCode.swap_macros_adjusted: (
         "Al intercambiar el alimento hemos ajustado la cantidad para mantener los "
