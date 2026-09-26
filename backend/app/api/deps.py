@@ -5,14 +5,16 @@ from datetime import UTC, datetime, timedelta
 from typing import Annotated, Final
 
 from fastapi import Depends, Request, Response
+from forja_engine import Tables
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings
-from app.core.errors import ProblemError, forbidden, unauthenticated
+from app.core.errors import forbidden, unauthenticated
 from app.db.session import get_db
 from app.models.user import AuthSession, User
 from app.security.ratelimit import RateLimiter
+from app.services.catalog_cache import CatalogCache
 from app.security.tokens import (
     SESSION_COOKIE,
     client_ip,
@@ -107,5 +109,15 @@ async def require_admin(auth: CurrentAuth) -> User:
 AdminUser = Annotated[User, Depends(require_admin)]
 
 
-def problem_or(status: int, code: str, detail: str) -> ProblemError:
-    return ProblemError(status, code, detail)
+def get_catalog(request: Request) -> CatalogCache:
+    cache: CatalogCache = request.app.state.catalog
+    return cache
+
+
+def get_tables(request: Request) -> Tables:
+    tables: Tables = request.app.state.tables
+    return tables
+
+
+Catalog = Annotated[CatalogCache, Depends(get_catalog)]
+EngineTables = Annotated[Tables, Depends(get_tables)]
