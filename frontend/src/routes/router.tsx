@@ -1,5 +1,6 @@
 import { createRootRoute, createRoute, createRouter, lazyRouteComponent } from "@tanstack/react-router";
 
+import { SessionRoute, SessionSummaryRoute } from "../features/session/SessionRoute";
 import { ProfileRoute } from "./ProfileRoute";
 import { ProgramsRoute } from "./ProgramsRoute";
 import { ProgressRoute } from "./ProgressRoute";
@@ -69,7 +70,44 @@ const profileRoute = createRoute({
   component: ProfileRoute,
 });
 
+// Parte B (F2): reproductor de sesión, resumen, nutrición y administración.
+const sessionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/sesion",
+  component: SessionRoute,
+});
+
+const sessionSummaryRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/sesion/resumen/$uuid",
+  component: SessionSummaryRoute,
+});
+
+const nutritionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/nutricion",
+  component: lazyRouteComponent(() => import("./NutritionRoute"), "NutritionRoute"),
+});
+
+const adminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/admin",
+  component: lazyRouteComponent(() => import("./AdminRoute"), "AdminRoute"),
+});
+
+// Parte B: inicio de sesión (la guarda de sesión vive en `RootLayout` → `AuthGate`).
+const loginRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/login",
+  component: lazyRouteComponent(() => import("../features/auth/LoginScreen"), "LoginScreen"),
+});
+
 const routeTree = rootRoute.addChildren([
+  loginRoute,
+  adminRoute,
+  nutritionRoute,
+  sessionRoute,
+  sessionSummaryRoute,
   todayRoute,
   programsRoute,
   libraryRoute,
