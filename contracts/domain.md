@@ -1,4 +1,4 @@
-# Modelo de dominio de Forja · contrato v1.0.0
+# Modelo de dominio de Forja · contrato v1.1.0
 
 > Contrato compartido entre `ingesta-datos`, `motor-rutinas`, `motor-nutricion`,
 > `backend-api` y `frontend-ui`. Fuente: MASTER_PROMPT §5–§9. Cambios **solo** vía
@@ -73,11 +73,11 @@ Todas son `StrEnum` en Python y `enum` en OpenAPI con el mismo nombre de esquema
 | `SessionStatus` | `in_progress`, `completed`, `abandoned` | |
 | `RecordKind` | `e1rm`, `heaviest_set` (mejor peso×reps), `volume` (mayor volumen en una sesión) | |
 | `SuggestionKind` | `first_time`, `increase_load`, `increase_reps`, `harder_variant`, `hold`, `decrease_load` | §7.6. |
-| `PlanWarningCode` | `beginner_high_frequency`, `recovery_day_enforced`, `slot_relaxed`, `slot_dropped`, `time_budget_exceeded`, `main_exercise_trimmed`, `volume_out_of_range`, `session_group_cap`, `rest_below_minimum`, `empty_day`, `mobility_in_main_block`, `equipment_insufficient`, `avoided_muscle_substituted`, `deprecated_exercise` | Códigos estables; el texto va en `message_es`. |
+| `PlanWarningCode` | `beginner_high_frequency`, `recovery_day_enforced`, `slot_relaxed`, `slot_dropped`, `time_budget_exceeded`, `main_exercise_trimmed`, `volume_out_of_range`, `session_group_cap`, `rest_below_minimum`, `empty_day`, `mobility_in_main_block`, `equipment_insufficient`, `avoided_muscle_substituted`, `deprecated_exercise`, `excluded_exercise`, `avoided_exercise`, `unknown_exercise` | Códigos estables; el texto va en `message_es`. |
 | `NutritionGoal` | `lose` (perder grasa), `maintain` (mantener), `gain` (ganar), `recomp` (recomposición) | |
 | `NutritionPace` | `gentle` (suave), `standard` (estándar) | |
 | `DietType` | `omnivore`, `pescatarian`, `vegetarian`, `vegan` | |
-| `Allergen` | `gluten`, `lactose`, `tree_nuts` (frutos secos), `egg`, `fish`, `shellfish` (marisco), `soy` | |
+| `Allergen` | `gluten`, `lactose`, `tree_nuts` (frutos secos), `egg`, `fish`, `shellfish` (marisco), `soy`, `peanuts` (cacahuete) | |
 | `MealSlot` | `breakfast` (desayuno), `mid_morning` (media mañana), `lunch` (comida), `snack` (merienda), `dinner` (cena) | Plantillas en `specs/nutrition.yaml#meal_templates`. |
 | `FoodCategory` | `fruits`, `vegetables`, `legumes`, `grains`, `bakery`, `dairy`, `eggs`, `meat`, `fish_seafood`, `plant_protein`, `nuts_seeds`, `fats_oils`, `condiments`, `beverages` | Orden = orden de la lista de la compra. |
 | `FoodMacroRole` | `protein`, `carb`, `produce`, `fat` | Papel en la plantilla mediterránea. |
@@ -134,7 +134,7 @@ Tipos: `uuid` (v7 generado en aplicación), `text`, `citext`, `int`, `numeric(p,
 
 Índices: GIN(`search_vector`), GIN trigram (`name_es gin_trgm_ops`), GIN trigram (`display_name_en gin_trgm_ops`), btree(`movement_pattern`), btree(`equipment_code`), btree(`target_muscle`), btree(`variant_group`).
 
-**`exercise_secondary_muscle`** — PK(`exercise_id`, `muscle_code`).
+**`exercise_secondary_muscle`** — PK(`exercise_id`, `muscle_code`) · `position smallint not null` (0…n-1: orden del dataset tras normalizar y deduplicar; reconstruye `ExerciseCard.secondary_muscles`).
 **`exercise_instruction`** — PK(`exercise_id`, `lang`) · `text text` · `steps jsonb` (array de strings, 4–11 elementos).
 **`exercise_alternative`** — PK(`exercise_id`, `alt_id`) · `score numeric(4,3)` · `rank smallint` (1–8). Precalculada en ingesta (§6.5).
 
@@ -404,8 +404,8 @@ informado). La API responde `422 nutrition_blocked` con `block` si no hay plan.
 
 ## 8. Versionado
 
-- Este contrato es la versión **1.0.0** (`info.version` de `openapi.yaml`); el orquestador
-  lo congela con la etiqueta `contracts-v1`.
+- Este contrato es la versión **1.1.0** (`info.version` de `openapi.yaml`); el orquestador
+  lo congela con la etiqueta `contracts-v1` (1.0.0); 1.1.0 (CC-0001..0003) se etiqueta `contracts-v1.1`.
 - Cambios compatibles (campo opcional nuevo, valor de enumeración nuevo en una salida,
   endpoint nuevo) ⇒ versión menor. Incompatibles ⇒ versión mayor y ADR.
 - Toda propuesta se registra en `docs/CONTRACT_CHANGES.md`; al aprobarla, el arquitecto

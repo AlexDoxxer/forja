@@ -46,7 +46,7 @@ contrato en silencio.**
   por el orquestador (tarea F0-ORQ-01).
 
 ### CC-0001 · Orden estable de `exercise_secondary_muscle`
-- **Estado**: propuesto
+- **Estado**: aprobado
 - **Propone**: ingesta-datos · **Fecha**: 2026-09-24
 - **Afecta a**: `contracts/domain.md` §4.1 (`exercise_secondary_muscle`)
 - **Motivo**: `ExerciseCard.secondary_muscles` exige «sin duplicados, orden estable»
@@ -58,10 +58,10 @@ contrato en silencio.**
   `backend/app/models/catalog.py` y en `forja-ingest load`.
 - **Compatibilidad**: compatible (columna nueva en una tabla que solo escribe la ingesta; no
   cambia la API).
-- **Resolución**: _pendiente del arquitecto_.
+- **Resolución**: Aprobado; columna `position` añadida a `domain.md` §4.1. Versión resultante **1.1.0**, 2026-09-26 (arquitecto). Avisados: ingesta-datos/backend-api (CC-0001), motor-nutricion (CC-0002), motor-rutinas (CC-0003) en `docs/handoffs/f2-arquitecto.md`.
 
 ### CC-0002 · Alérgeno `peanuts` en `Allergen`
-- **Estado**: propuesto
+- **Estado**: aprobado
 - **Propone**: motor-nutricion · **Fecha**: 2026-09-25
 - **Afecta a**: enumeración `Allergen` (`contracts/domain.md` §3, `contracts/openapi.yaml`), `NutritionInput.allergens`, `Food.allergens`.
 - **Motivo**: MASTER_PROMPT §8.1 lista «frutos secos» como alérgeno, pero el cacahuete es una
@@ -72,10 +72,10 @@ contrato en silencio.**
   en `cacahuete` y `mantequilla_cacahuete` de `foods.json`. Interfaz de usuario: «cacahuete».
 - **Compatibilidad**: compatible (valor de enumeración nuevo en entrada y salida; los clientes
   existentes no lo envían). Requiere versión menor.
-- **Resolución**: pendiente del arquitecto.
+- **Resolución**: Aprobado; `peanuts` añadido a `Allergen` en `domain.md` y `openapi.yaml`. Versión resultante **1.1.0**, 2026-09-26 (arquitecto). Avisados: ingesta-datos/backend-api (CC-0001), motor-nutricion (CC-0002), motor-rutinas (CC-0003) en `docs/handoffs/f2-arquitecto.md`.
 
 ### CC-0003 · Códigos de aviso específicos para ejercicios excluidos, evitados o inexistentes
-- **Estado**: propuesto
+- **Estado**: aprobado
 - **Propone**: motor-rutinas · **Fecha**: 2026-09-25
 - **Afecta a**: `PlanWarningCode` (`contracts/openapi.yaml`, `contracts/domain.md` §3 y §5.3)
 - **Motivo**: `validate_plan` debe detectar ejercicios excluidos, con músculo objetivo o
@@ -87,4 +87,4 @@ contrato en silencio.**
   `avoided_exercise` y `unknown_exercise`. Al aprobarse, el motor los emitirá en
   `forja_engine/ops.py::_exercise_violations` (cambio de una línea por caso).
 - **Compatibilidad**: compatible (valores nuevos en una enumeración de salida ⇒ versión menor).
-- **Resolución**: _pendiente del arquitecto_.
+- **Resolución**: Aprobado; tres códigos añadidos a `PlanWarningCode` en `domain.md` y `openapi.yaml`. Versión resultante **1.1.0**, 2026-09-26 (arquitecto). Avisados: ingesta-datos/backend-api (CC-0001), motor-nutricion (CC-0002), motor-rutinas (CC-0003) en `docs/handoffs/f2-arquitecto.md`.
