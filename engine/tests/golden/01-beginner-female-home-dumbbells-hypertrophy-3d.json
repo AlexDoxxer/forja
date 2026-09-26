@@ -1,6 +1,6 @@
 {
- "engine_version": "0.2.0",
- "tables_hash": "9b0522a74876b46d121e095e9a98607744057030a3d3f2c8cf98548c5e481275",
+ "engine_version": "0.2.1",
+ "tables_hash": "da30efe1f1a2d2b6b1c3e47c0256869e376f610286b6e02abc86778e22bb3e25",
  "seed": 20260923,
  "input": {
   "goal": "hypertrophy",
@@ -432,7 +432,6 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0970",
           "0974"
          ],
          "order": 0,
@@ -600,7 +599,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0970",
+         "exercise_id": "0974",
          "sets": 3,
          "rep_min": 6,
          "rep_max": 10,
@@ -609,10 +608,9 @@
          "target_rir": 3,
          "tempo": "3-0-1-0",
          "rest_s": 150,
-         "load_hint": "Ajusta la asistencia para dejar 3 repeticiones en reserva",
+         "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0974",
           "1013"
          ],
          "order": 0,
@@ -1188,7 +1186,6 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0970",
           "0974"
          ],
          "order": 0,
@@ -1356,7 +1353,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0970",
+         "exercise_id": "0974",
          "sets": 3,
          "rep_min": 6,
          "rep_max": 10,
@@ -1365,10 +1362,9 @@
          "target_rir": 3,
          "tempo": "3-0-1-0",
          "rest_s": 150,
-         "load_hint": "Ajusta la asistencia para dejar 3 repeticiones en reserva",
+         "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0974",
           "1013"
          ],
          "order": 0,
@@ -1944,7 +1940,6 @@
          "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0970",
           "0974"
          ],
          "order": 0,
@@ -2112,7 +2107,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0970",
+         "exercise_id": "0974",
          "sets": 3,
          "rep_min": 6,
          "rep_max": 10,
@@ -2121,10 +2116,9 @@
          "target_rir": 3,
          "tempo": "3-0-1-0",
          "rest_s": 150,
-         "load_hint": "Ajusta la asistencia para dejar 3 repeticiones en reserva",
+         "load_hint": "Carga que te deje 3 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0974",
           "1013"
          ],
          "order": 0,
@@ -2700,7 +2694,6 @@
          "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0970",
           "0974"
          ],
          "order": 0,
@@ -2868,7 +2861,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0970",
+         "exercise_id": "0974",
          "sets": 3,
          "rep_min": 6,
          "rep_max": 10,
@@ -2877,10 +2870,9 @@
          "target_rir": 2,
          "tempo": "3-0-1-0",
          "rest_s": 150,
-         "load_hint": "Ajusta la asistencia para dejar 2 repeticiones en reserva",
+         "load_hint": "Carga que te deje 2 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0974",
           "1013"
          ],
          "order": 0,
@@ -3456,7 +3448,6 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0970",
           "0974"
          ],
          "order": 0,
@@ -3624,7 +3615,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0970",
+         "exercise_id": "0974",
          "sets": 2,
          "rep_min": 6,
          "rep_max": 10,
@@ -3636,7 +3627,6 @@
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
          "alternatives": [
-          "0974",
           "1013"
          ],
          "order": 0,
@@ -3949,7 +3939,7 @@
  ],
  "rationale_es": [
   "Hemos elegido un reparto de cuerpo completo porque entrenas 3 días por semana y tu nivel es principiante.",
-  "Por el énfasis en tren inferior y glúteo hemos dado más volumen a cuádriceps, isquiotibiales y glúteos, manteniendo el resto por encima de su mínimo de mantenimiento.",
+  "Por el énfasis en tren inferior y glúteo hemos dado más volumen a cuádriceps, isquiotibiales y glúteos, manteniendo el resto por encima de su mínimo de mantenimiento. Como estás empezando, el énfasis se aplica con la elección de ejercicios, no con series extra.",
   "Para hipertrofia, los ejercicios principales van a 6-10 repeticiones con 2 min-3 min de descanso y dejando algunas repeticiones en reserva; los accesorios usan rangos algo más altos.",
   "El mesociclo dura 5 semanas: 4 de acumulación, en las que las repeticiones en reserva bajan poco a poco, y una última de descarga con el 55 % de las series para recuperarte. Como estás empezando, la progresión es lineal: mismas series y un poco más de carga o repeticiones cada semana.",
   "Cada sesión está ajustada a unos 45 minutos, incluyendo calentamiento y vuelta a la calma.",

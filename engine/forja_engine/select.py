@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from forja_engine.models import (
     ExerciseCard,
     ExerciseRole,
+    Experience,
     GeneratorInput,
     Goal,
     Laterality,
@@ -98,6 +99,7 @@ class Selector:
         if lumbar:
             self.avoid_patterns.add(MovementPattern.HINGE)
         fixture_gated = inp.equipment.preset in rules.fixture_gated.presets
+        bar_gated = inp.equipment.preset in rules.bar_gated.presets
         self.demo_bonus = tables.sex_modifiers.for_sex(inp.sex).demo_variant_bonus
         self.usable: dict[MovementPattern, list[ExerciseCard]] = {}
         self.available: dict[MovementPattern, list[ExerciseCard]] = {}
@@ -109,6 +111,7 @@ class Selector:
                 or card.target_muscle in inp.avoid_muscles
                 or card.movement_pattern in self.avoid_patterns
                 or self._gated(card)
+                or (bar_gated and rules.bar_gated.matches(card))
                 or (lumbar and rules.lumbar_avoid.matches(card))
             ):
                 continue
@@ -182,6 +185,12 @@ class Selector:
                     or card.variant_group in usage.day_variants
                     or (not difficulty_relaxed and card.difficulty > cap)
                     or (needs_compound and card.mechanic is Mechanic.ISOLATION)
+                    or (
+                        slot.role is ExerciseRole.MAIN
+                        and self.inp.goal is Goal.STRENGTH
+                        and self.inp.experience is Experience.ADVANCED
+                        and card.id in self.rules.advanced_strength_main_excluded_ids
+                    )
                     or (
                         slot.role is ExerciseRole.CARDIO
                         and card.equipment_code not in recovery.cardio_equipment_any
