@@ -4,8 +4,9 @@
   semana (acumulativa) mientras quepa en el tope semanal, en 10 series/grupo/sesión y en el
   presupuesto de tiempo. Principiantes: progresión lineal, sin series extra ni ondulación.
 - Descarga (última semana): ``volume_ratio`` de las series, RIR fijo y cargas al 90 %.
-- Fuerza (intermedio/avanzado): ondulación diaria pesado/medio en los ``main``; las semanas
-  con RIR ≤ 1 se marcan como ``intensification``.
+- Fuerza (intermedio/avanzado): ondulación diaria pesado/medio solo en los ``main`` que son
+  compuestos con carga externa (B4): día pesado 3-5 repeticiones y RIR ≥ 2 en intermedios, día
+  medio 4-7; las semanas con RIR ≤ 1 se marcan como ``intensification``.
 """
 
 import math
@@ -24,7 +25,7 @@ from forja_engine.models import (
     WeekPhase,
 )
 from forja_engine.prescribe import clamp, load_hint, working_rir
-from forja_engine.tables import Tables
+from forja_engine.tables import StrengthUndulation, Tables
 from forja_engine.timefit import day_seconds, limit_seconds
 from forja_engine.volume import Credits, GroupTarget, blocks_volume
 
@@ -46,6 +47,17 @@ def undulation_enabled(inp: GeneratorInput, tables: Tables) -> bool:
         inp.goal is Goal.STRENGTH
         and inp.experience in tables.periodization.strength_undulation.enabled_for
     )
+
+
+def undulated_reps(
+    reps: tuple[int, int], *, heavy: bool, undulation: StrengthUndulation
+) -> tuple[int, int]:
+    """Rango de repeticiones de un día pesado (con suelo ``min_reps``) o medio."""
+    shift = undulation.heavy_day.reps_shift if heavy else undulation.medium_day.reps_shift
+    low = reps[0] + shift
+    if heavy:
+        low = max(undulation.heavy_day.min_reps, low)
+    return low, max(low, reps[1] + shift)
 
 
 def linear_beginner(inp: GeneratorInput, tables: Tables) -> bool:
@@ -76,11 +88,15 @@ class _Periodizer:
         self.cap = tables.volume_targets.max_effective_sets_per_group_per_session
         self.target_credit = tables.volume_targets.set_credit.target
         self.extra_cap = tables.engine_rules.allocation.accumulation_extra_cap
+        self.from_week = tables.engine_rules.allocation.accumulation_extra_from_week
         training = [d.index for d in base if not d.is_recovery]
         self.heavy_days = {index for n, index in enumerate(training) if n % 2 == 0}
 
     # ----------------------------------------------------------- series extra
-    def add_extra_sets(self, days: list[DraftDay]) -> None:
+    def add_extra_sets(self, days: list[DraftDay], *, late: bool) -> None:
+        """+1 serie por grupo; solo desde la semana ``accumulation_extra_from_week`` se puede
+        superar el máximo de la tabla de prescripción (``late``)."""
+        extra_cap = self.extra_cap if late else 0
         accumulation = self.periodization.phases.accumulation
         for group in VolumeGroup:
             ceiling = self.targets[group].target_max * accumulation.cap_ratio_of_max
@@ -97,7 +113,10 @@ class _Periodizer:
                             and exercise.rx_role in SLOTTED_ROLES
                             and (group, self.target_credit) in self.credits_of(exercise.exercise_id)
                             and exercise.sets
-                            < role_bounds(exercise.rx_role, self.tables)[1] + self.extra_cap
+                            < role_bounds(
+                                exercise.rx_role, self.inp.goal, self.inp.experience, self.tables
+                            )[1]
+                            + extra_cap
                             and weekly + self.target_credit <= ceiling
                             and self._fits(day, exercise)
                         ):
@@ -164,14 +183,21 @@ class _Periodizer:
         self, exercise: DraftExercise, raw_rir: int, day_index: int, *, undulating: bool
     ) -> None:
         rir = working_rir(self.inp, exercise.rx_role, raw_rir, self.tables)
-        if undulating and exercise.rx_role is ExerciseRole.MAIN:
-            undulation = self.periodization.strength_undulation
+        undulation = self.periodization.strength_undulation
+        if (
+            undulating
+            and exercise.rx_role is ExerciseRole.MAIN
+            and undulation.undulates(exercise.card)
+        ):
             heavy = day_index in self.heavy_days
-            day_rule = undulation.heavy_day if heavy else undulation.medium_day
-            rir = max(day_rule.rir, rir)
+            if heavy:
+                rir = max(undulation.heavy_day.rir_floor[self.inp.experience], rir)
+            else:
+                rir = max(undulation.medium_day.rir, rir)
             if exercise.rep_min is not None and exercise.rep_max is not None:
-                exercise.rep_min = max(1, exercise.rep_min + day_rule.reps_shift)
-                exercise.rep_max = max(exercise.rep_min, exercise.rep_max + day_rule.reps_shift)
+                exercise.rep_min, exercise.rep_max = undulated_reps(
+                    (exercise.rep_min, exercise.rep_max), heavy=heavy, undulation=undulation
+                )
             exercise.notes_es = (
                 "Día pesado: menos repeticiones y más carga."
                 if heavy
@@ -190,7 +216,8 @@ class _Periodizer:
                 weeks.append(self.build_week(index, self.base, deload=True))
                 continue
             if index > 0 and grow:
-                self.add_extra_sets(state)
+                late = index + 1 >= self.from_week and self.inp.experience is not Experience.BEGINNER
+                self.add_extra_sets(state, late=late)
             weeks.append(self.build_week(index, state, deload=False))
         return weeks
 
@@ -224,8 +251,12 @@ def periodization_rationale(inp: GeneratorInput, tables: Tables) -> str:
             " Cada semana de acumulación suma una serie por grupo muscular mientras haya margen."
         )
     if undulation_enabled(inp, tables):
+        undulation = tables.periodization.strength_undulation
+        main_reps = tables.prescription.table[inp.goal]["main"].reps
+        heavy = undulated_reps(main_reps, heavy=True, undulation=undulation)
+        medium = undulated_reps(main_reps, heavy=False, undulation=undulation)
         text += (
-            " Alternamos días pesados (menos repeticiones, más carga) y medios en los ejercicios "
-            "principales."
+            f" Alternamos días pesados ({heavy[0]}-{heavy[1]} repeticiones) y medios "
+            f"({medium[0]}-{medium[1]}) en los ejercicios principales con carga externa."
         )
     return text

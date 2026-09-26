@@ -19,36 +19,86 @@ always_available_equipment: [bodyweight]
 difficulty:
   cap: { beginner: 2, intermediate: 2, advanced: 2 }
   accessory_extra: { beginner: 0, intermediate: 0, advanced: 1 }
+  # B3: la dificultad solo se relaja para avanzados y solo en accesorios; principiante e
+  # intermedio nunca superan el tope.
+  relax_difficulty_for: [advanced]
 
 scoring:
   pattern_exact: 40
   target_group: 25
   staple_in_main: 15
+  staple_in_accessory: 12      # C2: entre cientos de variantes de accesorio se prefieren los básicos
   favorite: 10
   used_other_day: -30
   same_variant_group: -15
   above_difficulty: -10
   unilateral_in_strength_main: -20
-  # Extensión de §7.2 (pendiente de revisión del experto): en slots main se prefiere material
-  # que admite carga progresiva frente a banda o peso corporal cuando ambos están disponibles.
+  # Extensión de §7.2 aprobada en ADR 0012: en slots main se prefiere material que admite carga
+  # progresiva frente a banda o peso corporal cuando ambos están disponibles. Depende del nivel
+  # (loadable_equipment) y no se aplica con objetivo endurance.
   loadable_in_main: 10
-loadable_equipment: [barbell, dumbbell, ez_bar, trap_bar, machine, smith, sled, cable, kettlebell, weighted]
+  # C5: en fuerza, intermedios y avanzados prefieren barra o barra hexagonal en slots main.
+  barbell_in_strength_main: 10
+loadable_equipment:
+  beginner:     [dumbbell, machine, smith, sled, cable, kettlebell]
+  intermediate: [barbell, dumbbell, ez_bar, trap_bar, machine, smith, sled, cable, kettlebell, weighted]
+  advanced:     [barbell, dumbbell, ez_bar, trap_bar, machine, smith, sled, cable, kettlebell, weighted]
+strength_main_preferred_equipment:
+  beginner: []
+  intermediate: [barbell, trap_bar]
+  advanced: [barbell, trap_bar]
+# C2: un slot main de patrón compuesto nunca se rellena con aislamiento (salvo que el patrón
+# esté evitado por el usuario y el hueco se sustituya por uno afín).
+main_requires_compound: true
+
+# Ejercicios que nunca se eligen solos, para ningún nivel (B3), salvo favorite_exercise_ids.
+# Coincidencia por palabra completa en display_name_en (con plural en «s»).
+skill_gated:
+  name_en_any: ["handstand", "planche", "maltese", "front lever", "back lever", "iron cross",
+                "muscle up", "muscle-up", "kipping", "dragon flag", "l-sit", "v-sit",
+                "skin the cat", "pistol", "one leg squat", "clean", "snatch", "jerk",
+                "push press", "thruster", "depth jump", "drop push", "clap push", "plyo push",
+                "turkish get up"]
+  ids: []
+# Instrucciones que no coinciden con el nombre: no se auto-seleccionan (mismo tratamiento).
+low_quality_ids: ["0100", "0543", "0777"]
+# Ejercicios de riesgo elevado por defecto (B8): fuera de la selección, calentamiento incluido,
+# salvo favorite_exercise_ids.
+contraindicated_default:
+  name_en_any: ["behind neck", "behind head", "rear pull-up", "wide grip rear", "upright row"]
+  ids: ["0086", "0747", "0772", "0788", "1325", "1367", "0670", "1718", "1748",
+        "0119", "0120", "0121", "0123", "0246", "0363", "0437", "0775", "1765"]
+# Ejercicios que exigen estructura fija (barra de dominadas, banco, anillas, polea...): se
+# excluyen con los presets sin ella (B5). Con home_dumbbells, full_gym y custom se permiten.
+fixture_gated:
+  presets: [bodyweight, home_bands]
+  name_en_any: ["pull-up", "pull up", "chin-up", "chin up", "hanging", "dip", "ring",
+                "suspended", "suspension", "straps", "parallel bars", "straight bar",
+                "toes to bar", "on bench", "bench", "hyperextension", "glute-ham",
+                "donkey", "box jump", "captains chair"]
+  ids: ["2400"]
+# C16: con lower_back entre los músculos evitados también se excluyen la bisagra y estos nombres.
+lumbar_avoid:
+  name_en_any: ["bent over", "bent-over", "good morning", "deadlift", "hyperextension",
+                "back extension", "jefferson", "zercher", "stiff leg"]
+  ids: []
 
 # Orden de relajación cuando un slot no tiene candidatos (acumulativo).
-relaxation_order: [difficulty, staple, target_group, pattern_affinity]
+relaxation_order: [staple, target_group, pattern_affinity, difficulty]
 # Relajaciones que se comunican con el aviso slot_relaxed (quitar la exigencia de staple es
 # habitual con equipamiento doméstico y solo se explica en rationale_es).
 relaxations_warned: [difficulty, target_group, pattern_affinity]
 max_alternatives: 3
 
 # §7.2 paso 4: límites de series por ejercicio al repartir el volumen semanal.
+# B2: main y accesorio salen de prescription.yaml ([sets.min, sets.max] del objetivo, nunca por
+# debajo de min_sets_per_exercise; los principiantes van siempre en el mínimo del rango).
 allocation:
-  bounds_by_role:
-    main: [2, 5]
-    accessory: [1, 4]
-    core: [1, 4]
+  core_bounds: [1, 4]
+  min_sets_per_exercise: 2
   tolerance_sets: 0.5
-  accumulation_extra_cap: 1   # la acumulación puede superar el máximo por ejercicio en 1 serie
+  accumulation_extra_cap: 1   # la acumulación puede superar el máximo por ejercicio en 1 serie...
+  accumulation_extra_from_week: 3   # ...solo desde esta semana (1 = primera) y no en principiantes
   volume_warning_ratio: 0.15
 
 # Grupo de volumen de un slot añadido por énfasis (split-templates.yaml#emphasis_overrides).
@@ -112,12 +162,15 @@ antagonist_pairs:
 warmup:
   cardio_share: 0.5          # fracción de warmup_minutes para el cardio suave inicial
   specific_items: 1          # ejercicio ligero del patrón del primer slot principal
+  cardio_rotation: true      # C7: el cardio de calentamiento rota entre los disponibles
 cooldown:
   items: 2
 finisher:
   long_session_minutes: 75   # a partir de aquí se usa el máximo de cardio_finisher.minutes
 recovery:
-  cardio_minutes: [5, 20]    # recortado a session_minutes - reserve_minutes
+  cardio_minutes: [20, 30]   # recortado a session_minutes - reserve_minutes (C8)
+  cardio_equipment_any: [bike, elliptical, stepmill]   # bajo impacto
+  cardio_ids_any: ["3666", "2311"]                       # caminata
   reserve_minutes: 10
   mobility_sets: 1
   mobility_hold_s: 45

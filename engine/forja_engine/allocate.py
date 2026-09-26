@@ -49,11 +49,22 @@ def base_sets(goal: Goal, role: ExerciseRole, level: Experience, tables: Tables)
     )
 
 
-def role_bounds(role: ExerciseRole, tables: Tables) -> Range:
-    bounds = tables.engine_rules.allocation.bounds_by_role
-    if role is ExerciseRole.MAIN:
-        return bounds["main"]
-    return bounds["core"] if role is ExerciseRole.CORE else bounds["accessory"]
+def role_bounds(role: ExerciseRole, goal: Goal, level: Experience, tables: Tables) -> Range:
+    """Series mínimas y máximas por ejercicio (B2).
+
+    Main y accesorio salen de ``prescription.yaml`` (``[sets.min, sets.max]`` del objetivo,
+    con suelo ``min_sets_per_exercise``); los principiantes quedan fijados en el mínimo del
+    rango. El core usa ``allocation.core_bounds``.
+    """
+    allocation = tables.engine_rules.allocation
+    if role is ExerciseRole.CORE:
+        return allocation.core_bounds
+    rx = tables.prescription.table[goal]["main" if role is ExerciseRole.MAIN else "accessory"]
+    floor = allocation.min_sets_per_exercise
+    low = max(floor, rx.sets[0])
+    if tables.prescription.experience_adjustments[level].sets == "min":
+        return (low, low)
+    return (low, max(low, rx.sets[1]))
 
 
 class _Allocator:
@@ -66,6 +77,8 @@ class _Allocator:
         tables: Tables,
     ) -> None:
         self.tables = tables
+        self.goal = goal
+        self.level = level
         self.targets = targets
         self.cap = tables.volume_targets.max_effective_sets_per_group_per_session
         self.tolerance = tables.engine_rules.allocation.tolerance_sets
@@ -83,8 +96,11 @@ class _Allocator:
                 key = (day.index, slot.slot_index)
                 self.slots[key] = slot
                 self.credits[key] = slot_credits(slot, tables)
-                low, high = role_bounds(slot.role, tables)
+                low, high = self._bounds(slot.role)
                 self._change(key, min(max(base_sets(goal, slot.role, level, tables), low), high))
+
+    def _bounds(self, role: ExerciseRole) -> Range:
+        return role_bounds(role, self.goal, self.level, self.tables)
 
     def _change(self, key: SlotKey, sets: int) -> None:
         delta = sets - self.sets.get(key, 0)
@@ -110,7 +126,7 @@ class _Allocator:
                     key
                     for key in self.slots
                     if self._targets_group(key, group)
-                    and self.sets[key] > role_bounds(self.slots[key].role, self.tables)[0]
+                    and self.sets[key] > self._bounds(self.slots[key].role)[0]
                 ]
                 if not options:
                     break
@@ -126,7 +142,7 @@ class _Allocator:
                     for key in self.slots
                     if key[0] == day_index
                     and any(g is group for g, _ in self.credits[key])
-                    and self.sets[key] > role_bounds(self.slots[key].role, self.tables)[0]
+                    and self.sets[key] > self._bounds(self.slots[key].role)[0]
                 ]
                 if not options:
                     break
@@ -142,7 +158,7 @@ class _Allocator:
                     key
                     for key in self.slots
                     if self._targets_group(key, group)
-                    and self.sets[key] < role_bounds(self.slots[key].role, self.tables)[1]
+                    and self.sets[key] < self._bounds(self.slots[key].role)[1]
                     and self._fits_cap(key)
                 ]
                 if not options:

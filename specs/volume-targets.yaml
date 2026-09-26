@@ -29,6 +29,8 @@ targets:
     advanced:     { default: [10, 14], arms: [6, 10],  calves: [4, 8],  core: [6, 10] }
 # Contribución de una serie a cada grupo
 set_credit: { target: 1.0, relevant_secondary: 0.5 }
+# C3: press y remo aportan de forma real pero parcial a brazos.
+secondary_credit_by_group: { arms: 0.3 }
 max_effective_sets_per_group_per_session: 10
 maintenance_floor_ratio: 0.6   # nunca bajar de 60 % del mínimo por redistribución
 emphasis_multipliers:

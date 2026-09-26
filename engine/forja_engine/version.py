@@ -6,4 +6,4 @@ Cualquier cambio que altere la salida para una misma entrada y semilla DEBE incr
 
 from typing import Final
 
-ENGINE_VERSION: Final[str] = "0.1.1"
+ENGINE_VERSION: Final[str] = "0.2.0"

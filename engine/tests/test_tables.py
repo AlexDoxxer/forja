@@ -132,8 +132,8 @@ BROKEN: list[tuple[str, Mutation, str]] = [
         "cada relajación",
     ),
     ("engine-rules.yaml", _delete(["difficulty", "cap", "advanced"]), "tres niveles"),
-    ("engine-rules.yaml", _delete(["allocation", "bounds_by_role", "core"]), "bounds_by_role"),
-    ("engine-rules.yaml", _set(["allocation", "bounds_by_role", "core"], [5, 1]), "supera"),
+    ("engine-rules.yaml", _delete(["allocation", "core_bounds"]), "core_bounds"),
+    ("engine-rules.yaml", _set(["allocation", "core_bounds"], [5, 1]), "supera"),
     ("engine-rules.yaml", _delete(["progression_loads", "step_kg", "default"]), "step_kg"),
     ("engine-rules.yaml", _set(["progression_loads", "step_kg", "dumbbell"], 0), "step_kg"),
 ]

@@ -44,11 +44,11 @@ def test_cap_enforcement_stops_at_the_minimum_sets() -> None:
     day = DaySpec(0, "custom", "Custom", slots, is_recovery=False, weekday=None)
     targets = {g: GroupTarget(g, 1, 2, 1.5) for g in VolumeGroup}
     sets = allocate_sets([day], targets, Goal.STRENGTH, Experience.ADVANCED, TABLES, circuit=False)
-    assert all(value == 2 for value in sets.values())
+    assert all(value == 4 for value in sets.values())  # mínimo de la tabla de fuerza (B2)
 
 
 def test_beginner_bodyweight_vertical_push_falls_back_to_safer_pattern() -> None:
-    """Solo hay pino (dificultad 3) como empuje vertical: el principiante recibe un patrón afín."""
+    """Solo hay pino como empuje vertical: cae a flexiones con un aviso específico (B3)."""
     inp = make_input(
         equipment=EquipmentSelection(preset=EquipmentPreset.BODYWEIGHT),
         experience=Experience.BEGINNER,
@@ -70,7 +70,7 @@ def test_beginner_bodyweight_vertical_push_falls_back_to_safer_pattern() -> None
         if w.code is PlanWarningCode.SLOT_RELAXED and w.exercise_id == chosen[0].id
     ]
     assert relaxed
-    assert "patrón de movimiento afín" in relaxed[0].message_es
+    assert "sin material no hay un empuje vertical seguro" in relaxed[0].message_es
 
 
 def test_slot_credits_for_groups_without_volume() -> None:

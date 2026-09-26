@@ -25,6 +25,8 @@ from forja_engine.models import (
     ExerciseCard,
     ExerciseRole,
     GeneratorInput,
+    Goal,
+    LoadType,
     MuscleGroup,
     PlanWarning,
     PlanWarningCode,
@@ -39,6 +41,7 @@ from forja_engine.prescribe import (
     prescribe_finisher,
     prescribe_recovery,
     prescribe_warmup_cardio,
+    prescribe_warmup_ramp,
     prescribe_warmup_specific,
     prescribe_working,
 )
@@ -50,7 +53,7 @@ from forja_engine.select import (
 )
 from forja_engine.split import DaySpec, build_days, split_rationale
 from forja_engine.tables import Tables, default_tables
-from forja_engine.timefit import fit_day, pair_supersets
+from forja_engine.timefit import fit_day, order_working_blocks, pair_supersets
 from forja_engine.version import ENGINE_VERSION
 from forja_engine.volume import Credits, card_credits, emphasis_rationale, weekly_targets
 
@@ -166,6 +169,7 @@ class _Builder:
             if self.supersets and not self.circuit:
                 pair_supersets(day, self.tables, self.credits, antagonists_only=False)
         self.warnings += fit_day(day, self.inp.session_minutes, self.tables, self.credits)
+        order_working_blocks(day)
         return day
 
     def _fallback(self, spec: DaySpec, usage: UsageState, seed: int) -> list[DraftExercise]:
@@ -275,14 +279,20 @@ class _Builder:
         items: list[DraftExercise] = []
         cardio = self.selector.warmup_cardio(rng_for(seed, 0, day_index, "warmup"), usage)
         if cardio is not None:
+            usage.use(cardio)
             items.append(prescribe_warmup_cardio(cardio, self.tables))
         if self.tables.engine_rules.warmup.specific_items:
             first = next((e for e in working if e.rx_role is ExerciseRole.MAIN), working[0])
-            specific = self.selector.warmup_specific(
-                first.card.movement_pattern, rng_for(seed, 0, day_index, "warmup-specific"), usage
-            )
-            if specific is not None:
-                items.append(prescribe_warmup_specific(specific, self.inp, self.tables))
+            if self.inp.goal is Goal.STRENGTH and first.card.load_type is LoadType.EXTERNAL:
+                items.append(prescribe_warmup_ramp(first.card, self.tables))
+            else:
+                specific = self.selector.warmup_specific(
+                    first.card.movement_pattern,
+                    rng_for(seed, 0, day_index, "warmup-specific"),
+                    usage,
+                )
+                if specific is not None:
+                    items.append(prescribe_warmup_specific(specific, self.inp, self.tables))
         return items
 
     def build(self) -> ProgramPlan:

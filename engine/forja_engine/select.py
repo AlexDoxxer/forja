@@ -18,7 +18,9 @@ from forja_engine.models import (
     Goal,
     Laterality,
     LoadType,
+    Mechanic,
     MovementPattern,
+    MuscleCode,
     MuscleGroup,
     PlanWarning,
     PlanWarningCode,
@@ -26,20 +28,25 @@ from forja_engine.models import (
 )
 from forja_engine.tables import Relaxation, Tables
 from forja_engine.texts import PATTERN_ES, join_es
+from forja_engine.volume import COMPOUND_PATTERNS, training_group
 
 STRENGTH_ROLES = frozenset({ExerciseRole.MAIN, ExerciseRole.ACCESSORY, ExerciseRole.CORE})
 NON_STRENGTH_ROLES = frozenset({ExerciseRole.MOBILITY, ExerciseRole.CARDIO, ExerciseRole.WARMUP})
 WARMUP_ROLES = frozenset({ExerciseRole.WARMUP, ExerciseRole.CARDIO})
+MOBILITY_ROLES = frozenset({ExerciseRole.MOBILITY, ExerciseRole.WARMUP})
 UNCONSTRAINED_GROUPS = frozenset({MuscleGroup.OTHER, MuscleGroup.CARDIO})
 
 
 def role_compatible(slot_role: ExerciseRole, card_role: ExerciseRole) -> bool:
     """``mobility``/``cardio`` nunca en slots de fuerza; calentamiento admite cardio suave;
-    slots de recuperación, su rol exacto."""
+    movilidad (recuperación activa) admite también ejercicios de calentamiento dinámico; el
+    cardio, su rol exacto."""
     if slot_role in STRENGTH_ROLES:
         return card_role not in NON_STRENGTH_ROLES
     if slot_role is ExerciseRole.WARMUP:
         return card_role in WARMUP_ROLES
+    if slot_role is ExerciseRole.MOBILITY:
+        return card_role in MOBILITY_ROLES
     return card_role is slot_role
 
 
@@ -72,9 +79,6 @@ class Choice:
     relaxed: tuple[Relaxation, ...]
 
 
-BEGINNER_UNSAFE_DIFFICULTY = 3
-
-
 class Selector:
     """Catálogo filtrado por la entrada (equipamiento, exclusiones, evitados, deprecated)."""
 
@@ -88,6 +92,12 @@ class Selector:
         excluded = set(inp.excluded_exercise_ids)
         available = set(inp.equipment.items)
         self.favorites = set(inp.favorite_exercise_ids)
+        rules = self.rules
+        lumbar = MuscleCode.LOWER_BACK in inp.avoid_muscles
+        self.avoid_patterns = set(inp.avoid_patterns)
+        if lumbar:
+            self.avoid_patterns.add(MovementPattern.HINGE)
+        fixture_gated = inp.equipment.preset in rules.fixture_gated.presets
         self.demo_bonus = tables.sex_modifiers.for_sex(inp.sex).demo_variant_bonus
         self.usable: dict[MovementPattern, list[ExerciseCard]] = {}
         self.available: dict[MovementPattern, list[ExerciseCard]] = {}
@@ -97,13 +107,26 @@ class Selector:
                 card.deprecated
                 or card.id in excluded
                 or card.target_muscle in inp.avoid_muscles
-                or card.movement_pattern in inp.avoid_patterns
+                or card.movement_pattern in self.avoid_patterns
+                or self._gated(card)
+                or (lumbar and rules.lumbar_avoid.matches(card))
             ):
                 continue
-            self.group[card.id] = tables.muscle_group(card.target_muscle)
+            self.group[card.id] = training_group(card, tables)
             self.usable.setdefault(card.movement_pattern, []).append(card)
-            if card.equipment_code in available:
+            if card.equipment_code in available and not (
+                fixture_gated and rules.fixture_gated.matches(card)
+            ):
                 self.available.setdefault(card.movement_pattern, []).append(card)
+
+    def _gated(self, card: ExerciseCard) -> bool:
+        """Habilidad avanzada, instrucciones dudosas o riesgo elevado: solo si es favorito."""
+        rules = self.rules
+        return card.id not in self.favorites and (
+            rules.skill_gated.matches(card)
+            or card.id in rules.low_quality_ids
+            or rules.contraindicated_default.matches(card)
+        )
 
     @property
     def is_empty(self) -> bool:
@@ -115,13 +138,20 @@ class Selector:
             cap += self.rules.difficulty.accessory_extra[self.inp.experience]
         return cap
 
-    def _unsafe_for_beginner(self, card: ExerciseCard) -> bool:
-        """Los principiantes nunca reciben pino ni variantes avanzadas de empuje vertical."""
+    def can_relax_difficulty(self, slot: SlotRef) -> bool:
+        """La dificultad solo se relaja en accesorios de avanzados (B3)."""
         return (
-            self.inp.experience is Experience.BEGINNER
-            and card.movement_pattern is MovementPattern.VERTICAL_PUSH
-            and card.equipment_code == "bodyweight"
-            and card.difficulty >= BEGINNER_UNSAFE_DIFFICULTY
+            self.inp.experience in self.rules.difficulty.relax_difficulty_for
+            and slot.role is ExerciseRole.ACCESSORY
+        )
+
+    def _needs_compound(self, slot: SlotRef) -> bool:
+        """Un main de patrón compuesto no admite aislamiento, salvo si el patrón se evita (C2)."""
+        return (
+            self.rules.main_requires_compound
+            and slot.role is ExerciseRole.MAIN
+            and slot.pattern in COMPOUND_PATTERNS
+            and not self.slot_touches_avoided(slot)
         )
 
     def candidates(
@@ -139,6 +169,9 @@ class Selector:
         if "pattern_affinity" in relaxed:
             patterns += list(self.tables.pattern_affinity.affinity.get(slot.pattern, ()))
         cap = self.cap_for(slot.role)
+        difficulty_relaxed = "difficulty" in relaxed and self.can_relax_difficulty(slot)
+        needs_compound = self._needs_compound(slot)
+        recovery = self.rules.recovery
         result: list[ExerciseCard] = []
         for pattern in patterns:
             for card in source.get(pattern, ()):
@@ -147,8 +180,13 @@ class Selector:
                     or card.id in usage.day_ids
                     or card.id in exclude
                     or card.variant_group in usage.day_variants
-                    or ("difficulty" not in relaxed and card.difficulty > cap)
-                    or self._unsafe_for_beginner(card)
+                    or (not difficulty_relaxed and card.difficulty > cap)
+                    or (needs_compound and card.mechanic is Mechanic.ISOLATION)
+                    or (
+                        slot.role is ExerciseRole.CARDIO
+                        and card.equipment_code not in recovery.cardio_equipment_any
+                        and card.id not in recovery.cardio_ids_any
+                    )
                     or (
                         "staple" not in relaxed
                         and slot.role is ExerciseRole.MAIN
@@ -190,8 +228,27 @@ class Selector:
             and self.inp.goal is Goal.STRENGTH
         ):
             total += weights.unilateral_in_strength_main
-        if slot.role is ExerciseRole.MAIN and card.equipment_code in self.rules.loadable_equipment:
+        if slot.role is ExerciseRole.ACCESSORY and card.is_staple:
+            total += weights.staple_in_accessory
+        if slot.role is ExerciseRole.MAIN:
+            total += self._main_equipment_bonus(card)
+        return total
+
+    def _main_equipment_bonus(self, card: ExerciseCard) -> int:
+        """Preferencia de material cargable en slots main (ADR 0012) y de barra en fuerza (C5)."""
+        weights = self.rules.scoring
+        level = self.inp.experience
+        total = 0
+        if (
+            self.inp.goal is not Goal.ENDURANCE
+            and card.equipment_code in self.rules.loadable_equipment[level]
+        ):
             total += weights.loadable_in_main
+        if (
+            self.inp.goal is Goal.STRENGTH
+            and card.equipment_code in self.rules.strength_main_preferred_equipment[level]
+        ):
+            total += weights.barbell_in_strength_main
         return total
 
     def choose(
@@ -202,7 +259,11 @@ class Selector:
         exclude: Collection[str] = (),
     ) -> Choice | None:
         """Mejor candidato del primer nivel de relajación con candidatos; ``None`` si no hay."""
-        order = self.rules.relaxation_order
+        order = [
+            step
+            for step in self.rules.relaxation_order
+            if step != "difficulty" or self.can_relax_difficulty(slot)
+        ]
         for level in range(len(order) + 1):
             relaxed = order[:level]
             pool = self.candidates(slot, relaxed, usage, exclude)
@@ -230,7 +291,7 @@ class Selector:
         return PlanWarningCode.SLOT_DROPPED
 
     def slot_touches_avoided(self, slot: SlotRef) -> bool:
-        return slot.pattern in self.inp.avoid_patterns or any(
+        return slot.pattern in self.avoid_patterns or any(
             self.tables.muscle_group(muscle) is slot.group for muscle in self.inp.avoid_muscles
         )
 
@@ -244,16 +305,38 @@ class Selector:
         return rng.choice([c for c in cards if key[c.id] == best])
 
     def _all_available(self) -> list[ExerciseCard]:
+        """Ejercicios disponibles dentro del tope de dificultad del nivel (B3).
+
+        Calentamiento, vuelta a la calma, finisher y día de respaldo nunca superan el tope
+        de accesorios, ni siquiera cuando el slot de fuerza relaja la dificultad.
+        """
+        cap = self.cap_for(ExerciseRole.ACCESSORY)
         return sorted(
-            (card for cards in self.available.values() for card in cards), key=lambda c: c.id
+            (
+                card
+                for cards in self.available.values()
+                for card in cards
+                if card.difficulty <= cap
+            ),
+            key=lambda c: c.id,
         )
 
     def fallback_cards(self) -> list[ExerciseCard]:
-        """Todo el catálogo disponible, para el día que no ha podido cubrir ningún slot."""
-        return self._all_available()
+        """Ejercicios disponibles para el día que no ha podido cubrir ningún slot.
+
+        Si el tope de dificultad los deja sin nada, se usa todo lo disponible antes que un día
+        vacío (se avisa igualmente con ``empty_day``).
+        """
+        return self._all_available() or sorted(
+            (card for cards in self.available.values() for card in cards), key=lambda c: c.id
+        )
 
     def warmup_cardio(self, rng: random.Random, usage: UsageState) -> ExerciseCard | None:
-        """Cardio suave de calentamiento (se prefieren los de rol ``warmup``, p. ej. marcha)."""
+        """Cardio suave de calentamiento (se prefieren los de rol ``warmup``, p. ej. marcha).
+
+        Con ``cardio_rotation`` se prefiere uno que no se haya usado ya en la semana (C7).
+        """
+        rotate = self.rules.warmup.cardio_rotation
         cards = [
             c
             for c in self._all_available()
@@ -261,17 +344,30 @@ class Selector:
             and c.movement_pattern is MovementPattern.CARDIO
             and c.id not in usage.day_ids
         ]
-        key = {c.id: (0 if c.role is ExerciseRole.WARMUP else 1, c.difficulty) for c in cards}
+        key = {
+            c.id: (
+                int(rotate and c.id in usage.week_ids),
+                0 if c.role is ExerciseRole.WARMUP else 1,
+                c.difficulty,
+            )
+            for c in cards
+        }
         return self._pick(cards, rng, key)
 
     def warmup_specific(
         self, pattern: MovementPattern, rng: random.Random, usage: UsageState
     ) -> ExerciseCard | None:
-        """Versión ligera (peso corporal, banda o dificultad 1) del primer patrón principal."""
+        """Versión ligera (peso corporal, banda o dificultad 1) del primer patrón principal.
+
+        Se elige el ejercicio de menor dificultad, con preferencia por los básicos del patrón
+        (``is_staple``) y por el rol principal, nunca una variante exótica (C7).
+        """
+        cap = self.cap_for(ExerciseRole.ACCESSORY)
         cards = [
             c
             for c in self.available.get(pattern, ())
             if c.role in STRENGTH_ROLES
+            and c.difficulty <= cap
             and c.id not in usage.day_ids
             and c.variant_group not in usage.day_variants
             and (
@@ -280,7 +376,10 @@ class Selector:
                 or c.difficulty == 1
             )
         ]
-        key = {c.id: (c.difficulty,) for c in cards}
+        key = {
+            c.id: (int(not c.is_staple), c.difficulty, int(c.role is not ExerciseRole.MAIN))
+            for c in cards
+        }
         return self._pick(cards, rng, key)
 
     def cooldown(
@@ -336,6 +435,14 @@ def relaxation_warning(
             day_index=day_index,
             exercise_id=choice.card.id,
         )
+    fallback = _fallback_message(selector, slot, choice, day_name)
+    if fallback is not None:
+        return PlanWarning(
+            code=PlanWarningCode.SLOT_RELAXED,
+            message_es=fallback,
+            day_index=day_index,
+            exercise_id=choice.card.id,
+        )
     warned = [r for r in choice.relaxed if r in selector.rules.relaxations_warned]
     if not warned:
         return None
@@ -354,6 +461,31 @@ def relaxation_warning(
         day_index=day_index,
         exercise_id=choice.card.id,
     )
+
+
+def _fallback_message(
+    selector: Selector, slot: SlotRef, choice: Choice, day_name: str
+) -> str | None:
+    """Texto específico cuando el empuje o tirón vertical cae a su versión horizontal (B3, B5)."""
+    if "pattern_affinity" not in choice.relaxed:
+        return None
+    pattern, name = choice.card.movement_pattern, choice.card.name_es
+    if (
+        slot.pattern is MovementPattern.VERTICAL_PUSH
+        and pattern is MovementPattern.HORIZONTAL_PUSH
+        and choice.card.equipment_code.value == "bodyweight"
+    ):
+        return (
+            f"En «{day_name}»: sin material no hay un empuje vertical seguro para tu nivel, "
+            f"así que hemos usado «{name}». Con mancuernas o bandas podrás trabajar hombros."
+        )
+    if (
+        slot.pattern is MovementPattern.VERTICAL_PULL
+        and pattern is MovementPattern.HORIZONTAL_PULL
+        and selector.inp.equipment.preset in selector.rules.fixture_gated.presets
+    ):
+        return f"En «{day_name}»: sin barra de dominadas hemos usado remos, como «{name}»."
+    return None
 
 
 def dropped_warning(
