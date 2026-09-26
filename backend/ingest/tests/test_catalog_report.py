@@ -10,6 +10,7 @@ import yaml
 from jsonschema import Draft202012Validator
 
 from ingest.catalog import Catalog, build_catalog, write_cards
+from ingest.domain import STAPLE_CELL_EXEMPTIONS
 from ingest.enrich import EnrichmentError
 from ingest.names import NamesError
 from ingest.report import quality_problems, render_report, staple_matrix
@@ -41,14 +42,14 @@ def test_cards_match_openapi_contract(full_catalog: Catalog, tmp_path: Path) -> 
         errors = list(validator.iter_errors(card))
         assert not errors, (card["id"], errors[0].message)
     assert all(card["deprecated"] is False for card in cards)
-    assert sum(card["is_staple"] for card in cards) == 144
+    assert sum(card["is_staple"] for card in cards) == 136
 
 
 def test_fixture_catalog_builds_without_full_dataset(fixture_catalog: Catalog) -> None:
     assert len(fixture_catalog.entries) == 60
     card = fixture_catalog.by_id()["0043"].card(deprecated=True)
     assert card.deprecated
-    assert card.name_es == "sentadilla profunda con barra"
+    assert card.name_es == "sentadilla trasera con barra"
 
 
 def test_full_dataset_rejects_unknown_references(
@@ -85,7 +86,7 @@ def test_quality_problems_detect_missing_staples_and_other(
         alternatives=full_catalog.alternatives,
     )
     problems = quality_problems(stripped, specs)
-    assert len(problems) == len(staple_matrix(stripped))
+    assert len(problems) == len(staple_matrix(stripped)) - len(STAPLE_CELL_EXEMPTIONS)
     orphan = replace(
         full_catalog.entries[0],
         enrichment=replace(full_catalog.entries[0].enrichment, movement_pattern="other"),

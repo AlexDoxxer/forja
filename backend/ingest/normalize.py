@@ -137,6 +137,17 @@ def map_equipment(
     return entry.code, entry.group
 
 
+def _override_equipment(
+    code: EquipmentCode, specs: IngestSpecs
+) -> tuple[EquipmentCode, EquipmentGroup]:
+    """Grupo de un código de equipamiento forzado por ``enrichment-overrides.yaml``."""
+    for entry in specs.equipment.map.values():
+        if entry.code == code:
+            return code, entry.group
+    msg = f"equipment_code {code!r} de un override no existe en equipment-normalization.yaml"
+    raise UnmappedValueError(msg)
+
+
 def map_body_part(value: str, exercise_id: str) -> BodyPart:
     """``body_part`` del dataset con espacios ⇒ ``snake_case`` del contrato."""
     candidate = value.strip().lower().replace(" ", "_")
@@ -153,6 +164,9 @@ def _dedupe[T](values: Iterable[T]) -> tuple[T, ...]:
 def normalize_record(raw: RawExercise, specs: IngestSpecs) -> NormalizedExercise:
     """Normaliza un registro; la agrupación de variantes se resuelve en :func:`normalize_all`."""
     equipment_code, equipment_group = map_equipment(raw.equipment, raw.id, specs)
+    override = specs.overrides.by_id.get(raw.id)
+    if override is not None and override.equipment_code is not None:
+        equipment_code, equipment_group = _override_equipment(override.equipment_code, specs)
     display = fix_display_name(raw.id, raw.name, specs)
     suffixes = split_variant_suffixes(display)
     return NormalizedExercise(

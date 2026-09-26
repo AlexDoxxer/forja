@@ -98,6 +98,13 @@ def _difficulty(exercise: NormalizedExercise, name: str, specs: IngestSpecs) -> 
         name, keywords.difficulty_level_3_any
     ):
         return 3
+    for rule in specs.overrides.difficulty_rules:
+        if (
+            _contains_any(name, rule.name_any)
+            and not _contains_any(name, rule.name_none)
+            and (rule.equipment is None or exercise.raw_equipment in rule.equipment)
+        ):
+            return rule.difficulty
     if (
         _contains_any(name, rules.level_1_any)
         or _contains_any(name, keywords.difficulty_level_1_any)

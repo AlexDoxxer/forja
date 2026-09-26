@@ -143,6 +143,21 @@ class ExerciseOverride(_Frozen):
     laterality: Laterality | None = None
     load_type: LoadType | None = None
     is_staple: bool | None = None
+    equipment_code: EquipmentCode | None = None
+
+
+class DifficultyRule(_Frozen):
+    """Regla de dificultad condicional (AND entre condiciones, OR dentro de cada lista)."""
+
+    difficulty: Annotated[int, Field(ge=1, le=3)]
+    name_any: tuple[Keyword, ...]
+    name_none: tuple[Keyword, ...] = ()
+    equipment: tuple[str, ...] | None = None
+
+    @field_validator("equipment", mode="before")
+    @classmethod
+    def _scalar_to_tuple(cls, value: Any) -> Any:
+        return _as_tuple(value)
 
 
 class KeywordAdjustments(_Frozen):
@@ -163,6 +178,7 @@ class KeywordAdjustments(_Frozen):
 class EnrichmentOverrides(_Frozen):
     version: int
     pattern_rules: tuple[PatternRule, ...] = ()
+    difficulty_rules: tuple[DifficultyRule, ...] = ()
     keywords: KeywordAdjustments = KeywordAdjustments()
     other_justified: dict[ExerciseId, str] = Field(default_factory=dict)
     by_id: dict[ExerciseId, ExerciseOverride] = Field(default_factory=dict)
