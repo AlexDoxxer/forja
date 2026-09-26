@@ -244,3 +244,33 @@ def test_calculate_target_protein_clamped_notice_with_monkeypatched_table(
     codes = {n.code for n in target.notices}
     assert NutritionNoticeCode.protein_clamped in codes
     assert target.protein_g == pytest.approx(TABLES.protein_g_per_kg.max * 80.0)
+
+
+def test_protein_in_obesity_uses_adjusted_bodyweight() -> None:
+    target = calculate_target(make_input(weight_kg=130.0, height_cm=175.0, goal=NutritionGoal.lose))
+    assert target.protein_g == pytest.approx(TABLES.protein_g_per_kg.lose * 27 * 1.75**2)
+    assert target.protein_g is not None
+    assert target.protein_g < 220.0
+
+
+def test_protein_is_capped_at_the_absolute_daily_maximum(monkeypatch: pytest.MonkeyPatch) -> None:
+    custom_tables = TABLES.model_copy(update={"protein_max_g_per_day": 120.0})
+    monkeypatch.setattr(energy, "load_nutrition_tables", lambda: custom_tables)
+    target = calculate_target(make_input(goal=NutritionGoal.gain))  # 1,8 g/kg * 80 = 144 g
+    assert target.protein_g == pytest.approx(120.0)
+    codes = [n.code for n in target.notices]
+    assert codes.count(NutritionNoticeCode.protein_clamped) == 1
+
+
+def test_protein_cap_does_not_duplicate_the_clamped_notice(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    out_of_range = TABLES.protein_g_per_kg.model_copy(update={"gain": 9.0})
+    custom_tables = TABLES.model_copy(
+        update={"protein_g_per_kg": out_of_range, "protein_max_g_per_day": 150.0}
+    )
+    monkeypatch.setattr(energy, "load_nutrition_tables", lambda: custom_tables)
+    target = calculate_target(make_input(goal=NutritionGoal.gain))
+    assert target.protein_g == pytest.approx(150.0)
+    codes = [n.code for n in target.notices]
+    assert codes.count(NutritionNoticeCode.protein_clamped) == 1

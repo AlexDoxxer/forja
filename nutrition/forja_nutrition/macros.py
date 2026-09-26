@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING
 from forja_nutrition.models import NutritionGoal
 
 if TYPE_CHECKING:
-    from forja_nutrition.tables import FatTable, ProteinTable
+    from forja_nutrition.tables import FatTable, ProteinBasisTable, ProteinTable
 
 _FAT_KCAL_PER_GRAM = 9.0
 _PROTEIN_KCAL_PER_GRAM = 4.0
@@ -36,6 +36,20 @@ def clamp_protein_g_per_kg(value: float, table: ProteinTable) -> tuple[float, bo
     if value > table.max:
         return table.max, True
     return value, False
+
+
+def protein_basis_weight_kg(
+    *, weight_kg: float, height_cm: float, basis: ProteinBasisTable
+) -> float:
+    """Peso sobre el que se calcula la proteína (C14).
+
+    Con IMC >= ``adjusted_if_bmi_ge`` se usa el menor entre el peso real y el peso que
+    correspondería a un IMC de ``reference_bmi`` (evita objetivos irreales en obesidad).
+    """
+    height_m = height_cm / 100.0
+    if weight_kg / (height_m * height_m) < basis.adjusted_if_bmi_ge:
+        return weight_kg
+    return min(weight_kg, basis.reference_bmi * height_m * height_m)
 
 
 def resolve_energy_and_fat(

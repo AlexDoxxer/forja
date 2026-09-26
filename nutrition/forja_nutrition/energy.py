@@ -186,7 +186,16 @@ def calculate_target(nutrition_input: NutritionInput) -> NutritionTarget:
     )
     if protein_clamped:
         notices.append(notice(NutritionNoticeCode.protein_clamped))
-    protein_g = clamped_per_kg * nutrition_input.weight_kg
+    protein_weight_kg = macros.protein_basis_weight_kg(
+        weight_kg=nutrition_input.weight_kg,
+        height_cm=nutrition_input.height_cm,
+        basis=tables.protein_bodyweight_basis,
+    )
+    protein_g = clamped_per_kg * protein_weight_kg
+    if protein_g > tables.protein_max_g_per_day:
+        protein_g = tables.protein_max_g_per_day
+        if not protein_clamped:
+            notices.append(notice(NutritionNoticeCode.protein_clamped))
 
     target_kcal, fat_g = macros.resolve_energy_and_fat(
         weight_kg=nutrition_input.weight_kg,

@@ -43,6 +43,12 @@ class ProteinTable(_Frozen):
 class FatTable(_Frozen):
     min_g_per_kg: float
     min_pct_kcal: float
+    max_pct_kcal: float
+
+
+class ProteinBasisTable(_Frozen):
+    adjusted_if_bmi_ge: float
+    reference_bmi: float
 
 
 class SafetyTable(_Frozen):
@@ -58,6 +64,7 @@ class TolerancesTable(_Frozen):
     kcal: float
     macros: float
     macro_sum_vs_kcal: float
+    fat_over_allowed: float
 
 
 class RoundingTable(_Frozen):
@@ -71,6 +78,8 @@ class NutritionTables(_Frozen):
     training_days_adjustment: dict[str, float]
     goal_adjustment: dict[NutritionGoal, GoalAdjustmentEntry]
     protein_g_per_kg: ProteinTable
+    protein_bodyweight_basis: ProteinBasisTable
+    protein_max_g_per_day: float
     fat: FatTable
     fiber_g_per_1000_kcal: float
     safety: SafetyTable
