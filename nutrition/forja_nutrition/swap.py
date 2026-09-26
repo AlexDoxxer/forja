@@ -56,7 +56,9 @@ def _is_candidate(
     return not (set(food.allergens) & allergens)
 
 
-def _pick_replacement(original: Food, nutrition_input: NutritionInput, seed: int) -> Food:
+def _pick_replacement(
+    original: Food, nutrition_input: NutritionInput, seed: int, slot: MealSlot | None = None
+) -> Food:
     allergens: set[object] = set(nutrition_input.allergens)
     excluded = set(nutrition_input.excluded_food_ids)
     catalog = foods_by_id().values()
@@ -78,8 +80,11 @@ def _pick_replacement(original: Food, nutrition_input: NutritionInput, seed: int
             f"'{original.id}'."
         )
     disliked = set(nutrition_input.disliked_food_ids)
-    preferred = [food for food in candidates if food.id not in disliked]
-    pool = preferred or candidates
+    # idoneidad por comida (B7): se prefieren sustitutos aptos para esa comida y no rechazados
+    fitting = [food for food in candidates if slot is None or slot in food.meal_slots]
+    fitting = fitting or candidates
+    preferred = [food for food in fitting if food.id not in disliked]
+    pool = preferred or fitting
     rng = random.Random(seed)  # noqa: S311 (PRNG determinista, no criptográfico)
     return rng.choice(sorted(pool, key=lambda food: food.id))
 
@@ -112,10 +117,11 @@ def _resolve_replacement(
     nutrition_input: NutritionInput,
     replacement_food_id: str | None,
     seed: int,
+    slot: MealSlot | None = None,
 ) -> Food:
     catalog = foods_by_id()
     if replacement_food_id is None:
-        return _pick_replacement(original_food, nutrition_input, seed)
+        return _pick_replacement(original_food, nutrition_input, seed, slot)
     replacement = catalog.get(replacement_food_id)
     if replacement is None:
         raise ValueError(f"'{replacement_food_id}' no existe en la base de alimentos")
@@ -209,6 +215,7 @@ def swap_food(  # noqa: PLR0917 (firma fijada por contracts/domain.md sec 6.3)
         nutrition_input=nutrition_input,
         replacement_food_id=replacement_food_id,
         seed=swap_seed,
+        slot=meal,
     )
 
     new_item = _build_replacement_item(original_item, replacement)

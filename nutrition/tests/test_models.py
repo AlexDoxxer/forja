@@ -289,6 +289,7 @@ def test_food_requires_unit_grams_and_name_together() -> None:
             diet_types=(DietType.omnivore,),
             macro_role=FoodMacroRole.produce,
             typical_portion_g=100.0,
+            max_portion_g=1000.0,
             unit_grams=50.0,
             unit_name_es=None,
         )
@@ -302,6 +303,7 @@ def test_food_requires_unit_grams_and_name_together() -> None:
             diet_types=(DietType.omnivore,),
             macro_role=FoodMacroRole.produce,
             typical_portion_g=100.0,
+            max_portion_g=1000.0,
             unit_grams=None,
             unit_name_es="unidad",
         )
@@ -317,6 +319,24 @@ def test_food_valid() -> None:
         diet_types=(DietType.omnivore,),
         macro_role=FoodMacroRole.produce,
         typical_portion_g=100.0,
+        max_portion_g=1000.0,
     )
     assert food.unit_grams is None
     assert food.unit_name_es is None
+
+
+def test_food_max_portion_must_cover_one_unit() -> None:
+    with pytest.raises(ValidationError, match="una unidad"):
+        Food(
+            id="test_food",
+            name_es="Alimento de prueba",
+            category=FoodCategory.fruits,
+            fdc_id=1,
+            per_100g=_macro_totals(),
+            diet_types=(DietType.omnivore,),
+            macro_role=FoodMacroRole.produce,
+            typical_portion_g=100.0,
+            max_portion_g=40.0,
+            unit_grams=50.0,
+            unit_name_es="unidad",
+        )
