@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<title>{{ program.name }}</title>
+<style>
+  @page {
+    size: A4;
+    margin: 18mm 14mm 20mm 14mm;
+    @bottom-left { content: "{{ program.name }} · " counter(page) " / " counter(pages); font-size: 8pt; color: #555; }
+    @bottom-right { content: "{{ attribution }}"; font-size: 8pt; color: #555; }
+  }
+  body { font-family: "DejaVu Sans", "Liberation Sans", sans-serif; font-size: 9pt; color: #1b1d20; }
+  h1 { font-size: 20pt; margin: 0 0 2mm; }
+  h2 { font-size: 13pt; margin: 6mm 0 2mm; border-bottom: 1.5pt solid #ff6a2b; padding-bottom: 1mm; }
+  h3 { font-size: 10.5pt; margin: 4mm 0 1mm; }
+  .meta { color: #555; margin-bottom: 3mm; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 2mm; page-break-inside: auto; }
+  tr { page-break-inside: avoid; }
+  th, td { text-align: left; padding: 1mm 1.5mm; border-bottom: 0.4pt solid #ccc; vertical-align: middle; }
+  th { font-size: 8pt; color: #555; }
+  td.thumb { width: 12mm; }
+  td.thumb img { width: 10mm; height: 10mm; }
+  .kind { font-size: 8pt; text-transform: uppercase; color: #ff6a2b; }
+  .week { page-break-before: always; }
+  .week:first-of-type { page-break-before: auto; }
+  ul { margin: 1mm 0 2mm 4mm; padding: 0; }
+  .footer { margin-top: 6mm; font-size: 8pt; color: #555; }
+</style>
+</head>
+<body>
+<h1>{{ program.name }}</h1>
+<p class="meta">
+  {% if program.goal %}{{ t.goal }}: {{ program.goal }} · {% endif %}
+  {{ program.days_per_week }} {{ t.days }} · {{ program.weeks_count }} {{ t.weeks }}
+</p>
+
+{% if program.rationale_es %}
+<h2>{{ t.why }}</h2>
+<ul>{% for line in program.rationale_es %}<li>{{ line }}</li>{% endfor %}</ul>
+{% endif %}
+
+{% if program.warnings %}
+<h2>{{ t.warnings }}</h2>
+<ul>{% for w in program.warnings %}<li>{{ w.message_es }}</li>{% endfor %}</ul>
+{% endif %}
+
+{% for week in program.weeks %}
+<section class="week">
+  <h2>{{ t.week }} {{ week.index + 1 }} · {{ t['phase_' ~ week.phase] }}</h2>
+  {% for day in week.days %}
+  <h3>{{ day.name }}{% if day.focus %} — {{ day.focus }}{% endif %} · {{ day.estimated_minutes }} min{% if day.is_recovery %} · {{ t.recovery }}{% endif %}</h3>
+  <table>
+    <thead><tr><th></th><th>{{ t.exercise }}</th><th>{{ t.sets }}</th><th>{{ t.reps }}</th><th>{{ t.rir }}</th><th>{{ t.rest }}</th><th>{{ t.tempo }}</th></tr></thead>
+    <tbody>
+    {% for block in day.blocks %}
+      <tr><td colspan="7" class="kind">{{ t['kind_' ~ block.kind] }}{% if block.rounds > 1 %} · {{ block.rounds }} {{ t.rounds }}{% endif %}</td></tr>
+      {% for ex in block.exercises %}
+      {% set info = names.get(ex.exercise_id) %}
+      <tr>
+        <td class="thumb"><img src="{{ thumbs.get(ex.exercise_id, '') }}" alt=""></td>
+        <td>{% if info %}{{ info.name_es if lang == 'es' else info.name_en }}{% else %}{{ ex.exercise_id }}{% endif %}</td>
+        <td>{{ ex.sets }}</td>
+        <td>{% if ex.rep_min is not none %}{{ ex.rep_min }}–{{ ex.rep_max }}{% else %}{{ ex.duration_s }} s{% endif %}{% if ex.per_side %} {{ t.per_side }}{% endif %}</td>
+        <td>{{ ex.target_rir if ex.target_rir is not none else '—' }}</td>
+        <td>{{ ex.rest_s }} s</td>
+        <td>{{ ex.tempo or '—' }}</td>
+      </tr>
+      {% endfor %}
+    {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+</section>
+{% endfor %}
+
+<p class="footer">{{ t.footer }}<br>{{ attribution }}</p>
+</body>
+</html>

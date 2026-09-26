@@ -9,6 +9,7 @@ dependencies = [
   "alembic>=1.14,<2",
   "argon2-cffi>=23.1",
   "asyncpg>=0.30",
+  "email-validator>=2.2",
   "fastapi>=0.115,<1",
   "forja-engine",
   "forja-nutrition",
@@ -37,6 +38,7 @@ dev = [
   "pytest>=8.3",
   "pytest-asyncio>=0.24",
   "pytest-benchmark>=4.0",
+  "pypdf>=5.1",
   "pytest-cov>=6.0",
   "ruff>=0.8",
   "testcontainers[postgres]>=4.8",
@@ -57,7 +59,17 @@ packages = ["app", "ingest"]
 
 [tool.ruff]
 extend = "../ruff.toml"
-extend-exclude = ["migrations/versions"]
+extend-exclude = ["migrations/versions", "app/schemas/api.py"]
+
+[tool.ruff.lint]
+extend-ignore = ["E501", "C416", "PERF403", "RET504", "UP047", "ARG002", "PLR0911", "PLR0912", "PLR0915", "PLR0917", "FBT001", "FBT002"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101", "PLR2004", "FBT001", "ARG001", "E501", "PT018", "S608", "DTZ011", "C416", "RUF059"]
+"**/test_*.py" = ["S101", "PLR2004", "FBT001"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Header", "fastapi.Path"]
 
 [tool.mypy]
 python_version = "3.12"
@@ -67,7 +79,7 @@ plugins = ["pydantic.mypy"]
 files = ["app", "ingest", "tests"]
 
 [[tool.mypy.overrides]]
-module = ["testcontainers.*"]
+module = ["testcontainers.*", "weasyprint", "weasyprint.*"]
 ignore_missing_imports = true
 
 [tool.pydantic-mypy]
@@ -80,6 +92,7 @@ minversion = "8.0"
 testpaths = ["tests", "ingest/tests"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
 addopts = [
   "--strict-markers",
   "--strict-config",
@@ -97,6 +110,7 @@ markers = [
 
 [tool.coverage.run]
 branch = true
+concurrency = ["greenlet", "thread"]
 source = ["app", "ingest"]
 omit = ["ingest/tests/*"]
 
