@@ -1,6 +1,7 @@
 import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 
 import { SessionRoute, SessionSummaryRoute } from "../features/session/SessionRoute";
+import { AdminRoute } from "./AdminRoute";
 import { LibraryRoute } from "./LibraryRoute";
 import { NutritionRoute } from "./NutritionRoute";
 import { ProfileRoute } from "./ProfileRoute";
@@ -65,7 +66,14 @@ const nutritionRoute = createRoute({
   component: NutritionRoute,
 });
 
+const adminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/admin",
+  component: AdminRoute,
+});
+
 const routeTree = rootRoute.addChildren([
+  adminRoute,
   nutritionRoute,
   sessionRoute,
   sessionSummaryRoute,
