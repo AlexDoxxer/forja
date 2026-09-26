@@ -49,7 +49,7 @@ _Trabajo de cuádriceps, espalda, pecho y glúteos_
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con banda elástica (1004) | 1 | 8-12 | — | 30 s | — |
 | Trabajo | sentadilla goblet con mancuerna (1760) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
-| Trabajo | dominada asistida con banda elástica (0970) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
+| Trabajo | jalón con banda elástica y agarre cerrado (0974) | 3 | 6-10 | 3 | 150 s | 3-0-1-0 |
 | Trabajo | flexión (0662) | 2 | 10-15 | 3 | 65 s | 2-0-1-1 |
 | Trabajo | fondos de tríceps (0814) | 2 | 10-12 | 3 | 65 s | 2-0-1-1 |
 | Trabajo | hip thrust de rodillas con banda de resistencia (3236) | 2 | 10-16 | 3 | 65 s | 2-0-1-1 |
@@ -98,7 +98,7 @@ Series efectivas: chest 2, back 3, arms 3,5, quads 3, glutes 3,5
 ## Explicaciones (rationale_es)
 
 - Hemos elegido un reparto de cuerpo completo porque entrenas 3 días por semana y tu nivel es principiante.
-- Por el énfasis en tren inferior y glúteo hemos dado más volumen a cuádriceps, isquiotibiales y glúteos, manteniendo el resto por encima de su mínimo de mantenimiento.
+- Por el énfasis en tren inferior y glúteo hemos dado más volumen a cuádriceps, isquiotibiales y glúteos, manteniendo el resto por encima de su mínimo de mantenimiento. Como estás empezando, el énfasis se aplica con la elección de ejercicios, no con series extra.
 - Para hipertrofia, los ejercicios principales van a 6-10 repeticiones con 2 min-3 min de descanso y dejando algunas repeticiones en reserva; los accesorios usan rangos algo más altos.
 - El mesociclo dura 5 semanas: 4 de acumulación, en las que las repeticiones en reserva bajan poco a poco, y una última de descarga con el 55 % de las series para recuperarte. Como estás empezando, la progresión es lineal: mismas series y un poco más de carga o repeticiones cada semana.
 - Cada sesión está ajustada a unos 45 minutos, incluyendo calentamiento y vuelta a la calma.

@@ -78,8 +78,15 @@ fixture_gated:
   name_en_any: ["pull-up", "pull up", "chin-up", "chin up", "hanging", "dip", "ring",
                 "suspended", "suspension", "straps", "parallel bars", "straight bar",
                 "toes to bar", "on bench", "bench", "hyperextension", "glute-ham",
-                "donkey", "box jump", "captains chair"]
-  ids: ["2400"]
+                "donkey", "box jump", "captains chair", "side-to-side chin"]
+  ids: ["2400", "0720"]
+# C-b5: la dominada asistida con banda exige barra de dominadas; con home_dumbbells no se elige.
+bar_gated:
+  presets: [home_dumbbells]
+  name_en_any: ["band assisted pull-up"]
+  ids: ["0970"]
+# La máquina de dominada asistida no es un básico principal para fuerza avanzada.
+advanced_strength_main_excluded_ids: ["0017"]
 # C16: con lower_back entre los músculos evitados también se excluyen la bisagra y estos nombres.
 lumbar_avoid:
   name_en_any: ["bent over", "bent-over", "good morning", "deadlift", "hyperextension",
@@ -137,6 +144,16 @@ pattern_groups:
   mobility: other
   other: other
 emphasis_block_priority: 2
+# El bloque de brazos (énfasis «arms») solo con estos objetivos y sin principiantes: el énfasis
+# de un principiante se aplica por elección de ejercicios, no con series extra.
+arms_block:
+  goals: [hypertrophy, toning]
+  excluded_experience: [beginner]
+# En general_fitness la extensión de codo del bloque de énfasis pasa a la prioridad más baja (3) y se
+# omite a partir de drop_from_days días por semana.
+general_fitness_elbow_extension:
+  priority: 3   # el contrato limita priority a 1-3; 3 = la más baja
+  drop_from_days: 5
 
 # «Secundarios relevantes» (0,5 series) de los ejercicios compuestos, por patrón. El grupo
 # objetivo del propio ejercicio nunca recibe crédito secundario.

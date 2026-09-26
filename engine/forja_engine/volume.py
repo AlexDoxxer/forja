@@ -14,6 +14,7 @@ from forja_engine.models import (
     WORKING_BLOCKS,
     Emphasis,
     ExerciseCard,
+    Experience,
     GeneratorInput,
     Mechanic,
     MovementPattern,
@@ -83,10 +84,16 @@ def emphasis_rationale(inp: GeneratorInput, tables: Tables) -> str | None:
         for group in VolumeGroup
         if tables.volume_targets.multiplier(inp.emphasis, group) > 1
     ]
-    return (
+    text = (
         f"Por el énfasis en {EMPHASIS_ES[inp.emphasis]} hemos dado más volumen a "
         f"{join_es(boosted)}, manteniendo el resto por encima de su mínimo de mantenimiento."
     )
+    if inp.experience is Experience.BEGINNER:
+        text += (
+            " Como estás empezando, el énfasis se aplica con la elección de ejercicios, "
+            "no con series extra."
+        )
+    return text
 
 
 def training_group(card: ExerciseCard, tables: Tables) -> MuscleGroup:

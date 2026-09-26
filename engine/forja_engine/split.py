@@ -3,8 +3,11 @@
 from dataclasses import dataclass
 
 from forja_engine.models import (
+    Emphasis,
     ExerciseRole,
     GeneratorInput,
+    Goal,
+    MovementPattern,
     MuscleGroup,
     SlotRef,
     Weekday,
@@ -59,6 +62,15 @@ def build_days(inp: GeneratorInput, tables: Tables) -> list[DaySpec]:
     rules = tables.engine_rules
     override = split.emphasis_overrides[inp.emphasis]
     append = override.append_block if inp.days_per_week >= override.min_days else None
+    if (
+        append is not None
+        and inp.emphasis is Emphasis.ARMS
+        and (
+            inp.goal not in rules.arms_block.goals
+            or inp.experience in rules.arms_block.excluded_experience
+        )
+    ):
+        append = None
     days: list[DaySpec] = []
     for index, template in enumerate(split_templates(inp, tables)):
         spec = split.day_templates[template]
@@ -75,6 +87,12 @@ def build_days(inp: GeneratorInput, tables: Tables) -> list[DaySpec]:
         is_recovery = all(slot.role in RECOVERY_ROLES for slot in slots)
         if append is not None and not is_recovery and (append.to == "*" or template in append.to):
             for pattern in append.patterns:
+                priority = rules.emphasis_block_priority
+                if inp.goal is Goal.GENERAL_FITNESS and pattern is MovementPattern.ELBOW_EXTENSION:
+                    gf = rules.general_fitness_elbow_extension
+                    if inp.days_per_week >= gf.drop_from_days:
+                        continue
+                    priority = gf.priority
                 group = rules.pattern_groups[pattern]
                 slots.append(
                     SlotRef(
@@ -84,7 +102,7 @@ def build_days(inp: GeneratorInput, tables: Tables) -> list[DaySpec]:
                         if group is MuscleGroup.CORE
                         else ExerciseRole.ACCESSORY,
                         group=group,
-                        priority=rules.emphasis_block_priority,
+                        priority=priority,
                     )
                 )
         days.append(

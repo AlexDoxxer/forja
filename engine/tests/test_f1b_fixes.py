@@ -15,12 +15,14 @@ from forja_engine.models import (
     Goal,
     MovementPattern,
     MuscleCode,
+    MuscleGroup,
     PlanBlock,
     PlanDay,
     PlanExercise,
     PlanWarningCode,
     PlanWeek,
     ProgramPlan,
+    SlotRef,
 )
 from forja_engine.normalize import normalize_input
 from forja_engine.periodize import undulated_reps
@@ -211,3 +213,93 @@ def test_fallback_cards_degrade_when_difficulty_cap_leaves_nothing() -> None:
     assert selector.fallback_cards()
     slot = build_days(inp, TABLES)[0].slots[0]
     assert not selector.candidates(slot, RULES.relaxation_order, UsageState())
+
+
+# ---------------------------------------------------------------- cierre de B5 (0.2.1)
+BAR_FREE_PRESETS = (EquipmentPreset.BODYWEIGHT, EquipmentPreset.HOME_BANDS)
+FIXED_STRUCTURE_EQUIPMENT = {"cable", "machine", "smith", "barbell", "trap_bar", "ez_bar", "sled"}
+FIXED_STRUCTURE_WORDS = ("pull-up", "chin", "ring", "bench", "cable", "dip", "hanging")
+
+
+@pytest.mark.parametrize("preset", BAR_FREE_PRESETS)
+def test_no_fixed_structure_exercise_is_selectable_without_bar_or_bench(
+    preset: EquipmentPreset,
+) -> None:
+    inp = make_input(equipment=equipment_for(preset))
+    selector = Selector(catalog(), inp, TABLES)
+    offenders = []
+    for cards in selector.available.values():
+        for card in cards:
+            name = card.display_name_en.lower()
+            if card.equipment_code.value in FIXED_STRUCTURE_EQUIPMENT or any(
+                word in name for word in FIXED_STRUCTURE_WORDS
+            ):
+                offenders.append((card.id, card.display_name_en))
+    assert offenders == []
+    ids = {c.id for cards in selector.available.values() for c in cards}
+    assert not {"0720", "2400"} & ids
+
+
+def test_band_assisted_pull_up_is_not_selectable_with_home_dumbbells() -> None:
+    inp = make_input(equipment=equipment_for(EquipmentPreset.HOME_DUMBBELLS))
+    selector = Selector(catalog(), inp, TABLES)
+    ids = {c.id for cards in selector.usable.values() for c in cards}
+    assert "0970" not in ids
+
+
+def test_assisted_machine_is_never_main_for_advanced_strength() -> None:
+    inp = make_input(goal=Goal.STRENGTH, experience=Experience.ADVANCED)
+    selector = Selector(catalog(), inp, TABLES)
+    slot = SlotRef(
+        slot_index=0,
+        pattern=MovementPattern.VERTICAL_PULL,
+        role=ExerciseRole.MAIN,
+        group=MuscleGroup.BACK,
+        priority=1,
+    )
+    for relaxed in ((), tuple(RULES.relaxation_order)):
+        assert "0017" not in {c.id for c in selector.candidates(slot, relaxed, UsageState())}
+    for _, _, block, exercise, _ in _cards(generate(inp, catalog())):
+        if block.kind is BlockKind.MAIN:
+            assert exercise.exercise_id != "0017"
+
+
+def _elbow_ext_slots(days: int, **kw: object) -> list[SlotRef]:
+    inp = make_input(days_per_week=days, **kw)
+    return [
+        s
+        for d in build_days(inp, TABLES)
+        for s in d.slots
+        if s.pattern is MovementPattern.ELBOW_EXTENSION
+    ]
+
+
+def test_arms_block_only_for_hypertrophy_or_toning_non_beginners() -> None:
+    def extra(goal: Goal, level: Experience) -> int:
+        kw = {"goal": goal, "experience": level}
+        return len(_elbow_ext_slots(4, emphasis="arms", **kw)) - len(
+            _elbow_ext_slots(4, emphasis="balanced", **kw)
+        )
+
+    assert extra(Goal.HYPERTROPHY, Experience.INTERMEDIATE) > 0
+    assert extra(Goal.HYPERTROPHY, Experience.BEGINNER) == 0
+    assert extra(Goal.GENERAL_FITNESS, Experience.INTERMEDIATE) == 0
+
+
+def test_general_fitness_elbow_extension_low_priority_then_dropped() -> None:
+    def extra(days: int) -> list[int]:
+        kw = {"goal": Goal.GENERAL_FITNESS, "experience": Experience.INTERMEDIATE}
+        base = [s.priority for s in _elbow_ext_slots(days, emphasis="balanced", **kw)]
+        boosted = [s.priority for s in _elbow_ext_slots(days, emphasis="upper_body", **kw)]
+        for priority in base:
+            boosted.remove(priority)
+        return boosted
+
+    assert extra(4)
+    assert set(extra(4)) == {3}
+    assert extra(5) == []
+
+
+def test_beginner_emphasis_rationale_mentions_exercise_choice() -> None:
+    plan = generate(make_input(emphasis="arms", experience=Experience.BEGINNER), catalog())
+    assert "elección de ejercicios, no con series extra" in " ".join(plan.rationale_es)

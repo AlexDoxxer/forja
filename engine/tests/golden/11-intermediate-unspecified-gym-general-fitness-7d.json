@@ -1,6 +1,6 @@
 {
- "engine_version": "0.2.0",
- "tables_hash": "9b0522a74876b46d121e095e9a98607744057030a3d3f2c8cf98548c5e481275",
+ "engine_version": "0.2.1",
+ "tables_hash": "da30efe1f1a2d2b6b1c3e47c0256869e376f610286b6e02abc86778e22bb3e25",
  "seed": 20260923,
  "input": {
   "goal": "general_fitness",

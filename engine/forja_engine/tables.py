@@ -543,6 +543,16 @@ class FixtureGated(NameRule):
     presets: tuple[EquipmentPreset, ...] = Field(min_length=1)
 
 
+class ArmsBlockRules(Table):
+    goals: tuple[Goal, ...] = Field(min_length=1)
+    excluded_experience: tuple[Experience, ...] = ()
+
+
+class GeneralFitnessElbow(Table):
+    priority: int = Field(ge=1, le=3)
+    drop_from_days: int = Field(ge=1, le=8)
+
+
 class WarmupRules(Table):
     cardio_share: float = Field(gt=0, le=1)
     specific_items: int = Field(ge=0, le=2)
@@ -597,6 +607,8 @@ class EngineRules(Table):
     skill_gated: NameRule
     contraindicated_default: NameRule
     fixture_gated: FixtureGated
+    bar_gated: FixtureGated
+    advanced_strength_main_excluded_ids: tuple[str, ...] = ()
     low_quality_ids: tuple[str, ...] = ()
     lumbar_avoid: NameRule
     relaxation_order: tuple[Relaxation, ...]
@@ -605,6 +617,8 @@ class EngineRules(Table):
     allocation: AllocationRules
     pattern_groups: dict[MovementPattern, MuscleGroup]
     emphasis_block_priority: int = Field(ge=1, le=3)
+    arms_block: ArmsBlockRules
+    general_fitness_elbow_extension: GeneralFitnessElbow
     compound_secondary_groups: dict[MovementPattern, tuple[VolumeGroup, ...]]
     antagonist_pairs: tuple[tuple[MovementPattern, MovementPattern], ...]
     warmup: WarmupRules

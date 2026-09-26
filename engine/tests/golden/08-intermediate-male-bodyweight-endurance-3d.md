@@ -35,7 +35,7 @@ _Trabajo de isquiotibiales, hombros, espalda y cuádriceps_
 | Calentamiento | extensión lumbar boca abajo (1352) | 1 | 8-12 | — | 30 s | — |
 | Circuito x2 | bisagra de cadera con peso corporal (elevator) (3292) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | flexión inclinada (0493) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
-| Circuito x2 | dominada de lado a lado (0720) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
+| Circuito x2 | remo en sentadilla con peso corporal (3168) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | zancada adelante (3470) | 2 | 15-25 por lado | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | curl de bíceps tumbado de lado con peso corporal (1769) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | giro ruso (0687) | 2 | 10-20 | 2 | 45 s | — |
@@ -53,7 +53,7 @@ _Trabajo de cuádriceps, espalda, pecho y glúteos_
 | Calentamiento | salto de tijera con palmada (jumping jack) (3224) | 1 | 180 s | — | 0 s | — |
 | Calentamiento | sentadilla con peso corporal (cuádriceps) (3533) | 1 | 8-12 | — | 30 s | — |
 | Circuito x2 | sentadilla con peso corporal hasta paralelo (potty squat) (3119) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
-| Circuito x2 | dominada de lado a lado (0720) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
+| Circuito x2 | remo invertido (0499) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | flexión (0662) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | puente de glúteo bajo en el suelo (3013) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
 | Circuito x2 | flexión diamante (0283) | 2 | 15-25 | 3 | 30 s | 1-0-1-0 |
@@ -92,6 +92,8 @@ Series efectivas: chest 2, back 2, arms 3,2, quads 2, glutes 3, calves 2, core 2
 
 - `equipment_insufficient`: En «Cuerpo completo A» no hay ningún ejercicio de elevaciones de hombro con el equipamiento que tienes: hemos quitado ese hueco del día.
 - `slot_relaxed`: En «Cuerpo completo B»: sin material no hay un empuje vertical seguro para tu nivel, así que hemos usado «flexión inclinada». Con mancuernas o bandas podrás trabajar hombros.
+- `slot_relaxed`: En «Cuerpo completo B»: sin barra de dominadas hemos usado remos, como «remo en sentadilla con peso corporal».
+- `slot_relaxed`: En «Cuerpo completo C»: sin barra de dominadas hemos usado remos, como «remo invertido».
 - `volume_out_of_range`: Volumen semanal de pecho: 6 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de espalda: 6 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.
 - `volume_out_of_range`: Volumen semanal de hombros: 0 series efectivas, por debajo del objetivo de 10. Más días o más tiempo por sesión permitirían acercarse.

@@ -26,15 +26,15 @@ _Trabajo de pecho, hombros y brazos_
 
 Series efectivas: chest 10, shoulders 8, arms 6,6
 
-### Día 2 · Tirón (~69 min)
+### Día 2 · Tirón (~70 min)
 
 _Trabajo de espalda, hombros y brazos_
 
 | Bloque | Ejercicio | Series | Reps / tiempo | RIR | Descanso | Tempo |
 |---|---|---|---|---|---|---|
 | Calentamiento | medias flexiones de rodillas (3221) | 1 | 180 s | — | 0 s | — |
-| Calentamiento | dominada asistida con banda elástica (0970) | 2 | 8-12 | — | 30 s | — |
-| Trabajo | dominada asistida (0017) | 4 | 3-6 | 3 | 240 s | 2-1-X-0 |
+| Calentamiento | jalón en polea (0198) | 3 | 2-8 | — | 30 s | — |
+| Trabajo | jalón en polea (0198) | 4 | 4-7 | 3 | 240 s | 2-1-X-0 |
 | Trabajo | remo inclinado con barra (0027) | 4 | 4-7 | 3 | 240 s | 2-1-X-0 |
 | Trabajo | remo invertido con rodillas flexionadas (2300) | 1 | 6-10 | 2 | 105 s | 2-0-1-0 |
 | Trabajo | remo para deltoides posterior en polea con cuerda (0203) | 3 | 6-10 | 2 | 105 s | 2-0-1-0 |

@@ -1,6 +1,6 @@
 {
- "engine_version": "0.2.0",
- "tables_hash": "9b0522a74876b46d121e095e9a98607744057030a3d3f2c8cf98548c5e481275",
+ "engine_version": "0.2.1",
+ "tables_hash": "da30efe1f1a2d2b6b1c3e47c0256869e376f610286b6e02abc86778e22bb3e25",
  "seed": 20260923,
  "input": {
   "goal": "fat_loss",
@@ -369,7 +369,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "3168",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -380,7 +380,11 @@
          "rest_s": 105,
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0499",
+          "1772",
+          "1773"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 2,
@@ -544,7 +548,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "0499",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -555,7 +559,11 @@
          "rest_s": 105,
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "1772",
+          "1773",
+          "3156"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -1004,7 +1012,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "3168",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -1015,7 +1023,11 @@
          "rest_s": 105,
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0499",
+          "1772",
+          "1773"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 2,
@@ -1179,7 +1191,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "0499",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -1190,7 +1202,11 @@
          "rest_s": 105,
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "1772",
+          "1773",
+          "3156"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -1639,7 +1655,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "3168",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -1650,7 +1666,11 @@
          "rest_s": 105,
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0499",
+          "1772",
+          "1773"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 2,
@@ -1814,7 +1834,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "0499",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -1825,7 +1845,11 @@
          "rest_s": 105,
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "1772",
+          "1773",
+          "3156"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -2274,7 +2298,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "3168",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -2285,7 +2309,11 @@
          "rest_s": 105,
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0499",
+          "1772",
+          "1773"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 2,
@@ -2449,7 +2477,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "0499",
          "sets": 3,
          "rep_min": 8,
          "rep_max": 12,
@@ -2460,7 +2488,11 @@
          "rest_s": 105,
          "load_hint": "Con tu peso corporal, deja 3 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "1772",
+          "1773",
+          "3156"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -2909,7 +2941,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "3168",
          "sets": 1,
          "rep_min": 8,
          "rep_max": 12,
@@ -2920,7 +2952,11 @@
          "rest_s": 105,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "0499",
+          "1772",
+          "1773"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 2,
@@ -3084,7 +3120,7 @@
        "rest_between_rounds_s": null,
        "exercises": [
         {
-         "exercise_id": "0720",
+         "exercise_id": "0499",
          "sets": 2,
          "rep_min": 8,
          "rep_max": 12,
@@ -3095,7 +3131,11 @@
          "rest_s": 105,
          "load_hint": "Semana de descarga: usa el 90 % de tu carga habitual y deja 4 repeticiones en reserva",
          "notes_es": null,
-         "alternatives": [],
+         "alternatives": [
+          "1772",
+          "1773",
+          "3156"
+         ],
          "order": 0,
          "slot": {
           "slot_index": 1,
@@ -3294,6 +3334,13 @@
    "exercise_id": "0493"
   },
   {
+   "code": "slot_relaxed",
+   "message_es": "En «Cuerpo completo B»: sin barra de dominadas hemos usado remos, como «remo en sentadilla con peso corporal».",
+   "week_index": null,
+   "day_index": 1,
+   "exercise_id": "3168"
+  },
+  {
    "code": "slot_dropped",
    "message_es": "Para ajustar «Cuerpo completo B» a 30 minutos hemos quitado el finisher de cardio, «giro ruso», «curl de bíceps tumbado de lado con peso corporal» y «zancada caminando».",
    "week_index": null,
@@ -3306,6 +3353,13 @@
    "week_index": null,
    "day_index": 1,
    "exercise_id": null
+  },
+  {
+   "code": "slot_relaxed",
+   "message_es": "En «Cuerpo completo C»: sin barra de dominadas hemos usado remos, como «remo invertido».",
+   "week_index": null,
+   "day_index": 2,
+   "exercise_id": "0499"
   },
   {
    "code": "slot_dropped",
