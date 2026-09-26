@@ -58,6 +58,7 @@ class Allergen(StrEnum):
     fish = "fish"
     shellfish = "shellfish"
     soy = "soy"
+    peanuts = "peanuts"
 
 
 class MealSlot(StrEnum):
