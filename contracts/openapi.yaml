@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Forja API
-  version: 1.0.0
+  version: 1.1.0
   summary: API de Forja, app de entrenamiento autoalojada.
   description: |
     Contrato de la API de Forja (fuente de verdad, MASTER_PROMPT §9). Lo consumen el cliente
@@ -2113,7 +2113,8 @@ components:
       enum: [beginner_high_frequency, recovery_day_enforced, slot_relaxed, slot_dropped,
         time_budget_exceeded, main_exercise_trimmed, volume_out_of_range, session_group_cap,
         rest_below_minimum, empty_day, mobility_in_main_block, equipment_insufficient,
-        avoided_muscle_substituted, deprecated_exercise]
+        avoided_muscle_substituted, deprecated_exercise, excluded_exercise, avoided_exercise,
+        unknown_exercise]
     NutritionGoal:
       type: string
       enum: [lose, maintain, gain, recomp]
@@ -2125,8 +2126,8 @@ components:
       enum: [omnivore, pescatarian, vegetarian, vegan]
     Allergen:
       type: string
-      description: "gluten, lactosa, frutos secos (tree_nuts), huevo, pescado, marisco y soja."
-      enum: [gluten, lactose, tree_nuts, egg, fish, shellfish, soy]
+      description: "gluten, lactosa, frutos secos (tree_nuts), huevo, pescado, marisco, soja y cacahuete (peanuts)."
+      enum: [gluten, lactose, tree_nuts, egg, fish, shellfish, soy, peanuts]
     MealSlot:
       type: string
       enum: [breakfast, mid_morning, lunch, snack, dinner]
