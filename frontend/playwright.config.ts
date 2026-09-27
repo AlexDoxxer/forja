@@ -12,6 +12,7 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
+  timeout: process.env.E2E_BASE_URL ? 60_000 : 30_000, // 60s for docker-compose, 30s for vite preview
   use: {
     baseURL,
     locale: "es-ES",
