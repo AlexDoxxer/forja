@@ -83,7 +83,25 @@ async function completeAccount(user: ReturnType<typeof userEvent.setup>): Promis
   await user.click(screen.getByRole("button", { name: "Continuar" }));
 }
 
+async function completeBasics(user: ReturnType<typeof userEvent.setup>, withHeight = true): Promise<void> {
+  await user.type(screen.getByLabelText("Fecha de nacimiento"), "1992-04-15");
+  if (withHeight) await user.type(screen.getByLabelText("Altura (cm)"), "170");
+}
+
 describe("OnboardingScreen", () => {
+  it("exige fecha de nacimiento y altura (el backend las necesita para completar el onboarding)", async () => {
+    const user = userEvent.setup();
+    captureRequests({ flagged: false });
+    renderWithRouter(OnboardingScreen, { path: "/onboarding" });
+    await screen.findByLabelText("Correo electrónico");
+    await completeAccount(user);
+    await screen.findByLabelText("Fecha de nacimiento");
+    await user.click(screen.getByRole("button", { name: "Continuar" }));
+    expect(screen.getByText(/fecha de nacimiento válida/)).toBeInTheDocument();
+    expect(screen.getByText("La altura debe estar entre 100 y 250 cm.")).toBeInTheDocument();
+    expect(screen.getByText(/Paso 2 de 4/)).toBeInTheDocument();
+  });
+
   it("valida la cuenta antes de avanzar", async () => {
     const user = userEvent.setup();
     renderWithRouter(OnboardingScreen, { path: "/onboarding" });
@@ -118,6 +136,7 @@ describe("OnboardingScreen", () => {
     expect(captured.register).toMatchObject({ email: "lucia@example.org", display_name: "Lucía" });
 
     await user.click(screen.getByRole("button", { name: "Mujer" }));
+    await user.type(screen.getByLabelText("Fecha de nacimiento"), "1992-04-15");
     await user.type(screen.getByLabelText("Altura (cm)"), "166");
     await user.type(screen.getByLabelText("Peso (kg)"), "60");
     await user.click(screen.getByRole("button", { name: "Intermedio" }));
@@ -162,6 +181,8 @@ describe("OnboardingScreen", () => {
     renderWithRouter(OnboardingScreen, { path: "/onboarding" });
     await screen.findByLabelText("Correo electrónico");
     await completeAccount(user);
+    await screen.findByLabelText("Fecha de nacimiento");
+    await completeBasics(user);
     await user.click(await screen.findByRole("button", { name: "Continuar" }));
 
     const groups = screen.getAllByRole("radiogroup");
@@ -186,6 +207,7 @@ describe("OnboardingScreen", () => {
     await user.click(await screen.findByRole("button", { name: "Atrás" }));
     expect(screen.getByLabelText("Correo electrónico")).toBeDisabled();
     await user.click(screen.getByRole("button", { name: "Continuar" }));
+    await completeBasics(user);
     await user.click(await screen.findByRole("button", { name: "Continuar" }));
     for (const group of screen.getAllByRole("radiogroup")) {
       await user.click(within(group).getByLabelText("No"));

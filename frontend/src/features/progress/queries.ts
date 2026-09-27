@@ -42,6 +42,6 @@ export function useExerciseStats(exerciseId: string | null): UseQueryResult<Sche
 export function useBodyMetrics(): UseQueryResult<Schemas["BodyMetricPage"]> {
   return useQuery({
     queryKey: ["body-metrics"],
-    queryFn: async () => unwrapApi(await api.GET("/body-metrics", { params: { query: { limit: 120 } } })),
+    queryFn: async () => unwrapApi(await api.GET("/body-metrics", { params: { query: { limit: 100 } } })),
   });
 }

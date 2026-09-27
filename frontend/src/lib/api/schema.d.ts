@@ -2646,7 +2646,13 @@ export interface components {
          *       "typical_portion_g": 150,
          *       "unit_grams": null,
          *       "unit_name_es": null,
-         *       "energy_note": null
+         *       "energy_note": null,
+         *       "max_portion_g": 300,
+         *       "meal_slots": [
+         *         "lunch",
+         *         "dinner"
+         *       ],
+         *       "weekly_max": null
          *     }
          */
         Food: {
@@ -2666,6 +2672,12 @@ export interface components {
             unit_name_es: string | null;
             /** @description Justificación cuando |kcal − (4P + 4C + 9G)| supera el 12 % (alcohol, fibra, polioles). */
             energy_note: string | null;
+            /** @description Tope de gramos por ítem en un plan. */
+            max_portion_g: number;
+            /** @description Comidas donde puede seleccionarse; vacío = no se selecciona automáticamente. */
+            meal_slots: components["schemas"]["MealSlot"][];
+            /** @description Máximo de apariciones por semana; `null` sin límite. */
+            weekly_max: number | null;
         };
         FoodPage: {
             items: components["schemas"]["Food"][];

@@ -13,6 +13,8 @@ export default tseslint.config(
       "playwright-report",
       "test-results",
       ".lighthouseci",
+      // Script de verificación manual con Playwright contra la API real (F2-FE-16).
+      "scripts/gate2-live.mjs",
       // Generado por `openapi-typescript` a partir de contracts/openapi.yaml (`npm run gen:api`);
       // no se edita a mano y se sobrescribe en cada generación.
       "src/lib/api/schema.d.ts",

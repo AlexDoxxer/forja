@@ -244,6 +244,31 @@ describe("cola offline y /sync", () => {
     expect((await flushQueue()).failed).toBe(true);
     expect(await queueLength()).toBe(1);
   });
+
+  it("un lote con una operación inválida (422) aísla la culpable, la descarta con aviso y sincroniza el resto", async () => {
+    const good = uuidv7(T0);
+    const bad = uuidv7(T0 + 1);
+    await enqueueOperation(sessionOp(good));
+    await enqueueOperation(sessionOp(bad));
+    server.use(
+      http.post("/api/v1/sync", async ({ request }) => {
+        const body = (await request.json()) as { operations: { op: string; client_uuid: string }[] };
+        if (body.operations.some((o) => o.client_uuid === bad)) {
+          return HttpResponse.json({ type: "/x", title: "Datos no válidos", status: 422 }, { status: 422 });
+        }
+        return HttpResponse.json({
+          server_time: new Date(T0).toISOString(),
+          results: body.operations.map((o, index) => ({
+            index, op: o.op, client_uuid: o.client_uuid, status: "applied", server_id: null, problem: null,
+          })),
+        });
+      }),
+    );
+    const out = await flushQueue();
+    expect(out).toMatchObject({ applied: 1, rejected: 1, failed: false });
+    expect(await queueLength()).toBe(0);
+    expect((await takeRejections())[0]?.clientUuid).toBe(bad);
+  });
 });
 
 describe("reintento exponencial", () => {
