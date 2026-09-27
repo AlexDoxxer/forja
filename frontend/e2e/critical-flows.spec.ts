@@ -11,11 +11,10 @@ function getTestEmail(testName: string): string {
 
 test.describe("Critical flows — Onboarding, Generate, Activate, Train, Progress", () => {
   test("Complete onboarding flow with PAR-Q", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/onboarding");
 
     // Step 1: Register
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
-    await page.getByLabel(/Correo|Email/i).fill(getTestEmail("onboarding"));
+        await page.getByLabel(/Correo|Email/i).fill(getTestEmail("onboarding"));
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
 
@@ -49,8 +48,7 @@ test.describe("Critical flows — Onboarding, Generate, Activate, Train, Progres
   test("Complete workflow: generate → activate → train session", async ({ page }) => {
     // First, register and complete onboarding
     const email = getTestEmail("workflow");
-    await page.goto("/");
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
+    await page.goto("/onboarding");
     await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
@@ -163,12 +161,11 @@ test.describe("Critical flows — Onboarding, Generate, Activate, Train, Progres
   });
 
   test("View progress and stats", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/onboarding");
 
     // Quick login
     const email = getTestEmail("progress");
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
-    await page.getByLabel(/Correo|Email/i).fill(email);
+        await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
 
@@ -201,11 +198,10 @@ test.describe("Critical flows — Onboarding, Generate, Activate, Train, Progres
 test.describe("Editor flow", () => {
   test("Edit generated program: reorder exercises, create superset", async ({ page }) => {
     const email = getTestEmail("editor");
-    await page.goto("/");
+    await page.goto("/onboarding");
 
     // Create account
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
-    await page.getByLabel(/Correo|Email/i).fill(email);
+        await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
 

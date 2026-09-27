@@ -13,11 +13,10 @@ test.describe("Offline mode — Session persistence and sync", () => {
     const email = getTestEmail("offline");
 
     // Setup account and program
-    await page.goto("/");
+    await page.goto("/onboarding");
 
     // Register
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
-    await page.getByLabel(/Correo|Email/i).fill(email);
+        await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
 
@@ -133,8 +132,7 @@ test.describe("Offline mode — Session persistence and sync", () => {
     const email = getTestEmail("offline-indicator");
 
     // Setup account
-    await page.goto("/");
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
+    await page.goto("/onboarding");
     await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();

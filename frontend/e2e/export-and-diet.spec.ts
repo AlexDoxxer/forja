@@ -13,8 +13,7 @@ test.describe("Export and Diet features", () => {
     const email = getTestEmail("export-pdf");
 
     // Setup account
-    await page.goto("/");
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
+    await page.goto("/onboarding");
     await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
@@ -82,8 +81,7 @@ test.describe("Export and Diet features", () => {
     const email = getTestEmail("export-ics");
 
     // Setup account
-    await page.goto("/");
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
+    await page.goto("/onboarding");
     await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
@@ -152,8 +150,7 @@ test.describe("Export and Diet features", () => {
     const email = getTestEmail("diet-flow");
 
     // Setup account WITH diet enabled during onboarding
-    await page.goto("/");
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
+    await page.goto("/onboarding");
     await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
@@ -204,8 +201,7 @@ test.describe("Export and Diet features", () => {
     const email = getTestEmail("diet-disable");
 
     // Setup with diet enabled
-    await page.goto("/");
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
+    await page.goto("/onboarding");
     await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();

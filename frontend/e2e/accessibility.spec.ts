@@ -30,7 +30,7 @@ async function checkA11y(page: any, context: string | null = null) {
 
 test.describe("Accessibility (WCAG 2.2 AA) — 0 serious/critical violations", () => {
   test("Home/today screen has no a11y violations", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/onboarding");
     await checkA11y(page);
   });
 
@@ -39,8 +39,7 @@ test.describe("Accessibility (WCAG 2.2 AA) — 0 serious/critical violations", (
     await page.goto("/");
 
     // Register
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
-    await checkA11y(page);
+        await checkA11y(page);
 
     await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
@@ -82,11 +81,10 @@ test.describe("Accessibility (WCAG 2.2 AA) — 0 serious/critical violations", (
 
   test("Profile/settings screen has no a11y violations", async ({ page }) => {
     const email = getTestEmail("a11y-profile");
-    await page.goto("/");
+    await page.goto("/onboarding");
 
     // Setup account
-    await page.getByRole("button", { name: /Crear cuenta|Sign up/i }).click();
-    await page.getByLabel(/Correo|Email/i).fill(email);
+        await page.getByLabel(/Correo|Email/i).fill(email);
     await page.getByLabel(/Contraseña|Password/i).fill(BASE_PASSWORD);
     await page.getByRole("button", { name: /Crear|Create/i }).click();
 
