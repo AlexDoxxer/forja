@@ -5,12 +5,13 @@ Rama: `f3/qa-tests` (sin fusionar). E2E con Playwright (Chromium + WebKit móvil
 ## 1. Resumen
 
 Implementación completa de la suite de E2E de Fase 3 per MASTER_PROMPT §13 y §15 (Definition of Done):
-- **Suite E2E Playwright**: 5 ficheros spec (smoke, critical-flows, accessibility, offline, export-and-diet) + lighthouse checks
-- **Accesibilidad**: @axe-core/playwright integrado para 0 violaciones serias/críticas
+- **Suite E2E Playwright**: 6 ficheros spec (smoke + 5 nuevos), 969 LOC, ESLint/TypeScript limpio
+- **Accesibilidad**: @axe-core/playwright integrado para 0 violaciones serias/críticas (en pantallas que cargan)
 - **Offline**: tests de red cortada, persistencia en IndexedDB, sincronización
 - **Exportación**: PDF/ICS
 - **Dieta**: flow de activación/desactivación
-- **PWA**: manifest, service worker, offline capability checks
+- **PWA**: manifest, service worker, offline capability checks ✅
+- **Resultados finales**: **12 PASSED**, **26 FAILED** (todos timeout en auth)
 - Verificación contra `docker-compose` real (BD PostgreSQL + API + nginx)
 
 ## 2. Ficheros tocados
@@ -27,6 +28,7 @@ Implementación completa de la suite de E2E de Fase 3 per MASTER_PROMPT §13 y �
 - `frontend/e2e/smoke.spec.ts`: fix assertion de `<h1>Hoy</h1>` (era `Forja`)
 - `frontend/e2e/lighthouse.spec.ts`: fix offline capability check para verificar `/sw.js` en lugar de HTML content
 - `frontend/playwright.config.ts`: aumentar timeout a 60s cuando se usa E2E_BASE_URL (docker-compose)
+- `frontend/e2e/*.spec.ts`: eliminar unused variables, convertir timestamps a strings, añadir tipos explícitos (ESLint/TypeScript clean)
 - `frontend/package.json`: dependencias añadidas:
   - @axe-core/playwright@^4.13.0
   - @lhci/cli@^0.13.0
@@ -135,7 +137,11 @@ Todos los fallos son **timeout a 60 segundos** esperando `getByRole("button", { 
 - Lógica de enrutamiento condicional no respeta REGISTRATION_OPEN en frontend
 - Necesita investigación adicional (fuera del scope E2E, requiere debug de frontend/backend)
 
-**Nota importante**: Per f2-frontend-integration handoff, estos mismos flujos sí funcionan end-to-end en otro contexto. Los tests E2E están correctamente escritos; la configuración del stack docker-compose o la comunicación frontend-backend con REGISTRATION_OPEN necesita verificación.
+**Causa raíz real encontrada (commit de652f0)**: La página `/` (home) está protegida por AuthGate que redirige a `/login`. El botón "Crear cuenta" en home es un `<Link>` (role=link), NO un button (role=button), por lo que los tests que buscaban `getByRole("button", ...)` nunca lo encontraban. 
+
+**Solución aplicada**: Tests ahora navegan directamente a `/onboarding` en lugar de pasar por home. Sin embargo, los tests SIGUEN FALLANDO (26 fallos con timeouts idénticos), lo que sugiere que `/onboarding` TAMBIÉN está protegido por AuthGate o redirige a `/login`.
+
+**Investigación pendiente**: ¿Por qué /onboarding está bloqueado si debería ser accesible sin autenticación para nuevos usuarios? (AuthGate está configurado demasiado agresivamente o /onboarding debería ser excluido)
 
 ## 6. Riesgos y pendientes
 
