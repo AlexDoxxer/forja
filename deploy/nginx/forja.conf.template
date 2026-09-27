@@ -1,0 +1,131 @@
+# nginx de Forja (MASTER_PROMPT §12.1). Plantilla procesada con envsubst al arrancar el
+# contenedor: solo se sustituyen ${MEDIA_ROOT}, ${MEDIA_AUTH_DIRECTIVE} y ${MEDIA_CACHE_CONTROL}
+# (calculadas por docker-entrypoint.d/15-media-auth.envsh a partir de MEDIA_REQUIRE_AUTH).
+# El TLS lo termina el reverse proxy externo (ver deploy/lxc/README.md).
+
+# IP real del cliente cuando hay un reverse proxy delante (redes privadas).
+set_real_ip_from 10.0.0.0/8;
+set_real_ip_from 172.16.0.0/12;
+set_real_ip_from 192.168.0.0/16;
+set_real_ip_from fc00::/7;
+real_ip_header X-Forwarded-For;
+real_ip_recursive on;
+
+limit_req_zone $binary_remote_addr zone=forja_auth:10m rate=30r/m;
+limit_req_zone $binary_remote_addr zone=forja_api:10m rate=20r/s;
+limit_req_status 429;
+
+map $http_x_forwarded_proto $forja_proto {
+    default $http_x_forwarded_proto;
+    ""      $scheme;
+}
+
+upstream forja_api {
+    server api:8000;
+    keepalive 16;
+}
+
+gzip on;
+gzip_comp_level 5;
+gzip_min_length 512;
+gzip_vary on;
+gzip_proxied any;
+gzip_types text/plain text/css application/javascript text/javascript application/json
+    application/manifest+json image/svg+xml application/xml font/ttf;
+
+server {
+    listen 8080 default_server;
+    server_name _;
+    server_tokens off;
+
+    root /usr/share/nginx/html;
+    index index.html;
+    client_max_body_size 5m;
+    client_body_timeout 15s;
+
+    location = /healthz {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+
+    # ---- API ------------------------------------------------------------------
+    # Las cabeceras de seguridad de /api las añade la propia API.
+    location /api/ {
+        limit_req zone=forja_api burst=40 nodelay;
+        include /etc/nginx/snippets/proxy-api.conf;
+        proxy_pass http://forja_api;
+    }
+
+    # Autenticación: límite estricto contra fuerza bruta (además del de la app).
+    location /api/v1/auth/ {
+        limit_req zone=forja_auth burst=20 nodelay;
+        include /etc/nginx/snippets/proxy-api.conf;
+        proxy_pass http://forja_api;
+    }
+
+    # ---- Medios (© Gym visual) ---------------------------------------------------
+    # Subrequest de autorización: 2xx con sesión válida, 401 sin ella.
+    location = /_media_auth {
+        internal;
+        proxy_pass http://forja_api/api/v1/auth/check;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $forja_proto;
+        proxy_set_header X-Original-URI $request_uri;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+    }
+
+    # Solo se exponen miniaturas y GIF. `source/` (dataset), `manifest.json` y `LICENSES/`
+    # nunca se sirven por HTTP (404).
+    location ^~ /media/ {
+        location ~ ^/media/((?:thumbs|gifs)/[A-Za-z0-9._-]+)$ {
+            ${MEDIA_AUTH_DIRECTIVE}
+            alias ${MEDIA_ROOT}/$1;
+            limit_req zone=forja_api burst=200 nodelay;
+            include /etc/nginx/snippets/security-headers.conf;
+            add_header Cache-Control "${MEDIA_CACHE_CONTROL}" always;
+            add_header X-Robots-Tag "noindex" always;
+            access_log off;
+        }
+        return 404;
+    }
+
+    # ---- Estáticos ---------------------------------------------------------------
+    # Nombres con hash de contenido: inmutables.
+    location /assets/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+        try_files $uri =404;
+    }
+
+    # Service worker y manifiesto: en la raíz (alcance `/`) y sin caché larga.
+    location = /sw.js {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "no-cache" always;
+        add_header Service-Worker-Allowed "/" always;
+        try_files $uri =404;
+    }
+
+    location = /manifest.webmanifest {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "no-cache" always;
+        default_type application/manifest+json;
+        try_files $uri =404;
+    }
+
+    location /icons/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=86400" always;
+        try_files $uri =404;
+    }
+
+    # SPA: cualquier otra ruta cae en index.html (sin caché, para ver despliegues nuevos).
+    location / {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "no-cache" always;
+        try_files $uri /index.html;
+    }
+}

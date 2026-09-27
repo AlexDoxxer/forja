@@ -1,0 +1,13 @@
+# /etc/systemd/system/forja-backup.timer
+# Activar: systemctl enable --now forja-backup.timer
+# Alternativa con cron: 30 3 * * * cd /opt/forja && deploy/backup/backup.sh >>/var/log/forja-backup.log 2>&1
+[Unit]
+Description=Copia diaria de Forja
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+RandomizedDelaySec=10min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

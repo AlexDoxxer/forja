@@ -1,0 +1,12 @@
+# /etc/systemd/system/forja-backup.service
+# Ajusta WorkingDirectory y BACKUP_DIR a tu instalación.
+[Unit]
+Description=Copia de seguridad de la base de datos de Forja
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/forja
+Environment=BACKUP_DIR=/var/backups/forja
+ExecStart=/opt/forja/deploy/backup/backup.sh

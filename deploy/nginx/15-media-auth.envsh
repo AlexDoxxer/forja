@@ -1,0 +1,21 @@
+#!/bin/sh
+# Se ejecuta (source) antes del envsubst de plantillas de la imagen nginx.
+# Traduce MEDIA_REQUIRE_AUTH a las directivas concretas de `location /media/`.
+MEDIA_REQUIRE_AUTH="${MEDIA_REQUIRE_AUTH:-true}"
+MEDIA_ROOT="${MEDIA_ROOT:-/var/lib/forja/media}"
+case "$MEDIA_REQUIRE_AUTH" in
+    true)
+        MEDIA_AUTH_DIRECTIVE="auth_request /_media_auth;"
+        # `private`: una caché compartida intermedia no debe servir medios sin sesión.
+        MEDIA_CACHE_CONTROL="private, max-age=31536000, immutable"
+        ;;
+    false)
+        MEDIA_AUTH_DIRECTIVE="# MEDIA_REQUIRE_AUTH=false: medios públicos (revisa los términos de Gym visual)"
+        MEDIA_CACHE_CONTROL="public, max-age=31536000, immutable"
+        ;;
+    *)
+        echo "15-media-auth: MEDIA_REQUIRE_AUTH debe ser true o false (recibido: $MEDIA_REQUIRE_AUTH)" >&2
+        exit 1
+        ;;
+esac
+export MEDIA_REQUIRE_AUTH MEDIA_ROOT MEDIA_AUTH_DIRECTIVE MEDIA_CACHE_CONTROL

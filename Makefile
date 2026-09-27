@@ -21,7 +21,8 @@ PLACEHOLDER_PATTERN := TODO|FIXME|XXX|NotImplementedError|[Ll]orem ipsum
 .PHONY: help install lint lint-python lint-frontend lint-contracts lint-placeholders \
 	typecheck typecheck-python typecheck-frontend test test-engine test-nutrition \
 	test-backend test-backend-unit test-backend-integration test-frontend test-slow e2e \
-	format build clean seed-demo
+	format build clean seed-demo \
+	bootstrap up down logs migrate ingest backup restore restore-verify create-admin ps
 
 help: ## Muestra esta ayuda
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
@@ -114,3 +115,51 @@ seed-demo: ## Datos de demostración (solo desarrollo)
 clean: ## Elimina artefactos generados
 	rm -rf dist frontend/dist frontend/coverage frontend/playwright-report frontend/test-results
 	find . -name coverage.json -not -path './frontend/node_modules/*' -delete
+
+# ------------------------------------------------------------------ operación (§12.3)
+# Objetivos de despliegue de `devops-despliegue`. Requieren Docker con el plugin compose y
+# un `.env` (lo crea `make bootstrap` desde `.env.example`).
+COMPOSE ?= docker compose --env-file .env -f deploy/docker-compose.yml
+export FORJA_COMPOSE := $(COMPOSE)
+BACKUP_DIR ?= /var/backups/forja
+
+bootstrap: ## Primera instalación: secretos, imágenes, BD, migraciones, ingesta, admin y arranque
+	deploy/scripts/init-env.sh
+	$(COMPOSE) build
+	$(COMPOSE) up -d --wait db
+	$(COMPOSE) --profile tools run --rm ingest
+	$(COMPOSE) run --rm api python -m app.cli create-admin
+	$(COMPOSE) up -d --wait
+	@echo "==> Forja lista en http://localhost:$$(grep -E '^WEB_PORT=' .env | cut -d= -f2-)"
+
+up: ## Construye (si hace falta) y arranca la pila en segundo plano
+	$(COMPOSE) up -d --build --wait
+
+down: ## Detiene la pila (conserva volúmenes; usa `down -v` a mano para borrarlos)
+	$(COMPOSE) down
+
+ps: ## Estado de los contenedores
+	$(COMPOSE) ps
+
+logs: ## Sigue los logs (SERVICE=api para uno solo)
+	$(COMPOSE) logs -f --tail=200 $(SERVICE)
+
+migrate: ## Aplica las migraciones de Alembic (con bloqueo consultivo)
+	$(COMPOSE) run --rm api true
+
+ingest: ## Migra, descarga el commit fijado del dataset y carga el catálogo
+	$(COMPOSE) --profile tools run --rm ingest
+
+create-admin: ## Crea un usuario administrador (pide email y contraseña)
+	$(COMPOSE) run --rm -e FORJA_MIGRATE=0 api python -m app.cli create-admin
+
+backup: ## pg_dump -Fc con rotación 7 diarias + 4 semanales en $(BACKUP_DIR)
+	BACKUP_DIR=$(BACKUP_DIR) deploy/backup/backup.sh
+
+restore: ## Restaura una copia sobre la BD real: make restore FILE=/ruta/forja.dump
+	@test -n "$(FILE)" || { echo "Uso: make restore FILE=/ruta/forja.dump"; exit 2; }
+	deploy/backup/restore.sh --yes "$(FILE)"
+
+restore-verify: ## Comprueba una copia restaurándola en una BD efímera: make restore-verify FILE=...
+	@test -n "$(FILE)" || { echo "Uso: make restore-verify FILE=/ruta/forja.dump"; exit 2; }
+	deploy/backup/restore.sh --verify "$(FILE)"
