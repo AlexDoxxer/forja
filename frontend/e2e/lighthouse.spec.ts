@@ -53,28 +53,22 @@ test.describe("PWA and Performance checks", () => {
 
     await page.goto("/", { baseURL });
 
-    // Verify SW can be detected and offline.html or cache strategy exists
+    // Verify service worker and offline cache strategy exists
     // The app should handle offline gracefully via service worker cache
 
-    // Check for offline cache strategy indicators
-    const html = await page.content();
-    const hasWorkerBox = html.includes("workbox") || html.includes("serviceWorker");
-    expect(hasWorkerBox).toBeTruthy();
+    // Check that service worker file exists and is valid JavaScript
+    const swUrl = new URL("/sw.js", baseURL).href;
+    const swResponse = await page.request.get(swUrl);
+    expect(swResponse.ok()).toBeTruthy();
 
-    // Verify static assets are being cached
-    // This would be verified through the SW registration and cache API
-    const cacheCheck = await page.evaluate(async () => {
-      try {
-        const caches_obj = await caches?.keys?.();
-        return caches_obj ? caches_obj.length > 0 : false;
-      } catch {
-        return false;
-      }
-    });
+    // Service worker file should contain workbox references
+    const swContent = await swResponse.text();
+    const hasWorkbox = swContent.includes("workbox") || swContent.includes("precache");
+    expect(hasWorkbox).toBeTruthy();
 
-    // Cache may or may not be present depending on when this test runs
-    // Just verify the SW infrastructure is there
-    expect(hasWorkerBox).toBeTruthy();
+    // Verify service worker can be detected via API
+    const swPresent = await page.evaluate(() => "serviceWorker" in navigator);
+    expect(swPresent).toBeTruthy();
   });
 
   test("Media attribution (Gym visual) is visible and correct", async ({
