@@ -1,3 +1,6 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
 import { test, expect } from "@playwright/test";
 
 test.describe("PWA and Performance checks", () => {
@@ -58,9 +61,18 @@ test.describe("PWA and Performance checks", () => {
     const swResponse = await page.request.get(swUrl);
     expect(swResponse.ok()).toBeTruthy();
 
-    // Service worker file should contain workbox references
-    const swContent = await swResponse.text();
-    const hasWorkbox = swContent.includes("workbox") || swContent.includes("precache");
+    // `vite-plugin-pwa` solo genera el service worker real de Workbox en `npm run build`; en
+    // modo desarrollo (este test corre contra `npx vite`) sirve un SW mínimo sin esas cadenas,
+    // así que la comprobación se hace contra `dist/sw.js` (requiere haber compilado antes).
+    const distSwPath = path.resolve(import.meta.dirname, "..", "dist", "sw.js");
+    let distSwContent: string;
+    try {
+      distSwContent = await readFile(distSwPath, "utf8");
+    } catch {
+      test.skip(true, `No hay build de producción en ${distSwPath}; ejecuta \`npm run build\` primero.`);
+      return;
+    }
+    const hasWorkbox = distSwContent.includes("workbox") || distSwContent.includes("precache");
     expect(hasWorkbox).toBeTruthy();
 
     // Verify service worker can be detected via API
