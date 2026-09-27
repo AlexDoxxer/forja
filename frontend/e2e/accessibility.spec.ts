@@ -1,15 +1,15 @@
 import { expect, test } from "@playwright/test";
+import type { Page } from "@playwright/test";
 import { AxeBuilder } from "@axe-core/playwright";
 
-const BASE_EMAIL = "access-test@forja.local";
 const BASE_PASSWORD = "Test@1234!test";
 
 function getTestEmail(testName: string): string {
-  const timestamp = Date.now();
+  const timestamp = Date.now().toString();
   return `${testName}-${timestamp}@forja.local`;
 }
 
-async function checkA11y(page: any, context: string | null = null) {
+async function checkA11y(page: Page, context: string | null = null): Promise<void> {
   const builder = new AxeBuilder({ page });
   if (context) {
     builder.include(context);
@@ -22,7 +22,7 @@ async function checkA11y(page: any, context: string | null = null) {
 
   expect(
     criticalViolations,
-    `Found ${criticalViolations.length} critical/serious a11y violations: ${criticalViolations
+    `Found ${criticalViolations.length.toString()} critical/serious a11y violations: ${criticalViolations
       .map((v) => v.id)
       .join(", ")}`
   ).toHaveLength(0);

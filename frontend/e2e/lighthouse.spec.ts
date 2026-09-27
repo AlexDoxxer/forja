@@ -10,7 +10,7 @@ test.describe("PWA and Performance checks", () => {
     await page.goto("/", { baseURL });
 
     // Check for manifest
-    const manifest = await page.locator('link[rel="manifest"]');
+    const manifest = page.locator('link[rel="manifest"]');
     const manifestHref = await manifest.getAttribute("href");
     expect(manifestHref).toBeTruthy();
 
@@ -20,7 +20,14 @@ test.describe("PWA and Performance checks", () => {
       const manifestResponse = await page.request.get(manifestUrl);
       expect(manifestResponse.ok()).toBeTruthy();
 
-      const manifestData = await manifestResponse.json();
+      interface ManifestData {
+        name: string;
+        short_name: string;
+        display: string;
+        theme_color: string;
+      }
+
+      const manifestData = (await manifestResponse.json()) as ManifestData;
       expect(manifestData.name).toBeTruthy();
       expect(manifestData.short_name).toBeTruthy();
       expect(manifestData.display).toBe("standalone");
@@ -30,16 +37,6 @@ test.describe("PWA and Performance checks", () => {
     // Check service worker
     const swPresent = await page.evaluate(() => "serviceWorker" in navigator);
     expect(swPresent).toBeTruthy();
-
-    // Try to register/detect service worker
-    const swRegistered = await page.evaluate(async () => {
-      try {
-        const registration = await navigator.serviceWorker.getRegistrations();
-        return registration.length > 0;
-      } catch {
-        return false;
-      }
-    });
 
     // SW may not be registered on first load, but file should exist
     const swResponse = await page.request.get(new URL("/sw.js", baseURL).href);
@@ -85,24 +82,18 @@ test.describe("PWA and Performance checks", () => {
     // Wait for content to load
     await page.waitForTimeout(2000);
 
-    // Check if there's any media with attribution
+    // Check if there are images on the page
     const images = await page.locator("img").all();
 
     if (images.length > 0) {
-      // For each image, check if it's followed by attribution text
-      for (const img of images.slice(0, 5)) {
-        // Check the page for Gym visual attribution somewhere
-        const hasAttribution = await page
-          .locator("text=/Gym visual|gymvisual/i")
-          .isVisible()
-          .catch(() => false);
+      // Check the page for Gym visual attribution somewhere
+      const hasAttribution = await page
+        .locator("text=/Gym visual|gymvisual/i")
+        .isVisible()
+        .catch(() => false);
 
-        // At least some content should have attribution
-        if (hasAttribution) {
-          expect(hasAttribution).toBeTruthy();
-          break;
-        }
-      }
+      // Page with images should have attribution
+      expect(hasAttribution).toBeTruthy();
     }
 
     // Check footer/about section for license attribution

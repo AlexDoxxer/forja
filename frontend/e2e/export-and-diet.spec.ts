@@ -1,10 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-const BASE_EMAIL = "export-diet-test@forja.local";
 const BASE_PASSWORD = "Test@1234!test";
 
 function getTestEmail(testName: string): string {
-  const timestamp = Date.now();
+  const timestamp = Date.now().toString();
   return `${testName}-${timestamp}@forja.local`;
 }
 
@@ -243,13 +242,8 @@ test.describe("Export and Diet features", () => {
       }
     }
 
-    // Verify diet link/section is no longer visible in nav or main menu
-    const dietLinkAfterDisable = page.getByRole("link", {
-      name: /Dieta|Nutrición|Nutrition|Diet/i,
-    });
-
-    // Diet link may or may not be visible depending on implementation
-    // Just verify the page didn't crash
+    // Verify page didn't crash after disabling diet
+    // (Diet link visibility depends on implementation — may be hidden or still present)
     await expect(page.getByRole("heading")).toBeVisible();
   });
 });

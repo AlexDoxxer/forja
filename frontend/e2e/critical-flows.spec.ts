@@ -1,11 +1,10 @@
 import { expect, test } from "@playwright/test";
 
-const BASE_EMAIL = "test-e2e@forja.local";
 const BASE_PASSWORD = "Test@1234!test";
 
 // Helper to generate unique email for each test
 function getTestEmail(testName: string): string {
-  const timestamp = Date.now();
+  const timestamp = Date.now().toString();
   return `${testName}-${timestamp}@forja.local`;
 }
 

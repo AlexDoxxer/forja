@@ -1,10 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-const BASE_EMAIL = "offline-test@forja.local";
 const BASE_PASSWORD = "Test@1234!test";
 
 function getTestEmail(testName: string): string {
-  const timestamp = Date.now();
+  const timestamp = Date.now().toString();
   return `${testName}-${timestamp}@forja.local`;
 }
 
@@ -160,10 +159,8 @@ test.describe("Offline mode — Session persistence and sync", () => {
     await context.setOffline(true);
     await page.waitForTimeout(1000);
 
-    // Check for offline indicator in the app
-    // The app should show some indication of being offline
-    const offlineIndicator = page.locator("text=/Sin conexión|Offline|desconectado/i");
-    // May not always be visible, but session should still work
+    // App should continue functioning offline (may or may not show offline indicator)
+    // Just verify page remains responsive
     await page.waitForTimeout(500);
 
     // Restore network
