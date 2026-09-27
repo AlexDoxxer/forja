@@ -160,14 +160,14 @@ jobs:
           docker buildx build --load -t forja-api:ci -f deploy/docker/api.Dockerfile .
           docker buildx build --load -t forja-web:ci -f deploy/docker/web.Dockerfile .
       - name: Trivy · imagen api (falla en HIGH/CRITICAL corregibles)
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: forja-api:ci
           severity: HIGH,CRITICAL
           ignore-unfixed: true
           exit-code: "1"
       - name: Trivy · imagen web (falla en HIGH/CRITICAL corregibles)
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: forja-web:ci
           severity: HIGH,CRITICAL

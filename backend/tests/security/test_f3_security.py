@@ -409,15 +409,17 @@ async def test_nul_byte_strings_do_not_cause_500(
     client: httpx.AsyncClient, user: dict[str, Any], path: str
 ) -> None:
     """U+0000 en un texto libre no debe llegar a PostgreSQL (500)."""
-    payload: dict[str, Any] = {
-        "/profile": {"display_name": "a\u0000b"},
-        "/body-metrics": {"date": "2026-03-03", "weight_kg": 70, "notes": "a\u0000b"},
-        "/sessions": {
+    payload: dict[str, Any]
+    if path == "/profile":
+        payload = {"display_name": "a\u0000b"}
+    elif path == "/body-metrics":
+        payload = {"date": "2026-03-03", "weight_kg": 70, "notes": "a\u0000b"}
+    else:
+        payload = {
             "client_uuid": str(uuid.uuid4()),
             "started_at": "2026-01-01T00:00:00Z",
             "name": "a\u0000b",
-        },
-    }[path]
+        }
     method = "PUT" if path == "/profile" else "POST"
     response = await client.request(
         method, path, json=payload, headers={"Idempotency-Key": str(uuid.uuid4())}
