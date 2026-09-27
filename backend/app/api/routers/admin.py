@@ -31,7 +31,11 @@ Limit = Annotated[int, Query(ge=1, le=100)]
     response_model=api.UserExport,
     responses=errors(401),
 )
-async def export_account_data(user: CurrentUserDep, db: Db) -> api.UserExport:
+async def export_account_data(user: CurrentUserDep, db: Db, response: Response) -> api.UserExport:
+    # S-09 (docs/reviews/f3-security.md): fuerza la descarga como fichero en vez de abrirse
+    # inline en el navegador (riesgo bajo, pero un export de "mis datos" no debería quedar
+    # pegado en el historial de un navegador compartido).
+    response.headers["Content-Disposition"] = 'attachment; filename="forja-export.json"'
     return await account.export_account(db, user)
 
 

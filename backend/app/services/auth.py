@@ -78,7 +78,10 @@ async def start_session(
         expires_at=now + ttl,
         last_seen_at=now,
         user_agent=agent[:256] if agent else None,
-        ip_hash=hash_ip(client_ip(request), settings.secret_key.get_secret_value()),
+        ip_hash=hash_ip(
+            client_ip(request, settings.trusted_proxy_count),
+            settings.secret_key.get_secret_value(),
+        ),
     )
     db.add(session)
     await db.flush()
@@ -139,7 +142,9 @@ async def login(
     user = (await db.execute(select(User).where(User.email == body.email))).scalar_one_or_none()
     stored = user.password_hash if user else passwords.decoy_hash()
     valid = await passwords.verify_password_async(stored, body.password)
-    ip = hash_ip(client_ip(request), settings.secret_key.get_secret_value())
+    ip = hash_ip(
+        client_ip(request, settings.trusted_proxy_count), settings.secret_key.get_secret_value()
+    )
     if user is None or not valid or not user.is_active:
         await audit(
             db,

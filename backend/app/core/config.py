@@ -43,6 +43,11 @@ class Settings(BaseSettings):
     gunicorn_workers: Annotated[int, Field(ge=1, le=32)] = 2
     session_ttl_days: Annotated[int, Field(ge=1, le=365)] = 30
     metrics_enabled: bool = False
+    # S-02 (docs/reviews/f3-security.md): número de proxies de confianza inmediatamente delante
+    # de la app (p. ej. 1 con el nginx del propio despliegue). 0 (por defecto) = no confiar en
+    # ninguno y usar siempre el par IP del socket TCP; ``X-Forwarded-For`` solo se lee cuando
+    # este valor es >= 1, y entonces se toma el salto que esos proxies no pudieron sobrescribir.
+    trusted_proxy_count: Annotated[int, Field(ge=0, le=10)] = 0
 
     @field_validator("database_url")
     @classmethod

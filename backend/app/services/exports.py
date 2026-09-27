@@ -148,11 +148,21 @@ async def render_pdf(detail: api.ProgramDetail, lang: str, media_root: Path) -> 
 
 # ---------------------------------------------------------------------------- ICS
 def _escape(text: str) -> str:
+    """Escapa un valor de texto de una propiedad ICS (RFC 5545 §3.3.11).
+
+    S-08 (``docs/reviews/f3-security.md``): normaliza primero ``\\r\\n`` y luego cualquier
+    ``\\r`` suelto (sin ``\\n`` detrás) a ``\\n`` **antes** de escapar los saltos de línea a
+    ``\\n`` literal. Un ``\\r`` sin normalizar sobreviviría intacto (RFC 5545 usa ``\\r\\n``
+    como separador de línea) y algunos parsers de calendario lo tratan como un salto de línea
+    de facto, permitiendo inyectar una propiedad o un ``VEVENT`` adicional en el ``.ics`` desde
+    un campo de texto libre elegido por el propio usuario (p. ej. el nombre del programa).
+    """
     return (
         text.replace("\\", "\\\\")
         .replace(";", "\\;")
         .replace(",", "\\,")
-        .replace("\r\n", "\\n")
+        .replace("\r\n", "\n")
+        .replace("\r", "\n")
         .replace("\n", "\\n")
     )
 

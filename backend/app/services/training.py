@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.common import encode_cursor
 from app.core.errors import ProblemError, conflict, not_found, unprocessable
-from app.core.ids import uuid7
+from app.core.ids import derived_uuid, uuid7
 from app.models.catalog import Exercise
 from app.models.program import (
     PersonalRecord,
@@ -652,11 +652,28 @@ async def _sync_set(
     if session is None:
         raise not_found("La sesión de la serie no existe (envía antes su session_upsert).")
     data = op.set
+    set_uuid = data.client_uuid
     row = (
-        await db.execute(select(SetLog).where(SetLog.client_uuid == data.client_uuid))
+        await db.execute(select(SetLog).where(SetLog.client_uuid == set_uuid))
     ).scalar_one_or_none()
     if row is not None and row.session_id != session.id:
-        raise conflict("conflict", "Ese client_uuid pertenece a otra sesión.")
+        owner = (
+            await db.execute(
+                select(WorkoutSession.user_id).where(WorkoutSession.id == row.session_id)
+            )
+        ).scalar_one()
+        if owner != user.id:
+            # S-05 (docs/reviews/f3-security.md): ``client_uuid`` ajeno a esta cuenta. Devolver
+            # 409 confirmaría que existe en el sistema para otra cuenta (fuga de un bit, IDOR
+            # parcial). En vez de eso, se deriva un id propio y estable -- igual que hace la
+            # importación de cuentas (``services/account.py::_derived``) -- y se sigue como si
+            # no existiera ninguna fila con ese id.
+            set_uuid = derived_uuid(user.id, set_uuid)
+            row = (
+                await db.execute(select(SetLog).where(SetLog.client_uuid == set_uuid))
+            ).scalar_one_or_none()
+        else:
+            raise conflict("conflict", "Ese client_uuid pertenece a otra sesión.")
     if row is None:
         await _check_exercise(db, data.exercise_id)
         row = SetLog(
@@ -671,18 +688,18 @@ async def _sync_set(
             duration_s=data.duration_s,
             is_warmup=data.is_warmup,
             completed_at=data.completed_at,
-            client_uuid=data.client_uuid,
+            client_uuid=set_uuid,
             client_updated_at=op.updated_at,
         )
         db.add(row)
         await db.flush()
         touched.add(data.exercise_id)
-        return _result(index, "set_upsert", data.client_uuid, "applied", row.id)
+        return _result(index, "set_upsert", set_uuid, "applied", row.id)
     known = _aware(row.client_updated_at)
     if row.deleted_at is not None or op.updated_at < known:
-        return _result(index, "set_upsert", data.client_uuid, "superseded", row.id)
+        return _result(index, "set_upsert", set_uuid, "superseded", row.id)
     if op.updated_at == known:
-        return _result(index, "set_upsert", data.client_uuid, "duplicate", row.id)
+        return _result(index, "set_upsert", set_uuid, "duplicate", row.id)
     row.set_index = data.set_index
     row.weight_kg = _dec(data.weight_kg)
     row.reps = data.reps
@@ -693,7 +710,7 @@ async def _sync_set(
     row.client_updated_at = op.updated_at
     await db.flush()
     touched.add(row.exercise_id)
-    return _result(index, "set_upsert", data.client_uuid, "applied", row.id)
+    return _result(index, "set_upsert", set_uuid, "applied", row.id)
 
 
 async def _sync_delete(
