@@ -147,6 +147,73 @@ jobs:
           path: frontend/dist
           if-no-files-found: error
 
+  # Trabajos de devops-despliegue (ADR 0002): imágenes, Trivy, E2E de humo contra la pila
+  # de `deploy/docker-compose.yml` y el simulacro de restauración de copias de seguridad.
+  images:
+    needs: lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Construir imágenes (api, web)
+        run: |
+          docker buildx build --load -t forja-api:ci -f deploy/docker/api.Dockerfile .
+          docker buildx build --load -t forja-web:ci -f deploy/docker/web.Dockerfile .
+      - name: Trivy · imagen api (falla en HIGH/CRITICAL corregibles)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: forja-api:ci
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+      - name: Trivy · imagen web (falla en HIGH/CRITICAL corregibles)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: forja-web:ci
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+
+  smoke-compose:
+    needs: images
+    runs-on: ubuntu-24.04
+    env:
+      FORJA_IMAGE_TAG: ci
+      COMPOSE_PROJECT_NAME: forja-ci
+      WEB_PORT: "18080"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: .env de la pila
+        run: deploy/scripts/init-env.sh
+      - name: Levantar (migración + ingesta + arranque)
+        run: |
+          docker compose --env-file .env -f deploy/docker-compose.yml build
+          docker compose --env-file .env -f deploy/docker-compose.yml up -d --wait db
+          docker compose --env-file .env -f deploy/docker-compose.yml --profile tools run --rm ingest
+          docker compose --env-file .env -f deploy/docker-compose.yml up -d --wait
+      - name: Comprobaciones HTTP (listo, SPA, medios con y sin sesión, cabeceras)
+        run: |
+          set -euo pipefail
+          curl -sf http://127.0.0.1:18080/api/v1/ready | tee /dev/stderr | grep -q '"ready"'
+          curl -sf http://127.0.0.1:18080/ | grep -qi '<html'
+          media="$(docker compose --env-file .env -f deploy/docker-compose.yml exec -T api \
+              sh -c "ls \$MEDIA_ROOT/thumbs | head -1")"
+          media="${media%$'\r'}"
+          status="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:18080/media/thumbs/$media")"
+          test "$status" = "401"
+          curl -sI http://127.0.0.1:18080/ | grep -qi 'content-security-policy:.*default-src'
+      - name: Simulacro de copia y restauración (BD efímera)
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/forja-ci-backups
+          BACKUP_DIR=/tmp/forja-ci-backups deploy/backup/backup.sh
+          dump="$(ls -t /tmp/forja-ci-backups/daily/*.dump | head -1)"
+          deploy/backup/restore.sh --verify "$dump"
+      - name: Apagar y borrar volúmenes
+        if: always()
+        run: docker compose --env-file .env -f deploy/docker-compose.yml down -v
+
   e2e:
     needs: build
     runs-on: ubuntu-24.04

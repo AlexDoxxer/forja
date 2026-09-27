@@ -1,0 +1,120 @@
+# Forja · pila de producción (MASTER_PROMPT §12.1).
+# Uso: desde la raíz del repo, `make up` (equivale a
+#   docker compose --env-file .env -f deploy/docker-compose.yml up -d --build`).
+# Solo `web` publica un puerto; db y api viven en una red interna sin salida a Internet.
+name: ${COMPOSE_PROJECT_NAME:-forja}
+
+x-forja-env: &forja-env
+  DATABASE_URL: "${DATABASE_URL:-postgresql+asyncpg://${POSTGRES_USER:-forja}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD vacío, ejecuta make bootstrap}@db:5432/${POSTGRES_DB:-forja}}"
+  SECRET_KEY: "${SECRET_KEY:?SECRET_KEY vacío, ejecuta make bootstrap}"
+  PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8080}
+  MEDIA_ROOT: ${MEDIA_ROOT:-/var/lib/forja/media}
+  MEDIA_REQUIRE_AUTH: ${MEDIA_REQUIRE_AUTH:-true}
+  DATASET_REPO: ${DATASET_REPO:-https://github.com/hasaneyldrm/exercises-dataset}
+  DATASET_COMMIT: ${DATASET_COMMIT:-7455efae41b330c265e7cd4b78dfa848e7ce5ebd}
+  REGISTRATION_OPEN: ${REGISTRATION_OPEN:-false}
+  DIET_FEATURE_ENABLED: ${DIET_FEATURE_ENABLED:-true}
+  DEFAULT_LOCALE: ${DEFAULT_LOCALE:-es}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  GUNICORN_WORKERS: ${GUNICORN_WORKERS:-2}
+  SESSION_TTL_DAYS: ${SESSION_TTL_DAYS:-30}
+  METRICS_ENABLED: ${METRICS_ENABLED:-false}
+  FORJA_MIGRATE: "1"
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-forja}
+      POSTGRES_USER: ${POSTGRES_USER:-forja}
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?POSTGRES_PASSWORD vacío, ejecuta make bootstrap}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [internal]
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    security_opt: ["no-new-privileges:true"]
+
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/docker/api.Dockerfile
+    image: forja-api:${FORJA_IMAGE_TAG:-local}
+    restart: unless-stopped
+    environment: *forja-env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - media:${MEDIA_ROOT:-/var/lib/forja/media}
+    # `internal`: db y web. `egress`: salida a Internet solo para la ingesta lanzada desde
+    # Administración (git clone del dataset); no publica puertos.
+    networks: [internal, egress]
+    mem_limit: 768m
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+      - /dev/shm:size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/docker/web.Dockerfile
+    image: forja-web:${FORJA_IMAGE_TAG:-local}
+    restart: unless-stopped
+    environment:
+      MEDIA_REQUIRE_AUTH: ${MEDIA_REQUIRE_AUTH:-true}
+      MEDIA_ROOT: ${MEDIA_ROOT:-/var/lib/forja/media}
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    volumes:
+      - media:${MEDIA_ROOT:-/var/lib/forja/media}:ro
+    networks: [internal, egress]
+    mem_limit: 128m
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+      # envsubst genera aquí la configuración al arrancar (raíz de solo lectura).
+      - /etc/nginx/conf.d:size=1m,uid=101,gid=101,mode=0755
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+  # Servicio de un solo uso: `make ingest` (migra, descarga el commit fijado y carga el catálogo).
+  ingest:
+    profiles: ["tools"]
+    image: forja-api:${FORJA_IMAGE_TAG:-local}
+    build:
+      context: ..
+      dockerfile: deploy/docker/api.Dockerfile
+    environment: *forja-env
+    entrypoint: ["/usr/bin/tini", "--", "/usr/local/bin/api-entrypoint"]
+    command: ["sh", "-c", "forja-ingest fetch && forja-ingest load"]
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - media:${MEDIA_ROOT:-/var/lib/forja/media}
+    networks: [internal, egress]
+    mem_limit: 768m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+networks:
+  internal:
+    internal: true
+  egress: {}
+
+volumes:
+  pgdata:
+  media:

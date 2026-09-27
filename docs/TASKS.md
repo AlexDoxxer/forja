@@ -187,18 +187,18 @@
 
 ## Fase 3 · Endurecimiento
 
-### `devops-despliegue` (§12) — handoff `docs/handoffs/F3-devops.md`
+### `devops-despliegue` (§12) — handoff `docs/handoffs/f3-devops.md`
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F3-OPS-01 | `backend/Dockerfile` multi-stage (uv → `python:3.12-slim`, no root, HEALTHCHECK, incluye `specs/`) | Imagen sin compiladores; `docker run` responde `/api/v1/health` | F2-BE-20 | pendiente |
-| F3-OPS-02 | Imagen `web` (`nginx:1.27-alpine`, no root) con `frontend/dist` | Sirve la SPA con fallback | F2-FE-17 | pendiente |
-| F3-OPS-03 | `deploy/docker-compose.yml` (§12.1) | `docker compose config` válido; `read_only`, límites, healthchecks, perfil `tools` | F3-OPS-01, F3-OPS-02 | pendiente |
-| F3-OPS-04 | `deploy/nginx/forja.conf` con `auth_request` condicionado, CSP, caché, `limit_req` | `/media` 401 sin sesión y 200 con sesión | F3-OPS-03 | pendiente |
-| F3-OPS-05 | Objetivos de operación del `Makefile` (`bootstrap`, `up`, `down`, `logs`, `migrate`, `ingest`, `backup`, `restore`, `create-admin`) | `make bootstrap && make up` en LXC limpio | F3-OPS-03 | pendiente |
-| F3-OPS-06 | `deploy/lxc/README.md` + bloques de nginx externo (TLS fuera y dentro) | Reproducible por un tercero | F3-OPS-05 | pendiente |
-| F3-OPS-07 | `deploy/backup/` con rotación 7+4 y `restore.sh` probado en CI | Trabajo de CI de restauración verde | F3-OPS-03 | pendiente |
-| F3-OPS-08 | CI: build de imágenes y Trivy (falla en HIGH/CRITICAL corregibles) | Trabajos añadidos a `ci.yml` | F3-OPS-01, F3-OPS-02 | pendiente |
+| F3-OPS-01 | `deploy/docker/api.Dockerfile` multi-stage (uv → `python:3.12-slim`, no root, HEALTHCHECK, incluye `specs/`) | Imagen sin compiladores; `/api/v1/ready` responde 200 | F2-BE-20 | hecha |
+| F3-OPS-02 | Imagen `web` (`nginx-unprivileged:1.27-alpine`, no root) con `frontend/dist` | Sirve la SPA con fallback | F2-FE-17 | hecha |
+| F3-OPS-03 | `deploy/docker-compose.yml` (§12.1) | `docker compose config` válido; `read_only`, límites, healthchecks, perfil `tools` | F3-OPS-01, F3-OPS-02 | hecha |
+| F3-OPS-04 | `deploy/nginx/forja.conf.template` con `auth_request` condicionado, CSP, caché, `limit_req` | `/media` 401 sin sesión y 200 con sesión | F3-OPS-03 | hecha |
+| F3-OPS-05 | Objetivos de operación del `Makefile` (`bootstrap`, `up`, `down`, `logs`, `migrate`, `ingest`, `backup`, `restore`, `create-admin`) | `make bootstrap && make up` en LXC limpio | F3-OPS-03 | hecha |
+| F3-OPS-06 | `deploy/lxc/README.md` + bloques de nginx externo (TLS fuera y dentro) | Reproducible por un tercero | F3-OPS-05 | hecha |
+| F3-OPS-07 | `deploy/backup/` con rotación 7+4 y `restore.sh` probado en CI | Trabajo de CI de restauración verde | F3-OPS-03 | hecha |
+| F3-OPS-08 | CI: build de imágenes y Trivy (falla en HIGH/CRITICAL corregibles) | Trabajos añadidos a `ci.yml` | F3-OPS-01, F3-OPS-02 | hecha |
 
 ### `qa-tests` (§13) — handoff `docs/handoffs/F3-qa.md`
 
