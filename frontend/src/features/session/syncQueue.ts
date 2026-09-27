@@ -9,6 +9,7 @@ import {
   removeFromQueue,
   savePlayerState,
   setMeta,
+  type QueueItem as StoredQueueItem,
   type SyncOperation,
 } from "./storage";
 
@@ -77,41 +78,69 @@ export async function flushQueue(): Promise<FlushOutcome> {
   const outcome: FlushOutcome = { ...EMPTY };
   const items = await readQueue();
   for (let start = 0; start < items.length; start += SYNC_BATCH_SIZE) {
-    const batch = items.slice(start, start + SYNC_BATCH_SIZE);
-    let response: SyncResponse;
-    try {
-      const result = await api.POST("/sync", { body: { operations: batch.map((i) => i.op) } });
-      if (result.data === undefined) {
-        // 4xx del lote entero (sesión caducada, 413…): se reintentará; no se pierde nada.
-        return { ...outcome, failed: true };
-      }
-      response = result.data;
-    } catch {
-      return { ...outcome, failed: true };
-    }
-    outcome.sent += batch.length;
-    await updateSkew(response.server_time);
-    const done: number[] = [];
-    for (const result of response.results) {
-      const item = batch[result.index];
-      if (item === undefined) continue;
-      done.push(item.seq);
-      outcome[result.status] += 1;
-      if (result.status === "rejected") {
-        await addRejection({
-          op: result.op,
-          clientUuid: result.client_uuid,
-          title: result.problem?.title ?? "Operación rechazada",
-          at: Date.now(),
-        });
-      } else if (result.op === "session_upsert" && result.server_id !== null) {
-        await rememberServerId(result.client_uuid, result.server_id);
-      }
-    }
-    // Operaciones sin resultado (respuesta incompleta) se conservan para el siguiente intento.
-    await removeFromQueue(done);
+    const failed = await sendBatch(items.slice(start, start + SYNC_BATCH_SIZE), outcome);
+    if (failed) return { ...outcome, failed: true };
   }
   return outcome;
+}
+
+/** Envía un lote; devuelve `true` si hay que reintentar más tarde (red, 5xx, 401, 413…). */
+async function sendBatch(batch: readonly Required<StoredQueueItem>[], outcome: FlushOutcome): Promise<boolean> {
+  let response: SyncResponse;
+  try {
+    const result = await api.POST("/sync", { body: { operations: batch.map((i) => i.op) } });
+    if (result.data === undefined) {
+      if (result.response.status === 422) {
+        // Un lote con una operación inválida no debe bloquear la cola para siempre: se aísla
+        // la culpable enviando de una en una; la que siga fallando se descarta con aviso.
+        if (batch.length > 1) {
+          for (const item of batch) {
+            if (await sendBatch([item], outcome)) return true;
+          }
+          return false;
+        }
+        const [item] = batch;
+        if (item !== undefined) {
+          outcome.rejected += 1;
+          await addRejection({
+            op: item.op.op,
+            clientUuid: "client_uuid" in item.op ? item.op.client_uuid : "",
+            title: "Operación rechazada por datos no válidos",
+            at: Date.now(),
+          });
+          await removeFromQueue([item.seq]);
+        }
+        return false;
+      }
+      // 4xx del lote entero (sesión caducada, 413…): se reintentará; no se pierde nada.
+      return true;
+    }
+    response = result.data;
+  } catch {
+    return true;
+  }
+  outcome.sent += batch.length;
+  await updateSkew(response.server_time);
+  const done: number[] = [];
+  for (const result of response.results) {
+    const item = batch[result.index];
+    if (item === undefined) continue;
+    done.push(item.seq);
+    outcome[result.status] += 1;
+    if (result.status === "rejected") {
+      await addRejection({
+        op: result.op,
+        clientUuid: result.client_uuid,
+        title: result.problem?.title ?? "Operación rechazada",
+        at: Date.now(),
+      });
+    } else if (result.op === "session_upsert" && result.server_id !== null) {
+      await rememberServerId(result.client_uuid, result.server_id);
+    }
+  }
+  // Operaciones sin resultado (respuesta incompleta) se conservan para el siguiente intento.
+  await removeFromQueue(done);
+  return false;
 }
 
 export { enqueueOperation };

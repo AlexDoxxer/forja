@@ -75,6 +75,24 @@ describe("cliente API — middleware CSRF (ADR 0003)", () => {
     expect(capturedHeader).toBeNull();
   });
 
+  it("pide GET /auth/csrf antes de la primera escritura si no hay cookie y usa el token recibido", async () => {
+    let capturedHeader: string | null = null;
+    server.use(
+      http.get("/api/v1/auth/csrf", () => {
+        setCsrfCookie("token-nuevo");
+        return new HttpResponse(null, { status: 204 });
+      }),
+      http.post("/api/v1/auth/logout", ({ request }) => {
+        capturedHeader = request.headers.get("x-csrf-token");
+        return new HttpResponse(null, { status: 204 });
+      }),
+    );
+
+    await api.POST("/auth/logout");
+
+    expect(capturedHeader).toBe("token-nuevo");
+  });
+
   it("no añade la cabecera en escrituras si no hay cookie CSRF", async () => {
     let capturedHeader: string | null = "sin-tocar";
     server.use(

@@ -108,8 +108,12 @@ export function OnboardingScreen(): React.JSX.Element {
 
   const validateBasics = (): boolean => {
     const next: Errors = {};
+    // El backend solo marca el onboarding como completo con fecha de nacimiento y altura.
+    if (birthDate === "" || Number.isNaN(Date.parse(birthDate)) || Date.parse(birthDate) > Date.now()) {
+      next["birthDate"] = t("onboarding.basics.errorBirthDate");
+    }
     const height = Number(heightCm);
-    if (heightCm !== "" && (Number.isNaN(height) || height < 100 || height > 250)) {
+    if (heightCm === "" || Number.isNaN(height) || height < 100 || height > 250) {
       next["height"] = t("onboarding.basics.errorHeight");
     }
     const weight = Number(weightKg);
@@ -282,6 +286,7 @@ export function OnboardingScreen(): React.JSX.Element {
               label={t("onboarding.basics.birthDate")}
               type="date"
               value={birthDate}
+              error={errors["birthDate"] ?? null}
               onChange={(event) => {
                 setBirthDate(event.target.value);
               }}

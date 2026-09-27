@@ -25,7 +25,7 @@ function Heatmap(): React.JSX.Element {
     [overview.data],
   );
   return (
-    <section className={shared["card"]} aria-labelledby="heat-title">
+    <section className={`${shared["card"] ?? ""} ${styles["heatCard"] ?? ""}`} aria-labelledby="heat-title">
       <h2 id="heat-title">{t("progressB.heatmap")}</h2>
       <p className={shared["muted"]}>{t("progressB.heatmapHelp")}</p>
       <QueryState
@@ -34,7 +34,14 @@ function Heatmap(): React.JSX.Element {
         loadingLabel={t("progress.loading")}
         errorLabel={t("progress.error")}
       >
-        <ul className={styles["heatmap"]} aria-label={t("progressB.heatmap")}>
+        <ul
+          className={styles["heatmap"]}
+          aria-label={t("progressB.heatmap")}
+          // Lo más reciente (última columna) debe verse sin desplazarse.
+          ref={(node) => {
+            if (node !== null) node.scrollLeft = node.scrollWidth;
+          }}
+        >
           {columns.flat().map((cell) => (
             <li
               key={cell.date}

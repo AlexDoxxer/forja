@@ -271,7 +271,8 @@ export function toSetCreate(set: LoggedSet): SetLogCreate {
     client_uuid: set.clientUuid,
     exercise_id: set.exerciseId,
     program_exercise_id: set.programExerciseId,
-    set_index: set.setIndex,
+    // Interno 0-based; el contrato (SetLogCreate) exige >= 1.
+    set_index: set.setIndex + 1,
     weight_kg: set.weightKg,
     reps: set.reps,
     rir: set.rir,
