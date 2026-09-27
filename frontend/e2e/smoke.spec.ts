@@ -4,5 +4,5 @@ test("la aplicación carga en español con su encabezado principal", async ({ pa
   await page.goto("/");
   await expect(page).toHaveTitle("Forja");
   await expect(page.locator("html")).toHaveAttribute("lang", "es");
-  await expect(page.getByRole("heading", { level: 1, name: "Forja" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Hoy" })).toBeVisible();
 });
