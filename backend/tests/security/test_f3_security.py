@@ -288,11 +288,10 @@ async def test_sync_cannot_touch_foreign_sessions_or_sets(
     assert len(victim["sets"]) == 1
 
 
-@KNOWN_ISSUE
 async def test_sync_set_conflict_does_not_reveal_foreign_client_uuid(
     client: httpx.AsyncClient, other_client: httpx.AsyncClient, user: dict[str, Any]
 ) -> None:
-    """S-05: el 409 «pertenece a otra sesión» confirma que un client_uuid existe en otra cuenta."""
+    """S-05 (corregido): el conflicto ya no revela que un client_uuid existe en otra cuenta."""
     session = await start(client)
     victim_set = (await log(client, session["id"])).json()["client_uuid"]
     mine = str(uuid.uuid4())
@@ -379,11 +378,10 @@ async def test_oversized_declared_body_is_413(
     assert response.status_code == 413
 
 
-@KNOWN_ISSUE
 async def test_chunked_body_over_limit_is_413(
     client: httpx.AsyncClient, user: dict[str, Any]
 ) -> None:
-    """S-03: el límite solo mira Content-Length; con Transfer-Encoding: chunked no se aplica."""
+    """S-03 (corregido): el límite ahora también cuenta bytes reales de un cuerpo chunked."""
 
     async def gen() -> Any:
         for _ in range(3):
@@ -438,11 +436,10 @@ async def test_sql_injection_payloads_are_inert(
         assert (await conn.execute(text('SELECT count(*) FROM "user"'))).scalar_one() == 1
 
 
-@KNOWN_ISSUE
 async def test_ics_text_fields_cannot_inject_lines(
     client: httpx.AsyncClient, user: dict[str, Any]
 ) -> None:
-    """S-08: `_escape` no neutraliza un CR suelto ⇒ inyección de líneas en el .ics."""
+    """S-08 (corregido): `_escape` ahora neutraliza también un CR suelto."""
     evil = "x\rBEGIN:VEVENT\rSUMMARY:pwn"
     program = await create(client, (await preview(client))["plan"], name=evil)
     ics = (await client.get(f"/programs/{program['id']}/calendar.ics")).text
@@ -494,11 +491,10 @@ async def test_login_rate_limit_per_email(strict_app: FastAPI, user: dict[str, A
     assert 429 in codes[10:]
 
 
-@KNOWN_ISSUE
 async def test_rate_limit_not_bypassable_with_spoofed_forwarded_for(
     strict_app: FastAPI, user: dict[str, Any]
 ) -> None:
-    """S-02: ``client_ip`` confía en el primer valor de X-Forwarded-For (lo fija el cliente)."""
+    """S-02 (corregido): con TRUSTED_PROXY_COUNT=0 (por defecto) ``client_ip`` ignora XFF."""
     http = await _strict_client(strict_app)
     try:
         codes = [

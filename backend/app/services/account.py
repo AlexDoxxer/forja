@@ -8,8 +8,8 @@ from typing import Any, cast
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.errors import conflict, forbidden
-from app.core.ids import uuid7
+from app.core.errors import conflict, forbidden, unprocessable
+from app.core.ids import derived_uuid, uuid7
 from app.models.catalog import Exercise
 from app.models.nutrition import MealPlan, NutritionSettings, NutritionTarget
 from app.models.program import (
@@ -33,7 +33,52 @@ from app.services import training
 from app.services.audit import audit
 
 APP_VERSION_FALLBACK = "0.0.0"
-IMPORT_NAMESPACE = uuid.UUID("6f0f7a3e-3c1c-5d0e-9a53-5b1a0b6f0c11")
+
+# S-06 (docs/reviews/f3-security.md): límite explícito de elementos por colección en
+# ``/me/import``, además del límite de 10 MiB del cuerpo (``LARGE_BODY_PATHS``). No forma parte
+# del contrato (cambiarlo ahí exige docs/CONTRACT_CHANGES.md), así que es un 422 propio de la
+# capa de servicio, no de la validación de FastAPI/Pydantic.
+IMPORT_MAX_ITEMS: dict[str, int] = {
+    "body_metrics": 5_000,
+    "favorites": 2_000,
+    "programs": 500,
+    "sessions": 5_000,
+    "sets_per_session": 500,
+    "personal_records": 5_000,
+    "nutrition_targets": 5_000,
+    "nutrition_plans": 500,
+}
+
+
+def _derived(user: User, original: uuid.UUID) -> uuid.UUID:
+    return derived_uuid(user.id, original)
+
+
+def _check_import_size(body: api.UserExport) -> None:
+    counts = {
+        "body_metrics": len(body.body_metrics),
+        "favorites": len(body.favorites),
+        "programs": len(body.programs),
+        "sessions": len(body.sessions),
+        "personal_records": len(body.personal_records),
+        "nutrition_targets": len(body.nutrition.targets),
+        "nutrition_plans": len(body.nutrition.plans),
+    }
+    for field, count in counts.items():
+        if count > IMPORT_MAX_ITEMS[field]:
+            raise unprocessable(
+                "import_too_large",
+                f"«{field}» tiene {count} elementos; el máximo admitido es "
+                f"{IMPORT_MAX_ITEMS[field]}.",
+            )
+    max_sets = IMPORT_MAX_ITEMS["sets_per_session"]
+    for session in body.sessions:
+        if len(session.sets) > max_sets:
+            raise unprocessable(
+                "import_too_large",
+                f"La sesión {session.client_uuid} tiene {len(session.sets)} series; el máximo "
+                f"admitido por sesión es {max_sets}.",
+            )
 
 
 # ------------------------------------------------------------------------ export
@@ -149,14 +194,11 @@ def _zero() -> dict[str, int]:
     }
 
 
-def _derived(user: User, original: uuid.UUID) -> uuid.UUID:
-    return uuid.uuid5(IMPORT_NAMESPACE, f"{user.id}:{original}")
-
-
 async def import_account(
     db: AsyncSession, user: User, body: api.UserExport, known_exercises: set[str]
 ) -> api.ImportResult:
     """Importación idempotente: repetirla no duplica nada (ids derivados y ``client_uuid``)."""
+    _check_import_size(body)
     created, skipped = _zero(), _zero()
     warnings: list[str] = []
     profile = await profile_service.load_profile(db, user)

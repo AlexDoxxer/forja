@@ -29,11 +29,28 @@ def hash_ip(ip: str | None, secret: str) -> str | None:
     return hmac.new(secret.encode(), ip.encode(), hashlib.sha256).hexdigest()
 
 
-def client_ip(request: Request) -> str | None:
+def client_ip(request: Request, trusted_proxy_count: int = 0) -> str | None:
+    """IP real del cliente para el rate limit y el ``ip_hash`` de auditoría (S-02).
+
+    Por defecto (``trusted_proxy_count=0``, "confiar en ninguno") ignora por completo
+    ``X-Forwarded-For`` -- que cualquier cliente puede fijar a lo que quiera, distinto en
+    cada petición -- y usa el par IP del socket TCP (``request.client``), que el cliente no
+    puede falsificar. Solo cuando el despliegue confirma cuántos proxies de confianza hay
+    delante de la app (``TRUSTED_PROXY_COUNT`` en el entorno, ver ``.env.example``) se lee la
+    cabecera, tomando el salto que ese número de proxies no pudo haber sobrescrito (contando
+    desde la derecha, no el primer valor, que sigue controlando el cliente).
+    """
+    peer = request.client.host if request.client else None
+    if trusted_proxy_count <= 0:
+        return peer
     forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip() or None
-    return request.client.host if request.client else None
+    if not forwarded:
+        return peer
+    hops = [hop.strip() for hop in forwarded.split(",") if hop.strip()]
+    index = len(hops) - trusted_proxy_count
+    if 0 <= index < len(hops):
+        return hops[index]
+    return peer
 
 
 def set_session_cookie(response: Response, token: str, max_age: int) -> None:

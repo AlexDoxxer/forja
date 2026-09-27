@@ -79,6 +79,12 @@ async def test_target_plan_swap_and_shopping_list(
     client: httpx.AsyncClient, user: dict[str, Any]
 ) -> None:
     await enable_diet(client)
+    # Regresión: el frontend manda literalmente `{}` (no una petición sin cuerpo) al calcular
+    # el objetivo por defecto; con nutrition 0.2.0 esto llegó a devolver 422 `extra_forbidden`
+    # sobre `fat.max_pct_kcal`/`tolerances.fat_over_allowed` porque el `engine_input` construido
+    # ya no coincidía con el esquema del motor (docs/handoffs/f2-frontend-integration.md).
+    empty_body = await client.post("/nutrition/targets/calculate", json={})
+    assert empty_body.status_code == 200, empty_body.text
     record = (await client.post("/nutrition/targets/calculate")).json()
     target = record["target"]
     assert target["blocked"] is False
@@ -208,6 +214,8 @@ async def test_export_import_roundtrip_is_idempotent(
     await client.post("/nutrition/plans", json={"week_start": next_monday(), "seed": 1})
     exported = await client.get("/me/export")
     assert exported.status_code == 200
+    # S-09: descarga forzada, no inline en un navegador compartido.
+    assert exported.headers["content-disposition"] == 'attachment; filename="forja-export.json"'
     data = exported.json()
     assert data["format"] == "forja-export"
     assert data["schema_version"] == 1
@@ -245,6 +253,11 @@ async def test_export_import_roundtrip_is_idempotent(
     unknown = {**data, "favorites": ["9999"]}
     warned = (await other_client.post("/me/import", json=unknown)).json()
     assert warned["warnings"]
+    # S-06: un límite explícito por colección rechaza con 422 antes de tocar la base de datos.
+    oversized = {**data, "favorites": ["0043"] * 2_001}
+    too_large = await other_client.post("/me/import", json=oversized)
+    assert too_large.status_code == 422
+    assert too_large.json()["code"] == "import_too_large"
 
 
 async def test_delete_account_removes_everything(

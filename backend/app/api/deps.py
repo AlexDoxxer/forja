@@ -43,7 +43,8 @@ def get_rate_limiter(request: Request) -> RateLimiter:
 
 
 def rate_limit_key(request: Request, settings: Settings) -> str:
-    return hash_ip(client_ip(request), settings.secret_key.get_secret_value()) or "unknown"
+    ip = client_ip(request, settings.trusted_proxy_count)
+    return hash_ip(ip, settings.secret_key.get_secret_value()) or "unknown"
 
 
 @dataclass(frozen=True)
