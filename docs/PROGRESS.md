@@ -30,3 +30,19 @@
 ## Fase 2 · Integración — en curso
 - Backend (59 rutas, contrato 1.2.0), frontend A y B fusionados; integración con API real y
   Puerta 2 en `f2/frontend-integration`.
+
+## Fase 2 · Integración — completada, Puerta 2 superada (2026-09-27)
+- **Hecho**: backend con 59 rutas y contrato 1.2.0; frontend completo (partes A y B) contra la
+  API real. Flujo manual completo: registro → onboarding → generar → activar → entrenar con
+  descanso → resumen → progreso. 19 capturas en `docs/screenshots/`.
+- **Métricas**: frontend 194 tests, build 148,2 KB gzip. `gate2-live.mjs` reproduce el flujo sin
+  errores HTTP/JS.
+- **Riesgos abiertos**: bug de backend en `POST /nutrition/targets/calculate` (422 con cuerpo
+  vacío) bloquea probar Nutrición desde el frontend.
+
+## Fase 3 · Endurecimiento — en curso
+- `f3/security` fusionado: 0 CRITICO, 1 ALTO (S-01, DoS por límite de tasa sin cota en el
+  diccionario de intentos de login), 4 MEDIO, 4 BAJO. `pip-audit` y `npm audit`: 0
+  vulnerabilidades conocidas. Tests que demuestran los hallazgos abiertos en
+  `backend/tests/security/`.
+- `f3/devops` en curso.
