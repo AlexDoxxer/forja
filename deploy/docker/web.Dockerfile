@@ -15,7 +15,14 @@ RUN cd frontend && npm run build
 
 FROM nginxinc/nginx-unprivileged:${NGINX_VERSION}-alpine AS runtime
 USER root
-RUN rm -f /etc/nginx/conf.d/default.conf \
+# La rama 1.27 de la imagen base ya no recibe rebuilds (queda fija en
+# 1.27.5-alpine3.21), pero el repositorio Alpine v3.21 sí publica parches de
+# seguridad en el sitio. `apk upgrade` los aplica sin esperar una nueva
+# etiqueta (CVE-2026-27135 nghttp2-libs, CVE-2026-22184 zlib, y otros HIGH/
+# CRITICAL corregibles detectados por Trivy en la imagen base).
+RUN apk update \
+    && apk upgrade --no-cache \
+    && rm -f /etc/nginx/conf.d/default.conf \
     && install -d -o nginx -g nginx /var/lib/forja/media /usr/share/nginx/html
 USER nginx
 COPY --chown=nginx:nginx --from=build /src/frontend/dist /usr/share/nginx/html

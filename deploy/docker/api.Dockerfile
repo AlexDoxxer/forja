@@ -28,7 +28,11 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 FROM python:${PYTHON_VERSION}-slim AS runtime
 # WeasyPrint (Pango/HarfBuzz/Fontconfig), git (servicio `ingest`) y tini como init.
+# `apt-get upgrade` aplica los parches de seguridad ya publicados para Debian
+# trixie sin esperar un nuevo rebuild de la etiqueta `python:3.12-slim`
+# (defensa en profundidad para HIGH/CRITICAL corregibles detectados por Trivy).
 RUN apt-get update \
+    && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         git tini libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b libfontconfig1 \
         fonts-dejavu-core shared-mime-info \
