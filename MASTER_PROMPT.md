@@ -605,8 +605,8 @@ color. i18n completo (`es` por defecto, `en`), formateo de números/fechas con `
 
 ### 10.5 Rendimiento
 Lighthouse móvil ≥ 90 en Rendimiento, Accesibilidad, Buenas prácticas y PWA; JS inicial
-< 200 KB gzip (code-splitting por ruta; Recharts y editor en chunks diferidos); LCP < 2,5 s
-en red 4G simulada.
+< 500 KB gzip (ADR 0013; code-splitting por ruta; Recharts y editor en chunks diferidos);
+LCP < 2,5 s en red 4G simulada.
 
 ---
 

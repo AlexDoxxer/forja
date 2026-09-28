@@ -179,7 +179,7 @@
 | F2-FE-12 | Perfil, ajustes, sesiones activas, exportar/importar/borrar, Créditos (`GET /about`) | Créditos con MIT, aviso de Gym visual y SHA | F1-FE-08 | hecho (f2/frontend-b) |
 | F2-FE-13 | Admin | Usuarios, registro, dieta global, ingesta | F1-FE-08 | hecho (f2/frontend-b) |
 | F2-FE-14 | PWA: manifest, Workbox según §10.3, descarga de biblioteca | SW controla la página; arranque offline | F2-FE-05 | hecho (f2/frontend-b) |
-| F2-FE-15 | Presupuesto de rendimiento (JS inicial < 200 KB gzip) | Informe del build en el handoff | F2-FE-01…14 | hecha |
+| F2-FE-15 | Presupuesto de rendimiento (JS inicial < 200 KB gzip) | Informe del build en el handoff | F2-FE-01…14 | hecha (límite subido a < 500 KB por ADR 0013) |
 | F2-FE-16 | Cambio de MSW a API real | Flujo de la puerta 2 contra `docker compose` de desarrollo | F2-BE-17 | hecho (f2/frontend-integration) |
 | F2-FE-17 | Cobertura ≥ 85 % y capturas de todas las pantallas | `make test-frontend` verde; handoff | todas | hecha |
 

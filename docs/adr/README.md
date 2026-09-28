@@ -18,3 +18,4 @@ edita: se sustituye por otro que lo declare «Reemplaza a NNNN».
 | [0010](0010-ci-and-quality-gates.md) | CI en GitHub Actions y puertas de calidad | Aceptado |
 | [0011](0011-nutrition-tables-single-source.md) | `specs/nutrition.yaml` como fuente única de las tablas de nutrición | Aceptado |
 | [0012](0012-loadable-in-main-scoring.md) | Puntuación `loadable_in_main` (extensión de §7.2) | Aceptado |
+| [0013](0013-initial-js-budget-500kb.md) | Presupuesto de JS inicial: 500 KB gzip | Aceptado |
