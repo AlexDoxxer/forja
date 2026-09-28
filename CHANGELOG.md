@@ -130,9 +130,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   shareable shopping list (categories, checkboxes, IndexedDB-backed), nutrient settings and
   recalculation.
 - **Profile (Perfil)**: User data edit (name, height, weight), locale and theme selection
-  (dark/light/system), sound and vibration toggles, default rest between sets, full data
-  export (JSON), data import with schema validation, account deletion with password confirmation,
-  active session management (revoke), offline library download, logout, and access to credits/licenses.
+  (dark/light/system), sound and vibration toggles, default rest between sets, per-user diet
+  feature toggle, full data export (JSON), data import with schema validation, account deletion
+  with password confirmation, active session management (revoke), offline library download,
+  logout, and access to credits/licenses.
+- **Export**: routine export to PDF (`GET /programs/{id}/export.pdf`) and calendar export to ICS
+  (`GET /programs/{id}/calendar.ics`), linked from the Routines (Rutinas) list.
 - **Admin**: User registration toggle, global diet feature toggle, user list (role, active status,
   search), ingest launch (dry-run or real) with live progress and execution history (row counts,
   checksums, errors, diffs).
@@ -214,7 +217,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   against the built app; routes are code-split by route with `lazyRouteComponent`, and heavy
   chart code (Recharts) is loaded in deferred chunks.
 - **Code quality**: Lint (`ruff`, `eslint`) and strict type checking (`mypy --strict`, `tsc --strict`)
-  enforced in CI; no `TODO`, `# type: ignore`, or `# noqa` without justification.
+  enforced in CI; no unfinished-work markers, `# type: ignore`, or `# noqa` without
+  justification.
 - **Contract compliance**: OpenAPI schema exported from FastAPI, diffed against
   `contracts/openapi.yaml` in CI to detect inadvertent breaking changes.
 
@@ -235,15 +239,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known Limitations
 
-- **Export features (próximamente)**: MASTER_PROMPT §1.7 specifies PDF export for routines and
-  ICS export for calendars; backend endpoints exist (`GET /programs/{id}/export.pdf`,
-  `/calendar.ics`) but frontend UI links and handlers are pending (branch `f4/frontend-gaps`).
-- **Diet disable toggle (próximamente)**: Diet feature can be activated during onboarding but
-  currently cannot be toggled off per-user in Profile settings (Admin can disable globally).
-  Frontend UI control pending (branch `f4/frontend-gaps`).
-- **Accessibility contrast (A11Y-1)**: The "delete account" danger button in the dark theme has a
-  3.49:1 contrast ratio, below the 4.5:1 WCAG 2.2 AA minimum; fix pending
-  (`docs/handoffs/f3-qa-tests.md`).
+- **WebKit/Safari over plain HTTP**: registering or logging in fails in webkit-mobile E2E runs
+  against a local `http://localhost` dev server, because WebKit does not persist the `Secure`
+  `__Host-forja_csrf` cookie there the way Chromium does (Chromium treats `localhost` as a secure
+  context; WebKit does not). Production is unaffected — nginx always terminates TLS there. See
+  `docs/handoffs/f3-qa-tests.md`.
 - **Gym visual media licensing**: App serves 180×180 GIF and thumbnail files without modification,
   with mandatory attribution on all views. Public exposure requires review of Gym visual terms of
   use (https://gymvisual.com/content/3-terms-and-conditions-of-use) and compliance verification
