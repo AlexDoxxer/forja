@@ -59,6 +59,23 @@
   /* Navegación */
   --nav-height: 64px;
   --nav-width: 240px;
+
+  /*
+   * Superficie líquida (F5, sistema de diseño): brillo de cristal (botones), metal de la nav y
+   * easing de entrada. Todo construido a partir de los tokens de arriba con alfa de blanco o
+   * `color-mix()` — ningún valor hex nuevo (`tests/design-tokens.test.ts` solo reconoce pares
+   * `--token: #hex;`, así que estos tokens quedan fuera de su verificación de contraste a
+   * propósito: son brillos/sombras decorativos sobre superficies ya verificadas, no texto).
+   */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --shine-duration: 0.65s;
+  --glass-sheen: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.45) 48%, transparent 76%);
+  --glass-highlight: rgba(255, 255, 255, 0.14);
+  --glass-tint: rgba(255, 255, 255, 0.05);
+  --glow-accent: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  --glow-accent-soft: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  --color-border-bright: color-mix(in srgb, var(--color-border) 55%, white 45%);
+  --nav-pill-gradient: linear-gradient(180deg, var(--color-surface-1), var(--color-surface-2));
 }
 
 :root[data-theme="light"] {

@@ -108,7 +108,15 @@
   color: var(--color-text-muted);
 }
 
+/*
+ * Botón «cristal líquido» (F5), misma técnica que `components/ui/ui.module.css`: relieve
+ * interior + barrido de brillo en `::after`. `.btn` desnudo (sin `.primary`) hace de «secundario»
+ * en las pantallas de la parte B: cristal esmerilado con un tinte translúcido sobre la superficie.
+ */
 .btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -118,17 +126,43 @@
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
-  background: var(--color-surface-2);
+  background: linear-gradient(160deg, var(--glass-tint), transparent 65%), var(--color-surface-2);
   color: var(--color-text);
   font-weight: 600;
   font-size: 1rem;
   text-decoration: none;
   cursor: pointer;
-  transition: filter var(--motion-duration) ease;
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    filter var(--motion-duration) ease;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--glass-sheen);
+  transform: translateX(-130%);
+  transition: transform var(--shine-duration) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.btn:hover:not(:disabled)::after {
+  transform: translateX(130%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn::after {
+    transition: none;
+  }
 }
 
 .btn:hover:not(:disabled) {
   filter: brightness(1.12);
+  border-color: var(--color-border-bright);
 }
 
 .btn:disabled {
@@ -143,8 +177,50 @@
   font-weight: 700;
 }
 
+.primary:hover:not(:disabled) {
+  border-color: transparent;
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 22px var(--glow-accent);
+}
+
 .danger {
   border-color: var(--color-error);
+  color: var(--color-error-text);
+}
+
+/*
+ * Insignias (F5): estado pequeño (programa activo, simulación de ingesta…) como una píldora,
+ * no como texto entre paréntesis o unido con « · ». Nunca solas: siempre acompañan texto ya
+ * visible, así que no hace falta lectura adicional para lectores de pantalla.
+ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.2rem var(--space-2);
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: linear-gradient(160deg, var(--color-surface-2), var(--color-bg));
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.badgeAccent {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  color: var(--color-accent);
+}
+
+.badgeSuccess {
+  border-color: color-mix(in srgb, var(--color-success) 45%, var(--color-border));
+  color: var(--color-success-text);
+}
+
+.badgeError {
+  border-color: color-mix(in srgb, var(--color-error) 45%, var(--color-border));
   color: var(--color-error-text);
 }
 

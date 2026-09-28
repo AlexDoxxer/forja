@@ -1,5 +1,14 @@
 /* Componentes base «Forja» (F1-FE-04). Solo tokens de src/styles/tokens.css. */
+/*
+ * Botones «cristal líquido» (F5): superficie con relieve (brillo interior superior de 1 px) y un
+ * barrido de brillo diagonal en `::after` al pasar el cursor — la misma técnica en las dos hojas
+ * de botones (aquí y `features/shared/ui.module.css`). `isolation: isolate` mantiene el barrido
+ * dentro de su propio contexto de apilamiento; `overflow: hidden` lo recorta a la caja del botón.
+ */
 .button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -15,7 +24,29 @@
   color: var(--color-text);
   background: var(--color-surface-2);
   text-decoration: none;
-  transition: filter var(--motion-duration) ease;
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    filter var(--motion-duration) ease;
+}
+.button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--glass-sheen);
+  transform: translateX(-130%);
+  transition: transform var(--shine-duration) var(--ease-out-expo);
+  pointer-events: none;
+}
+.button:hover:not(:disabled)::after {
+  transform: translateX(130%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .button::after {
+    transition: none;
+  }
 }
 .button:hover:not(:disabled) {
   filter: brightness(1.12);
@@ -28,13 +59,25 @@
   background: var(--gradient-accent);
   color: var(--color-on-accent);
 }
+.primary:hover:not(:disabled) {
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 22px var(--glow-accent);
+}
 .secondary {
-  background: var(--color-surface-2);
+  background: linear-gradient(160deg, var(--glass-tint), transparent 65%), var(--color-surface-2);
   border-color: var(--color-border);
+}
+.secondary:hover:not(:disabled) {
+  border-color: var(--color-border-bright);
 }
 .ghost {
   background: transparent;
   border-color: var(--color-border);
+}
+.ghost:hover:not(:disabled) {
+  background: var(--glass-tint);
+  border-color: var(--color-border-bright);
 }
 .danger {
   background: transparent;

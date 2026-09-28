@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
 import { IconClipboardList, IconSettings, IconTarget } from "../../components/icons";
+import { Reveal, REVEAL_STEP } from "../../components/Reveal";
 import type { components } from "../../lib/api/schema";
 import { cx } from "../../lib/cx";
 import shared from "../shared/ui.module.css";
@@ -199,8 +200,10 @@ export function NutritionScreen(): React.JSX.Element {
 
   return (
     <section aria-labelledby="nutrition-title" className={shared["page"]}>
-      <h1 id="nutrition-title">{t("nutrition.title")}</h1>
-      <SafetyNotice />
+      <Reveal variant="soft">
+        <h1 id="nutrition-title">{t("nutrition.title")}</h1>
+        <SafetyNotice />
+      </Reveal>
       <QueryState
         isLoading={settings.isLoading}
         isError={settings.isError}
@@ -209,64 +212,72 @@ export function NutritionScreen(): React.JSX.Element {
       >
         {data?.feature_available === false && <p role="status">{t("nutrition.unavailable")}</p>}
         {data?.feature_available === true && !data.diet_enabled && (
-          <div className={shared["stack"]}>
-            <p>{t("nutrition.disabled")}</p>
-            <button
-              type="button"
-              className={cx(shared["btn"], shared["primary"])}
-              disabled={save.isPending}
-              onClick={() => {
-                save.mutate({ ...toFields(data), diet_enabled: true });
-              }}
-            >
-              {t("nutrition.enable")}
-            </button>
-          </div>
+          <Reveal variant="pop" delay={REVEAL_STEP}>
+            <div className={shared["stack"]}>
+              <p>{t("nutrition.disabled")}</p>
+              <button
+                type="button"
+                className={cx(shared["btn"], shared["primary"])}
+                disabled={save.isPending}
+                onClick={() => {
+                  save.mutate({ ...toFields(data), diet_enabled: true });
+                }}
+              >
+                {t("nutrition.enable")}
+              </button>
+            </div>
+          </Reveal>
         )}
         {usable && (
           <>
-            <section className={shared["card"]} aria-labelledby="target-title">
-              <div className={shared["cardHeader"]}>
-                <span className={shared["cardIcon"]}>
-                  <IconTarget />
-                </span>
-                <h2 id="target-title">{t("nutrition.targetTitle")}</h2>
-              </div>
-              {target === null ? (
-                <p className={shared["muted"]}>{t("nutrition.noTarget")}</p>
-              ) : target.blocked && target.block !== null ? (
-                <div className={shared["notice"]} role="note">
-                  <strong>{t("nutrition.blockedTitle")}. </strong>
-                  {target.block.message_es}
+            <Reveal variant="scale" delay={REVEAL_STEP}>
+              <section className={shared["card"]} aria-labelledby="target-title">
+                <div className={shared["cardHeader"]}>
+                  <span className={shared["cardIcon"]}>
+                    <IconTarget />
+                  </span>
+                  <h2 id="target-title">{t("nutrition.targetTitle")}</h2>
                 </div>
-              ) : (
-                <TargetRings target={target} />
-              )}
-              {target !== null && target.notices.length > 0 && (
-                <ul className={shared["list"]}>
-                  {target.notices.map((n) => (
-                    <li key={n.code} className={shared["notice"]}>
-                      {n.message_es}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <div className={shared["row"]}>
-                <button type="button" className={shared["btn"]} disabled={recalc.isPending} onClick={() => { recalc.mutate(); }}>
-                  {t("nutrition.recalc")}
-                </button>
-              </div>
-            </section>
-            <PlanSection blocked={target?.blocked ?? false} />
-            <section className={shared["card"]} aria-labelledby="nsettings-title">
-              <div className={shared["cardHeader"]}>
-                <span className={shared["cardIcon"]}>
-                  <IconSettings />
-                </span>
-                <h2 id="nsettings-title">{t("nutrition.settingsTitle")}</h2>
-              </div>
-              <SettingsForm settings={data} />
-            </section>
+                {target === null ? (
+                  <p className={shared["muted"]}>{t("nutrition.noTarget")}</p>
+                ) : target.blocked && target.block !== null ? (
+                  <div className={shared["notice"]} role="note">
+                    <strong>{t("nutrition.blockedTitle")}. </strong>
+                    {target.block.message_es}
+                  </div>
+                ) : (
+                  <TargetRings target={target} />
+                )}
+                {target !== null && target.notices.length > 0 && (
+                  <ul className={shared["list"]}>
+                    {target.notices.map((n) => (
+                      <li key={n.code} className={shared["notice"]}>
+                        {n.message_es}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <div className={shared["row"]}>
+                  <button type="button" className={shared["btn"]} disabled={recalc.isPending} onClick={() => { recalc.mutate(); }}>
+                    {t("nutrition.recalc")}
+                  </button>
+                </div>
+              </section>
+            </Reveal>
+            <Reveal variant="soft" delay={REVEAL_STEP * 2}>
+              <PlanSection blocked={target?.blocked ?? false} />
+            </Reveal>
+            <Reveal variant="soft" delay={REVEAL_STEP * 3}>
+              <section className={shared["card"]} aria-labelledby="nsettings-title">
+                <div className={shared["cardHeader"]}>
+                  <span className={shared["cardIcon"]}>
+                    <IconSettings />
+                  </span>
+                  <h2 id="nsettings-title">{t("nutrition.settingsTitle")}</h2>
+                </div>
+                <SettingsForm settings={data} />
+              </section>
+            </Reveal>
           </>
         )}
       </QueryState>

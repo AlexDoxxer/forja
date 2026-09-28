@@ -27,21 +27,54 @@
   object-fit: contain;
 }
 
+/*
+ * Único botón de la app que se apoya directamente sobre una imagen (el GIF/miniatura del
+ * ejercicio): cristal esmerilado de verdad, con `backdrop-filter` para desenfocar el medio que
+ * queda debajo (F5, técnica 1). El resto de botones «secundarios»/«fantasma» no se posan sobre
+ * imágenes, así que no pagan el coste de `backdrop-filter` en ningún otro sitio de la app.
+ */
 .playButton {
   position: absolute;
+  isolation: isolate;
+  overflow: hidden;
   inset: auto var(--space-2) var(--space-2) auto;
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
   min-height: var(--tap-target-min);
   padding: var(--space-2) var(--space-3);
-  border: none;
+  border: 1px solid var(--glass-highlight);
   border-radius: var(--radius-sm);
-  background: var(--color-surface-1);
+  background: color-mix(in srgb, var(--color-surface-1) 72%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: var(--color-text);
-  box-shadow: var(--shadow-1);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    var(--shadow-1);
   cursor: pointer;
   font-size: 0.8125rem;
+  transition: border-color 0.35s ease;
+}
+
+.playButton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--glass-sheen);
+  transform: translateX(-130%);
+  transition: transform var(--shine-duration) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.playButton:hover::after {
+  transform: translateX(130%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playButton::after {
+    transition: none;
+  }
 }
 
 .attribution {

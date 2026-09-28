@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
 import { IconTrophy } from "../../components/icons";
+import { Reveal, REVEAL_STEP } from "../../components/Reveal";
 import { cx } from "../../lib/cx";
 import { useReducedMotion } from "../../lib/useReducedMotion";
 import { formatNumber } from "../shared/format";
@@ -88,70 +89,82 @@ export function SessionSummary({ sessionUuid, onExit }: SessionSummaryProps): Re
 
   return (
     <section className={styles["player"]} aria-labelledby="summary-title">
-      <h1 id="summary-title">{t("session.summaryTitle")}</h1>
-      <p className={shared["muted"]}>{local.data.name}</p>
-      <dl className={`${shared["card"] ?? ""} ${styles["summaryGrid"] ?? ""}`}>
-        <div>
-          <dt>{t("session.duration")}</dt>
-          <dd>{t("session.minutes", { count: Math.max(1, Math.round(durationS / 60)) })}</dd>
-        </div>
-        <div>
-          <dt>{t("session.volume")}</dt>
-          <dd>{formatNumber(volume, 0)} kg</dd>
-        </div>
-        <div>
-          <dt>{t("session.sets")}</dt>
-          <dd>{sets}</dd>
-        </div>
-        <div>
-          <dt>{t("session.totalReps")}</dt>
-          <dd>{reps}</dd>
-        </div>
-        <div>
-          <dt>{t("session.exercises")}</dt>
-          <dd>{exercises}</dd>
-        </div>
-        {local.data.perceivedEffort !== null && (
+      <Reveal variant="soft">
+        <h1 id="summary-title">
+          {t("session.summaryTitleLead")}
+          <span className="headline-accent">{t("session.summaryTitleAccent")}</span>
+          {t("session.summaryTitleTrail")}
+        </h1>
+        <p className={shared["muted"]}>{local.data.name}</p>
+      </Reveal>
+      <Reveal variant="stat" delay={REVEAL_STEP}>
+        <dl className={`${shared["card"] ?? ""} ${styles["summaryGrid"] ?? ""}`}>
           <div>
-            <dt>{t("session.effortLabel")}</dt>
-            <dd>{local.data.perceivedEffort}/10</dd>
+            <dt>{t("session.duration")}</dt>
+            <dd>{t("session.minutes", { count: Math.max(1, Math.round(durationS / 60)) })}</dd>
           </div>
-        )}
-      </dl>
-      <section className={shared["card"]} aria-labelledby="records-title">
-        <div className={shared["cardHeader"]}>
-          <span className={styles["trophyWrap"]}>
-            <span className={shared["cardIcon"]}>
-              <IconTrophy />
+          <div>
+            <dt>{t("session.volume")}</dt>
+            <dd>{formatNumber(volume, 0)} kg</dd>
+          </div>
+          <div>
+            <dt>{t("session.sets")}</dt>
+            <dd>{sets}</dd>
+          </div>
+          <div>
+            <dt>{t("session.totalReps")}</dt>
+            <dd>{reps}</dd>
+          </div>
+          <div>
+            <dt>{t("session.exercises")}</dt>
+            <dd>{exercises}</dd>
+          </div>
+          {local.data.perceivedEffort !== null && (
+            <div>
+              <dt>{t("session.effortLabel")}</dt>
+              <dd>{local.data.perceivedEffort}/10</dd>
+            </div>
+          )}
+        </dl>
+      </Reveal>
+      <Reveal variant="scale" delay={REVEAL_STEP * 2}>
+        <section className={shared["card"]} aria-labelledby="records-title">
+          <div className={shared["cardHeader"]}>
+            <span className={styles["trophyWrap"]}>
+              <span className={shared["cardIcon"]}>
+                <IconTrophy />
+              </span>
+              {remote !== null && remote.new_records.length > 0 && !reducedMotion && (
+                <Suspense fallback={null}>
+                  <PrConfetti />
+                </Suspense>
+              )}
             </span>
-            {remote !== null && remote.new_records.length > 0 && !reducedMotion && (
-              <Suspense fallback={null}>
-                <PrConfetti />
-              </Suspense>
-            )}
-          </span>
-          <h2 id="records-title">{t("session.records")}</h2>
-        </div>
-        {remote === null ? (
-          <p className={shared["muted"]} role="status">
-            {t("session.localSummary")}
-          </p>
-        ) : remote.new_records.length === 0 ? (
-          <p>{t("session.recordNone")}</p>
-        ) : (
-          <ul className={shared["list"]}>
-            {remote.new_records.map((r) => (
-              <li key={r.id} className={styles["record"]}>
-                <strong>{r.exercise_name_es}</strong> · {t(`session.recordKind_${r.kind}`)}: {formatNumber(r.value)}
-                {" kg"}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-      <button type="button" className={cx(shared["btn"], shared["primary"])} onClick={onExit}>
-        {t("session.backToToday")}
-      </button>
+            <h2 id="records-title">{t("session.records")}</h2>
+          </div>
+          {remote === null ? (
+            <p className={shared["muted"]} role="status">
+              {t("session.localSummary")}
+            </p>
+          ) : remote.new_records.length === 0 ? (
+            <p>{t("session.recordNone")}</p>
+          ) : (
+            <ul className={shared["list"]}>
+              {remote.new_records.map((r) => (
+                <li key={r.id} className={styles["record"]}>
+                  <strong>{r.exercise_name_es}</strong> · {t(`session.recordKind_${r.kind}`)}: {formatNumber(r.value)}
+                  {" kg"}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </Reveal>
+      <Reveal variant="pop" delay={REVEAL_STEP * 3}>
+        <button type="button" className={cx(shared["btn"], shared["primary"])} onClick={onExit}>
+          {t("session.backToToday")}
+        </button>
+      </Reveal>
     </section>
   );
 }

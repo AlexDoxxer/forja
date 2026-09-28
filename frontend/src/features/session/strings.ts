@@ -57,6 +57,11 @@ registerBundle(
     offline: "Sin conexión: tus series se guardan en el dispositivo y se enviarán al volver la red.",
     notes: "Notas del ejercicio",
     summaryTitle: "Resumen de la sesión",
+    // Partido en 3 para el acento de titular (F5, técnica 5): concatenados dan exactamente
+    // "Resumen de la sesión" (igual que `summaryTitle`, mantener en sincronía si cambia).
+    summaryTitleLead: "Resumen de la ",
+    summaryTitleAccent: "sesión",
+    summaryTitleTrail: "",
     summaryLoading: "Calculando el resumen…",
     duration: "Duración",
     volume: "Volumen",
@@ -126,6 +131,9 @@ registerBundle(
     offline: "Offline: your sets are saved on this device and will be sent when the network returns.",
     notes: "Exercise notes",
     summaryTitle: "Session summary",
+    summaryTitleLead: "",
+    summaryTitleAccent: "Session",
+    summaryTitleTrail: " summary",
     summaryLoading: "Calculating the summary…",
     duration: "Duration",
     volume: "Volume",

@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Reveal, REVEAL_STEP } from "../../components/Reveal";
 import { Button, Chip, ChoiceCard, Slider, TextField, useToast } from "../../components/ui";
 import {
   EMPHASES,
@@ -173,193 +174,209 @@ export function GeneratorScreen(): React.JSX.Element {
 
   return (
     <section aria-labelledby="generator-title" className={styles["root"]}>
-      <h1 id="generator-title">{t("generator.title")}</h1>
-      <p aria-live="polite" className={styles["progress"]}>
-        {t("generator.stepOf", { current: step + 1, total: STEP_KEYS.length })} · {t(`generator.steps.${stepKey}`)}
-      </p>
-      <progress className={styles["bar"]} max={STEP_KEYS.length} value={step + 1} aria-label={t("generator.title")} />
+      <Reveal variant="soft">
+        <h1 id="generator-title">
+          {t("generator.titleLead")}
+          <span className="headline-accent">{t("generator.titleAccent")}</span>
+          {t("generator.titleTrail")}
+        </h1>
+        <p aria-live="polite" className={styles["progress"]}>
+          {t("generator.stepOf", { current: step + 1, total: STEP_KEYS.length })} · {t(`generator.steps.${stepKey}`)}
+        </p>
+        <progress className={styles["bar"]} max={STEP_KEYS.length} value={step + 1} aria-label={t("generator.title")} />
+      </Reveal>
 
       {step === 0 && (
-        <fieldset className={styles["step"]}>
-          <legend>{t("generator.goal.heading")}</legend>
-          <div className={styles["cards"]}>
-            {GOALS.map((value) => (
-              <ChoiceCard
-                key={value}
-                selected={goal === value}
-                title={t(`enums.goal.${value}`)}
-                description={t(`enums.goalHint.${value}`)}
-                onSelect={() => {
-                  setGoal(value);
-                }}
-              />
-            ))}
-          </div>
-        </fieldset>
+        <Reveal variant="soft">
+          <fieldset className={styles["step"]}>
+            <legend>{t("generator.goal.heading")}</legend>
+            <div className={styles["cards"]}>
+              {GOALS.map((value) => (
+                <ChoiceCard
+                  key={value}
+                  selected={goal === value}
+                  title={t(`enums.goal.${value}`)}
+                  description={t(`enums.goalHint.${value}`)}
+                  onSelect={() => {
+                    setGoal(value);
+                  }}
+                />
+              ))}
+            </div>
+          </fieldset>
+        </Reveal>
       )}
 
       {step === 1 && (
-        <fieldset className={styles["step"]}>
-          <legend>{t("generator.days.heading")}</legend>
-          <Slider
-            label={t("generator.days.perWeek")}
-            value={days}
-            min={1}
-            max={7}
-            valueText={t("generator.days.count", { count: days })}
-            onValueChange={setDays}
-          />
-          {days === 7 && <p className={styles["hint"]}>{t("generator.days.sevenNote")}</p>}
-          <p className={styles["label"]}>{t("generator.days.preferred")}</p>
-          <div className={styles["chips"]} role="group" aria-label={t("generator.days.preferred")}>
-            {WEEKDAYS.map((day) => (
-              <Chip
-                key={day}
-                selected={preferredDays.includes(day)}
-                onSelectedChange={() => {
-                  setPreferredDays((current) => toggle(current, day));
-                }}
-              >
-                {t(`enums.weekday.${day}`)}
-              </Chip>
-            ))}
-          </div>
-          <p className={styles["hint"]}>{t("generator.days.preferredHint")}</p>
-        </fieldset>
-      )}
-
-      {step === 2 && (
-        <fieldset className={styles["step"]}>
-          <legend>{t("generator.sex.heading")}</legend>
-          <div className={styles["chips"]} role="group" aria-label={t("generator.sex.heading")}>
-            {SEXES.map((value) => (
-              <Chip
-                key={value}
-                selected={sex === value}
-                onSelectedChange={() => {
-                  changeSex(value);
-                }}
-              >
-                {t(`enums.sex.${value}`)}
-              </Chip>
-            ))}
-          </div>
-          <div role="note" className={styles["explain"]}>
-            <p>
-              {sex === profileData?.sex
-                ? t("generator.sex.fromProfile")
-                : t("generator.sex.changed")}
-            </p>
-            <p>{t(`generator.sex.explain.${sex}`, { emphasis: t(`enums.emphasis.${emphasisForSex(sex)}`) })}</p>
-            <p>{t("generator.sex.never")}</p>
-          </div>
-        </fieldset>
-      )}
-
-      {step === 3 && (
-        <fieldset className={styles["step"]}>
-          <legend>{t("generator.setup.heading")}</legend>
-          <p className={styles["label"]}>{t("generator.setup.level")}</p>
-          <div className={styles["chips"]} role="group" aria-label={t("generator.setup.level")}>
-            {EXPERIENCES.map((value) => (
-              <Chip
-                key={value}
-                selected={experience === value}
-                onSelectedChange={() => {
-                  setExperience(value);
-                }}
-              >
-                {t(`enums.experience.${value}`)}
-              </Chip>
-            ))}
-          </div>
-          {profileData?.parq_flagged === true && <p className={styles["hint"]}>{t("generator.setup.parqNote")}</p>}
-          <Slider
-            label={t("generator.setup.duration")}
-            value={minutes}
-            min={20}
-            max={120}
-            step={5}
-            valueText={t("generator.preview.minutes", { count: minutes })}
-            onValueChange={setMinutes}
-          />
-          <p className={styles["label"]}>{t("generator.setup.equipment")}</p>
-          <div className={styles["cards"]}>
-            {PRESETS.map((value) => (
-              <ChoiceCard
-                key={value}
-                selected={preset === value}
-                title={t(`enums.preset.${value}`)}
-                onSelect={() => {
-                  setPreset(value);
-                }}
-              />
-            ))}
-          </div>
-          {preset === "custom" && (
-            <div className={styles["chips"]} role="group" aria-label={t("generator.setup.items")}>
-              {EQUIPMENT_CODES.map((code) => (
+        <Reveal variant="soft">
+          <fieldset className={styles["step"]}>
+            <legend>{t("generator.days.heading")}</legend>
+            <Slider
+              label={t("generator.days.perWeek")}
+              value={days}
+              min={1}
+              max={7}
+              valueText={t("generator.days.count", { count: days })}
+              onValueChange={setDays}
+            />
+            {days === 7 && <p className={styles["hint"]}>{t("generator.days.sevenNote")}</p>}
+            <p className={styles["label"]}>{t("generator.days.preferred")}</p>
+            <div className={styles["chips"]} role="group" aria-label={t("generator.days.preferred")}>
+              {WEEKDAYS.map((day) => (
                 <Chip
-                  key={code}
-                  selected={items.includes(code)}
+                  key={day}
+                  selected={preferredDays.includes(day)}
                   onSelectedChange={() => {
-                    setItems((current) => toggle(current, code));
+                    setPreferredDays((current) => toggle(current, day));
                   }}
                 >
-                  {t(`enums.equipment.${code}`)}
+                  {t(`enums.weekday.${day}`)}
                 </Chip>
               ))}
             </div>
-          )}
-        </fieldset>
+            <p className={styles["hint"]}>{t("generator.days.preferredHint")}</p>
+          </fieldset>
+        </Reveal>
+      )}
+
+      {step === 2 && (
+        <Reveal variant="soft">
+          <fieldset className={styles["step"]}>
+            <legend>{t("generator.sex.heading")}</legend>
+            <div className={styles["chips"]} role="group" aria-label={t("generator.sex.heading")}>
+              {SEXES.map((value) => (
+                <Chip
+                  key={value}
+                  selected={sex === value}
+                  onSelectedChange={() => {
+                    changeSex(value);
+                  }}
+                >
+                  {t(`enums.sex.${value}`)}
+                </Chip>
+              ))}
+            </div>
+            <div role="note" className={styles["explain"]}>
+              <p>
+                {sex === profileData?.sex
+                  ? t("generator.sex.fromProfile")
+                  : t("generator.sex.changed")}
+              </p>
+              <p>{t(`generator.sex.explain.${sex}`, { emphasis: t(`enums.emphasis.${emphasisForSex(sex)}`) })}</p>
+              <p>{t("generator.sex.never")}</p>
+            </div>
+          </fieldset>
+        </Reveal>
+      )}
+
+      {step === 3 && (
+        <Reveal variant="soft">
+          <fieldset className={styles["step"]}>
+            <legend>{t("generator.setup.heading")}</legend>
+            <p className={styles["label"]}>{t("generator.setup.level")}</p>
+            <div className={styles["chips"]} role="group" aria-label={t("generator.setup.level")}>
+              {EXPERIENCES.map((value) => (
+                <Chip
+                  key={value}
+                  selected={experience === value}
+                  onSelectedChange={() => {
+                    setExperience(value);
+                  }}
+                >
+                  {t(`enums.experience.${value}`)}
+                </Chip>
+              ))}
+            </div>
+            {profileData?.parq_flagged === true && <p className={styles["hint"]}>{t("generator.setup.parqNote")}</p>}
+            <Slider
+              label={t("generator.setup.duration")}
+              value={minutes}
+              min={20}
+              max={120}
+              step={5}
+              valueText={t("generator.preview.minutes", { count: minutes })}
+              onValueChange={setMinutes}
+            />
+            <p className={styles["label"]}>{t("generator.setup.equipment")}</p>
+            <div className={styles["cards"]}>
+              {PRESETS.map((value) => (
+                <ChoiceCard
+                  key={value}
+                  selected={preset === value}
+                  title={t(`enums.preset.${value}`)}
+                  onSelect={() => {
+                    setPreset(value);
+                  }}
+                />
+              ))}
+            </div>
+            {preset === "custom" && (
+              <div className={styles["chips"]} role="group" aria-label={t("generator.setup.items")}>
+                {EQUIPMENT_CODES.map((code) => (
+                  <Chip
+                    key={code}
+                    selected={items.includes(code)}
+                    onSelectedChange={() => {
+                      setItems((current) => toggle(current, code));
+                    }}
+                  >
+                    {t(`enums.equipment.${code}`)}
+                  </Chip>
+                ))}
+              </div>
+            )}
+          </fieldset>
+        </Reveal>
       )}
 
       {step === 4 && (
-        <fieldset className={styles["step"]}>
-          <legend>{t("generator.emphasis.heading")}</legend>
-          <div className={styles["chips"]} role="group" aria-label={t("generator.emphasis.heading")}>
-            {EMPHASES.map((value) => (
-              <Chip
-                key={value}
-                selected={emphasis === value}
-                onSelectedChange={() => {
-                  setEmphasis(value);
-                  setEmphasisTouched(true);
-                }}
-              >
-                {t(`enums.emphasis.${value}`)}
-              </Chip>
-            ))}
-          </div>
-          <p className={styles["label"]}>{t("generator.emphasis.avoidMuscles")}</p>
-          <div className={styles["chips"]} role="group" aria-label={t("generator.emphasis.avoidMuscles")}>
-            {MUSCLE_CODES.filter((code) => code !== "cardio").map((code) => (
-              <Chip
-                key={code}
-                selected={avoidMuscles.includes(code)}
-                onSelectedChange={() => {
-                  setAvoidMuscles((current) => toggle(current, code));
-                }}
-              >
-                {t(`enums.muscle.${code}`)}
-              </Chip>
-            ))}
-          </div>
-          <p className={styles["label"]}>{t("generator.emphasis.avoidPatterns")}</p>
-          <div className={styles["chips"]} role="group" aria-label={t("generator.emphasis.avoidPatterns")}>
-            {PATTERN_CODES.filter((code) => code !== "cardio" && code !== "mobility" && code !== "other").map((code) => (
-              <Chip
-                key={code}
-                selected={avoidPatterns.includes(code)}
-                onSelectedChange={() => {
-                  setAvoidPatterns((current) => toggle(current, code));
-                }}
-              >
-                {t(`enums.pattern.${code}`)}
-              </Chip>
-            ))}
-          </div>
-        </fieldset>
+        <Reveal variant="soft">
+          <fieldset className={styles["step"]}>
+            <legend>{t("generator.emphasis.heading")}</legend>
+            <div className={styles["chips"]} role="group" aria-label={t("generator.emphasis.heading")}>
+              {EMPHASES.map((value) => (
+                <Chip
+                  key={value}
+                  selected={emphasis === value}
+                  onSelectedChange={() => {
+                    setEmphasis(value);
+                    setEmphasisTouched(true);
+                  }}
+                >
+                  {t(`enums.emphasis.${value}`)}
+                </Chip>
+              ))}
+            </div>
+            <p className={styles["label"]}>{t("generator.emphasis.avoidMuscles")}</p>
+            <div className={styles["chips"]} role="group" aria-label={t("generator.emphasis.avoidMuscles")}>
+              {MUSCLE_CODES.filter((code) => code !== "cardio").map((code) => (
+                <Chip
+                  key={code}
+                  selected={avoidMuscles.includes(code)}
+                  onSelectedChange={() => {
+                    setAvoidMuscles((current) => toggle(current, code));
+                  }}
+                >
+                  {t(`enums.muscle.${code}`)}
+                </Chip>
+              ))}
+            </div>
+            <p className={styles["label"]}>{t("generator.emphasis.avoidPatterns")}</p>
+            <div className={styles["chips"]} role="group" aria-label={t("generator.emphasis.avoidPatterns")}>
+              {PATTERN_CODES.filter((code) => code !== "cardio" && code !== "mobility" && code !== "other").map((code) => (
+                <Chip
+                  key={code}
+                  selected={avoidPatterns.includes(code)}
+                  onSelectedChange={() => {
+                    setAvoidPatterns((current) => toggle(current, code));
+                  }}
+                >
+                  {t(`enums.pattern.${code}`)}
+                </Chip>
+              ))}
+            </div>
+          </fieldset>
+        </Reveal>
       )}
 
       {step === LAST_STEP && (
@@ -368,43 +385,45 @@ export function GeneratorScreen(): React.JSX.Element {
           {preview !== null && (
             <>
               <PreviewPanel preview={preview} onChange={setPreview} />
-              <div className={styles["saveBar"]}>
-                <TextField
-                  label={t("generator.programName")}
-                  value={name}
-                  maxLength={80}
-                  onChange={(event) => {
-                    setName(event.target.value);
-                  }}
-                />
-                <div className={styles["actions"]}>
-                  <Button
-                    disabled={previewMutation.isPending}
-                    onClick={() => {
-                      generate(randomSeed());
+              <Reveal variant="pop" delay={REVEAL_STEP * 4}>
+                <div className={styles["saveBar"]}>
+                  <TextField
+                    label={t("generator.programName")}
+                    value={name}
+                    maxLength={80}
+                    onChange={(event) => {
+                      setName(event.target.value);
                     }}
-                  >
-                    {t("generator.regenerate")}
-                  </Button>
-                  <Button
-                    disabled={saveMutation.isPending}
-                    onClick={() => {
-                      save(false);
-                    }}
-                  >
-                    {t("generator.save")}
-                  </Button>
-                  <Button
-                    variant="primary"
-                    disabled={saveMutation.isPending}
-                    onClick={() => {
-                      save(true);
-                    }}
-                  >
-                    {t("generator.saveActivate")}
-                  </Button>
+                  />
+                  <div className={styles["actions"]}>
+                    <Button
+                      disabled={previewMutation.isPending}
+                      onClick={() => {
+                        generate(randomSeed());
+                      }}
+                    >
+                      {t("generator.regenerate")}
+                    </Button>
+                    <Button
+                      disabled={saveMutation.isPending}
+                      onClick={() => {
+                        save(false);
+                      }}
+                    >
+                      {t("generator.save")}
+                    </Button>
+                    <Button
+                      variant="primary"
+                      disabled={saveMutation.isPending}
+                      onClick={() => {
+                        save(true);
+                      }}
+                    >
+                      {t("generator.saveActivate")}
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              </Reveal>
             </>
           )}
         </div>

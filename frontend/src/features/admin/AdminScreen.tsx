@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { QueryState } from "../../components/QueryState";
 import { IconRefresh, IconSettings, IconUsers } from "../../components/icons";
 import type { components } from "../../lib/api/schema";
+import { cx } from "../../lib/cx";
 import { formatDate } from "../shared/format";
 import shared from "../shared/ui.module.css";
 import { useProfileSummary } from "../today/useProfileSummary";
@@ -18,6 +19,13 @@ import {
 import "./strings";
 
 type Schemas = components["schemas"];
+
+/** Tono de la insignia de estado de una ejecución de ingesta (F5, técnica 6: insignias). */
+function statusBadgeTone(status: Schemas["IngestRun"]["status"]): string | undefined {
+  if (status === "succeeded") return shared["badgeSuccess"];
+  if (status === "failed") return shared["badgeError"];
+  return shared["badgeAccent"];
+}
 
 function SettingsSection(): React.JSX.Element {
   const { t } = useTranslation();
@@ -191,10 +199,13 @@ function IngestSection(): React.JSX.Element {
         <ul className={shared["list"]}>
           {runs.data?.items.map((run) => (
             <li key={run.id} className={shared["card"]}>
-              <strong>
-                {t("admin.runTitle", { status: t(`admin.status_${run.status}`), commit: run.commit.slice(0, 7) })}
-              </strong>
-              {run.dry_run && <span className={shared["muted"]}> · {t("admin.dryRun")}</span>}
+              <div className={shared["row"]}>
+                <span className={cx(shared["badge"], statusBadgeTone(run.status))}>
+                  {t(`admin.status_${run.status}`)}
+                </span>
+                <code>{run.commit.slice(0, 7)}</code>
+                {run.dry_run && <span className={shared["badge"]}>{t("admin.dryRun")}</span>}
+              </div>
               {run.started_at !== null && (
                 <p className={shared["muted"]}>
                   {t("admin.started", { date: formatDate(run.started_at, { dateStyle: "medium", timeStyle: "short" }) })}

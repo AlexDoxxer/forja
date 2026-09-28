@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
 import { IconCloudDownload, IconDevices, IconDownload, IconInfo, IconSettings } from "../../components/icons";
+import { Reveal, REVEAL_STEP } from "../../components/Reveal";
 import { i18next } from "../../i18n";
 import { api } from "../../lib/api/client";
 import type { components } from "../../lib/api/schema";
@@ -454,36 +455,46 @@ export function ProfileScreen(): React.JSX.Element {
 
   return (
     <section aria-labelledby="profile-title" className={shared["page"]}>
-      <h1 id="profile-title">{t("profile.title")}</h1>
-      {(me.data?.diet_available === true || me.data?.role === "admin") && (
-        <nav aria-label={t("profileB.links")} className={shared["row"]}>
-          {me.data.diet_available && (
-            <Link to="/nutricion" className={shared["btn"]}>
-              {t("profileB.nutrition")}
-            </Link>
-          )}
-          {me.data.role === "admin" && (
-            <Link to="/admin" className={shared["btn"]}>
-              {t("profileB.admin")}
-            </Link>
-          )}
-        </nav>
-      )}
+      <Reveal variant="soft">
+        <h1 id="profile-title">{t("profile.title")}</h1>
+        {(me.data?.diet_available === true || me.data?.role === "admin") && (
+          <nav aria-label={t("profileB.links")} className={shared["row"]}>
+            {me.data.diet_available && (
+              <Link to="/nutricion" className={shared["btn"]}>
+                {t("profileB.nutrition")}
+              </Link>
+            )}
+            {me.data.role === "admin" && (
+              <Link to="/admin" className={shared["btn"]}>
+                {t("profileB.admin")}
+              </Link>
+            )}
+          </nav>
+        )}
+      </Reveal>
       <QueryState
         isLoading={profile.isLoading}
         isError={profile.isError}
         loadingLabel={t("profile.loading")}
         errorLabel={t("profile.error")}
       >
-        {profile.data && <SettingsSection profile={profile.data} />}
+        {profile.data && (
+          <Reveal variant="scale" delay={REVEAL_STEP}>
+            <SettingsSection profile={profile.data} />
+          </Reveal>
+        )}
       </QueryState>
-      <div className={shared["grid"]}>
-        <DataSection />
-        <SessionsSection />
-        <OfflineSection />
-      </div>
-      <LogoutButton />
-      <CreditsSection />
+      <Reveal variant="soft" delay={REVEAL_STEP * 2}>
+        <div className={shared["grid"]}>
+          <DataSection />
+          <SessionsSection />
+          <OfflineSection />
+        </div>
+      </Reveal>
+      <Reveal variant="soft" delay={REVEAL_STEP * 3}>
+        <LogoutButton />
+        <CreditsSection />
+      </Reveal>
     </section>
   );
 }

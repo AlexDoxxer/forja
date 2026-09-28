@@ -21,6 +21,8 @@ export function RootLayout(): React.JSX.Element {
 
   return (
     <>
+      {/* Grano global (F5): una sola capa, montada una vez aquí (nunca por pantalla). */}
+      <div className="grain-overlay" aria-hidden="true" />
       <a href="#main-content" className="skip-link">
         {t("nav.skipToContent")}
       </a>

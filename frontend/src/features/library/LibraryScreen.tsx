@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ExerciseMedia } from "../../components/ExerciseMedia";
+import { Reveal, REVEAL_STEP } from "../../components/Reveal";
 import { Chip } from "../../components/ui";
 import {
   BODY_PARTS,
@@ -141,43 +142,52 @@ export function LibraryScreen(): React.JSX.Element {
 
   return (
     <section aria-labelledby="library-title" className={styles["root"]}>
-      <h1 id="library-title">{t("library.title")}</h1>
+      <Reveal variant="soft">
+        <h1 id="library-title">{t("library.title")}</h1>
+      </Reveal>
 
-      <div className={styles["toolbar"]}>
-        <label className={styles["searchLabel"]}>
-          <span className={styles["visuallyHidden"]}>{t("library.search")}</span>
-          <input
-            type="search"
-            className={styles["search"]}
-            placeholder={t("library.searchPlaceholder")}
-            value={text}
-            onChange={(event) => {
-              setText(event.target.value);
-            }}
-          />
-        </label>
-        <Chip
-          selected={filters.favorites}
-          onSelectedChange={(selected) => {
-            setFilters((current) => ({ ...current, favorites: selected }));
-          }}
-        >
-          {t("library.favorites")}
-        </Chip>
-        {activeCount > 0 && (
-          <button
-            type="button"
-            className={styles["clear"]}
-            onClick={() => {
-              setFilters((current) => ({ ...EMPTY_FILTERS, q: current.q }));
+      <Reveal variant="soft" delay={REVEAL_STEP}>
+        <div className={styles["toolbar"]}>
+          <label className={styles["searchLabel"]}>
+            <span className={styles["visuallyHidden"]}>{t("library.search")}</span>
+            <input
+              type="search"
+              className={styles["search"]}
+              placeholder={t("library.searchPlaceholder")}
+              value={text}
+              onChange={(event) => {
+                setText(event.target.value);
+              }}
+            />
+          </label>
+          <Chip
+            selected={filters.favorites}
+            onSelectedChange={(selected) => {
+              setFilters((current) => ({ ...current, favorites: selected }));
             }}
           >
-            {t("library.clearFilters", { count: activeCount })}
-          </button>
-        )}
-      </div>
+            {t("library.favorites")}
+          </Chip>
+          {activeCount > 0 && (
+            <button
+              type="button"
+              className={styles["clear"]}
+              onClick={() => {
+                setFilters((current) => ({ ...EMPTY_FILTERS, q: current.q }));
+              }}
+            >
+              {t("library.clearFilters", { count: activeCount })}
+            </button>
+          )}
+        </div>
+      </Reveal>
 
       <div className={styles["layout"]}>
+        {/* El mapa muscular/filtros son una lista fija y pequeña: se anima. La cuadrícula
+            virtualizada de resultados NO (técnica 4): puede tener miles de ejercicios y sus filas
+            se montan/desmontan constantemente al hacer scroll, así que una entrada por fila
+            repetiría la animación sin parar en vez de ser un único momento de carga. */}
+        <Reveal variant="side" delay={REVEAL_STEP * 2}>
         <aside className={styles["filters"]} aria-label={t("library.filters")}>
           <details open>
             <summary>{t("library.map.title")}</summary>
@@ -258,6 +268,7 @@ export function LibraryScreen(): React.JSX.Element {
             </div>
           </details>
         </aside>
+        </Reveal>
 
         <div className={styles["results"]}>
           <p role="status" aria-live="polite" className={styles["count"]}>
