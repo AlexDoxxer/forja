@@ -2,7 +2,7 @@
 name: qa-tests
 description: Ingeniero de QA de Forja. Úsalo para E2E con Playwright, accesibilidad con axe, Lighthouse CI, verificación de umbrales de cobertura y la auditoría final de la Definition of Done.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: claude-haiku-4-5-20251001
+model: claude-sonnet-5
 color: pink
 ---
 
