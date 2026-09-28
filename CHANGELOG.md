@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   mapped through `specs/muscle-normalization.yaml` and `specs/equipment-normalization.yaml`.
 - **Spanish translations**: All 1.324 exercise names translated to Spanish and stored in
   `specs/overrides/names_es.json` with zero inconsistencies against `specs/glossary-es.yaml`.
-- **Enrichment**: Deterministic enrichment pipeline with 6 derived fields per exercise
+- **Enrichment**: Deterministic enrichment pipeline with 7 derived fields per exercise
   (movement_pattern, mechanic, role, difficulty, laterality, load_type, is_staple) verified
   against `specs/overrides/enrichment-overrides.yaml` and 100% test coverage.
 - **Media verification**: 2.648 media files (1.324 GIFs + 1.324 thumbnails) downloaded at
@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Alternative suggestions**: Pre-calculated top 8 alternatives per exercise by pattern
   similarity, target muscle overlap, and difficulty.
 
-### Routine Engine (forja_engine v0.1.1)
+### Routine Engine (forja_engine v0.2.1)
 
 - **Deterministic generation**: Complete 9-step pipeline (normalize → split → volume → allocate
   → select → prescribe → timefit → periodize → compose) guaranteed to produce identical programs
@@ -34,11 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Volume management**: Automatic calculation of weekly volume targets by muscle group
   per goal; distribution across days with ≤10 effective sets per group and session.
 - **Exercise selection**: Scoring-based with pattern matching (+40), staple preference (+15),
-  progression difficulty limits, and fallback relaxation chain (difficulty → staple → target
-  muscle → affinity pattern) with full visibility of applied relaxations.
+  progression difficulty limits, and fallback relaxation chain (staple → target muscle →
+  affinity pattern → difficulty) with full visibility of applied relaxations.
 - **Periodization**: Automatic progression through accumulation/intensification phases with
   weekly volume increases, deload week with 55% load, and optional daily undulation for strength.
-- **Sex-aware defaults**: Preselectes emphasis (lower_glutes for females, balanced otherwise),
+- **Sex-aware defaults**: Preselects emphasis (lower_glutes for females, balanced otherwise),
   adjusts rest times and exercise demonstration preference; **never excludes exercises or limits
   loads based on sex**.
 - **Accessibility features**: Plan operations (regenerate_day, swap_exercise, rebalance_after_edit,
@@ -66,19 +66,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Backend API (v1.2.0)
 
-- **Complete REST API**: 59 endpoints across auth, profile, catalog, routine generation,
-  routine management, session tracking, progress analytics, nutrition (optional), data
-  export/import, and admin functions.
+- **Complete REST API**: 71 endpoints across 59 routes covering auth, profile, catalog, routine
+  generation, routine management, session tracking, progress analytics, nutrition (optional),
+  data export/import, and admin functions.
 - **Database schema**: PostgreSQL 16 with UUID v7 primary keys, full-text search over exercises
-  (unaccent), trigram indexes for fuzzy matching, and 14 core tables with audit trail support.
+  (unaccent), trigram indexes for fuzzy matching, and 28 tables with audit trail support.
 - **Authentication**: Argon2id password hashing with OWASP parameters, opaque session tokens
   with sliding 30-day expiration, revocation from settings, per-session IP hash logging.
 - **CSRF protection**: Double-submit cookie validation (cookie + header) on all non-safe methods,
   automatic token rotation on login and password change.
 - **Authorization**: Strict ownership verification on all user-scoped routes; attempts to access
   another user's resources return 404 (not 403) to prevent information leakage.
-- **Rate limiting**: Per-IP rate limiting on login (5 attempts/min), registration (3 attempts/min),
-  and generator preview (30 requests/min) with 429 response and `Retry-After` header.
+- **Rate limiting**: Sliding-window rate limiting (memory, LRU-bounded) on login (10 attempts/min,
+  keyed by IP and by email), registration (5 attempts/min), and generator preview
+  (30 requests/min), with 429 response and `Retry-After` header.
 - **Input validation**: Pydantic v2 with strict mode on all request bodies; file size limits (5 MB
   for imports) and chunked transfer encoding protection at the app layer.
 - **Security headers**: CSP (`default-src 'self'`), HSTS, X-Content-Type-Options, Referrer-Policy,
@@ -98,7 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Home (Hoy)**: Quick session status (scheduled/rest/no active program), workout start button,
   weekly summary (sessions done/planned, volume), recent personal record, and quick weight log.
 - **Routine Generator (Generador)**: Interactive 6-step wizard with goal selection, frequency,
-  sex (preselecteed from profile with explanation), level, duration, equipment, emphasis and
+  sex (preselected from profile with explanation), level, duration, equipment, emphasis and
   limitations; live preview with exercise GIFs, sets×reps, rest times, estimated duration,
   volume distribution graph, rationale, and warnings; regenerate with new seed, regenerate day,
   swap exercise, save and activate.
@@ -129,7 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   shareable shopping list (categories, checkboxes, IndexedDB-backed), nutrient settings and
   recalculation.
 - **Profile (Perfil)**: User data edit (name, height, weight), locale and theme selection
-  (dark/light/system), sonics and vibration toggles, default rest between sets, full data
+  (dark/light/system), sound and vibration toggles, default rest between sets, full data
   export (JSON), data import with schema validation, account deletion with password confirmation,
   active session management (revoke), offline library download, logout, and access to credits/licenses.
 - **Admin**: User registration toggle, global diet feature toggle, user list (role, active status,
@@ -145,9 +146,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Internationalization**: Spanish default with English fallback; all UI strings translated; 10
   languages available for exercise instructions (from dataset); locale-aware date/number formatting
   via `Intl`.
-- **Accessibility**: WCAG 2.2 AA compliance with visible focus, logical tab order, `aria-live`
+- **Accessibility**: Targets WCAG 2.2 AA, with visible focus, logical tab order, `aria-live`
   announcements for timer, alt text for all exercise media, labeled form controls, no
-  color-only information; `prefers-reduced-motion` respected (static image + play button).
+  color-only information, and `prefers-reduced-motion` respected (static image + play button).
+  One known contrast issue is still open (see Testing & Quality below).
 
 ### Deployment
 
@@ -173,10 +175,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- **Penetration testing**: Comprehensive security audit covering authentication, authorization,
-  input validation, CSRF, SQLi, SSRF/RCE, IDOR, PII handling, rate limiting, and dependency
-  scanning (`pip-audit`, `npm audit`, Trivy). Results: 0 critical/high vulnerabilities in
-  production code.
+- **Penetration testing**: Security audit of `backend/` and `frontend/` covering authentication,
+  authorization, input validation, CSRF, SQLi, SSRF, IDOR, PII handling, rate limiting, and
+  dependency scanning (`pip-audit`, `npm audit`). Findings: 0 critical, 1 high, 4 medium, 4 low,
+  2 informational (`docs/reviews/f3-security.md`); the high-severity finding (unbounded rate
+  limiter memory growth) and 7 of the remaining 8 actionable findings were fixed and verified
+  with tests before release (`docs/handoffs/f3-backend-fixes.md`) — 0 unresolved critical/high
+  vulnerabilities at v1.0.0. `deploy/` (nginx, Docker, Trivy) was out of scope for this audit.
 - **Credentials**: No hardcoded secrets, all rotated on deployment, password policy enforced
   (≥10 chars, common password check).
 - **Dependencies**: Locked versions (`uv.lock`, `package-lock.json`), vendored (Radix UI
@@ -187,17 +192,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Testing & Quality
 
-- **Unit test coverage**: Routine engine 100% lines / ≥95% branches, nutrition engine 100% lines,
-  backend ≥90% lines and branches, frontend ≥85% lines; all tests passing with thresholds
-  enforced in CI.
+- **Unit test coverage**: Routine engine and nutrition engine 100% lines / ≥95% branches,
+  backend ≥90% lines and branches, frontend ≥85% lines/branches/functions; all tests passing
+  with thresholds enforced in CI.
 - **Integration tests**: Database fixtures with testcontainers, async API tests with `httpx`,
   OpenAPI contract validation.
 - **E2E tests**: Playwright (Chromium + WebKit mobile) covering onboarding → generate → activate
   → train (full session with rest timer, weight/rep entry) → view progress, offline session
-  player, diet flow, and admin ingest.
-- **Accessibility**: Axe Core tests on all major routes (0 critical/serious violations).
-- **Performance**: Lighthouse CI with thresholds (≥90 performance/accessibility/best practices/PWA),
-  JS bundle <200 KB gzip (code-split by route), LCP <2.5s on 4G throttle.
+  player, diet flow, and admin ingest. WebKit mobile flows that require login/registration are
+  currently blocked in the local HTTP test environment (a `Secure`/`__Host-` cookie limitation of
+  WebKit over plain HTTP, not a product bug — TLS in the real deployment is unaffected); see
+  `docs/handoffs/f3-qa-tests.md`.
+- **Accessibility**: Axe Core tests (0 critical/serious violations threshold) on the main routes
+  (home, onboarding, library, profile). One serious finding is currently open and tracked
+  (insufficient color contrast on the "delete account" danger button in the dark theme,
+  A11Y-1 in `docs/handoffs/f3-qa-tests.md`); it does not yet fail CI because that specific
+  control is not exercised by the current scan.
+- **PWA**: Web app manifest and service worker registration verified end-to-end with Playwright
+  (`e2e/lighthouse.spec.ts`).
+- **Performance**: Lighthouse CI with thresholds (≥90 performance/accessibility/best practices)
+  against the built app; routes are code-split by route with `lazyRouteComponent`, and heavy
+  chart code (Recharts) is loaded in deferred chunks.
 - **Code quality**: Lint (`ruff`, `eslint`) and strict type checking (`mypy --strict`, `tsc --strict`)
   enforced in CI; no `TODO`, `# type: ignore`, or `# noqa` without justification.
 - **Contract compliance**: OpenAPI schema exported from FastAPI, diffed against
@@ -226,6 +241,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Diet disable toggle (próximamente)**: Diet feature can be activated during onboarding but
   currently cannot be toggled off per-user in Profile settings (Admin can disable globally).
   Frontend UI control pending (branch `f4/frontend-gaps`).
+- **Accessibility contrast (A11Y-1)**: The "delete account" danger button in the dark theme has a
+  3.49:1 contrast ratio, below the 4.5:1 WCAG 2.2 AA minimum; fix pending
+  (`docs/handoffs/f3-qa-tests.md`).
 - **Gym visual media licensing**: App serves 180×180 GIF and thumbnail files without modification,
   with mandatory attribution on all views. Public exposure requires review of Gym visual terms of
   use (https://gymvisual.com/content/3-terms-and-conditions-of-use) and compliance verification

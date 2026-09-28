@@ -101,8 +101,10 @@ Tras la instalación:
      elásticas, solo peso corporal, otro).
    - Limitaciones: si tienes lesiones o patrones de movimiento que evitar, indícalos (Forja
      excluirá ejercicios automáticamente).
-4. **Opción de dieta**: actívala si quieres planes de comidas personalizados (puedes cambiarla
-   después en Perfil).
+4. **Opción de dieta**: actívala si quieres planes de comidas personalizados. Si prefieres no
+   activarla ahora, puedes hacerlo más tarde desde la pantalla de Nutrición (accesible desde
+   Perfil); por ahora no existe un interruptor para desactivarla de nuevo una vez activada
+   (un administrador puede desactivar la función para toda la app desde Administración).
 
 ¡Ya estás listo para entrenar!
 
