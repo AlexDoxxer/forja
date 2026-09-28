@@ -13,10 +13,20 @@ NPM ?= npm
 PY_PACKAGES := engine nutrition backend
 GATE := $(UV_RUN) --project engine python scripts/coverage_gate.py
 
-# Directorios de código de producción revisados por la comprobación de marcadores (§15).
+# Rutas revisadas por la comprobación de marcadores (§15): código de producción, tests
+# y documentación de cara al usuario. docs/USER_GUIDE.md y CHANGELOG.md son entregables de
+# F4-ORQ-01 (Fase 4): `wildcard` los omite mientras no existan sin romper este objetivo, y
+# los incorpora automáticamente en cuanto se creen.
 PLACEHOLDER_PATHS := backend/app backend/ingest backend/migrations engine/forja_engine \
-	nutrition/forja_nutrition frontend/src contracts deploy scripts
+	nutrition/forja_nutrition frontend/src contracts deploy scripts \
+	backend/tests engine/tests nutrition/tests frontend/e2e frontend/tests \
+	$(wildcard README.md CHANGELOG.md docs/USER_GUIDE.md)
 PLACEHOLDER_PATTERN := TODO|FIXME|XXX|NotImplementedError|[Ll]orem ipsum
+# El patrón distingue mayúsculas/minúsculas a propósito: evita falsos positivos con
+# palabras legítimas en español como «todo» (p. ej. frontend/e2e/*.spec.ts «Todo listo»,
+# nutrition/tests/test_properties.py «todo el dominio»), que no son marcadores de trabajo
+# pendiente. Verificado en F3-QA-05: sin excepciones necesarias, no hay TODO/FIXME/XXX/
+# NotImplementedError/lorem ipsum reales en tests ni en README.md.
 
 .PHONY: help install lint lint-python lint-frontend lint-contracts lint-placeholders \
 	typecheck typecheck-python typecheck-frontend test test-engine test-nutrition \
@@ -50,7 +60,7 @@ lint-frontend: ## ESLint del frontend (0 avisos)
 lint-contracts: ## Valida contracts/openapi.yaml (OpenAPI 3.1)
 	$(UV_RUN) --project backend openapi-spec-validator contracts/openapi.yaml
 
-lint-placeholders: ## Falla si hay marcadores prohibidos (§2.2, §15) en código de producción
+lint-placeholders: ## Falla si hay marcadores prohibidos (§2.2, §15) en código, tests y docs
 	@if grep -rnE '$(PLACEHOLDER_PATTERN)' $(PLACEHOLDER_PATHS); then \
 		echo "Marcadores prohibidos encontrados (ver arriba)"; exit 1; \
 	else echo "==> sin marcadores prohibidos"; fi
