@@ -72,6 +72,8 @@ describe("tokens de diseño — contraste WCAG AA (MASTER_PROMPT §10.1)", () =>
     ["éxito sobre fondo", "color-success-text", "color-bg"],
     ["aviso sobre fondo", "color-warning-text", "color-bg"],
     ["error sobre fondo", "color-error-text", "color-bg"],
+    // Botón primario deshabilitado (F5, corrección «Hoy»): texto atenuado sobre superficie 2.
+    ["texto atenuado sobre superficie 2 (botón primario deshabilitado)", "color-text-muted", "color-surface-2"],
   ])("tema oscuro: %s cumple AA (>= 4.5:1)", (_label, fg, bg) => {
     const ratio = contrastRatio(requireToken(dark, fg), requireToken(dark, bg));
     expect(ratio).toBeGreaterThanOrEqual(AA_NORMAL_TEXT);
@@ -84,6 +86,8 @@ describe("tokens de diseño — contraste WCAG AA (MASTER_PROMPT §10.1)", () =>
     ["éxito sobre fondo", "color-success-text", "color-bg"],
     ["aviso sobre fondo", "color-warning-text", "color-bg"],
     ["error sobre fondo", "color-error-text", "color-bg"],
+    // Botón primario deshabilitado (F5, corrección «Hoy»): texto atenuado sobre superficie 2.
+    ["texto atenuado sobre superficie 2 (botón primario deshabilitado)", "color-text-muted", "color-surface-2"],
   ])("tema claro: %s cumple AA (>= 4.5:1)", (_label, fg, bg) => {
     const ratio = contrastRatio(requireToken(light, fg), requireToken(light, bg));
     expect(ratio).toBeGreaterThanOrEqual(AA_NORMAL_TEXT);
