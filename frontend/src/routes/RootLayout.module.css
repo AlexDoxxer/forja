@@ -11,3 +11,17 @@
     padding-bottom: var(--space-6);
   }
 }
+
+/*
+ * Rutas públicas a pantalla completa (F5-FE-02): `/login` es una landing de un único viewport,
+ * no una pantalla del shell autenticado — sin el padding/ancho máximo de `.main` (pensados para
+ * convivir con `AppNav`, que esta ruta nunca monta; ver `isFullBleedPath` en
+ * `features/auth/session.ts`). `/onboarding` es la otra ruta pública pero sigue siendo un
+ * asistente de formulario estándar que depende de este padding, así que se queda con `.main`
+ * (ver «Decisiones» en `docs/handoffs/f5-login-polish.md`).
+ */
+.fullBleed {
+  padding: 0;
+  max-width: none;
+  margin-inline: 0;
+}

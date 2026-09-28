@@ -58,15 +58,13 @@ describe("LoginScreen — landing", () => {
     expect(screen.getByRole("button", { name: "Entrar" })).toBeInTheDocument();
   });
 
-  it("el enlace de la barra superior y el secundario llevan ambos a /onboarding", async () => {
+  it("«Crear una cuenta» aparece una sola vez (el enlace contextual bajo el formulario) y lleva a /onboarding", async () => {
     mockReducedMotion(false);
     renderLogin();
 
     const links = await screen.findAllByRole("link", { name: "Crear una cuenta" });
-    expect(links).toHaveLength(2);
-    for (const link of links) {
-      expect(link).toHaveAttribute("href", "/onboarding");
-    }
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveAttribute("href", "/onboarding");
   });
 
   it("los campos de correo y contraseña son accesibles por su etiqueta", async () => {
@@ -75,5 +73,12 @@ describe("LoginScreen — landing", () => {
 
     expect(await screen.findByLabelText("Correo electrónico")).toBeInTheDocument();
     expect(screen.getByLabelText("Contraseña")).toBeInTheDocument();
+  });
+
+  it("«Entrar» no se deshabilita por tener los campos vacíos (F5-FE-02: solo `busy` lo deshabilita)", async () => {
+    mockReducedMotion(false);
+    renderLogin();
+
+    expect(await screen.findByRole("button", { name: "Entrar" })).not.toBeDisabled();
   });
 });
