@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
+import { IconTrophy } from "../../components/icons";
+import { cx } from "../../lib/cx";
 import { formatNumber } from "../shared/format";
 import shared from "../shared/ui.module.css";
 import { localVolumeKg, type PlayerState } from "./playerMachine";
@@ -111,7 +113,12 @@ export function SessionSummary({ sessionUuid, onExit }: SessionSummaryProps): Re
         )}
       </dl>
       <section className={shared["card"]} aria-labelledby="records-title">
-        <h2 id="records-title">{t("session.records")}</h2>
+        <div className={shared["cardHeader"]}>
+          <span className={shared["cardIcon"]}>
+            <IconTrophy />
+          </span>
+          <h2 id="records-title">{t("session.records")}</h2>
+        </div>
         {remote === null ? (
           <p className={shared["muted"]} role="status">
             {t("session.localSummary")}
@@ -129,7 +136,7 @@ export function SessionSummary({ sessionUuid, onExit }: SessionSummaryProps): Re
           </ul>
         )}
       </section>
-      <button type="button" className={shared["btn"]} onClick={onExit}>
+      <button type="button" className={cx(shared["btn"], shared["primary"])} onClick={onExit}>
         {t("session.backToToday")}
       </button>
     </section>

@@ -224,6 +224,7 @@
 
 | ID | Agente | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|---|
+| F4-FE-01 | frontend-ui | Pulido visual: CTA primaria con degradado brasa en cada pantalla, iconos en `AppNav` y cabeceras de tarjeta, más respiro y estados vacíos intencionados | `docs/handoffs/f4-visual-polish.md`; lint/tsc/build en verde; tests 196/196 (cobertura de ramas global sigue por debajo del umbral, preexistente — ver handoff) | Fase 2 | hecha (rama `f4/visual-polish`, sin fusionar) |
 | F4-QA-01 | qa-tests | Auditoría de §15 punto por punto | `docs/DOD_REPORT.md` con evidencia; lo que falle, tarea nueva aquí | Fase 3 | pendiente |
 | F4-ORQ-01 | orquestador | `CHANGELOG.md` y `docs/USER_GUIDE.md` (ES, con capturas) | Revisados | F4-QA-01 | pendiente |
 | F4-ORQ-02 | orquestador | README definitivo y tag `v1.0.0` | Tag creado sobre `main` verde | F4-ORQ-01 | pendiente |

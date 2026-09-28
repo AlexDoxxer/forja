@@ -16,6 +16,8 @@ export const resources = {
         library: "Biblioteca",
         progress: "Progreso",
         profile: "Perfil",
+        nutrition: "Nutrición",
+        admin: "Admin",
         skipToContent: "Saltar al contenido",
       },
       media: {
@@ -79,6 +81,8 @@ export const resources = {
         library: "Library",
         progress: "Progress",
         profile: "Profile",
+        nutrition: "Nutrition",
+        admin: "Admin",
         skipToContent: "Skip to content",
       },
       media: {
