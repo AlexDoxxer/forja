@@ -154,6 +154,8 @@ registerBundle(
 registerBundle(
   "todayB",
   {
+    // Título de la tarjeta de sesión: distinto del `<h1>` de la pantalla («Hoy»), que ya lo dice.
+    sessionCardTitle: "Sesión de hoy",
     scheduledFor: "Toca hoy: {{name}}",
     minutes: "≈ {{count}} min",
     start: "Empezar",
@@ -178,6 +180,7 @@ registerBundle(
     pendingSync: "Cambios pendientes de sincronizar: {{count}}",
   },
   {
+    sessionCardTitle: "Today's session",
     scheduledFor: "Today: {{name}}",
     minutes: "≈ {{count}} min",
     start: "Start",

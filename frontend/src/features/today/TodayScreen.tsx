@@ -15,6 +15,7 @@ import { loadActiveState } from "../session/storage";
 import "../session/strings";
 import { formatNumber, parseDecimal } from "../shared/format";
 import shared from "../shared/ui.module.css";
+import today from "./Today.module.css";
 import { useProfileSummary } from "./useProfileSummary";
 import { useTodayOverview } from "./useTodayOverview";
 
@@ -41,7 +42,7 @@ function BodyWeightCard(): React.JSX.Element {
   const average = overview.data?.body_weight.moving_average_7d_kg ?? null;
 
   return (
-    <section className={shared["card"]} aria-labelledby="bw-title">
+    <section className={cx(shared["card"], today["secondary"])} aria-labelledby="bw-title">
       <div className={shared["cardHeader"]}>
         <span className={shared["cardIcon"]}>
           <IconScale />
@@ -105,12 +106,12 @@ function NextSessionCard(): React.JSX.Element {
   };
 
   return (
-    <section className={shared["card"]} aria-labelledby="next-title">
+    <section className={cx(shared["card"], today["hero"])} aria-labelledby="next-title">
       <div className={shared["cardHeader"]}>
         <span className={shared["cardIcon"]}>
           <IconCalendar />
         </span>
-        <h2 id="next-title">{t("today.title")}</h2>
+        <h2 id="next-title">{t("todayB.sessionCardTitle")}</h2>
       </div>
       <QueryState
         isLoading={next.isLoading}
@@ -177,61 +178,65 @@ export function TodayScreen(): React.JSX.Element {
           </p>
         )}
       </Reveal>
-      <div className={shared["grid"]}>
+      <div className={today["grid"]}>
         <Reveal variant="scale" delay={REVEAL_STEP}>
           <NextSessionCard />
         </Reveal>
-        <Reveal variant="soft" delay={REVEAL_STEP * 2}>
-          <section className={shared["card"]} aria-labelledby="week-title">
-            <div className={shared["cardHeader"]}>
-              <span className={shared["cardIcon"]}>
-                <IconChartBar />
-              </span>
-              <h2 id="week-title">{t("todayB.weekSummary")}</h2>
-            </div>
-            <QueryState
-              isLoading={overview.isLoading}
-              isError={overview.isError}
-              loadingLabel={t("today.loading")}
-              errorLabel={t("today.error")}
-            >
-              {overview.data && (
-                <>
-                  <dl>
-                    <div>
-                      <dt>{t("today.sessionsCompleted")}</dt>
-                      <dd>{overview.data.sessions_completed}</dd>
-                    </div>
-                    <div>
-                      <dt>{t("today.sessionsPlanned")}</dt>
-                      <dd>{overview.data.sessions_planned}</dd>
-                    </div>
-                    <div>
-                      <dt>{t("today.volume")}</dt>
-                      <dd>{formatNumber(overview.data.volume_kg, 0)} kg</dd>
-                    </div>
-                    <div>
-                      <dt>{t("today.streak")}</dt>
-                      <dd>{overview.data.streak_weeks}</dd>
-                    </div>
-                  </dl>
-                  <h3>{t("todayB.lastRecord")}</h3>
-                  <p>
-                    {overview.data.last_record === null
-                      ? t("todayB.noRecord")
-                      : t("todayB.recordValue", {
-                          name: overview.data.last_record.exercise_name_es,
-                          value: formatNumber(overview.data.last_record.value),
-                        })}
-                  </p>
-                </>
-              )}
-            </QueryState>
-          </section>
-        </Reveal>
-        <Reveal variant="soft" delay={REVEAL_STEP * 2}>
-          <BodyWeightCard />
-        </Reveal>
+        <div className={today["secondaryStack"]}>
+          <Reveal variant="soft" delay={REVEAL_STEP * 2}>
+            <section className={cx(shared["card"], today["secondary"])} aria-labelledby="week-title">
+              <div className={shared["cardHeader"]}>
+                <span className={shared["cardIcon"]}>
+                  <IconChartBar />
+                </span>
+                <h2 id="week-title">{t("todayB.weekSummary")}</h2>
+              </div>
+              <QueryState
+                isLoading={overview.isLoading}
+                isError={overview.isError}
+                loadingLabel={t("today.loading")}
+                errorLabel={t("today.error")}
+              >
+                {overview.data && (
+                  <>
+                    <dl className={today["statGrid"]}>
+                      <div className={today["stat"]}>
+                        <dt className={today["statLabel"]}>{t("today.sessionsCompleted")}</dt>
+                        <dd className={today["statValue"]}>{overview.data.sessions_completed}</dd>
+                      </div>
+                      <div className={today["stat"]}>
+                        <dt className={today["statLabel"]}>{t("today.sessionsPlanned")}</dt>
+                        <dd className={today["statValue"]}>{overview.data.sessions_planned}</dd>
+                      </div>
+                      <div className={today["stat"]}>
+                        <dt className={today["statLabel"]}>{t("today.volume")}</dt>
+                        <dd className={today["statValue"]}>{formatNumber(overview.data.volume_kg, 0)} kg</dd>
+                      </div>
+                      <div className={today["stat"]}>
+                        <dt className={today["statLabel"]}>{t("today.streak")}</dt>
+                        <dd className={today["statValue"]}>{overview.data.streak_weeks}</dd>
+                      </div>
+                    </dl>
+                    <p className={today["lastRecord"]}>
+                      <span className={today["lastRecordLabel"]}>{t("todayB.lastRecord")}</span>
+                      <span className={today["lastRecordValue"]}>
+                        {overview.data.last_record === null
+                          ? t("todayB.noRecord")
+                          : t("todayB.recordValue", {
+                              name: overview.data.last_record.exercise_name_es,
+                              value: formatNumber(overview.data.last_record.value),
+                            })}
+                      </span>
+                    </p>
+                  </>
+                )}
+              </QueryState>
+            </section>
+          </Reveal>
+          <Reveal variant="soft" delay={REVEAL_STEP * 2}>
+            <BodyWeightCard />
+          </Reveal>
+        </div>
       </div>
       {profile.data?.diet_available === true && (
         <Reveal variant="pop" delay={REVEAL_STEP * 3}>

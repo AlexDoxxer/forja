@@ -64,6 +64,19 @@
     inset 0 1px 0 var(--glass-highlight),
     0 0 22px var(--glow-accent);
 }
+/*
+ * Deshabilitado: nunca el degradado brasa apagado con opacidad (mancha parda). Superficie plana,
+ * texto atenuado, sin relieve ni brillo — se lee como inactivo, no como una versión sucia del
+ * botón activo. Contraste verificado en `tests/design-tokens.test.ts` (texto atenuado/superficie 2).
+ */
+.primary:disabled {
+  opacity: 1;
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+  box-shadow: none;
+  cursor: not-allowed;
+}
 .secondary {
   background: linear-gradient(160deg, var(--glass-tint), transparent 65%), var(--color-surface-2);
   border-color: var(--color-border);

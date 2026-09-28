@@ -1,0 +1,101 @@
+/*
+ * Piezas visuales exclusivas de la pantalla «Hoy» (F5, corrección de jerarquía): la tarjeta de
+ * sesión es la protagonista (más ancha, con relieve cálido); resumen semanal y peso corporal
+ * quedan deliberadamente más discretos. Se apoya en `.card` de `shared/ui.module.css` para el
+ * borde/radio/sombra/espaciado entre hijos — aquí solo se ajusta tamaño y calidez.
+ *
+ * `section.hero` / `section.secondary` usan el selector de etiqueta junto con la clase para tener
+ * más especificidad que `.card` (que solo usa una clase) y así ganar de forma determinista sobre
+ * `padding`/`background`, sin depender del orden en que Vite concatene los módulos CSS.
+ */
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    /* La sesión de hoy ocupa la columna ancha; resumen + peso quedan en una columna angosta. */
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  }
+}
+
+.secondaryStack {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-content: start;
+}
+
+/* Tarjeta «héroe»: más relleno y un filo brasa superior (mismo `--gradient-accent` que el botón
+   primario que contiene), sin fundido decorativo detrás del contenido. */
+section.hero {
+  padding: var(--space-6) var(--space-5);
+  background:
+    var(--gradient-accent) top / 100% 3px no-repeat,
+    var(--color-surface-1);
+}
+
+/* Tarjetas secundarias: mismo lenguaje visual, con menos relleno para leerse más discretas. */
+section.secondary {
+  padding: var(--space-4);
+}
+
+/* Estadísticas de la semana: cuadrícula 2×2 (también en móvil) en vez de la lista `<dl>` por
+   defecto del navegador. El marcado sigue siendo `<dl>`/`<dt>`/`<dd>` (accesible); solo se
+   sustituye su estilo. */
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4) var(--space-3);
+  margin: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.statLabel {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.statValue {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+  font-feature-settings: var(--nums-tabular);
+}
+
+/* «Último récord»: una línea propia y pequeña (no un `<h3>`), con un filo brasa — mismo acento
+   reservado a acciones primarias y récords (MASTER_PROMPT, ver handoff F5). */
+.lastRecord {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
+}
+
+.lastRecordLabel {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.lastRecordValue {
+  font-weight: 700;
+  color: var(--color-text);
+}
