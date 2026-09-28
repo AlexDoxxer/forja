@@ -176,6 +176,8 @@
 
 .line {
   display: block;
+  /* Reparte el texto entre las líneas que ocupe (evita «con» colgando al final). */
+  text-wrap: balance;
 }
 
 /* El único acento del titular: «Forja» es a la vez la marca y el imperativo de «forjar», así
@@ -196,6 +198,8 @@
   color: var(--color-text-muted);
   font-size: 1.0625rem;
   line-height: 1.5;
+  /* Sin viudas: evita que la última palabra («semana.») quede sola en su línea. */
+  text-wrap: pretty;
 }
 
 /* Visualmente oculto: conserva `auth.loginTitle` como nombre accesible de la región del
