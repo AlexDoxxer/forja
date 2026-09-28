@@ -12,7 +12,22 @@
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
+/* Móvil: los dos grupos se «aplanan» (los enlaces pasan a ser hijos flex directos de `.nav`)
+   para mantener una sola fila; no hay sitio en la barra inferior para subtítulos ni separador. */
+.group {
+  display: contents;
+}
+
+.groupLabel {
+  display: none;
+}
+
+.divider {
+  display: none;
+}
+
 .link {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -33,6 +48,17 @@
   color: var(--color-text);
 }
 
+/* Píldora activa (motion.div con layoutId en AppNav.tsx): cubre el enlace entero. `z-index: -1`
+   la mantiene detrás del icono/etiqueta (que son estáticos y por tanto siempre pintan encima)
+   sin necesidad de darles su propio contexto de apilamiento. */
+.pill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+}
+
 .iconWrap {
   display: flex;
   align-items: center;
@@ -40,9 +66,6 @@
   width: 2.25rem;
   height: 1.75rem;
   border-radius: var(--radius-md);
-  transition:
-    background var(--motion-duration) ease,
-    color var(--motion-duration) ease;
 }
 
 .icon {
@@ -59,11 +82,6 @@
   color: var(--color-accent);
 }
 
-.active .iconWrap {
-  background: var(--color-surface-2);
-  color: var(--color-accent);
-}
-
 @media (min-width: 1024px) {
   .nav {
     inset-inline: auto;
@@ -75,10 +93,32 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    gap: var(--space-1);
+    gap: var(--space-4);
     padding: var(--space-6) var(--space-3);
     border-top: none;
     border-right: 1px solid var(--color-border);
+  }
+
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .groupLabel {
+    display: block;
+    margin: 0 0 var(--space-1);
+    padding: 0 var(--space-3);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  .divider {
+    display: block;
+    height: 1px;
+    margin: 0 var(--space-2);
+    background: var(--color-border);
   }
 
   .link {
@@ -99,18 +139,5 @@
     width: 2rem;
     height: 2rem;
     background: transparent;
-  }
-
-  .active {
-    background: var(--color-surface-2);
-    color: var(--color-accent);
-  }
-
-  .active .iconWrap {
-    background: transparent;
-  }
-
-  .active:hover {
-    background: var(--color-surface-2);
   }
 }

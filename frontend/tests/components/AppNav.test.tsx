@@ -43,4 +43,32 @@ describe("AppNav", () => {
     });
     expect(screen.getByRole("link", { name: "Admin" })).toHaveAttribute("href", "/admin");
   });
+
+  it("agrupa los enlaces en «Entrenar» y «Cuenta» (subtítulos del rail de escritorio)", async () => {
+    server.use(http.get("/api/v1/auth/me", () => HttpResponse.json(me("user", false))));
+    renderRoute(<AppNav />, "/", ["/biblioteca", "/progreso"]);
+
+    expect(await screen.findByText("Entrenar")).toBeInTheDocument();
+    expect(screen.getByText("Cuenta")).toBeInTheDocument();
+  });
+
+  it("marca el enlace activo con `aria-current` y una píldora; con movimiento reducido, sin animación", async () => {
+    server.use(http.get("/api/v1/auth/me", () => HttpResponse.json(me("user", false))));
+    const original = window.matchMedia.bind(window);
+    window.matchMedia = ((query: string) => ({
+      matches: query.includes("prefers-reduced-motion"),
+      media: query,
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+      addListener: () => undefined,
+      removeListener: () => undefined,
+    })) as unknown as typeof window.matchMedia;
+
+    renderRoute(<AppNav />, "/", ["/biblioteca", "/progreso"]);
+    const active = await screen.findByRole("link", { name: "Hoy" });
+    expect(active).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Rutinas" })).not.toHaveAttribute("aria-current");
+
+    window.matchMedia = original;
+  });
 });
