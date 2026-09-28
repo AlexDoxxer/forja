@@ -1,28 +1,32 @@
 # Forja
 
-Aplicación web de entrenamiento **autoalojada** (PWA) para uso personal o familiar: biblioteca
-de 1.324 ejercicios con GIF e instrucciones en 10 idiomas, generador determinista de rutinas
-según objetivo, días, sexo, nivel y equipamiento, reproductor de sesión que funciona sin
-conexión, seguimiento del progreso y un módulo opcional de dieta.
+Aplicación web de entrenamiento **autoalojada** (PWA): biblioteca de 1.324 ejercicios con GIF e
+instrucciones en 10 idiomas, generador determinista de rutinas según objetivo, días, sexo, nivel
+y equipamiento, reproductor de sesión que funciona sin conexión, seguimiento del progreso y un
+módulo opcional de dieta.
 
-> **Estado**: Fase 0 (fundaciones) completada: monorepo, contratos, ADRs y CI. La aplicación
-> se construye por fases según `ORCHESTRATION.md`; este README se completa en la Fase 4.
+## Empezar
 
-## Documentación
+- **¿Vas a usar Forja?** Lee la [guía de usuario](docs/USER_GUIDE.md): qué hace la app, cómo
+  generar y entrenar tu primera rutina, la dieta opcional y el módulo de progreso.
+- **¿Vas a desplegarla en tu propio servidor?** Sigue la [guía de despliegue en Proxmox
+  LXC](deploy/lxc/README.md) (Docker Compose + nginx, backups y actualización).
+- **¿Quieres ver qué ha cambiado en cada versión?** Consulta el [`CHANGELOG.md`](CHANGELOG.md).
+
+## Documentación técnica
 
 | Documento | Contenido |
 |---|---|
 | [`MASTER_PROMPT.md`](MASTER_PROMPT.md) | Especificación completa (fuente de verdad) |
-| [`ORCHESTRATION.md`](ORCHESTRATION.md) | Fases, puertas y protocolo entre agentes |
-| [`CLAUDE.md`](CLAUDE.md) | Reglas del proyecto para agentes |
+| [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) | Guía de usuario en español |
+| [`deploy/lxc/README.md`](deploy/lxc/README.md) | Despliegue en Proxmox LXC |
+| [`CHANGELOG.md`](CHANGELOG.md) | Historial de versiones |
 | [`contracts/openapi.yaml`](contracts/openapi.yaml) | Contrato de la API (OpenAPI 3.1) |
 | [`contracts/domain.md`](contracts/domain.md) | Modelo de dominio, enumeraciones y DTOs de los motores |
 | [`docs/adr/`](docs/adr/README.md) | Decisiones de arquitectura |
-| [`docs/TASKS.md`](docs/TASKS.md) | Tablero de tareas por fase y agente |
-| [`docs/CONTRACT_CHANGES.md`](docs/CONTRACT_CHANGES.md) | Propuestas y resoluciones de cambios de contrato |
-| [`docs/dataset-analysis.md`](docs/dataset-analysis.md) | Análisis del dataset de origen |
+| [`docs/DOD_REPORT.md`](docs/DOD_REPORT.md) | Auditoría de Definition of Done (§15) |
 
-## Estructura
+## Estructura del repositorio
 
 ```
 contracts/   Contrato OpenAPI y modelo de dominio
@@ -50,20 +54,36 @@ make e2e          # Playwright (requiere `npx playwright install` en frontend/)
 make help         # todos los objetivos
 ```
 
-Configuración exclusivamente por variables de entorno: copia `.env.example` a `.env`. Los
-objetivos de despliegue (`make bootstrap`, `make up`, `make ingest`, copias de seguridad) y la
-guía para Proxmox LXC llegan en la Fase 3 (`deploy/`).
+Configuración exclusivamente por variables de entorno: copia `.env.example` a `.env`.
+
+## Despliegue
+
+```bash
+deploy/scripts/init-env.sh   # crea .env con secretos generados
+make bootstrap                # construye imágenes y prepara la base de datos
+make up                       # levanta la pila (db, api, web)
+make ingest                   # descarga y carga el catálogo de ejercicios
+```
+
+Detalle completo (Proxmox LXC, TLS, copias de seguridad y restauración, variables de entorno)
+en [`deploy/lxc/README.md`](deploy/lxc/README.md).
 
 ## Licencias y medios
 
 - Los **datos** del dataset [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset)
   (nombres, músculos, equipamiento, instrucciones y traducciones) son **MIT**.
-- Los **medios** (GIF y miniaturas) son **© Gym visual — https://gymvisual.com/**, se
-  redistribuyen con permiso a 180×180 y **no** están cubiertos por MIT. No se versionan en
-  este repositorio: se descargan en el despliegue desde un commit fijado, se sirven sin
-  modificar, solo a usuarios autenticados por defecto, y siempre con la atribución visible.
-  Clonar este repositorio no concede ninguna licencia sobre ellos. Antes de exponer Forja
-  públicamente, revisa los [términos de Gym visual](https://gymvisual.com/content/3-terms-and-conditions-of-use).
+- Los **medios** (imágenes y vídeos) son **© Gym visual — https://gymvisual.com/**, usados con
+  permiso escrito del titular. **No** están cubiertos por la licencia MIT del dataset. Se
+  redistribuyen únicamente a **180×180 px**, sin reescalar, recodificar, recortar, convertir de
+  formato ni marcar de agua; se sirven **byte a byte tal cual**. Toda vista que muestre un medio
+  incluye la atribución **«© Gym visual — https://gymvisual.com/»** de forma visible. Los medios
+  **no se versionan** en este repositorio: se obtienen en el despliegue desde el repositorio de
+  origen en un commit fijado y se verifican por checksum. Clonar este repositorio **no concede
+  ninguna licencia** sobre los medios: la aplicación está pensada para **uso privado
+  autoalojado**, y por defecto los medios solo se sirven a usuarios autenticados. Si vas a exponer
+  tu instancia de Forja públicamente, revisa antes los
+  [términos y condiciones de Gym visual](https://gymvisual.com/content/3-terms-and-conditions-of-use)
+  y obtén tu propia licencia.
 
 ## Aviso sanitario
 
