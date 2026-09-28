@@ -131,7 +131,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Profile (Perfil)**: User data edit (name, height, weight), locale and theme selection
   (dark/light/system), sonics and vibration toggles, default rest between sets, full data
   export (JSON), data import with schema validation, account deletion with password confirmation,
-  active session management (revoke), offline library download, and logout.
+  active session management (revoke), offline library download, logout, and access to credits/licenses.
 - **Admin**: User registration toggle, global diet feature toggle, user list (role, active status,
   search), ingest launch (dry-run or real) with live progress and execution history (row counts,
   checksums, errors, diffs).
@@ -194,7 +194,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   OpenAPI contract validation.
 - **E2E tests**: Playwright (Chromium + WebKit mobile) covering onboarding → generate → activate
   → train (full session with rest timer, weight/rep entry) → view progress, offline session
-  player, diet flow, PDF export, ICS export, and admin ingest.
+  player, diet flow, and admin ingest.
 - **Accessibility**: Axe Core tests on all major routes (0 critical/serious violations).
 - **Performance**: Lighthouse CI with thresholds (≥90 performance/accessibility/best practices/PWA),
   JS bundle <200 KB gzip (code-split by route), LCP <2.5s on 4G throttle.
@@ -220,6 +220,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Known Limitations
 
+- **Export features (próximamente)**: MASTER_PROMPT §1.7 specifies PDF export for routines and
+  ICS export for calendars; backend endpoints exist (`GET /programs/{id}/export.pdf`,
+  `/calendar.ics`) but frontend UI links and handlers are pending (branch `f4/frontend-gaps`).
+- **Diet disable toggle (próximamente)**: Diet feature can be activated during onboarding but
+  currently cannot be toggled off per-user in Profile settings (Admin can disable globally).
+  Frontend UI control pending (branch `f4/frontend-gaps`).
 - **Gym visual media licensing**: App serves 180×180 GIF and thumbnail files without modification,
   with mandatory attribution on all views. Public exposure requires review of Gym visual terms of
   use (https://gymvisual.com/content/3-terms-and-conditions-of-use) and compliance verification
