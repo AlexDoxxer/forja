@@ -10,7 +10,7 @@ test.describe("PWA and Performance checks", () => {
       test.skip();
     }
 
-    await page.goto("/", { baseURL });
+    await page.goto("/");
 
     // Check for manifest
     const manifest = page.locator('link[rel="manifest"]');
@@ -51,7 +51,7 @@ test.describe("PWA and Performance checks", () => {
       test.skip();
     }
 
-    await page.goto("/", { baseURL });
+    await page.goto("/");
 
     // Verify service worker and offline cache strategy exists
     // The app should handle offline gracefully via service worker cache
@@ -89,7 +89,7 @@ test.describe("PWA and Performance checks", () => {
     }
 
     // Go to library where media is shown
-    await page.goto("/biblioteca", { baseURL });
+    await page.goto("/biblioteca");
 
     // Wait for content to load
     await page.waitForTimeout(2000);
