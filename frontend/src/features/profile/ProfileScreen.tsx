@@ -101,6 +101,10 @@ function SettingsSection({ profile }: { profile: Schemas["Profile"] }): React.JS
           <input type="checkbox" checked={prefs.vibration} onChange={(e) => { setPref("vibration", e.target.checked); }} />
           {t("profileB.vibration")}
         </label>
+        <label className={shared["row"]}>
+          <input type="checkbox" checked={form.diet_enabled} onChange={(e) => { setForm({ ...form, diet_enabled: e.target.checked }); }} />
+          {t("profileB.dietEnabled")}
+        </label>
         <div>
           <button type="submit" className={shared["btn"]} disabled={save.isPending}>
             {t("profileB.save")}
