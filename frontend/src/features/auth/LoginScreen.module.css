@@ -8,15 +8,11 @@
 @import "@fontsource-variable/archivo/standard-italic.css";
 
 /*
- * `RootLayout.module.css` (`.main`) asume que `AppNav` ocupa la columna/franja izquierda y dan
- * de sobra abajo — un supuesto correcto para el resto de la app, pero `AppNav` nunca se monta en
- * `/login` (`isPublicPath`). Sin corregirlo, esta pantalla heredaría un hueco muerto de hasta
- * 272 px a la izquierda en escritorio y no podría ocupar un solo viewport sin scroll. No se
- * puede tocar `RootLayout` (fuera de la zona de este agente), así que se contrarresta aquí, con
- * los mismos tokens que usa esa regla, sin cambiar `position` (se queda en `static`): así el
- * único elemento realmente posicionado cerca de la esquina superior izquierda del viewport
- * sigue siendo el enlace «saltar al contenido» de `RootLayout`, que por tanto nunca queda tapado
- * por esta pantalla (ver «Decisiones» en el handoff).
+ * RootLayout (F5-FE-02, `docs/handoffs/f5-login-polish.md`) ya no aplica el padding/ancho
+ * máximo del shell (`.main`) a esta ruta — ver `isFullBleedPath` en `features/auth/session.ts`
+ * y `.fullBleed` en `RootLayout.module.css`. El `<main id="main-content">` que envuelve esta
+ * pantalla mide, por tanto, el viewport completo: `.hero` solo necesita `100dvh`, sin ningún
+ * cálculo para cancelar un padding ajeno ni compensar el rail de escritorio.
  */
 .hero {
   display: grid;
@@ -27,43 +23,38 @@
   color: var(--color-text);
 }
 
-@media (min-width: 901px) {
-  .hero {
-    /* Cancela el padding vertical muerto de `.main` (16px arriba + nav-height/2 + space-6 abajo,
-       reservado para una barra de nav inferior que no existe en esta ruta). */
-    min-height: calc(100dvh - var(--space-4) - var(--nav-height) - var(--space-6));
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero {
-    /* A partir de aquí `.main` cambia su padding-bottom (ya no reserva la barra inferior) y
-       añade un padding-left del ancho del rail de escritorio + space-6. */
-    min-height: calc(100dvh - var(--space-4) - var(--space-6));
-    margin-left: calc(-1 * (var(--nav-width) + var(--space-6) - var(--space-4)));
-  }
-}
-
-/* === Fondo: brasa ambiental + velo + grano (§2 del encargo) ==============================
-   Todas las capas evitan `opacity`/`filter`/`transform` a nivel de elemento (esas propiedades
-   crean un contexto de apilamiento incluso con `position: static`); el color de baja opacidad
-   se calcula con `color-mix()` sobre los tokens y la deriva se anima con `background-position`,
-   no con `transform`, precisamente para que estas capas se queden en el mismo nivel de pintado
-   que cualquier contenido estático y nunca compitan con el enlace «saltar al contenido». */
+/* === Fondo: brasa ambiental + velo + grano (F5-FE-02, capas a pantalla completa) ============
+   Antes estas tres capas eran *grid items* acotados a la caja de `.hero`, con el resplandor
+   pintado en un `background-size` menor que esa caja: un `radial-gradient(circle, …)` sin
+   sizing explícito usa `farthest-corner`, y en una caja no cuadrada y descentrada eso deja
+   alfa > 0 en algunas esquinas antes de llegar al borde de ese *tile* — justo donde el *tile*
+   termina (recorte de `background-repeat: no-repeat`) se ve un corte recto (el defecto
+   reportado). Ahora las tres capas son `position: fixed; inset: 0`: cubren el viewport
+   completo sin depender de la caja de `.hero`, apiladas por debajo del contenido y del enlace
+   «saltar al contenido» con un `z-index` explícito y bajo — ya no hace falta evitar
+   `position`/`filter`/`transform` a nivel de elemento para protegerlo (z-index 100 en
+   `global.css`): un z-index explícito menor garantiza el orden de apilamiento sin depender del
+   orden de pintado. El resplandor usa un `background-size` **mayor** que el propio viewport
+   (170–180 %) para que, en cualquier punto de la deriva (`background-position`, nunca
+   `transform`), la imagen sobresalga del viewport por los cuatro lados — el borde de su propio
+   degradado (antes visible como corte recto) queda siempre fuera de la pantalla, sea cual sea
+   el tamaño o la proporción del viewport, en vez de depender de una cifra de porcentaje
+   ajustada a un solo tamaño. */
 .glow,
 .scrim,
 .grain {
-  grid-row: 1 / -1;
-  grid-column: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
 }
 
 .glow {
   background-image:
-    radial-gradient(circle, color-mix(in srgb, var(--color-accent) 55%, transparent), transparent 68%),
-    radial-gradient(circle, color-mix(in srgb, var(--color-accent-2) 45%, transparent), transparent 68%);
+    radial-gradient(circle, color-mix(in srgb, var(--color-accent) 55%, transparent), transparent 52%),
+    radial-gradient(circle, color-mix(in srgb, var(--color-accent-2) 45%, transparent), transparent 50%);
   background-repeat: no-repeat;
-  background-size: 62% 55%, 58% 50%;
+  background-size: 180% 180%, 168% 168%;
   background-position:
     14% 8%,
     88% 22%;
@@ -97,15 +88,20 @@
   background: linear-gradient(to bottom, transparent 0%, var(--color-bg) 62%);
 }
 
-/* Grano: SVG `feTurbulence` en un data URI (sin binarios). La opacidad del ruido está en la
-   propia matriz de color del filtro (canal alfa ≈ 0.05), no en `opacity` del elemento, por la
-   misma razón que `.glow` evita esa propiedad. */
+/* Grano: SVG `feTurbulence` en un data URI (sin binarios), repetido en mosaico — un patrón que
+   se repite no tiene un borde propio que se pueda notar, así que no necesita el sobre-tamaño de
+   `.glow`. La opacidad del ruido está en la propia matriz de color del filtro (canal alfa ≈
+   0.05), no en `opacity` del elemento. */
 .grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
 }
 
 /* === Fila 1 · barra superior =============================================================== */
+/* Solo la marca (F5-FE-02): el enlace «Crear una cuenta» que vivía aquí duplicaba el enlace
+   contextual bajo el formulario (`.secondaryLink`) en el mismo viewport — se mantiene solo ese,
+   más cercano al momento en que alguien se pregunta si necesita una cuenta (ver «Decisiones» en
+   `docs/handoffs/f5-login-polish.md`). */
 .topbar {
   position: relative;
   z-index: 1;
@@ -113,8 +109,6 @@
   grid-column: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
   padding: max(var(--space-4), env(safe-area-inset-top, 0px)) max(var(--space-5), env(safe-area-inset-right, 0px))
     0 max(var(--space-5), env(safe-area-inset-left, 0px));
 }
@@ -126,26 +120,6 @@
   font-size: 1.125rem;
   letter-spacing: 0.01em;
   color: var(--color-text);
-}
-
-.ghostLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 0 var(--space-4);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: transparent;
-  color: var(--color-text);
-  font-weight: 600;
-  font-size: 0.875rem;
-  text-decoration: none;
-  transition: background-color var(--motion-duration) ease, border-color var(--motion-duration) ease;
-}
-
-.ghostLink:hover {
-  background: var(--color-surface-2);
 }
 
 /* === Fila 2 · hero, anclado abajo-centro ==================================================== */
@@ -331,9 +305,18 @@
   transform: translateX(120%);
 }
 
+/* El único disparador de `:disabled` es ahora `busy` (envío en curso) — los campos vacíos ya no
+   deshabilitan el botón (F5-FE-02: `required` nativo + los mensajes de error ya existentes
+   cubren ese caso, ver `LoginScreen.tsx`). Atenuar el degradado con `opacity` lo hacía parecer
+   roto en el primer pintado (el CTA principal de la landing "muerto al llegar"); en su lugar,
+   mientras se envía, el botón pasa a una superficie plana neutra sin degradado — se lee como
+   «trabajando», no como «esta acción no está disponible» (el texto también cambia a
+   `auth.submitting`, «Entrando…», ver JSX). */
 .submit:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  box-shadow: none;
+  cursor: progress;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -390,13 +373,13 @@
    allá del viewport y el botón/enlace secundario/estadísticas quedan fuera sin scroll posible
    (contradice «sin scroll» del encargo). Se compacta el espaciado vertical y el titular —nunca
    el tamaño táctil de campos/botón (`--tap-target-min`), que es de accesibilidad— para que quepa
-   entero hasta 720px de alto real. Dos cortes distintos porque `.main` reserva un padding
-   vertical distinto a cada lado de 1024px (ver nota de `.hero`): 112px entre 901–1023px (hace
-   falta compactar hasta ≈906px de viewport, con contenido sin compactar ≈794px) y solo 48px
-   desde 1024px (hasta ≈842px); cada corte deja ~15px de margen, medido con Playwright
-   (`getBoundingClientRect`) en varias alturas. Así 1440×900 (≥1024px) sigue sin compactar. */
-@media (min-width: 901px) and (max-width: 1023px) and (max-height: 920px),
-  (min-width: 1024px) and (max-height: 860px) {
+   entero hasta 720px de alto real. Un único corte (a diferencia de versiones anteriores de este
+   fichero): ya no hay una asimetría de padding de `.main` que compensar a los dos lados de
+   1024px, porque esta ruta ya no recibe ese padding en absoluto (F5-FE-02, `RootLayout` +
+   `isFullBleedPath`) — el único eje que importa aquí es la altura real del viewport. Verificado
+   con Playwright (`scrollHeight`) en los tamaños que pide el encargo: 1440×900 sin compactar,
+   1280×720 compactado y sin scroll. */
+@media (min-width: 901px) and (max-height: 780px) {
   .headline {
     font-size: clamp(1.75rem, 4vw, 2.5rem);
   }

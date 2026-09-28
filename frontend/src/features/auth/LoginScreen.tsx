@@ -119,9 +119,6 @@ export function LoginScreen(): React.JSX.Element {
 
       <motion.div className={styles["topbar"]} {...reveal(reducedMotion, { opacity: 0, y: -10 }, { opacity: 1, y: 0 }, 0.08)}>
         <p className={styles["wordmark"]}>{t("app.name")}</p>
-        <Link to="/onboarding" className={styles["ghostLink"]}>
-          {t("auth.createAccount")}
-        </Link>
       </motion.div>
 
       <div className={styles["heroMid"]}>
@@ -180,7 +177,7 @@ export function LoginScreen(): React.JSX.Element {
             error={error}
             onChange={setPassword}
           />
-          <button type="submit" className={styles["submit"]} disabled={busy || email === "" || password === ""}>
+          <button type="submit" className={styles["submit"]} disabled={busy}>
             {busy ? t("auth.submitting") : t("auth.submit")}
           </button>
         </motion.form>
