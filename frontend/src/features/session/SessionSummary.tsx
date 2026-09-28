@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
 import { IconTrophy } from "../../components/icons";
 import { cx } from "../../lib/cx";
+import { useReducedMotion } from "../../lib/useReducedMotion";
 import { formatNumber } from "../shared/format";
 import shared from "../shared/ui.module.css";
 import { localVolumeKg, type PlayerState } from "./playerMachine";
@@ -11,6 +13,9 @@ import { scheduler } from "./scheduler";
 import { loadPlayerState } from "./storage";
 import styles from "./session.module.css";
 import "./strings";
+
+/** Chunk aparte: solo se descarga cuando hay de verdad un récord nuevo que celebrar. */
+const PrConfetti = lazy(() => import("../../components/PrConfetti"));
 
 export interface SessionSummaryProps {
   sessionUuid: string;
@@ -42,6 +47,7 @@ function localTotals(state: PlayerState): {
  */
 export function SessionSummary({ sessionUuid, onExit }: SessionSummaryProps): React.JSX.Element {
   const { t } = useTranslation();
+  const reducedMotion = useReducedMotion();
   const local = useQuery({
     queryKey: ["session-local", sessionUuid],
     queryFn: async () => (await loadPlayerState(sessionUuid)) ?? null,
@@ -114,8 +120,15 @@ export function SessionSummary({ sessionUuid, onExit }: SessionSummaryProps): Re
       </dl>
       <section className={shared["card"]} aria-labelledby="records-title">
         <div className={shared["cardHeader"]}>
-          <span className={shared["cardIcon"]}>
-            <IconTrophy />
+          <span className={styles["trophyWrap"]}>
+            <span className={shared["cardIcon"]}>
+              <IconTrophy />
+            </span>
+            {remote !== null && remote.new_records.length > 0 && !reducedMotion && (
+              <Suspense fallback={null}>
+                <PrConfetti />
+              </Suspense>
+            )}
           </span>
           <h2 id="records-title">{t("session.records")}</h2>
         </div>

@@ -19,6 +19,8 @@ export const resources = {
         nutrition: "Nutrición",
         admin: "Admin",
         skipToContent: "Saltar al contenido",
+        groupTrain: "Entrenar",
+        groupAccount: "Cuenta",
       },
       media: {
         playAnimation: "Reproducir animación",
@@ -84,6 +86,8 @@ export const resources = {
         nutrition: "Nutrition",
         admin: "Admin",
         skipToContent: "Skip to content",
+        groupTrain: "Train",
+        groupAccount: "Account",
       },
       media: {
         playAnimation: "Play animation",

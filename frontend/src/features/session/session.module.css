@@ -6,6 +6,13 @@
   margin-inline: auto;
 }
 
+/* Ancla del confeti de récord personal (`PrConfetti`): mismo tamaño que el icono de trofeo,
+   posicionado para que las motas partan de su centro. */
+.trophyWrap {
+  position: relative;
+  display: inline-flex;
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -171,8 +178,9 @@
 }
 
 .ringValue {
+  /* El color (`stroke`) lo anima Framer Motion en RestRing.tsx (pulso brasa en los últimos
+     segundos); aquí solo lo geométrico. */
   fill: none;
-  stroke: var(--color-accent);
   stroke-width: 8;
   stroke-linecap: round;
 }
