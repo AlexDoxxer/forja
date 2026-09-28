@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
 import { IconChartBar, IconGrid, IconScale, IconTrendingUp, IconTrophy } from "../../components/icons";
+import { Reveal, REVEAL_STEP } from "../../components/Reveal";
 import { formatDate, formatNumber } from "../shared/format";
 import shared from "../shared/ui.module.css";
 import { buildHeatmap, withMovingAverage } from "./math";
@@ -319,14 +320,24 @@ export function ProgressScreen(): React.JSX.Element {
   const { t } = useTranslation();
   return (
     <section aria-labelledby="progress-title" className={shared["page"]}>
-      <h1 id="progress-title">{t("progress.title")}</h1>
-      <div className={shared["grid"]}>
-        <Heatmap />
-        <RecordsSection />
-      </div>
-      <VolumeSection />
-      <E1rmSection />
-      <BodyWeightSection />
+      <Reveal variant="soft">
+        <h1 id="progress-title">{t("progress.title")}</h1>
+      </Reveal>
+      <Reveal variant="scale" delay={REVEAL_STEP}>
+        <div className={shared["grid"]}>
+          <Heatmap />
+          <RecordsSection />
+        </div>
+      </Reveal>
+      <Reveal variant="stat" delay={REVEAL_STEP * 2}>
+        <VolumeSection />
+      </Reveal>
+      <Reveal variant="stat" delay={REVEAL_STEP * 3}>
+        <E1rmSection />
+      </Reveal>
+      <Reveal variant="stat" delay={REVEAL_STEP * 4}>
+        <BodyWeightSection />
+      </Reveal>
     </section>
   );
 }

@@ -26,8 +26,18 @@
   display: none;
 }
 
+/*
+ * Nav «metal líquido» (F5): cada enlace es un contorno metálico frío en reposo (borde claro de
+ * baja alfa) que revela un degradado metálico + barrido de brillo al pasar el cursor/enfocar.
+ * `overflow: hidden` solo se aplica cuando el enlace NO está activo: el enlace activo aloja la
+ * píldora `layoutId` de Framer Motion (ver `AppNav.tsx`), que anima su posición/tamaño *fuera*
+ * de su caja durante la transición entre enlaces — recortarla con overflow la rompería a medio
+ * deslizamiento. Como la píldora solo existe en el enlace activo, excluir `.active` del recorte
+ * no reintroduce el problema que `overflow: hidden` evita en los demás (el barrido de brillo).
+ */
 .link {
   position: relative;
+  isolation: isolate;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -36,27 +46,67 @@
   gap: var(--space-1);
   min-height: var(--tap-target-min);
   padding: var(--space-1) 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   color: var(--color-text-muted);
   text-decoration: none;
   font-size: 0.75rem;
   font-weight: 600;
   font-family: var(--font-body);
-  transition: color var(--motion-duration) ease;
+  transition:
+    color var(--motion-duration) ease,
+    background 0.35s ease,
+    border-color 0.35s ease;
 }
 
-.link:hover {
+.link:not(.active) {
+  overflow: hidden;
+  border-color: var(--glass-highlight);
+}
+
+.link:not(.active)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--glass-sheen);
+  transform: translateX(-130%);
+  transition: transform var(--shine-duration) var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.link:hover:not(.active)::after,
+.link:focus-visible:not(.active)::after {
+  transform: translateX(130%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link::after {
+    transition: none;
+  }
+}
+
+.link:hover:not(.active),
+.link:focus-visible:not(.active) {
+  background: var(--nav-pill-gradient);
+  border-color: var(--color-border-bright);
   color: var(--color-text);
 }
 
 /* Píldora activa (motion.div con layoutId en AppNav.tsx): cubre el enlace entero. `z-index: -1`
    la mantiene detrás del icono/etiqueta (que son estáticos y por tanto siempre pintan encima)
-   sin necesidad de darles su propio contexto de apilamiento. */
+   sin necesidad de darles su propio contexto de apilamiento. Lee como metal «caliente»: mismo
+   degradado metálico que el resto de la nav, pero con un borde/resplandor brasa fino en vez del
+   contorno frío de los enlaces inactivos. */
 .pill {
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: var(--radius-md);
-  background: var(--color-surface-2);
+  background: var(--nav-pill-gradient);
+  border: 1px solid var(--glow-accent);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 14px var(--glow-accent-soft);
 }
 
 .iconWrap {
@@ -126,13 +176,7 @@
     justify-content: flex-start;
     gap: var(--space-3);
     padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-md);
     font-size: 0.9375rem;
-  }
-
-  .link:hover {
-    background: var(--color-surface-2);
-    color: var(--color-text);
   }
 
   .iconWrap {

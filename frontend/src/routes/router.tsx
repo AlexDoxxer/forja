@@ -26,8 +26,8 @@ const programsRoute = createRoute({
   component: ProgramsRoute,
 });
 
-// Rutas de la parte A (F2): cargadas bajo demanda para mantener el JS inicial < 200 KB gzip (§10.5).
-// Recharts (generador) y dnd-kit (editor) quedan en chunks propios.
+// Rutas de la parte A (F2): cargadas bajo demanda para mantener el JS inicial < 500 KB gzip
+// (§10.5, ADR 0013). Recharts (generador) y dnd-kit (editor) quedan en chunks propios.
 const libraryRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/biblioteca",

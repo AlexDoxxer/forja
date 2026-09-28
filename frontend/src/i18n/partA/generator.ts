@@ -1,6 +1,12 @@
 export const generator = {
   es: {
     title: "Generador de rutinas",
+    // Partido en 3 para el acento de titular (F5, técnica 5): concatenados dan exactamente
+    // "Generador de rutinas" (igual que `title`, usado aparte en el `aria-label` de la barra de
+    // progreso). Si se cambia `title`, mantener estas tres partes en sincronía con él.
+    titleLead: "Generador de ",
+    titleAccent: "rutinas",
+    titleTrail: "",
     stepOf: "Paso {{current}} de {{total}}",
     steps: {
       goal: "Objetivo",
@@ -93,6 +99,9 @@ export const generator = {
   },
   en: {
     title: "Program generator",
+    titleLead: "Program ",
+    titleAccent: "generator",
+    titleTrail: "",
     stepOf: "Step {{current}} of {{total}}",
     steps: {
       goal: "Goal",

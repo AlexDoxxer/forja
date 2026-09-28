@@ -45,6 +45,27 @@ function useAdmin(): void {
 }
 
 describe("AdminRoute", () => {
+  it("insignias de estado: correcta, con errores y en cola/curso (F5, técnica 6)", async () => {
+    useAdmin();
+    server.use(
+      http.get("/api/v1/admin/ingest/runs", () =>
+        HttpResponse.json({
+          items: [
+            { ...run, id: "r-ok", status: "succeeded", dry_run: false },
+            { ...run, id: "r-fail", status: "failed", dry_run: false },
+            { ...run, id: "r-queued", status: "queued", dry_run: false },
+          ],
+          next_cursor: null,
+        }),
+      ),
+    );
+    renderRoute(<AdminRoute />);
+    expect(await screen.findByText("Correcta")).toBeInTheDocument();
+    expect(screen.getByText("Con errores")).toBeInTheDocument();
+    expect(screen.getByText("En cola")).toBeInTheDocument();
+  });
+
+
   it("una persona sin rol de administración no ve los paneles", async () => {
     server.use(http.get("/api/v1/auth/me", () => HttpResponse.json(me("user"))));
     renderRoute(<AdminRoute />);
@@ -102,9 +123,11 @@ describe("AdminRoute", () => {
     );
     const user = userEvent.setup();
     renderRoute(<AdminRoute />);
-    const item = await screen.findByText("Correcta · 7455efa");
+    const item = await screen.findByText("Correcta");
     const card = item.closest("li");
     expect(card).not.toBeNull();
+    expect(within(card as HTMLElement).getByText("7455efa")).toBeInTheDocument();
+    expect(within(card as HTMLElement).getByText("simulación")).toBeInTheDocument();
     expect(within(card as HTMLElement).getByText(/2 nuevos · 3 actualizados · 1 retirados/)).toBeInTheDocument();
     expect(within(card as HTMLElement).getByText(/Diff: 2 añadidos, 1 actualizados, 0 retirados/)).toBeInTheDocument();
     expect(within(card as HTMLElement).getByText("Aviso de prueba")).toBeInTheDocument();

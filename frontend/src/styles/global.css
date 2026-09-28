@@ -69,3 +69,52 @@ button {
 .skip-link:focus {
   top: var(--space-3);
 }
+
+/*
+ * Grano (F5): una sola capa de ruido fija, decorativa, sobre toda la app (montada una vez en
+ * `RootLayout.tsx`). SVG `feTurbulence` codificado como data URI — sin ningún activo binario.
+ * `pointer-events: none` y una opacidad muy baja: nunca interfiere con la interacción ni con el
+ * contraste real del texto (los tests de contraste verifican los tokens en `tokens.css`, no esta
+ * capa, y esta capa no cambia ningún color declarado, solo superpone ruido casi imperceptible).
+ */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* El grano es estático (no animado), pero se retira igualmente: es la lectura más segura de
+     "movimiento reducido" cuando la persona también suele pedir menos textura/ruido visual. */
+  .grain-overlay {
+    display: none;
+  }
+}
+
+/*
+ * Acento de titular (F5, técnica 5): UNA palabra de un `<h1>`, con restraint — solo en las dos
+ * pantallas cuyo titular es realmente una frase de varias palabras (Generador, Resumen de
+ * sesión); el resto de titulares de la app son una sola palabra (Hoy, Rutinas…) y partir una
+ * palabra corta por la mitad no sería "acentuar una palabra", así que ahí no se usa esta clase.
+ * Mismo degradado brasa que los botones primarios y los récords (`--gradient-accent`): la
+ * palabra "pesa" visualmente lo mismo que una acción primaria, no es un color nuevo elegido al
+ * azar. ADR 0007: nada de cursiva (exigiría cargar un fichero de fuente nuevo que hoy no se
+ * importa) — el tratamiento distintivo es el degradado de color + tracking, no el estilo.
+ */
+.headline-accent {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.01em;
+}
+
+@supports not (background-clip: text) {
+  .headline-accent {
+    color: var(--color-accent);
+  }
+}

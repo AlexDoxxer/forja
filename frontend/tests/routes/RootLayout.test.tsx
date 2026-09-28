@@ -43,6 +43,8 @@ describe("RootLayout", () => {
     );
     expect(await screen.findByText("Pantalla Hoy")).toBeInTheDocument();
     expect(screen.getByRole("navigation")).toBeInTheDocument();
+    // Grano global (F5): una sola capa decorativa, siempre presente y fuera del árbol de a11y.
+    expect(document.querySelector(".grain-overlay")).toHaveAttribute("aria-hidden", "true");
   });
 
   it("con movimiento reducido, sigue mostrando la ruta activa (sin animar la transición)", async () => {

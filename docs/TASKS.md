@@ -229,3 +229,11 @@
 | F4-QA-01 | qa-tests | Auditoría de §15 punto por punto | `docs/DOD_REPORT.md` con evidencia; lo que falle, tarea nueva aquí | Fase 3 | pendiente |
 | F4-ORQ-01 | orquestador | `CHANGELOG.md` y `docs/USER_GUIDE.md` (ES, con capturas) | Revisados | F4-QA-01 | pendiente |
 | F4-ORQ-02 | orquestador | README definitivo y tag `v1.0.0` | Tag creado sobre `main` verde | F4-ORQ-01 | pendiente |
+
+---
+
+## Fase 5 · Sistema de diseño
+
+| ID | Agente | Tarea | Criterio de aceptación | Depende de | Estado |
+|---|---|---|---|---|---|
+| F5-FE-01 | frontend-ui | Adaptar el lenguaje visual de un spec de referencia (Vesper.ai) al concepto propio de Forja: botones «cristal líquido», nav «metal líquido», grano global, coreografía de entrada (`Reveal`) en 8 pantallas, acento de titular restringido a 2 pantallas, insignias de estado | `docs/handoffs/f5-design-system.md`; capturas en `docs/screenshots/f5/design-system/`; lint/tsc/test/build en verde; tests 204/204, cobertura de ramas 85.18 % | F4-FE-02 | hecha (rama `f5/design-system`, sin fusionar) |

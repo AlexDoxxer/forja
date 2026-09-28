@@ -2,6 +2,7 @@ import { lazy, Suspense, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ExerciseMedia } from "../../components/ExerciseMedia";
+import { Reveal, REVEAL_STEP } from "../../components/Reveal";
 import { Button, Sheet, Tabs, TabsContent, TabsList, TabsTrigger, useToast } from "../../components/ui";
 import type { components } from "../../lib/api/schema";
 import { formatPrescription } from "../shared/format";
@@ -68,29 +69,34 @@ export function PreviewPanel({ preview, onChange }: PreviewPanelProps): React.JS
 
   return (
     <div className={styles["preview"]}>
-      <section aria-labelledby="rationale-title">
-        <h2 id="rationale-title">{t("generator.preview.rationale")}</h2>
-        <ul>
-          {plan.rationale_es.map((line) => (
-            <li key={line}>{line}</li>
-          ))}
-        </ul>
-      </section>
-
-      {plan.warnings.length > 0 && (
-        <section aria-labelledby="warnings-title" className={styles["warnings"]}>
-          <h2 id="warnings-title">{t("generator.preview.warnings")}</h2>
+      <Reveal variant="soft">
+        <section aria-labelledby="rationale-title">
+          <h2 id="rationale-title">{t("generator.preview.rationale")}</h2>
           <ul>
-            {plan.warnings.map((warning, index) => (
-              <li key={`${warning.code}-${String(index)}`}>
-                <strong>{t("generator.preview.warningLabel")}: </strong>
-                {warning.message_es}
-              </li>
+            {plan.rationale_es.map((line) => (
+              <li key={line}>{line}</li>
             ))}
           </ul>
         </section>
+      </Reveal>
+
+      {plan.warnings.length > 0 && (
+        <Reveal variant="soft" delay={REVEAL_STEP}>
+          <section aria-labelledby="warnings-title" className={styles["warnings"]}>
+            <h2 id="warnings-title">{t("generator.preview.warnings")}</h2>
+            <ul>
+              {plan.warnings.map((warning, index) => (
+                <li key={`${warning.code}-${String(index)}`}>
+                  <strong>{t("generator.preview.warningLabel")}: </strong>
+                  {warning.message_es}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </Reveal>
       )}
 
+      <Reveal variant="scale" delay={REVEAL_STEP * 2}>
       <section aria-labelledby="week-title">
         <h2 id="week-title">{t("generator.preview.typicalWeek")}</h2>
         {firstDay !== undefined && (
@@ -174,34 +180,37 @@ export function PreviewPanel({ preview, onChange }: PreviewPanelProps): React.JS
           </Tabs>
         )}
       </section>
+      </Reveal>
 
-      <section aria-labelledby="volume-title">
-        <h2 id="volume-title">{t("generator.preview.volume")}</h2>
-        <Suspense fallback={<p role="status">{t("generator.preview.loadingChart")}</p>}>
-          <VolumeChart volume={plan.weekly_volume} />
-        </Suspense>
-        <table className={styles["volumeTable"]}>
-          <caption>{t("generator.preview.volumeCaption")}</caption>
-          <thead>
-            <tr>
-              <th scope="col">{t("generator.preview.group")}</th>
-              <th scope="col">{t("generator.preview.planned")}</th>
-              <th scope="col">{t("generator.preview.target")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {plan.weekly_volume.map((row) => (
-              <tr key={row.group}>
-                <th scope="row">{t(`enums.group.${row.group}`)}</th>
-                <td>{row.planned_sets}</td>
-                <td>
-                  {row.target_min}–{row.target_max}
-                </td>
+      <Reveal variant="stat" delay={REVEAL_STEP * 3}>
+        <section aria-labelledby="volume-title">
+          <h2 id="volume-title">{t("generator.preview.volume")}</h2>
+          <Suspense fallback={<p role="status">{t("generator.preview.loadingChart")}</p>}>
+            <VolumeChart volume={plan.weekly_volume} />
+          </Suspense>
+          <table className={styles["volumeTable"]}>
+            <caption>{t("generator.preview.volumeCaption")}</caption>
+            <thead>
+              <tr>
+                <th scope="col">{t("generator.preview.group")}</th>
+                <th scope="col">{t("generator.preview.planned")}</th>
+                <th scope="col">{t("generator.preview.target")}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+            </thead>
+            <tbody>
+              {plan.weekly_volume.map((row) => (
+                <tr key={row.group}>
+                  <th scope="row">{t(`enums.group.${row.group}`)}</th>
+                  <td>{row.planned_sets}</td>
+                  <td>
+                    {row.target_min}–{row.target_max}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      </Reveal>
 
       <Sheet
         open={swapTarget !== null}

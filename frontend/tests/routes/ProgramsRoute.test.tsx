@@ -14,7 +14,7 @@ describe("ProgramsRoute", () => {
     expect(await screen.findByText("Hipertrofia 4 días · glúteo")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Generar una rutina nueva" })).toHaveAttribute("href", "/rutinas/nueva");
     expect(screen.getByRole("link", { name: /Editar/ })).toHaveAttribute("href", expect.stringMatching(/\/rutinas\/.+\/editar$/));
-    expect(screen.getByText("(Activa)")).toBeInTheDocument();
+    expect(screen.getByText("Activa")).toBeInTheDocument();
     expect(screen.getByText("4 días por semana")).toBeInTheDocument();
   });
 

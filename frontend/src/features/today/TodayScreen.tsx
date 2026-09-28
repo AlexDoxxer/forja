@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
 import { IconCalendar, IconChartBar, IconInbox, IconScale } from "../../components/icons";
+import { Reveal, REVEAL_STEP } from "../../components/Reveal";
 import { api, unwrapApi } from "../../lib/api/client";
 import { cx } from "../../lib/cx";
 import { useNextSession } from "../session/queries";
@@ -168,68 +169,78 @@ export function TodayScreen(): React.JSX.Element {
 
   return (
     <section aria-labelledby="today-title" className={shared["page"]}>
-      <h1 id="today-title">{t("today.title")}</h1>
-      {pending > 0 && (
-        <p className={shared["notice"]} role="status">
-          {t("todayB.pendingSync", { count: pending })}
-        </p>
-      )}
+      <Reveal variant="soft">
+        <h1 id="today-title">{t("today.title")}</h1>
+        {pending > 0 && (
+          <p className={shared["notice"]} role="status">
+            {t("todayB.pendingSync", { count: pending })}
+          </p>
+        )}
+      </Reveal>
       <div className={shared["grid"]}>
-        <NextSessionCard />
-        <section className={shared["card"]} aria-labelledby="week-title">
-          <div className={shared["cardHeader"]}>
-            <span className={shared["cardIcon"]}>
-              <IconChartBar />
-            </span>
-            <h2 id="week-title">{t("todayB.weekSummary")}</h2>
-          </div>
-          <QueryState
-            isLoading={overview.isLoading}
-            isError={overview.isError}
-            loadingLabel={t("today.loading")}
-            errorLabel={t("today.error")}
-          >
-            {overview.data && (
-              <>
-                <dl>
-                  <div>
-                    <dt>{t("today.sessionsCompleted")}</dt>
-                    <dd>{overview.data.sessions_completed}</dd>
-                  </div>
-                  <div>
-                    <dt>{t("today.sessionsPlanned")}</dt>
-                    <dd>{overview.data.sessions_planned}</dd>
-                  </div>
-                  <div>
-                    <dt>{t("today.volume")}</dt>
-                    <dd>{formatNumber(overview.data.volume_kg, 0)} kg</dd>
-                  </div>
-                  <div>
-                    <dt>{t("today.streak")}</dt>
-                    <dd>{overview.data.streak_weeks}</dd>
-                  </div>
-                </dl>
-                <h3>{t("todayB.lastRecord")}</h3>
-                <p>
-                  {overview.data.last_record === null
-                    ? t("todayB.noRecord")
-                    : t("todayB.recordValue", {
-                        name: overview.data.last_record.exercise_name_es,
-                        value: formatNumber(overview.data.last_record.value),
-                      })}
-                </p>
-              </>
-            )}
-          </QueryState>
-        </section>
-        <BodyWeightCard />
+        <Reveal variant="scale" delay={REVEAL_STEP}>
+          <NextSessionCard />
+        </Reveal>
+        <Reveal variant="soft" delay={REVEAL_STEP * 2}>
+          <section className={shared["card"]} aria-labelledby="week-title">
+            <div className={shared["cardHeader"]}>
+              <span className={shared["cardIcon"]}>
+                <IconChartBar />
+              </span>
+              <h2 id="week-title">{t("todayB.weekSummary")}</h2>
+            </div>
+            <QueryState
+              isLoading={overview.isLoading}
+              isError={overview.isError}
+              loadingLabel={t("today.loading")}
+              errorLabel={t("today.error")}
+            >
+              {overview.data && (
+                <>
+                  <dl>
+                    <div>
+                      <dt>{t("today.sessionsCompleted")}</dt>
+                      <dd>{overview.data.sessions_completed}</dd>
+                    </div>
+                    <div>
+                      <dt>{t("today.sessionsPlanned")}</dt>
+                      <dd>{overview.data.sessions_planned}</dd>
+                    </div>
+                    <div>
+                      <dt>{t("today.volume")}</dt>
+                      <dd>{formatNumber(overview.data.volume_kg, 0)} kg</dd>
+                    </div>
+                    <div>
+                      <dt>{t("today.streak")}</dt>
+                      <dd>{overview.data.streak_weeks}</dd>
+                    </div>
+                  </dl>
+                  <h3>{t("todayB.lastRecord")}</h3>
+                  <p>
+                    {overview.data.last_record === null
+                      ? t("todayB.noRecord")
+                      : t("todayB.recordValue", {
+                          name: overview.data.last_record.exercise_name_es,
+                          value: formatNumber(overview.data.last_record.value),
+                        })}
+                  </p>
+                </>
+              )}
+            </QueryState>
+          </section>
+        </Reveal>
+        <Reveal variant="soft" delay={REVEAL_STEP * 2}>
+          <BodyWeightCard />
+        </Reveal>
       </div>
       {profile.data?.diet_available === true && (
-        <p>
-          <Link to="/nutricion" className={shared["btn"]}>
-            {t("todayB.nutrition")}
-          </Link>
-        </p>
+        <Reveal variant="pop" delay={REVEAL_STEP * 3}>
+          <p>
+            <Link to="/nutricion" className={shared["btn"]}>
+              {t("todayB.nutrition")}
+            </Link>
+          </p>
+        </Reveal>
       )}
     </section>
   );

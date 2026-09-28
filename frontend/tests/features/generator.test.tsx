@@ -157,7 +157,13 @@ describe("GeneratorScreen", () => {
     });
 
     await user.click(screen.getByRole("tab", { name: "Cuerpo completo B" }));
-    expect(await screen.findByText("peso muerto rumano")).toBeVisible();
+    // La sección vive dentro de un `Reveal` (F5): en jsdom, `requestAnimationFrame` no avanza en
+    // tiempo real, así que la opacidad del tween puede seguir en 0 en el instante exacto de esta
+    // aserción aunque el elemento ya esté en el DOM — igual que el resto de la suite comprueba
+    // contenido animado con Framer Motion (`toBeInTheDocument`, no `toBeVisible`; ver
+    // `RootLayout.test.tsx`). El estado de reposo declarado es "visible" (`Reveal.tsx`), y con
+    // movimiento reducido no hay animación en absoluto.
+    expect(await screen.findByText("peso muerto rumano")).toBeInTheDocument();
     await expectNoAxeViolations(container);
   });
 
