@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { AppNav } from "../components/AppNav";
 import { AuthGate } from "../features/auth/AuthGate";
-import { isPublicPath } from "../features/auth/session";
+import { isFullBleedPath, isPublicPath } from "../features/auth/session";
 import { useReducedMotion } from "../lib/useReducedMotion";
 import styles from "./RootLayout.module.css";
 
@@ -27,7 +27,7 @@ export function RootLayout(): React.JSX.Element {
         {t("nav.skipToContent")}
       </a>
       {isPublicPath(pathname) ? null : <AppNav />}
-      <main id="main-content" className={styles["main"]}>
+      <main id="main-content" className={isFullBleedPath(pathname) ? styles["fullBleed"] : styles["main"]}>
         <AuthGate>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
