@@ -18,6 +18,16 @@ registerBundle(
     createAccount: "Crear una cuenta",
     logout: "Cerrar sesión",
     logoutError: "No se ha podido cerrar la sesión.",
+    landing: {
+      badge: "Entrenamiento autoalojado",
+      headlineRest: "tu rutina",
+      headlineLine2: "con datos, no con suposiciones.",
+      lede:
+        "Genera tu rutina con un motor determinista, entrena con el reproductor sin conexión y sigue tu progreso semana a semana.",
+      stat1: "1.324 ejercicios con GIF de demostración",
+      stat2: "Tus datos no salen de tu servidor",
+      stat3: "Rutinas generadas sin IA generativa",
+    },
   },
   {
     checking: "Checking your session…",
@@ -35,5 +45,15 @@ registerBundle(
     createAccount: "Create an account",
     logout: "Sign out",
     logoutError: "Could not sign out.",
+    landing: {
+      badge: "Self-hosted training",
+      headlineRest: "your routine",
+      headlineLine2: "with data, not assumptions.",
+      lede:
+        "Generate your routine with a deterministic engine, train with the offline player and track your progress week by week.",
+      stat1: "1,324 exercises with a demo GIF",
+      stat2: "Your data never leaves your server",
+      stat3: "Routines generated without generative AI",
+    },
   },
 );

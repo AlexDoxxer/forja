@@ -1,0 +1,446 @@
+/*
+ * Pantalla de acceso / landing de Forja (F5-FE-01). Solo tokens de `src/styles/tokens.css`
+ * (ningún hex nuevo). Fuente itálica de titular: el paquete autoalojado
+ * `@fontsource-variable/archivo` incluye un eje itálico completo (`standard-italic.css`,
+ * confirmado en `node_modules` antes de usarlo); se importa aquí — no en `global.css`, que es
+ * de otro agente — porque es la única pantalla que necesita esa variante.
+ */
+@import "@fontsource-variable/archivo/standard-italic.css";
+
+/*
+ * `RootLayout.module.css` (`.main`) asume que `AppNav` ocupa la columna/franja izquierda y dan
+ * de sobra abajo — un supuesto correcto para el resto de la app, pero `AppNav` nunca se monta en
+ * `/login` (`isPublicPath`). Sin corregirlo, esta pantalla heredaría un hueco muerto de hasta
+ * 272 px a la izquierda en escritorio y no podría ocupar un solo viewport sin scroll. No se
+ * puede tocar `RootLayout` (fuera de la zona de este agente), así que se contrarresta aquí, con
+ * los mismos tokens que usa esa regla, sin cambiar `position` (se queda en `static`): así el
+ * único elemento realmente posicionado cerca de la esquina superior izquierda del viewport
+ * sigue siendo el enlace «saltar al contenido» de `RootLayout`, que por tanto nunca queda tapado
+ * por esta pantalla (ver «Decisiones» en el handoff).
+ */
+.hero {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  min-height: 100dvh;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+@media (min-width: 901px) {
+  .hero {
+    /* Cancela el padding vertical muerto de `.main` (16px arriba + nav-height/2 + space-6 abajo,
+       reservado para una barra de nav inferior que no existe en esta ruta). */
+    min-height: calc(100dvh - var(--space-4) - var(--nav-height) - var(--space-6));
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    /* A partir de aquí `.main` cambia su padding-bottom (ya no reserva la barra inferior) y
+       añade un padding-left del ancho del rail de escritorio + space-6. */
+    min-height: calc(100dvh - var(--space-4) - var(--space-6));
+    margin-left: calc(-1 * (var(--nav-width) + var(--space-6) - var(--space-4)));
+  }
+}
+
+/* === Fondo: brasa ambiental + velo + grano (§2 del encargo) ==============================
+   Todas las capas evitan `opacity`/`filter`/`transform` a nivel de elemento (esas propiedades
+   crean un contexto de apilamiento incluso con `position: static`); el color de baja opacidad
+   se calcula con `color-mix()` sobre los tokens y la deriva se anima con `background-position`,
+   no con `transform`, precisamente para que estas capas se queden en el mismo nivel de pintado
+   que cualquier contenido estático y nunca compitan con el enlace «saltar al contenido». */
+.glow,
+.scrim,
+.grain {
+  grid-row: 1 / -1;
+  grid-column: 1;
+  pointer-events: none;
+}
+
+.glow {
+  background-image:
+    radial-gradient(circle, color-mix(in srgb, var(--color-accent) 55%, transparent), transparent 68%),
+    radial-gradient(circle, color-mix(in srgb, var(--color-accent-2) 45%, transparent), transparent 68%);
+  background-repeat: no-repeat;
+  background-size: 62% 55%, 58% 50%;
+  background-position:
+    14% 8%,
+    88% 22%;
+  animation: emberDrift 34s ease-in-out infinite alternate;
+}
+
+@keyframes emberDrift {
+  from {
+    background-position:
+      14% 8%,
+      88% 22%;
+  }
+  to {
+    background-position:
+      21% 15%,
+      80% 30%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow {
+    animation: none;
+  }
+}
+
+/* El texto vive en la mitad inferior (hero anclado abajo): el velo se mantiene transparente
+   arriba, donde solo hay ambiente, y llega a `--color-bg` totalmente opaco antes de esa mitad,
+   así el contraste de todo el texto es el mismo AA ya verificado para `--color-text`/`--color-bg`
+   en `tests/design-tokens.test.ts` (no se toca ningún token). */
+.scrim {
+  background: linear-gradient(to bottom, transparent 0%, var(--color-bg) 62%);
+}
+
+/* Grano: SVG `feTurbulence` en un data URI (sin binarios). La opacidad del ruido está en la
+   propia matriz de color del filtro (canal alfa ≈ 0.05), no en `opacity` del elemento, por la
+   misma razón que `.glow` evita esa propiedad. */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* === Fila 1 · barra superior =============================================================== */
+.topbar {
+  position: relative;
+  z-index: 1;
+  grid-row: 1;
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: max(var(--space-4), env(safe-area-inset-top, 0px)) max(var(--space-5), env(safe-area-inset-right, 0px))
+    0 max(var(--space-5), env(safe-area-inset-left, 0px));
+}
+
+.wordmark {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+}
+
+.ghostLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: background-color var(--motion-duration) ease, border-color var(--motion-duration) ease;
+}
+
+.ghostLink:hover {
+  background: var(--color-surface-2);
+}
+
+/* === Fila 2 · hero, anclado abajo-centro ==================================================== */
+.heroMid {
+  position: relative;
+  z-index: 1;
+  grid-row: 2;
+  grid-column: 1;
+  align-self: end;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: var(--space-6) max(var(--space-5), env(safe-area-inset-right, 0px)) var(--space-6)
+    max(var(--space-5), env(safe-area-inset-left, 0px));
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-4);
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 32%, var(--color-border));
+  background: linear-gradient(135deg, var(--color-surface-2), var(--color-bg));
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.badgeIcon {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  font-size: clamp(2.1rem, 5.6vw, 3.75rem);
+}
+
+.lineMask {
+  display: block;
+  overflow: hidden;
+}
+
+.line {
+  display: block;
+}
+
+/* El único acento del titular: «Forja» es a la vez la marca y el imperativo de «forjar», así
+   que el tratamiento (itálica + degradado brasa) representa lo que la palabra ya significa, no
+   decora una palabra cualquiera. Itálica real (eje del fichero autoalojado, no `oblique`). */
+.accent {
+  font-style: italic;
+  background: var(--gradient-accent);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.lede {
+  max-width: 29.5rem;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+/* Visualmente oculto: conserva `auth.loginTitle` como nombre accesible de la región del
+   formulario (antes era el `<h1>` visible) sin duplicar el titular de la landing en pantalla. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 22rem;
+  margin-top: var(--space-2);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: left;
+}
+
+.fieldLabel {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* Vidrio esmerilado: superficie translúcida + `backdrop-filter`, para que la brasa del fondo se
+   note difuminada detrás del campo sin perder legibilidad del texto tecleado. */
+.input {
+  min-height: var(--tap-target-min);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);
+  background: color-mix(in srgb, var(--color-surface-2) 55%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--color-error-text);
+}
+
+.fieldError {
+  margin: 0;
+  color: var(--color-error-text);
+  font-size: 0.8125rem;
+}
+
+/* Botón primario: degradado brasa + veta superior + barrido de brillo al pasar el cursor +
+   halo cálido. `position: relative` es seguro aquí (esquina inferior del hero, lejos del
+   enlace «saltar al contenido», ver nota de `.hero` arriba). */
+.submit {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: var(--tap-target-min);
+  margin-top: var(--space-1);
+  padding: 0 var(--space-5);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--gradient-accent);
+  color: var(--color-on-accent);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 45%, transparent);
+  transition: box-shadow 0.3s ease, filter var(--motion-duration) ease;
+}
+
+.submit:hover:not(:disabled),
+.submit:focus-visible {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 45%, transparent),
+    0 0 28px color-mix(in srgb, var(--color-accent) 55%, transparent);
+}
+
+.submit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    color-mix(in srgb, white 55%, transparent) 48%,
+    transparent 66%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+
+.submit:hover:not(:disabled)::after {
+  transform: translateX(120%);
+}
+
+.submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submit,
+  .submit::after {
+    transition: none;
+  }
+}
+
+.secondary {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.secondaryLink {
+  color: var(--color-text);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+/* === Fila 3 · pie de estadísticas, fino ===================================================== */
+.stats {
+  position: relative;
+  z-index: 1;
+  grid-row: 3;
+  grid-column: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-6);
+  margin: 0;
+  padding: var(--space-3) max(var(--space-5), env(safe-area-inset-right, 0px))
+    max(var(--space-3), env(safe-area-inset-bottom, 0px)) max(var(--space-5), env(safe-area-inset-left, 0px));
+  border-top: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+}
+
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.statIcon {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+/* === Escritorio con poca altura (portátiles ~1280×720, ventanas restauradas…) ===============
+   `min-height` por sí solo no basta: si el contenido a tamaño normal no cabe, `.hero` crece más
+   allá del viewport y el botón/enlace secundario/estadísticas quedan fuera sin scroll posible
+   (contradice «sin scroll» del encargo). Se compacta el espaciado vertical y el titular —nunca
+   el tamaño táctil de campos/botón (`--tap-target-min`), que es de accesibilidad— para que quepa
+   entero hasta 720px de alto real. Dos cortes distintos porque `.main` reserva un padding
+   vertical distinto a cada lado de 1024px (ver nota de `.hero`): 112px entre 901–1023px (hace
+   falta compactar hasta ≈906px de viewport, con contenido sin compactar ≈794px) y solo 48px
+   desde 1024px (hasta ≈842px); cada corte deja ~15px de margen, medido con Playwright
+   (`getBoundingClientRect`) en varias alturas. Así 1440×900 (≥1024px) sigue sin compactar. */
+@media (min-width: 901px) and (max-width: 1023px) and (max-height: 920px),
+  (min-width: 1024px) and (max-height: 860px) {
+  .headline {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .topbar {
+    padding-top: var(--space-3);
+  }
+
+  .heroMid {
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+  }
+
+  .lede {
+    font-size: 0.9375rem;
+  }
+
+  .form {
+    gap: var(--space-2);
+  }
+
+  .stats {
+    padding-top: var(--space-2);
+    padding-bottom: max(var(--space-2), env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* === Móvil: se permite scroll y apilado natural (§1 del encargo) ===========================
+   Las filas pasan a `auto` (tamaño por contenido) en vez de `1fr`, y el hero deja de anclarse
+   abajo: con poco alto de viewport, forzar el anclaje inferior solo añadiría scroll innecesario
+   antes de llegar al contenido. `grid-row` de cada fila no cambia (heredado de la regla base). */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-rows: auto auto auto;
+  }
+
+  .heroMid {
+    align-self: start;
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .headline {
+    font-size: clamp(2rem, 9vw, 2.75rem);
+  }
+}

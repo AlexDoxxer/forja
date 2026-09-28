@@ -250,3 +250,24 @@ export function IconInbox(props: IconProps): React.JSX.Element {
     </svg>
   );
 }
+
+/** Insignia «autoalojado» de la pantalla de acceso: brasa/ember (motivo forja, F5-FE-01). */
+export function IconEmber(props: IconProps): React.JSX.Element {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 3c-3.4 3.5-5.4 6.3-5.4 9.1a5.4 5.4 0 0 0 10.8 0c0-1-.3-2-.9-3-.3 1.3-1 2.2-1.9 2.7.4-2.5-.5-5.2-2.6-8.1z" />
+      <path d="M9.7 14.2a2.4 2.4 0 0 0 2.3 2.3" />
+    </svg>
+  );
+}
+
+/** Estadística «tus datos no salen de tu servidor» de la pantalla de acceso: servidor (F5-FE-01). */
+export function IconServer(props: IconProps): React.JSX.Element {
+  return (
+    <svg {...base} {...props}>
+      <rect x="4" y="4.5" width="16" height="6" rx="1.5" />
+      <rect x="4" y="13.5" width="16" height="6" rx="1.5" />
+      <path d="M7.4 7.5h.01M7.4 16.5h.01" />
+    </svg>
+  );
+}
