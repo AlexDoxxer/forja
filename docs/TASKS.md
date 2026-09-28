@@ -208,7 +208,7 @@
 | F3-QA-02 | `@axe-core/playwright` en todas las pantallas | 0 violaciones serias/críticas | F3-QA-01 | hecha |
 | F3-QA-03 | Lighthouse CI con umbrales §10.5 sobre el despliegue y comprobaciones PWA en Playwright (ADR 0010) | Rendimiento/Accesibilidad/Buenas prácticas ≥ 90; manifest, SW y arranque offline verificados | F3-QA-01 | hecha |
 | F3-QA-04 | Test de licencia en el DOM (atribución y ≤ 180 px en toda vista con medios) | Falla si falta en cualquier pantalla | F3-QA-01 | hecha |
-| F3-QA-05 | Ampliar la comprobación de marcadores prohibidos a tests y documentación de usuario si procede | `make lint-placeholders` cubre las rutas acordadas | F0-ARQ-07 | pendiente |
+| F3-QA-05 | Ampliar la comprobación de marcadores prohibidos a tests y documentación de usuario si procede | `make lint-placeholders` cubre `backend/tests`, `engine/tests`, `nutrition/tests`, `frontend/e2e`, `frontend/tests`, `README.md` y (vía `wildcard`, en cuanto existan) `CHANGELOG.md`/`docs/USER_GUIDE.md`; ejecutado en verde el 2026-09-28, sin coincidencias reales ni excepciones necesarias (ver comentario junto a `PLACEHOLDER_PATHS` en el `Makefile`) | F0-ARQ-07 | hecha |
 | F3-QA-06 | E2E contra compose en CI (`E2E_BASE_URL`) | Trabajo `e2e` usa el despliegue | F3-QA-01, F3-OPS-08 | hecha |
 
 ### `revisor-seguridad` (§11) — `docs/SECURITY_REVIEW.md`
