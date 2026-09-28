@@ -293,17 +293,17 @@ En **Perfil > Eliminar datos**, botón «Exportar». Descargas un JSON con:
 
 Serve como copia de seguridad personal o para migrar a otra instancia de Forja.
 
-### 5.2 Exportar rutina a PDF (próximamente)
+### 5.2 Exportar rutina a PDF
 
-Planificado para una próxima versión: descarga cada rutina en PDF con estructura completa
-(días, bloques, ejercicios, series, reps, descansos), fotos de ejercicios e instrucciones,
-para imprimir o compartir con tu entrenador.
+Desde «Rutinas», cada rutina tiene un enlace «Exportar a PDF» que descarga su estructura
+completa (días, bloques, ejercicios, series, reps, descansos), útil para imprimir o compartir
+con tu entrenador.
 
-### 5.3 Exportar calendario a ICS (próximamente)
+### 5.3 Exportar calendario a ICS
 
-Planificado para una próxima versión: sincroniza tu calendario de entrenamientos con Google
-Calendar, Apple Calendar, Outlook o cualquier app que lea formato `.ics`, para no olvidarte
-de tus sesiones.
+El mismo listado de «Rutinas» ofrece «Exportar calendario (.ics)» para sincronizar tus sesiones
+de entrenamiento con Google Calendar, Apple Calendar, Outlook o cualquier app que lea el
+formato `.ics`.
 
 ---
 
