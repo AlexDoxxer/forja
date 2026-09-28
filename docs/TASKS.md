@@ -31,7 +31,7 @@
 | F0-ARQ-06 | ADRs 0001–0010 | `docs/adr/` con formato Contexto · Decisión · Alternativas · Consecuencias | — | hecha |
 | F0-ARQ-07 | CI `.github/workflows/ci.yml` con los trabajos de §13 | `actionlint` sin errores; cada trabajo ejecuta comprobaciones reales | F0-ARQ-02, F0-ARQ-03 | hecha |
 | F0-ARQ-08 | `.env.example` completo, `README.md`, este tablero y `docs/CONTRACT_CHANGES.md` | `backend/tests/unit/test_env_example.py` en verde | F0-ARQ-02 | hecha |
-| F0-ORQ-01 | Revisar y congelar contratos | Tag `contracts-v1` sobre el merge de `f0/arquitecto` | F0-ARQ-04, F0-ARQ-05 | pendiente |
+| F0-ORQ-01 | Revisar y congelar contratos | Tag `contracts-v1` sobre el merge de `f0/arquitecto` | F0-ARQ-04, F0-ARQ-05 | hecha |
 
 ### Tareas recurrentes del arquitecto
 
@@ -124,13 +124,13 @@
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F1b-EXP-01 | Revisión del enriquecimiento (100 aleatorios + staples) | `docs/reviews/enrichment-review.md` con veredicto por ítem | F1-ING-08 | pendiente |
-| F1b-EXP-02 | Revisión de staples por nivel y equipamiento | `docs/reviews/staples-review.md` | F1-ING-07 | pendiente |
-| F1b-EXP-03 | Revisión de nombres ES (dudosos + 150 muestreados) | `docs/reviews/names-es-review.md` | F1-ING-09 | pendiente |
-| F1b-EXP-04 | Revisión de tablas `specs/*.yaml` | `docs/reviews/tables-review.md` con diffs propuestos | — | pendiente |
-| F1b-EXP-05 | Revisión de los 12 snapshots | `docs/reviews/snapshots-review.md` | F1-ENG-17 | pendiente |
-| F1b-EXP-06 | Revisión de planes de comida y suelos | `docs/reviews/nutrition-review.md` | F1-NUT-10 | pendiente |
-| F1b-FIX | Aplicar CAMBIOS por los propietarios y re-verificar | 0 BLOQUEANTES; re-revisión aprobada | F1b-EXP-01…06 | pendiente |
+| F1b-EXP-01 | Revisión del enriquecimiento (100 aleatorios + staples) | `docs/reviews/enrichment-review.md` con veredicto por ítem | F1-ING-08 | hecha |
+| F1b-EXP-02 | Revisión de staples por nivel y equipamiento | `docs/reviews/staples-review.md` | F1-ING-07 | hecha |
+| F1b-EXP-03 | Revisión de nombres ES (dudosos + 150 muestreados) | `docs/reviews/names-es-review.md` | F1-ING-09 | hecha |
+| F1b-EXP-04 | Revisión de tablas `specs/*.yaml` | `docs/reviews/tables-review.md` con diffs propuestos | — | hecha |
+| F1b-EXP-05 | Revisión de los 12 snapshots | `docs/reviews/snapshots-review.md` | F1-ENG-17 | hecha |
+| F1b-EXP-06 | Revisión de planes de comida y suelos | `docs/reviews/nutrition-review.md` | F1-NUT-10 | hecha |
+| F1b-FIX | Aplicar CAMBIOS por los propietarios y re-verificar | 0 BLOQUEANTES; re-revisión aprobada | F1b-EXP-01…06 | hecha |
 
 ---
 
@@ -159,7 +159,7 @@
 | F2-BE-17 | Test de contrato: esquema exportado por FastAPI = `contracts/openapi.yaml` | `backend/tests/contract` compara ambos y falla ante cualquier diferencia | F2-BE-01…16 | hecha |
 | F2-BE-18 | Autorización cruzada en todas las rutas de usuario | Test que recorre todas las operaciones con ids de otro usuario ⇒ 404 | F2-BE-17 | hecha |
 | F2-BE-19 | `make seed-demo` (solo desarrollo) y colección `httpie`/`curl` | Documentado en el handoff | F2-BE-17 | hecha |
-| F2-BE-20 | Cobertura ≥ 90 % líneas y ramas y handoff | `make test-backend` verde | todas | en curso |
+| F2-BE-20 | Cobertura ≥ 90 % líneas y ramas y handoff | `make test-backend` verde | todas | hecha |
 
 ### `frontend-ui` · Fase 2 (§10.2) — handoff `docs/handoffs/F2-frontend.md`
 
@@ -179,9 +179,9 @@
 | F2-FE-12 | Perfil, ajustes, sesiones activas, exportar/importar/borrar, Créditos (`GET /about`) | Créditos con MIT, aviso de Gym visual y SHA | F1-FE-08 | hecho (f2/frontend-b) |
 | F2-FE-13 | Admin | Usuarios, registro, dieta global, ingesta | F1-FE-08 | hecho (f2/frontend-b) |
 | F2-FE-14 | PWA: manifest, Workbox según §10.3, descarga de biblioteca | SW controla la página; arranque offline | F2-FE-05 | hecho (f2/frontend-b) |
-| F2-FE-15 | Presupuesto de rendimiento (JS inicial < 200 KB gzip) | Informe del build en el handoff | F2-FE-01…14 | pendiente |
+| F2-FE-15 | Presupuesto de rendimiento (JS inicial < 200 KB gzip) | Informe del build en el handoff | F2-FE-01…14 | hecha |
 | F2-FE-16 | Cambio de MSW a API real | Flujo de la puerta 2 contra `docker compose` de desarrollo | F2-BE-17 | hecho (f2/frontend-integration) |
-| F2-FE-17 | Cobertura ≥ 85 % y capturas de todas las pantallas | `make test-frontend` verde; handoff | todas | pendiente |
+| F2-FE-17 | Cobertura ≥ 85 % y capturas de todas las pantallas | `make test-frontend` verde; handoff | todas | hecha |
 
 ---
 
@@ -204,19 +204,19 @@
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F3-QA-01 | E2E Playwright de todos los flujos de su definición contra `docker compose` | Chromium escritorio + WebKit iPhone verdes | F3-OPS-03, F2-FE-16 | pendiente |
-| F3-QA-02 | `@axe-core/playwright` en todas las pantallas | 0 violaciones serias/críticas | F3-QA-01 | pendiente |
-| F3-QA-03 | Lighthouse CI con umbrales §10.5 sobre el despliegue y comprobaciones PWA en Playwright (ADR 0010) | Rendimiento/Accesibilidad/Buenas prácticas ≥ 90; manifest, SW y arranque offline verificados | F3-QA-01 | pendiente |
-| F3-QA-04 | Test de licencia en el DOM (atribución y ≤ 180 px en toda vista con medios) | Falla si falta en cualquier pantalla | F3-QA-01 | pendiente |
+| F3-QA-01 | E2E Playwright de todos los flujos de su definición contra `docker compose` | Chromium escritorio + WebKit iPhone verdes | F3-OPS-03, F2-FE-16 | hecha |
+| F3-QA-02 | `@axe-core/playwright` en todas las pantallas | 0 violaciones serias/críticas | F3-QA-01 | hecha |
+| F3-QA-03 | Lighthouse CI con umbrales §10.5 sobre el despliegue y comprobaciones PWA en Playwright (ADR 0010) | Rendimiento/Accesibilidad/Buenas prácticas ≥ 90; manifest, SW y arranque offline verificados | F3-QA-01 | hecha |
+| F3-QA-04 | Test de licencia en el DOM (atribución y ≤ 180 px en toda vista con medios) | Falla si falta en cualquier pantalla | F3-QA-01 | hecha |
 | F3-QA-05 | Ampliar la comprobación de marcadores prohibidos a tests y documentación de usuario si procede | `make lint-placeholders` cubre las rutas acordadas | F0-ARQ-07 | pendiente |
-| F3-QA-06 | E2E contra compose en CI (`E2E_BASE_URL`) | Trabajo `e2e` usa el despliegue | F3-QA-01, F3-OPS-08 | pendiente |
+| F3-QA-06 | E2E contra compose en CI (`E2E_BASE_URL`) | Trabajo `e2e` usa el despliegue | F3-QA-01, F3-OPS-08 | hecha |
 
 ### `revisor-seguridad` (§11) — `docs/SECURITY_REVIEW.md`
 
 | ID | Tarea | Criterio de aceptación | Depende de | Estado |
 |---|---|---|---|---|
-| F3-SEC-01 | Auditoría completa (auth, CSRF, autorización cruzada, entrada, WeasyPrint, nginx, Docker, privacidad, licencia, dependencias) | Informe con severidad, reproducción y propietario por hallazgo | F2-BE-20, F2-FE-17, F3-OPS-04 | pendiente |
-| F3-SEC-02 | Re-revisión tras correcciones | 0 altos/críticos | F3-SEC-01 | pendiente |
+| F3-SEC-01 | Auditoría completa (auth, CSRF, autorización cruzada, entrada, WeasyPrint, nginx, Docker, privacidad, licencia, dependencias) | Informe con severidad, reproducción y propietario por hallazgo | F2-BE-20, F2-FE-17, F3-OPS-04 | hecha |
+| F3-SEC-02 | Re-revisión tras correcciones | 0 altos/críticos | F3-SEC-01 | hecha |
 
 ---
 
