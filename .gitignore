@@ -28,3 +28,4 @@ frontend/src/lib/api/schema.d.ts.tmp
 .env
 media/
 *.dump
+.admin-credentials
