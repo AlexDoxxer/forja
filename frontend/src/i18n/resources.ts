@@ -39,6 +39,10 @@ export const resources = {
         active: "Activa",
         daysPerWeek_one: "{{count}} día por semana",
         daysPerWeek_other: "{{count}} días por semana",
+        generate: "Crear una nueva rutina",
+        edit: "Editar {{name}}",
+        exportPdf: "Exportar a PDF",
+        exportCalendar: "Exportar calendario (.ics)",
       },
       library: {
         title: "Biblioteca",
@@ -98,6 +102,10 @@ export const resources = {
         active: "Active",
         daysPerWeek_one: "{{count}} day per week",
         daysPerWeek_other: "{{count}} days per week",
+        generate: "Create a new program",
+        edit: "Edit {{name}}",
+        exportPdf: "Export to PDF",
+        exportCalendar: "Export calendar (.ics)",
       },
       library: {
         title: "Library",

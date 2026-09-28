@@ -9,6 +9,10 @@ export function ProgramsRoute(): React.JSX.Element {
   const { t } = useTranslation();
   const programs = useProgramList();
 
+  const getApiBaseUrl = (): string => {
+    return typeof window === "undefined" ? "/api/v1" : `${window.location.origin}/api/v1`;
+  };
+
   return (
     <section aria-labelledby="programs-title">
       <h1 id="programs-title">{t("programs.title")}</h1>
@@ -29,9 +33,19 @@ export function ProgramsRoute(): React.JSX.Element {
                 <strong>{program.name}</strong>{" "}
                 {program.is_active && <span>({t("programs.active")})</span>}
                 <div>{t("programs.daysPerWeek", { count: program.days_per_week })}</div>
-                <Link to="/rutinas/$programId/editar" params={{ programId: program.id }}>
-                  {t("programs.edit", { name: program.name })}
-                </Link>
+                <div>
+                  <Link to="/rutinas/$programId/editar" params={{ programId: program.id }}>
+                    {t("programs.edit", { name: program.name })}
+                  </Link>
+                  {" · "}
+                  <a href={`${getApiBaseUrl()}/programs/${program.id}/export.pdf`} download>
+                    {t("programs.exportPdf")}
+                  </a>
+                  {" · "}
+                  <a href={`${getApiBaseUrl()}/programs/${program.id}/calendar.ics`} download>
+                    {t("programs.exportCalendar")}
+                  </a>
+                </div>
               </li>
             ))}
           </ul>

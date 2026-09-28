@@ -28,7 +28,7 @@
   --color-warning: #e8b03a;
   --color-warning-text: #e8b03a;
   --color-error: #e5484d;
-  --color-error-text: #e5484d;
+  --color-error-text: #ff6b70;
 
   /* Tipografía (ADR 0007) */
   --font-display: "Archivo Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;

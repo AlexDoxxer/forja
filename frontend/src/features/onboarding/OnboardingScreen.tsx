@@ -19,6 +19,7 @@ import {
   type Sex,
 } from "../shared/enums";
 import styles from "./Onboarding.module.css";
+import "./strings";
 
 type ParqAnswers = components["schemas"]["ParqAnswers"];
 type ParqKey = keyof ParqAnswers;
@@ -92,13 +93,17 @@ export function OnboardingScreen(): React.JSX.Element {
     });
     setBusy(false);
     if (result.error !== undefined) {
+      const errorObj = result.error as { code?: string; status?: number };
+      const code = errorObj.code;
       const status = result.response.status;
       setFormError(
-        status === 409
+        code === "conflict" || status === 409
           ? t("onboarding.account.errorConflict")
-          : status === 403
-            ? t("onboarding.account.errorForbidden")
-            : t("onboarding.account.errorGeneric"),
+          : code === "csrf_failed"
+            ? t("onboarding.account.errorCsrf")
+            : code === "registration_closed" || status === 403
+              ? t("onboarding.account.errorForbidden")
+              : t("onboarding.account.errorGeneric"),
       );
       return false;
     }
