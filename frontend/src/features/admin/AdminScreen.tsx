@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
+import { IconRefresh, IconSettings, IconUsers } from "../../components/icons";
 import type { components } from "../../lib/api/schema";
 import { formatDate } from "../shared/format";
 import shared from "../shared/ui.module.css";
@@ -33,7 +34,12 @@ function SettingsSection(): React.JSX.Element {
   };
   return (
     <section className={shared["card"]} aria-labelledby="admin-settings-title">
-      <h2 id="admin-settings-title">{t("admin.settings")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconSettings />
+        </span>
+        <h2 id="admin-settings-title">{t("admin.settings")}</h2>
+      </div>
       <QueryState
         isLoading={settings.isLoading}
         isError={settings.isError}
@@ -81,7 +87,12 @@ function UsersSection(): React.JSX.Element {
   const update = useUpdateUser();
   return (
     <section className={shared["card"]} aria-labelledby="admin-users-title">
-      <h2 id="admin-users-title">{t("admin.users")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconUsers />
+        </span>
+        <h2 id="admin-users-title">{t("admin.users")}</h2>
+      </div>
       <label className={shared["field"]}>
         {t("admin.search")}
         <input type="search" value={q} onChange={(e) => { setQ(e.target.value); }} />
@@ -152,7 +163,12 @@ function IngestSection(): React.JSX.Element {
   const start = useStartIngest();
   return (
     <section className={shared["card"]} aria-labelledby="admin-ingest-title">
-      <h2 id="admin-ingest-title">{t("admin.ingest")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconRefresh />
+        </span>
+        <h2 id="admin-ingest-title">{t("admin.ingest")}</h2>
+      </div>
       <p className={shared["muted"]}>{t("admin.ingestHelp")}</p>
       <div className={shared["row"]}>
         <button type="button" className={shared["btn"]} disabled={start.isPending} onClick={() => { start.mutate(true); }}>

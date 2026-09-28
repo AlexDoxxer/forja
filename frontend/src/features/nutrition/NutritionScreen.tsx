@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
+import { IconClipboardList, IconSettings, IconTarget } from "../../components/icons";
 import type { components } from "../../lib/api/schema";
+import { cx } from "../../lib/cx";
 import shared from "../shared/ui.module.css";
 import { PlanView } from "./PlanView";
 import {
@@ -134,7 +136,7 @@ function SettingsForm({ settings }: { settings: Schemas["NutritionSettings"] }):
         {t("nutrition.breastfeeding")}
       </label>
       <div className={shared["row"]}>
-        <button type="submit" className={shared["btn"]} disabled={save.isPending}>
+        <button type="submit" className={cx(shared["btn"], shared["primary"])} disabled={save.isPending}>
           {t("nutrition.saveSettings")}
         </button>
       </div>
@@ -154,12 +156,17 @@ function PlanSection({ blocked }: { blocked: boolean }): React.JSX.Element {
 
   return (
     <section className={shared["card"]} aria-labelledby="plan-title">
-      <h2 id="plan-title">{t("nutrition.planTitle")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconClipboardList />
+        </span>
+        <h2 id="plan-title">{t("nutrition.planTitle")}</h2>
+      </div>
       <div className={shared["stack"]}>
         {!blocked && (
           <button
             type="button"
-            className={shared["btn"]}
+            className={cx(shared["btn"], shared["primary"])}
             disabled={generate.isPending}
             onClick={() => {
               generate.mutate(mondayOf(new Date()), { onSuccess: (data) => { setChosen(data.id); } });
@@ -206,7 +213,7 @@ export function NutritionScreen(): React.JSX.Element {
             <p>{t("nutrition.disabled")}</p>
             <button
               type="button"
-              className={shared["btn"]}
+              className={cx(shared["btn"], shared["primary"])}
               disabled={save.isPending}
               onClick={() => {
                 save.mutate({ ...toFields(data), diet_enabled: true });
@@ -219,7 +226,12 @@ export function NutritionScreen(): React.JSX.Element {
         {usable && (
           <>
             <section className={shared["card"]} aria-labelledby="target-title">
-              <h2 id="target-title">{t("nutrition.targetTitle")}</h2>
+              <div className={shared["cardHeader"]}>
+                <span className={shared["cardIcon"]}>
+                  <IconTarget />
+                </span>
+                <h2 id="target-title">{t("nutrition.targetTitle")}</h2>
+              </div>
               {target === null ? (
                 <p className={shared["muted"]}>{t("nutrition.noTarget")}</p>
               ) : target.blocked && target.block !== null ? (
@@ -247,7 +259,12 @@ export function NutritionScreen(): React.JSX.Element {
             </section>
             <PlanSection blocked={target?.blocked ?? false} />
             <section className={shared["card"]} aria-labelledby="nsettings-title">
-              <h2 id="nsettings-title">{t("nutrition.settingsTitle")}</h2>
+              <div className={shared["cardHeader"]}>
+                <span className={shared["cardIcon"]}>
+                  <IconSettings />
+                </span>
+                <h2 id="nsettings-title">{t("nutrition.settingsTitle")}</h2>
+              </div>
               <SettingsForm settings={data} />
             </section>
           </>

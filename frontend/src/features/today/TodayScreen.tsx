@@ -4,7 +4,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
+import { IconCalendar, IconChartBar, IconInbox, IconScale } from "../../components/icons";
 import { api, unwrapApi } from "../../lib/api/client";
+import { cx } from "../../lib/cx";
 import { useNextSession } from "../session/queries";
 import { usePendingSync } from "../session/usePendingSync";
 import { startSession } from "../session/usePlayer";
@@ -39,7 +41,12 @@ function BodyWeightCard(): React.JSX.Element {
 
   return (
     <section className={shared["card"]} aria-labelledby="bw-title">
-      <h2 id="bw-title">{t("todayB.bodyWeight")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconScale />
+        </span>
+        <h2 id="bw-title">{t("todayB.bodyWeight")}</h2>
+      </div>
       {latest !== null && <p>{t("todayB.bodyWeightLatest", { weight: formatNumber(latest.weight_kg) })}</p>}
       {average !== null && (
         <p className={shared["muted"]}>{t("todayB.bodyWeightAverage", { weight: formatNumber(average) })}</p>
@@ -61,7 +68,11 @@ function BodyWeightCard(): React.JSX.Element {
             }}
           />
         </label>
-        <button type="submit" className={shared["btn"]} disabled={weight === null || weight <= 0 || mutation.isPending}>
+        <button
+          type="submit"
+          className={cx(shared["btn"], shared["primary"])}
+          disabled={weight === null || weight <= 0 || mutation.isPending}
+        >
           {t("todayB.bodyWeightSave")}
         </button>
       </form>
@@ -94,7 +105,12 @@ function NextSessionCard(): React.JSX.Element {
 
   return (
     <section className={shared["card"]} aria-labelledby="next-title">
-      <h2 id="next-title">{t("today.title")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconCalendar />
+        </span>
+        <h2 id="next-title">{t("today.title")}</h2>
+      </div>
       <QueryState
         isLoading={next.isLoading}
         isError={next.isError}
@@ -103,7 +119,7 @@ function NextSessionCard(): React.JSX.Element {
       >
         {active.data != null && (
           <p>
-            <Link to="/sesion" className={shared["btn"]}>
+            <Link to="/sesion" className={cx(shared["btn"], shared["primary"])}>
               {t("todayB.resume")}
             </Link>
           </p>
@@ -116,7 +132,7 @@ function NextSessionCard(): React.JSX.Element {
             <p className={shared["muted"]}>{t("todayB.minutes", { count: next.data.day.estimated_minutes })}</p>
             <button
               type="button"
-              className={`${shared["btn"] ?? ""} ${shared["primary"] ?? ""}`}
+              className={cx(shared["btn"], shared["primary"])}
               disabled={starting || active.data != null}
               onClick={() => void begin()}
             >
@@ -128,9 +144,12 @@ function NextSessionCard(): React.JSX.Element {
         {next.data?.status === "rest_day" && <p>{t("todayB.restDay")}</p>}
         {next.data?.status === "program_completed" && <p>{t("todayB.programCompleted")}</p>}
         {next.data?.status === "no_active_program" && (
-          <div className={shared["stack"]}>
+          <div className={shared["empty"]}>
+            <span className={shared["emptyIcon"]}>
+              <IconInbox />
+            </span>
             <p>{t("todayB.noProgram")}</p>
-            <Link to="/rutinas" className={shared["btn"]}>
+            <Link to="/rutinas" className={cx(shared["btn"], shared["primary"])}>
               {t("todayB.createProgram")}
             </Link>
           </div>
@@ -158,7 +177,12 @@ export function TodayScreen(): React.JSX.Element {
       <div className={shared["grid"]}>
         <NextSessionCard />
         <section className={shared["card"]} aria-labelledby="week-title">
-          <h2 id="week-title">{t("todayB.weekSummary")}</h2>
+          <div className={shared["cardHeader"]}>
+            <span className={shared["cardIcon"]}>
+              <IconChartBar />
+            </span>
+            <h2 id="week-title">{t("todayB.weekSummary")}</h2>
+          </div>
           <QueryState
             isLoading={overview.isLoading}
             isError={overview.isError}

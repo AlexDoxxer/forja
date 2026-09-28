@@ -2,6 +2,7 @@ import { lazy, Suspense, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
+import { IconChartBar, IconGrid, IconScale, IconTrendingUp, IconTrophy } from "../../components/icons";
 import { formatDate, formatNumber } from "../shared/format";
 import shared from "../shared/ui.module.css";
 import { buildHeatmap, withMovingAverage } from "./math";
@@ -26,7 +27,12 @@ function Heatmap(): React.JSX.Element {
   );
   return (
     <section className={`${shared["card"] ?? ""} ${styles["heatCard"] ?? ""}`} aria-labelledby="heat-title">
-      <h2 id="heat-title">{t("progressB.heatmap")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconGrid />
+        </span>
+        <h2 id="heat-title">{t("progressB.heatmap")}</h2>
+      </div>
       <p className={shared["muted"]}>{t("progressB.heatmapHelp")}</p>
       <QueryState
         isLoading={overview.isLoading}
@@ -82,7 +88,12 @@ function VolumeSection(): React.JSX.Element {
   }));
   return (
     <section className={shared["card"]} aria-labelledby="vol-title">
-      <h2 id="vol-title">{t("progressB.volume")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconChartBar />
+        </span>
+        <h2 id="vol-title">{t("progressB.volume")}</h2>
+      </div>
       <QueryState
         isLoading={volume.isLoading}
         isError={volume.isError}
@@ -170,7 +181,12 @@ function E1rmSection(): React.JSX.Element {
 
   return (
     <section className={shared["card"]} aria-labelledby="e1rm-title">
-      <h2 id="e1rm-title">{t("progressB.e1rmTitle")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconTrendingUp />
+        </span>
+        <h2 id="e1rm-title">{t("progressB.e1rmTitle")}</h2>
+      </div>
       {options.length === 0 ? (
         <p className={shared["muted"]}>{t("progressB.noRecordsExercise")}</p>
       ) : (
@@ -218,7 +234,12 @@ function RecordsSection(): React.JSX.Element {
   const records = useRecords();
   return (
     <section className={shared["card"]} aria-labelledby="rec-title">
-      <h2 id="rec-title">{t("progressB.records")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconTrophy />
+        </span>
+        <h2 id="rec-title">{t("progressB.records")}</h2>
+      </div>
       <QueryState
         isLoading={records.isLoading}
         isError={records.isError}
@@ -260,7 +281,12 @@ function BodyWeightSection(): React.JSX.Element {
   );
   return (
     <section className={shared["card"]} aria-labelledby="bw-chart-title">
-      <h2 id="bw-chart-title">{t("progressB.bodyWeight")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconScale />
+        </span>
+        <h2 id="bw-chart-title">{t("progressB.bodyWeight")}</h2>
+      </div>
       <QueryState
         isLoading={metrics.isLoading}
         isError={metrics.isError}

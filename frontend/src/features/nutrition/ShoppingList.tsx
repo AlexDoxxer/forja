@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { IconClipboardList } from "../../components/icons";
 import { formatNumber } from "../shared/format";
 import shared from "../shared/ui.module.css";
 import { getMeta, setMeta } from "../session/storage";
@@ -33,7 +34,12 @@ export function ShoppingList({ planId }: { planId: string }): React.JSX.Element 
 
   return (
     <section className={shared["card"]} aria-labelledby="shop-title">
-      <h2 id="shop-title">{t("nutrition.shoppingTitle")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconClipboardList />
+        </span>
+        <h2 id="shop-title">{t("nutrition.shoppingTitle")}</h2>
+      </div>
       {list.data?.categories.length === 0 && <p className={shared["muted"]}>{t("nutrition.shoppingEmpty")}</p>}
       {list.data?.categories.map((category) => (
         <div key={category.category}>

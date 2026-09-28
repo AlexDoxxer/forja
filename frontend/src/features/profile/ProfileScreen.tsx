@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { QueryState } from "../../components/QueryState";
+import { IconCloudDownload, IconDevices, IconDownload, IconInfo, IconSettings } from "../../components/icons";
 import { i18next } from "../../i18n";
 import { api } from "../../lib/api/client";
 import type { components } from "../../lib/api/schema";
+import { cx } from "../../lib/cx";
 import { applyTheme } from "../../lib/theme";
 import { collectActiveProgramMedia, offlineSupported, requestPrecache } from "../../sw/library";
 import { formatDate } from "../shared/format";
@@ -42,7 +44,12 @@ function SettingsSection({ profile }: { profile: Schemas["Profile"] }): React.JS
 
   return (
     <section className={shared["card"]} aria-labelledby="settings-title">
-      <h2 id="settings-title">{t("profileB.settings")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconSettings />
+        </span>
+        <h2 id="settings-title">{t("profileB.settings")}</h2>
+      </div>
       <form
         className={shared["stack"]}
         onSubmit={(event) => {
@@ -106,7 +113,7 @@ function SettingsSection({ profile }: { profile: Schemas["Profile"] }): React.JS
           {t("profileB.dietEnabled")}
         </label>
         <div>
-          <button type="submit" className={shared["btn"]} disabled={save.isPending}>
+          <button type="submit" className={cx(shared["btn"], shared["primary"])} disabled={save.isPending}>
             {t("profileB.save")}
           </button>
         </div>
@@ -187,7 +194,12 @@ function DataSection(): React.JSX.Element {
 
   return (
     <section className={shared["card"]} aria-labelledby="data-title">
-      <h2 id="data-title">{t("profileB.data")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconDownload />
+        </span>
+        <h2 id="data-title">{t("profileB.data")}</h2>
+      </div>
       <div className={shared["stack"]}>
         <div className={shared["row"]}>
           <button type="button" className={shared["btn"]} onClick={() => void onExport()}>
@@ -271,7 +283,12 @@ function SessionsSection(): React.JSX.Element {
   const revoke = useRevokeSession();
   return (
     <section className={shared["card"]} aria-labelledby="sessions-title">
-      <h2 id="sessions-title">{t("profileB.sessions")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconDevices />
+        </span>
+        <h2 id="sessions-title">{t("profileB.sessions")}</h2>
+      </div>
       <QueryState
         isLoading={sessions.isLoading}
         isError={sessions.isError}
@@ -330,7 +347,12 @@ function OfflineSection(): React.JSX.Element {
 
   return (
     <section className={shared["card"]} aria-labelledby="offline-title">
-      <h2 id="offline-title">{t("profileB.offline")}</h2>
+      <div className={shared["cardHeader"]}>
+        <span className={shared["cardIcon"]}>
+          <IconCloudDownload />
+        </span>
+        <h2 id="offline-title">{t("profileB.offline")}</h2>
+      </div>
       <div className={shared["stack"]}>
         <div>
           <button type="button" className={shared["btn"]} disabled={!supported || state.kind === "busy"} onClick={() => void run()}>
@@ -383,7 +405,12 @@ function CreditsSection(): React.JSX.Element {
     >
       {about.data && (
         <section className={shared["card"]} aria-label={t("profile.credits")}>
-          <h2>{t("profile.credits")}</h2>
+          <div className={shared["cardHeader"]}>
+            <span className={shared["cardIcon"]}>
+              <IconInfo />
+            </span>
+            <h2>{t("profile.credits")}</h2>
+          </div>
           <dl>
             <div>
               <dt>{t("profile.datasetCommit")}</dt>

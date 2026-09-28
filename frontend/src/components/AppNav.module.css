@@ -20,13 +20,47 @@
   justify-content: center;
   gap: var(--space-1);
   min-height: var(--tap-target-min);
+  padding: var(--space-1) 0;
   color: var(--color-text-muted);
   text-decoration: none;
   font-size: 0.75rem;
+  font-weight: 600;
   font-family: var(--font-body);
+  transition: color var(--motion-duration) ease;
+}
+
+.link:hover {
+  color: var(--color-text);
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 1.75rem;
+  border-radius: var(--radius-md);
+  transition:
+    background var(--motion-duration) ease,
+    color var(--motion-duration) ease;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.label {
+  line-height: 1;
 }
 
 .active {
+  color: var(--color-accent);
+}
+
+.active .iconWrap {
+  background: var(--color-surface-2);
   color: var(--color-accent);
 }
 
@@ -41,7 +75,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    gap: var(--space-2);
+    gap: var(--space-1);
     padding: var(--space-6) var(--space-3);
     border-top: none;
     border-right: 1px solid var(--color-border);
@@ -50,12 +84,33 @@
   .link {
     flex-direction: row;
     justify-content: flex-start;
-    padding: var(--space-3) var(--space-3);
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-md);
     font-size: 0.9375rem;
   }
 
   .link:hover {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+  }
+
+  .iconWrap {
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+  }
+
+  .active {
+    background: var(--color-surface-2);
+    color: var(--color-accent);
+  }
+
+  .active .iconWrap {
+    background: transparent;
+  }
+
+  .active:hover {
     background: var(--color-surface-2);
   }
 }
